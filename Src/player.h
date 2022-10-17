@@ -19,5 +19,5 @@ typedef struct {
 Player player;
 void drawPlayer();
 void setPlayerStartPoint();
-//_Bool checkMove(int x, int y);
+_Bool checkMove(int x, int y);
 void handlePlayerInput();

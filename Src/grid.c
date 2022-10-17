@@ -10,17 +10,17 @@ void drawTile() {
 		for (width = 0; width < VERTICAL_COUNT; width++) {
 			//depending on the tile the color of the tile is different
 			switch (tiles[width][height].type) {
-			case Wall:
-				CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
+			case WALL:
+				CP_Settings_Fill(CP_Color_Create(125, 125, 125, 255));
 				break;
-			case Floor:
-				CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
+			case FLOOR:
+				CP_Settings_Fill(CP_Color_Create(75, 75, 75, 255));
 				break;
-			case Start:
-				CP_Settings_Fill(CP_Color_Create(0, 255, 122, 255));
+			case START:
+				CP_Settings_Fill(CP_Color_Create(0, 150, 75, 255));
 				break;
-			case End:
-				CP_Settings_Fill(CP_Color_Create(255, 0, 122, 255));
+			case END:
+				CP_Settings_Fill(CP_Color_Create(200, 0, 0, 255));
 				break;
 			}
 			//draw the tile
@@ -38,8 +38,7 @@ void assignTile() {
 
 		for (width = 0; width < VERTICAL_COUNT; width++) {
 
-			tiles[width][height].type = 0;
-			//is type is floor2, need to set 2 to max
+			tiles[width][height].type = 1; //set everything to floor
 		}
 
 	}

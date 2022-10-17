@@ -14,7 +14,7 @@ void setPlayerStartPoint()
 
 	for (y = 0; y < HORIZONTAL_COUNT; y++) {
 		for (x = 0; x < VERTICAL_COUNT; x++) {
-			if (tiles[x][y].type == Start) {
+			if (tiles[x][y].type == START) {
 				player.x = x;
 				player.y = y;
 			}
@@ -27,13 +27,13 @@ void handlePlayerInput() {
 
 	if (CP_Input_KeyDown(KEY_ESCAPE)) {
 		CP_Engine_Terminate();
-	}//up
-
+	}
+	//up
 	if (CP_Input_KeyTriggered(KEY_W)) {
 		//check if out of bounds
 		if (player.y > 0) {
-			player.y -= 1;
-			//player.y -= checkMove(0, UP);
+			//player.y -= 1;
+			player.y -= checkMove(0, UP);
 		}
 		renderGame();
 	}
@@ -41,8 +41,8 @@ void handlePlayerInput() {
 	if (CP_Input_KeyTriggered(KEY_D)) {
 		//check out of bounds
 		if (player.x < HORIZONTAL_COUNT - 1) {
-		//	player.x += checkMove(RIGHT, 0);
-		player.x += 1;
+			player.x += checkMove(RIGHT, 0);
+		//player.x += 1;
 
 		}
 		renderGame();
@@ -52,8 +52,8 @@ void handlePlayerInput() {
 	if (CP_Input_KeyTriggered(KEY_S)) {
 		//check out of bounds
 		if (player.y < VERTICAL_COUNT - 1) {
-			//player.y += checkMove(0, DOWN);
-			player.y += 1;
+			player.y += checkMove(0, DOWN);
+			//player.y += 1;
 		}
 		renderGame();
 	}
@@ -61,10 +61,10 @@ void handlePlayerInput() {
 	if (CP_Input_KeyTriggered(KEY_A)) {
 		//check out of bounds
 		if (player.x > 0) {
-			player.x -= 1;
-			//if (checkMove(LEFT, 0)) {
-			//	player.x -= 1;
-			//}
+			//player.x -= 1;
+			if (checkMove(LEFT, 0)) {
+				player.x -= 1;
+			}
 		}
 		renderGame();
 	}
@@ -72,15 +72,13 @@ void handlePlayerInput() {
 }
 
 
-
 _Bool checkMove(int DirectionX, int DirectionY) {
 	//if tile is wall, player not allowed to move
 	if (tiles[player.x + DirectionX][player.y + DirectionY].type == 0)
 	{
-		player.counter++;
 		return FALSE;
 		
 	}
-
+	player.counter++;
 	return TRUE;
 }
