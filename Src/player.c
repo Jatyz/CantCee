@@ -5,16 +5,16 @@
 
 void drawPlayer() {
 	CP_Settings_Fill(CP_Color_Create(0, 255, 255, 255));
-	CP_Graphics_DrawRect((player.x * Tile_Size) + (Tile_Size / 2) - playerWidth / 2, (player.y * Tile_Size) + (Tile_Size / 2) - playerHeight / 2, player.width, player.height);
+	CP_Graphics_DrawRect((player.x * TILE_SIZE) + (TILE_SIZE / 2) - PLAYER_WIDTH / 2, (player.y * TILE_SIZE) + (TILE_SIZE / 2) - PLAYER_HEIGHT / 2, player.width, player.height);
 }
 
 void setPlayerStartPoint()
 {
 	int y, x;
 
-	for (y = 0; y < horizontal_count; y++) {
-		for (x = 0; x < vertical_count; x++) {
-			if (tiles[x][y].type == StartPt) {
+	for (y = 0; y < HORIZONTAL_COUNT; y++) {
+		for (x = 0; x < VERTICAL_COUNT; x++) {
+			if (tiles[x][y].type == Start) {
 				player.x = x;
 				player.y = y;
 			}
@@ -35,27 +35,27 @@ void handlePlayerInput() {
 			player.y -= 1;
 			//player.y -= checkMove(0, UP);
 		}
-		render_game();
+		renderGame();
 	}
 	//right
 	if (CP_Input_KeyTriggered(KEY_D)) {
 		//check out of bounds
-		if (player.x < horizontal_count - 1) {
+		if (player.x < HORIZONTAL_COUNT - 1) {
 		//	player.x += checkMove(RIGHT, 0);
 		player.x += 1;
 
 		}
-		render_game();
+		renderGame();
 	}
 
 	//down
 	if (CP_Input_KeyTriggered(KEY_S)) {
 		//check out of bounds
-		if (player.y < vertical_count - 1) {
+		if (player.y < VERTICAL_COUNT - 1) {
 			//player.y += checkMove(0, DOWN);
 			player.y += 1;
 		}
-		render_game();
+		renderGame();
 	}
 	//left
 	if (CP_Input_KeyTriggered(KEY_A)) {
@@ -66,7 +66,7 @@ void handlePlayerInput() {
 			//	player.x -= 1;
 			//}
 		}
-		render_game();
+		renderGame();
 	}
 
 }
@@ -77,7 +77,9 @@ _Bool checkMove(int DirectionX, int DirectionY) {
 	//if tile is wall, player not allowed to move
 	if (tiles[player.x + DirectionX][player.y + DirectionY].type == 0)
 	{
+		player.counter++;
 		return FALSE;
+		
 	}
 
 	return TRUE;

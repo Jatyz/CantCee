@@ -5,11 +5,11 @@
 
 void game_init(void)
 {
-	CP_System_SetWindowSize(wWidth, wHeight);
+	CP_System_SetWindowSize(WINDOW_WIDTH, WINIDOW_HEIGHT);
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 	assignTile();//assign all tiles
 	//hardcode to test drawing
-	tiles[0][1].type = EndPt;
+	tiles[0][1].type = End;
 	tiles[1][1].type = Floor;
 	tiles[2][1].type = Floor;
 	tiles[2][2].type = Floor;
@@ -26,10 +26,11 @@ void game_init(void)
 	tiles[7][4].type = Floor;
 	tiles[7][5].type = Floor;
 	tiles[7][6].type = Floor;
-	tiles[7][7].type = StartPt;
+	tiles[7][7].type = Start;
 	setPlayerStartPoint();
-	player.height = playerHeight;
-	player.width = playerWidth;
+	player.height = PLAYER_HEIGHT;
+	player.width = PLAYER_WIDTH;
+	player.counter = 0;
 }
 
 void game_update(void)
@@ -42,8 +43,8 @@ void game_exit(void)
 
 }
 
-void render_game() {
-
+void renderGame() {
 	drawTile();
 	drawPlayer();
+	//drawFOV();
 }

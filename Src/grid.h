@@ -1,25 +1,22 @@
 #pragma once
 
-#define wHeight 800
-#define wWidth 800
-#define Tile_Size 100 //might need to make it changable
+#define WINIDOW_HEIGHT 800  //decide on a size but i think 800 is good 
+#define WINDOW_WIDTH 800
+#define TILE_SIZE 50 //might need to make it changable depending on the stage how many tiles we want.
 
-#define horizontal_count  wWidth/Tile_Size
-#define vertical_count  wHeight/Tile_Size
+#define HORIZONTAL_COUNT  WINDOW_WIDTH/TILE_SIZE
+#define VERTICAL_COUNT  WINIDOW_HEIGHT/TILE_SIZE
 
 
 typedef enum {
-	Wall, Floor, StartPt, EndPt
+	Wall, Floor, Start, End
 }Tile_Type;
 
 typedef struct {
 	Tile_Type type;
-	int Alert; //boolean to check whether enemies checking current tile?
+	int alert; //boolean to check whether enemies checking current tile?
 }Tile;
 
-void grid_init(void);
-void grid_update(void);
-void grid_exit(void);
 void drawTile(void);
 void assignTile(void);
-Tile tiles[horizontal_count][vertical_count];
+Tile tiles[HORIZONTAL_COUNT][VERTICAL_COUNT];
