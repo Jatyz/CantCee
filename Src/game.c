@@ -7,6 +7,8 @@ void game_init(void)
 {
 	CP_System_SetWindowSize(WINDOW_WIDTH, WINIDOW_HEIGHT);
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
+
+
 	assignTile();//assign all tiles
 	//hardcode to test drawing
 	tiles[0][0].type = END;

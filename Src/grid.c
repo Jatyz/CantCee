@@ -1,5 +1,6 @@
 #include "cprocessing.h"
 #include "grid.h"
+#include "game.h"
 
 void drawTile() {
 
