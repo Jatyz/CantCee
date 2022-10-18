@@ -7,6 +7,8 @@
 typedef struct {
 	int x; //current tile in x axis + 1
 	int y; //current tile in y axis + 1
+	int Prev_X;
+	int Prev_Y;
 	int height;
 	int width;
 	int counter;//count number of stage;

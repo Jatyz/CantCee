@@ -76,9 +76,10 @@ _Bool checkMove(int DirectionX, int DirectionY) {
 	//if tile is wall, player not allowed to move
 	if (tiles[player.x + DirectionX][player.y + DirectionY].type == 0)
 	{
-		return FALSE;
-		
+		return FALSE;		
 	}
 	player.counter++;
+	player.Prev_X = player.x;
+	player.Prev_Y = player.y;
 	return TRUE;
 }
