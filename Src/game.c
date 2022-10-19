@@ -1,7 +1,7 @@
 #include "player.h"
 #include "grid.h"
 #include "game.h"
-
+#include "cprocessing.h"
 
 void game_init(void)
 {
@@ -25,6 +25,12 @@ void game_init(void)
 	tiles[8][7].type = WALL;
 	tiles[9][7].type = WALL;
 	tiles[9][9].type = START;
+	tiles[9][6].type = RED;
+	tiles[9][4].type = BLUE;
+	player.Player_Color = CP_Color_Create(0, 255, 255, 255);
+	Green = CP_Color_Create(0,255,0,255);
+	Red = CP_Color_Create(255, 0, 0, 255);
+	Blue = CP_Color_Create(0, 0, 255, 255);
 	setPlayerStartPoint();
 	player.height = PLAYER_HEIGHT;
 	player.width = PLAYER_WIDTH;

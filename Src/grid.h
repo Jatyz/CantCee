@@ -2,7 +2,7 @@
 
 
 typedef enum {
-	WALL, FLOOR, START, END
+	WALL, FLOOR, START, END, RED, BLUE, GREEN
 }Tile_Type;
 
 typedef struct {

@@ -4,7 +4,7 @@
 #include "game.h"
 
 void drawPlayer() {
-	CP_Settings_Fill(CP_Color_Create(0, 255, 255, 255));
+	CP_Settings_Fill(player.Player_Color);
 	CP_Graphics_DrawRect((player.x * TILE_SIZE) + (TILE_SIZE / 2) - PLAYER_WIDTH / 2, (player.y * TILE_SIZE) + (TILE_SIZE / 2) - PLAYER_HEIGHT / 2, player.width, player.height);
 }
 
@@ -74,12 +74,22 @@ void handlePlayerInput() {
 
 _Bool checkMove(int DirectionX, int DirectionY) {
 	//if tile is wall, player not allowed to move
-	if (tiles[player.x + DirectionX][player.y + DirectionY].type == 0)
-	{
-		return FALSE;		
+	switch (tiles[player.x + DirectionX][player.y + DirectionY].type) {
+	case WALL:
+		return FALSE;
+	case GREEN:
+		player.Player_Color = Green;
+		break;
+	case BLUE:
+		player.Player_Color = Blue;
+		break;
+	case RED:
+		player.Player_Color = Red;
+		break;
 	}
 	player.counter++;
 	player.Prev_X = player.x;
 	player.Prev_Y = player.y;
 	return TRUE;
+
 }

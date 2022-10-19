@@ -25,6 +25,15 @@ void drawTile() {
 			case END:
 				CP_Settings_Fill(CP_Color_Create(200, 0, 0, 255));
 				break;
+			case RED:
+				CP_Settings_Fill(Red);
+				break;
+			case BLUE:
+				CP_Settings_Fill(Blue);
+				break;
+			case GREEN:
+				CP_Settings_Fill(Green);
+				break;
 			}
 			//draw the tile
 			CP_Graphics_DrawRect(width * TILE_SIZE, height * TILE_SIZE, TILE_SIZE, TILE_SIZE);

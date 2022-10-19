@@ -1,4 +1,5 @@
 #pragma once
+#include "cprocessing.h"
 
 #define PLAYER_WIDTH 50
 #define PLAYER_HEIGHT 50
@@ -12,6 +13,7 @@ typedef struct {
 	int height;
 	int width;
 	int counter;//count number of stage;
+	CP_Color Player_Color;
 }Player;
 
 Player player;
@@ -19,3 +21,4 @@ void drawPlayer();
 void setPlayerStartPoint();
 _Bool checkMove(int x, int y);
 void handlePlayerInput();
+
