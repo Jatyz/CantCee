@@ -1,6 +1,7 @@
 #include "player.h"
 #include "grid.h"
 #include "game.h"
+#include "FOV.h"
 #include "cprocessing.h"
 
 void game_init(void)
@@ -42,6 +43,7 @@ void game_update(void)
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 	renderGame();
 	handlePlayerInput();
+	setIllumination(player.x,player.y);
 }
 
 void game_exit(void)
@@ -53,4 +55,5 @@ void renderGame() {
 	drawTile();
 	drawPlayer();
 	//drawFOV();
+	renderFOVBasic();
 }

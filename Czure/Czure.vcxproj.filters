@@ -27,6 +27,9 @@
     <ClCompile Include="..\Src\game.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\Src\FOV.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Src\grid.h">
@@ -39,6 +42,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Src\game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\FOV.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
