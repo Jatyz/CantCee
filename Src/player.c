@@ -35,7 +35,6 @@ void handlePlayerInput() {
 			//player.y -= 1;
 			player.y -= checkMove(0, UP);
 		}
-		renderGame();
 	}
 	//right
 	if (CP_Input_KeyTriggered(KEY_D)) {
@@ -45,7 +44,6 @@ void handlePlayerInput() {
 		//player.x += 1;
 
 		}
-		renderGame();
 	}
 
 	//down
@@ -55,7 +53,6 @@ void handlePlayerInput() {
 			player.y += checkMove(0, DOWN);
 			//player.y += 1;
 		}
-		renderGame();
 	}
 	//left
 	if (CP_Input_KeyTriggered(KEY_A)) {
@@ -66,7 +63,6 @@ void handlePlayerInput() {
 				player.x -= 1;
 			}
 		}
-		renderGame();
 	}
 
 }

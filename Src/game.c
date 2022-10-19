@@ -39,6 +39,8 @@ void game_init(void)
 
 void game_update(void)
 {
+	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
+	renderGame();
 	handlePlayerInput();
 }
 
