@@ -2,10 +2,10 @@
 #include "grid.h"
 #include "game.h"
 
-void drawTile(int Tile_Size) {
+void drawTile(int tilesize) {
 	
-	int Horizontal_Tile = 800 / Tile_Size;
-	int Vertical_Tile = 800 / Tile_Size;
+	int Horizontal_Tile = returnBounds(tilesize);
+	int Vertical_Tile = Horizontal_Tile;
 	int height, width;
 	//for loop to go through all the tiles
 	for (height = 0; height < Horizontal_Tile; height++) {
@@ -38,14 +38,14 @@ void drawTile(int Tile_Size) {
 				break;
 			}
 			//draw the tile
-			CP_Graphics_DrawRect(width * Tile_Size, height * Tile_Size, Tile_Size, Tile_Size);
+			CP_Graphics_DrawRect(width * tilesize, height * tilesize, tilesize, tilesize);
 		}
 
 	}
 
 }
 
-void assignTile(int Tile_Size) {
+void assignTile(int tilesize) {
 	int height, width;
 	//need to check tht there is only 1 start tile
 	for (height = 0; height < sizeof(tiles)/sizeof(tiles[0]); height++) {
@@ -55,8 +55,8 @@ void assignTile(int Tile_Size) {
 		}
 	}
 
-	int Horizontal_Tile = 800 / Tile_Size;
-	int Vertical_Tile = 800 / Tile_Size;
+	int Horizontal_Tile = returnBounds(tilesize);
+	int Vertical_Tile = Horizontal_Tile;
 
 	for (height = 0; height < Horizontal_Tile; height++) {
 

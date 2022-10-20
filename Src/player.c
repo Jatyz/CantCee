@@ -3,15 +3,15 @@
 #include "grid.h"
 #include "game.h"
 
-void drawPlayer(int Tile_Size) {
+void drawPlayer(int tilesize) {
 	CP_Settings_Fill(player.Player_Color);
-	CP_Graphics_DrawRect((player.x * Tile_Size) + (Tile_Size / 2) - player.width / 2, (player.y * Tile_Size) + (Tile_Size / 2) - player.height / 2, player.width, player.height);
+	CP_Graphics_DrawRect((player.x * tilesize) + (tilesize / 2) - player.width / 2, (player.y * tilesize) + (tilesize / 2) - player.height / 2, player.width, player.height);
 }
 
-void setPlayerStartPoint(int Tile_Size)
+void setPlayerStartPoint(int tilesize)
 {
-	int Horizontal_Tile = 800 / Tile_Size;
-	int Vertical_Tile = 800 / Tile_Size;
+	int Horizontal_Tile = returnBounds(tilesize);
+	int Vertical_Tile = Horizontal_Tile;
 
 	int y, x;
 
@@ -27,10 +27,10 @@ void setPlayerStartPoint(int Tile_Size)
 	}
 }
 
-void handlePlayerInput(int Tile_Size) {
+void handlePlayerInput(int tilesize) {
 
-	int Horizontal_Tile = 800 / Tile_Size;
-	int Vertical_Tile = 800 / Tile_Size;
+	int Horizontal_Tile = returnBounds(tilesize);
+	int Vertical_Tile = Horizontal_Tile;
 
 	if (CP_Input_KeyDown(KEY_ESCAPE)) {
 		CP_Engine_Terminate();

@@ -26,3 +26,4 @@ void setStartGame(void);
 //global tile size variable but try not to access this, maybe shld make this a local variable
 int Tile_Size;
 
+int returnBounds(int tilesize);

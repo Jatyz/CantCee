@@ -17,10 +17,10 @@ typedef struct { // structure to contain player variables
 Player player;
 
 //method to draw player in the middle of current tile, based on its own size and tile size.
-void drawPlayer(int Tile_size);
+void drawPlayer(int tilesize);
 
 //method to set player to the current start point in the tile arrray
-void setPlayerStartPoint(int Tile_Size);
+void setPlayerStartPoint(int tilesize);
 
 //check if player is moving into a tile that is not a wall. if player moe onto color, change player color.
 _Bool checkMove(int x, int y);

@@ -57,6 +57,7 @@ void game_init(void)
 	tiles[9][9].type = START;
 	tiles[9][6].type = RED;
 	tiles[9][4].type = BLUE;
+	tiles[0][9].type = GREEN;
 	setPlayerStartPoint(Tile_Size);
 
 }
@@ -96,4 +97,8 @@ void setStartGame(void) {
 	player.width = Tile_Size / 2;
 	player.counter = 0;
 
+}
+
+int returnBounds(int tilesize) {
+	return (800 / tilesize);
 }
