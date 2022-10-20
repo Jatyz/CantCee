@@ -9,14 +9,20 @@
 #define MEDIUM 50
 #define SMALL 80
 
-
+//GLOBAL Color variables
 CP_Color Green,Red,Blue;
 
 void game_init(void);
 void game_update(void);
 void game_exit(void);
+
+//render the player, tiles and fov
 void renderGame(void);
+
+//set the initialize values needed in the game.
 void setStartGame(void);
 
+
+//global tile size variable but try not to access this, maybe shld make this a local variable
 int Tile_Size;
 

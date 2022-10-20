@@ -46,15 +46,23 @@ void drawTile(int Tile_Size) {
 }
 
 void assignTile(int Tile_Size) {
-	int Horizontal_Tile = 800 / Tile_Size;
-	int Vertical_Tile = 800 / Tile_Size;
 	int height, width;
 	//need to check tht there is only 1 start tile
+	for (height = 0; height < sizeof(tiles)/sizeof(tiles[0]); height++) {
+
+		for (width = 0; width < sizeof(tiles) / sizeof(tiles[0]); width++) {
+			tiles[width][height].type = 0;//set all tiles to walls
+		}
+	}
+
+	int Horizontal_Tile = 800 / Tile_Size;
+	int Vertical_Tile = 800 / Tile_Size;
+
 	for (height = 0; height < Horizontal_Tile; height++) {
 
 		for (width = 0; width < Vertical_Tile; width++) {
 
-			tiles[width][height].type = 1; //set everything to floor
+			tiles[width][height].type = 1; //set everything to within map to floor
 		}
 
 	}
