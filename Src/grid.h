@@ -1,5 +1,6 @@
 #pragma once
-
+#define WINIDOW_HEIGHT 800  //decide on a size but i think 800 is good 
+#define WINDOW_WIDTH 1000
 
 typedef enum {
 	WALL, FLOOR, START, END, RED, BLUE, GREEN
@@ -10,5 +11,7 @@ typedef struct {
 	int alert; //boolean to check whether enemies checking current tile?
 }Tile;
 
-void drawTile(void);
-void assignTile(void);
+void drawTile(int Tile_Size);
+void assignTile(int Tile_Size);
+
+Tile tiles[1000][1000];

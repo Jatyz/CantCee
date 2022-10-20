@@ -2,13 +2,15 @@
 #include "grid.h"
 #include "game.h"
 
-void drawTile() {
-
+void drawTile(int Tile_Size) {
+	
+	int Horizontal_Tile = 800 / Tile_Size;
+	int Vertical_Tile = 800 / Tile_Size;
 	int height, width;
 	//for loop to go through all the tiles
-	for (height = 0; height < HORIZONTAL_COUNT; height++) {
+	for (height = 0; height < Horizontal_Tile; height++) {
 
-		for (width = 0; width < VERTICAL_COUNT; width++) {
+		for (width = 0; width < Vertical_Tile; width++) {
 			//depending on the tile the color of the tile is different
 			switch (tiles[width][height].type) {
 			case WALL:
@@ -36,19 +38,21 @@ void drawTile() {
 				break;
 			}
 			//draw the tile
-			CP_Graphics_DrawRect(width * TILE_SIZE, height * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+			CP_Graphics_DrawRect(width * Tile_Size, height * Tile_Size, Tile_Size, Tile_Size);
 		}
 
 	}
 
 }
 
-void assignTile() {
+void assignTile(int Tile_Size) {
+	int Horizontal_Tile = 800 / Tile_Size;
+	int Vertical_Tile = 800 / Tile_Size;
 	int height, width;
 	//need to check tht there is only 1 start tile
-	for (height = 0; height < HORIZONTAL_COUNT; height++) {
+	for (height = 0; height < Horizontal_Tile; height++) {
 
-		for (width = 0; width < VERTICAL_COUNT; width++) {
+		for (width = 0; width < Vertical_Tile; width++) {
 
 			tiles[width][height].type = 1; //set everything to floor
 		}

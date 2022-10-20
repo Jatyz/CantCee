@@ -3,17 +3,22 @@
 #include "grid.h"
 #include "game.h"
 
-void drawPlayer() {
+void drawPlayer(int Tile_Size) {
 	CP_Settings_Fill(player.Player_Color);
-	CP_Graphics_DrawRect((player.x * TILE_SIZE) + (TILE_SIZE / 2) - PLAYER_WIDTH / 2, (player.y * TILE_SIZE) + (TILE_SIZE / 2) - PLAYER_HEIGHT / 2, player.width, player.height);
+	CP_Graphics_DrawRect((player.x * Tile_Size) + (Tile_Size / 2) - player.width / 2, (player.y * Tile_Size) + (Tile_Size / 2) - player.height / 2, player.width, player.height);
 }
 
-void setPlayerStartPoint()
+void setPlayerStartPoint(int Tile_Size)
 {
+	int Horizontal_Tile = 800 / Tile_Size;
+	int Vertical_Tile = 800 / Tile_Size;
+
 	int y, x;
 
-	for (y = 0; y < HORIZONTAL_COUNT; y++) {
-		for (x = 0; x < VERTICAL_COUNT; x++) {
+	//do a check to see there is only one start point
+
+	for (y = 0; y < Horizontal_Tile; y++) {
+		for (x = 0; x < Vertical_Tile; x++) {
 			if (tiles[x][y].type == START) {
 				player.x = x;
 				player.y = y;
@@ -22,8 +27,10 @@ void setPlayerStartPoint()
 	}
 }
 
-void handlePlayerInput() {
+void handlePlayerInput(int Tile_Size) {
 
+	int Horizontal_Tile = 800 / Tile_Size;
+	int Vertical_Tile = 800 / Tile_Size;
 
 	if (CP_Input_KeyDown(KEY_ESCAPE)) {
 		CP_Engine_Terminate();
@@ -39,7 +46,7 @@ void handlePlayerInput() {
 	//right
 	if (CP_Input_KeyTriggered(KEY_D)) {
 		//check out of bounds
-		if (player.x < HORIZONTAL_COUNT - 1) {
+		if (player.x < Horizontal_Tile - 1) {
 			player.x += checkMove(RIGHT, 0);
 		//player.x += 1;
 
@@ -49,7 +56,7 @@ void handlePlayerInput() {
 	//down
 	if (CP_Input_KeyTriggered(KEY_S)) {
 		//check out of bounds
-		if (player.y < VERTICAL_COUNT - 1) {
+		if (player.y < Vertical_Tile - 1) {
 			player.y += checkMove(0, DOWN);
 			//player.y += 1;
 		}

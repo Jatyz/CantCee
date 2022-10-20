@@ -1,9 +1,6 @@
 #pragma once
 #include "cprocessing.h"
 
-#define PLAYER_WIDTH 50
-#define PLAYER_HEIGHT 50
-
 
 typedef struct {
 	int x; //current tile in x axis + 1
@@ -17,8 +14,8 @@ typedef struct {
 }Player;
 
 Player player;
-void drawPlayer();
-void setPlayerStartPoint();
+void drawPlayer(int Tile_size);
+void setPlayerStartPoint(int Tile_Size);
 _Bool checkMove(int x, int y);
-void handlePlayerInput();
+void handlePlayerInput(int Tile_Size);
 
