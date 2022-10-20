@@ -67,8 +67,8 @@ void game_update(void)
 	CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
 	handlePlayerInput(Tile_Size);
 	renderGame();
-	//setIllumination(player.x,player.y);
-	//setPlayerFOV(player.x, player.y, player.Prev_X, player.Prev_Y);
+	setIllumination(player.x,player.y,returnBounds(Tile_Size), returnBounds(Tile_Size));
+	setPlayerFOV(player.x, player.y, player.Prev_X, player.Prev_Y, returnBounds(Tile_Size), returnBounds(Tile_Size));
 }
 
 void game_exit(void)
@@ -80,7 +80,7 @@ void renderGame(void) {
 	drawTile(Tile_Size);
 	drawPlayer(Tile_Size);
 	//drawFOV();
-	//renderFOVBasic();
+	renderFOVBasic(returnBounds(Tile_Size), returnBounds(Tile_Size),Tile_Size);
 }
 
 void setStartGame(void) {
@@ -97,8 +97,4 @@ void setStartGame(void) {
 	player.width = Tile_Size / 2;
 	player.counter = 0;
 
-}
-
-int returnBounds(int tilesize) {
-	return (800 / tilesize);
 }

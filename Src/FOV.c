@@ -5,7 +5,7 @@
 #include <math.h>
 
 //fog grid of same size as base game to draw over the render layers as FOV, is 1 when FOV is blocked, 0 when FOV not blocked
-int fog[HORIZONTAL_COUNT][VERTICAL_COUNT];		
+int fog[1000][1000];		
 
 
 /*
@@ -13,11 +13,17 @@ TILE_SIZE
 */
 
 //update basic logic for drawing a layer of black tiles in the level, except in a circle around the player
-void setIllumination(int const playerXPos, int const playerYPos)
+void setIllumination
+(
+	int const playerXPos, 
+	int const playerYPos,
+	int const gridSizeX,
+	int const gridSizeY
+)
 {
-	for (int i = 0; i < HORIZONTAL_COUNT; i++)			//for each row
+	for (int i = 0; i < gridSizeX; i++)			//for each row
 	{
-		for (int j = 0; j < VERTICAL_COUNT; j++)		//for each column
+		for (int j = 0; j < gridSizeY; j++)		//for each column
 		{
 			
 			//if (abs(i - playerXPos) < 4
@@ -40,7 +46,14 @@ void setIllumination(int const playerXPos, int const playerYPos)
 }
 
 //update basic logic for not drawing fog along player's line of sight
-void setPlayerFOV(int const playerXPos, int const playerYPos, int const playerPrevPosX, int const playerPrevPosY)
+void setPlayerFOV(
+	int const playerXPos, 
+	int const playerYPos, 
+	int const playerPrevPosX, 
+	int const playerPrevPosY,
+	int const gridSizeX,
+	int const gridSizeY
+)
 {	
 //	int drawY,			//is one if fov is not blocked by wall, unused till further prototyping
 //		drawX;			//is one if fov is not blocked by wall, unused till further prototyping
@@ -59,14 +72,14 @@ void setPlayerFOV(int const playerXPos, int const playerYPos, int const playerPr
 		{
 		case 1:
 
-			for (int i = playerXPos; i < HORIZONTAL_COUNT; i++)			//for each row pass player to right side of screen
+			for (int i = playerXPos; i < gridSizeX; i++)				//for each row pass player to right side of screen
 			{	
 				//for columns on top, below and occupied by player (vertical axis)
 				for (int j = playerYPos - 1;
 					(j < playerPrevPosY + 2);
 					j++)			
 				{
-					if(!(j >= VERTICAL_COUNT) && !(j < 0))				//dont set value if out of array(vertical check)
+					if(!(j >= gridSizeY) && !(j < 0))					//dont set value if out of array(vertical check)
 					{
 					fog[i][j] = 0;										//set fog in this tile to none
 					}
@@ -82,7 +95,7 @@ void setPlayerFOV(int const playerXPos, int const playerYPos, int const playerPr
 					(j < playerPrevPosY + 2);
 					j++)
 				{
-					if (!(j >= VERTICAL_COUNT) && !(j < 0))				//dont set value if out of array(vertical check)
+					if (!(j >= gridSizeY) && !(j < 0))					//dont set value if out of array(vertical check)
 					{
 						fog[i][j] = 0;									//set fog in this tile to none
 					}
@@ -103,9 +116,9 @@ void setPlayerFOV(int const playerXPos, int const playerYPos, int const playerPr
 					(i < playerXPos + 2);
 					i++)			
 				{
-					for (int j = playerYPos; j < VERTICAL_COUNT; j++)	//for each columns pass player to bottom of screen 
+					for (int j = playerYPos; j < gridSizeY; j++)		//for each columns pass player to bottom of screen 
 					{
-						if (!(i >= HORIZONTAL_COUNT) && !(i < 0))		//dont set value if out of array(horizontal check)
+						if (!(i >= gridSizeX) && !(i < 0))				//dont set value if out of array(horizontal check)
 						{
 							fog[i][j] = 0;								//set fog in this tile to none
 						}
@@ -120,7 +133,7 @@ void setPlayerFOV(int const playerXPos, int const playerYPos, int const playerPr
 				{
 					for (int j = playerYPos; j >= 0; j--)				//for each columns pass player to bottom of screen 
 					{
-						if (!(i >= HORIZONTAL_COUNT)&& !(i < 0))		//dont set value if out of array(horizontal check)
+						if (!(i >= gridSizeX)&& !(i < 0))				//dont set value if out of array(horizontal check)
 						{
 							fog[i][j] = 0;								//set fog in this tile to none
 						}
@@ -134,19 +147,23 @@ void setPlayerFOV(int const playerXPos, int const playerYPos, int const playerPr
 
 }
 
-
-void renderFOVBasic(void) 
+	//renders the most basic version of the FOV fog	
+	void renderFOVBasic(
+		int const gridSizeX,		//size(number of horizontal elements) of grid in game level
+		int const gridSizeY,		//size(number of vertical elements) of grid in game level
+		int const tileSizePX		//tile size in pixels
+)
 {
-	for (int i = 0; i < HORIZONTAL_COUNT; i++)			//for each row
+	for (int i = 0; i < gridSizeX; i++)			//for each row
 	{
-		for (int j = 0; j < VERTICAL_COUNT; j++)		//for each column
+		for (int j = 0; j < gridSizeY; j++)		//for each column
 		{
 			switch (fog[i][j]) {
 				case 1:
-					CP_Settings_Stroke(CP_Color_Create(0, 0, 0, 255));
-					CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
+					CP_Settings_Stroke(CP_Color_Create(0, 0, 0, 255));	//set outline black	
+					CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));	//set block color black
 					//draw the tile
-					CP_Graphics_DrawRect(i * TILE_SIZE, j * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+					CP_Graphics_DrawRect(i * tileSizePX, j * tileSizePX, tileSizePX, tileSizePX);
 					break;
 				default:
 					break;

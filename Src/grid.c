@@ -2,6 +2,13 @@
 #include "grid.h"
 #include "game.h"
 
+
+//axulilary functions are defined first so it wont bloody crash when in a C lang compiler!!(without header)
+//returns the horizontal and vertical bounds(no. of elements) in the grid to be used for the level. Assumes grid space used is square
+int returnBounds(int tilesize) {
+	return (800 / tilesize);
+}
+
 void drawTile(int tilesize) {
 	
 	int Horizontal_Tile = returnBounds(tilesize);

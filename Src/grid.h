@@ -23,3 +23,5 @@ void assignTile(int Tile_Size);
 // 1000 1000 is just placeholder values so we can have a large tile map
 //but specific sstage tile map will need to be set by tile size.
 Tile tiles[1000][1000];
+
+int returnBounds(int tilesize);
