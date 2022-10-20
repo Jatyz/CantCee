@@ -61,7 +61,7 @@ void setPlayerFOV(int const playerXPos, int const playerYPos, int const playerPr
 
 			for (int i = playerXPos; i < HORIZONTAL_COUNT; i++)			//for each row pass player to right side of screen
 			{	
-				//for columns on top, below and occupied by player 
+				//for columns on top, below and occupied by player (vertical axis)
 				for (int j = playerYPos - 1;
 					(j < playerPrevPosY + 2);
 					j++)			
@@ -77,7 +77,7 @@ void setPlayerFOV(int const playerXPos, int const playerYPos, int const playerPr
 
 			for (int i = playerXPos; i >=0; i--)						//for each row pass player to the left side of the screen
 			{
-				//for columns on top, below and occupied by player 
+				//for columns on top, below and occupied by player (vertical axis)
 				for (int j = playerYPos - 1;
 					(j < playerPrevPosY + 2);
 					j++)
