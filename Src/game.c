@@ -67,8 +67,16 @@ void game_update(void)
 	CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
 	handlePlayerInput(Tile_Size);
 	renderGame();
-	setIllumination(player.x,player.y,returnBounds(Tile_Size), returnBounds(Tile_Size));
-	setPlayerFOV(player.x, player.y, player.Prev_X, player.Prev_Y, returnBounds(Tile_Size), returnBounds(Tile_Size));
+	
+	//FOV logic handled here
+	//setIllumination(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), 4);
+	setPlayerFOVFunnel(player.x, player.y, player.Prev_X, player.Prev_Y, returnBounds(Tile_Size), returnBounds(Tile_Size));
+	
+	
+	//Test code for *AHEM* dynamic *AHEM* style FOV independent of actual grid resolution
+	//setIllumination(player.x * 6 + 3, (player.y * 6) + 3, returnBounds(Tile_Size) * 6 + 2, returnBounds(Tile_Size) * 6 + 2, 4 * 6);
+
+	//End FOV logic handled area
 }
 
 void game_exit(void)
@@ -80,7 +88,11 @@ void renderGame(void) {
 	drawTile(Tile_Size);
 	drawPlayer(Tile_Size);
 	//drawFOV();
-	renderFOVBasic(returnBounds(Tile_Size), returnBounds(Tile_Size),Tile_Size);
+	renderFOVBasic(returnBounds(Tile_Size) , returnBounds(Tile_Size) , Tile_Size);
+
+	//Test code for *AHEM* dynamic *AHEM* style FOV independent of actual grid resolution
+	//renderFOVBasic(returnBounds(Tile_Size)*6+2, returnBounds(Tile_Size)*6+2,Tile_Size/6);
+	//End FOV render code
 }
 
 void setStartGame(void) {

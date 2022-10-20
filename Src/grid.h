@@ -24,4 +24,5 @@ void assignTile(int Tile_Size);
 //but specific sstage tile map will need to be set by tile size.
 Tile tiles[1000][1000];
 
+//returns the horizontal and vertical bounds(no. of elements) in the grid to be used for the level. Assumes grid space used is square
 int returnBounds(int tilesize);
