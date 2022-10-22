@@ -29,7 +29,9 @@ void setPlayerFOVFunnel(
 	int const playerPrevPosX,	//the last stored player character's previous horizontal position
 	int const playerPrevPosY,	//the last stored player character's previous vertical position
 	int const gridSizeX,		//horizontal size of grid
-	int const gridSizeY			//vertical size of grid
+	int const gridSizeY,		//vertical size of grid
+	int const expansionFactor,	//the rate at which the funnel will expand(i.e. grow by 1 tile every (expansionFactor) wort of tiles away from player)
+	int const coneRange			//the maximum range of the cone
 );
 
 //render array of FOV based on previous logics set by other FOV functions, renders an overlay grid similiar to the movement grid
