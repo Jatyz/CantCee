@@ -10,7 +10,7 @@ typedef struct { // structure to contain player variables
 	int height;
 	int width;
 	int counter;//count number of stage;
-	CP_Color Player_Color;
+	CP_Color Player_Color; //for setting current player color
 }Player;
 
 //Global player variable

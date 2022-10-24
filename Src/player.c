@@ -80,19 +80,12 @@ _Bool checkMove(int DirectionX, int DirectionY) {
 	switch (tiles[player.x + DirectionX][player.y + DirectionY].type) {
 	case WALL:
 		return FALSE;
-	case GREEN:
-		player.Player_Color = Green;
-		break;
-	case BLUE:
-		player.Player_Color = Blue;
-		break;
-	case RED:
-		player.Player_Color = Red;
+	case DISGUISE:
+		player.Player_Color = tiles[player.x + DirectionX][player.y + DirectionY].Tile_Color;
 		break;
 	}
 	player.counter++;
 	player.Prev_X = player.x;
 	player.Prev_Y = player.y;
 	return TRUE;
-
 }

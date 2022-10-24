@@ -34,14 +34,8 @@ void drawTile(int tilesize) {
 			case END:
 				CP_Settings_Fill(CP_Color_Create(200, 0, 0, 255));
 				break;
-			case RED:
-				CP_Settings_Fill(Red);
-				break;
-			case BLUE:
-				CP_Settings_Fill(Blue);
-				break;
-			case GREEN:
-				CP_Settings_Fill(Green);
+			case DISGUISE:
+				CP_Settings_Fill(tiles[width][height].Tile_Color);
 				break;
 			}
 			//draw the tile
@@ -72,5 +66,23 @@ void assignTile(int tilesize) {
 			tiles[width][height].type = 1; //set everything to within map to floor
 		}
 
+	}
+}
+
+void drawGrid(int tilesize) {
+	int Horizontal_Tile = returnBounds(tilesize);
+	int Vertical_Tile = Horizontal_Tile;
+
+	CP_Settings_StrokeWeight(0.5f);
+	CP_Settings_Stroke(CP_Color_Create(0, 0, 0, 255));
+	//draw vertical lines based on how many cells in the column
+	for (int rows = 0; rows < Horizontal_Tile; rows++) {
+		//draw from 0 to end of game window which is 800
+		CP_Graphics_DrawLine(0.f, tilesize * rows, 800, tilesize * rows);
+	}
+	//draw horizontal lines based on how many cells in the row
+	for (int i = 0; i < Vertical_Tile; i++) {
+		//draw from 0 to end of game window which is 800
+		CP_Graphics_DrawLine(tilesize * i, 0.0f, tilesize * i, 800);
 	}
 }

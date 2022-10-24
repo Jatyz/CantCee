@@ -103,6 +103,7 @@ xcopy "$(SolutionDir)Assets\*" "$(OutDir)Assets\" /s /r /y /q
     <ClCompile Include="..\Src\FOV.c" />
     <ClCompile Include="..\Src\game.c" />
     <ClCompile Include="..\Src\grid.c" />
+    <ClCompile Include="..\Src\level1.c" />
     <ClCompile Include="..\Src\main.c" />
     <ClCompile Include="..\Src\player.c" />
   </ItemGroup>
@@ -110,6 +111,7 @@ xcopy "$(SolutionDir)Assets\*" "$(OutDir)Assets\" /s /r /y /q
     <ClInclude Include="..\Src\FOV.h" />
     <ClInclude Include="..\Src\game.h" />
     <ClInclude Include="..\Src\grid.h" />
+    <ClInclude Include="..\Src\level1.h" />
     <ClInclude Include="..\Src\main.h" />
     <ClInclude Include="..\Src\player.h" />
   </ItemGroup>
