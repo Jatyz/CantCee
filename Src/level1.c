@@ -53,7 +53,7 @@ void level1_update(void)
 	renderGame();
 
 	//FOV logic handled here
-	setIllumination(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), 2);
+	setIllumination(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), 1);
 	setPlayerFOVFunnel(player.x, player.y, player.Prev_X, player.Prev_Y, returnBounds(Tile_Size), returnBounds(Tile_Size), 3, 10);
 
 
@@ -61,8 +61,6 @@ void level1_update(void)
 	//setIllumination(player.x * 6 + 3, (player.y * 6) + 3, returnBounds(Tile_Size) * 6 + 2, returnBounds(Tile_Size) * 6 + 2, 4 * 6);
 
 	//End FOV logic handled area
-
-	drawGrid(Tile_Size);
 
 	//level select code
 	if (CP_Input_KeyDown(KEY_F1)) {

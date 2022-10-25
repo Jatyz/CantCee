@@ -70,7 +70,6 @@ void game_update(void)
 	CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
 	handlePlayerInput(Tile_Size);
 	renderGame();
-	drawGrid(Tile_Size);
 	//FOV logic handled here
 	setIllumination(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), 2);
 	setPlayerFOVFunnel(player.x, player.y, player.Prev_X, player.Prev_Y, returnBounds(Tile_Size), returnBounds(Tile_Size),3,10);

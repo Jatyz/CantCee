@@ -4,8 +4,12 @@
 #include "game.h"
 
 void drawPlayer(int tilesize) {
+	CP_Settings_StrokeWeight(0.75f);
+	CP_Settings_Stroke(CP_Color_Create(0, 0, 0, 255));
 	CP_Settings_Fill(player.Player_Color);
 	CP_Graphics_DrawRect((player.x * tilesize) + (tilesize / 2) - player.width / 2, (player.y * tilesize) + (tilesize / 2) - player.height / 2, player.width, player.height);
+	CP_Settings_NoStroke();
+
 }
 
 void setPlayerStartPoint(int tilesize)

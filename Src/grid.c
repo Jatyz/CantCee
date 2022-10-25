@@ -14,6 +14,9 @@ void drawTile(int tilesize) {
 	int Horizontal_Tile = returnBounds(tilesize);
 	int Vertical_Tile = Horizontal_Tile;
 	int height, width;
+
+	CP_Settings_NoStroke();
+	
 	//for loop to go through all the tiles
 	for (height = 0; height < Horizontal_Tile; height++) {
 
@@ -23,23 +26,28 @@ void drawTile(int tilesize) {
 			case WALL:
 				CP_Settings_Stroke(CP_Color_Create(125, 125, 125, 255));
 				CP_Settings_Fill(CP_Color_Create(125, 125, 125, 255));
+				CP_Graphics_DrawRect(width * tilesize, height * tilesize, tilesize, tilesize);
 				break;
 			case FLOOR:
-				CP_Settings_Stroke(CP_Color_Create(75, 75, 75, 255));
+				CP_Settings_NoStroke();
 				CP_Settings_Fill(CP_Color_Create(75, 75, 75, 255));
+				CP_Graphics_DrawRect(width * tilesize, height * tilesize, tilesize - .5f, tilesize - .5f);
 				break;
 			case START:
 				CP_Settings_Fill(CP_Color_Create(0, 150, 75, 255));
+				CP_Graphics_DrawRect(width * tilesize, height * tilesize, tilesize - .5f, tilesize - .5f);
 				break;
 			case END:
 				CP_Settings_Fill(CP_Color_Create(200, 0, 0, 255));
+				CP_Graphics_DrawRect(width * tilesize, height * tilesize, tilesize - .5f, tilesize - .5f);
 				break;
 			case DISGUISE:
 				CP_Settings_Fill(tiles[width][height].Tile_Color);
+				CP_Graphics_DrawRect(width * tilesize, height * tilesize, tilesize - .5f, tilesize - .5f);
 				break;
 			}
 			//draw the tile
-			CP_Graphics_DrawRect(width * tilesize, height * tilesize, tilesize, tilesize);
+
 		}
 
 	}
@@ -69,20 +77,3 @@ void assignTile(int tilesize) {
 	}
 }
 
-void drawGrid(int tilesize) {
-	int Horizontal_Tile = returnBounds(tilesize);
-	int Vertical_Tile = Horizontal_Tile;
-
-	CP_Settings_StrokeWeight(0.5f);
-	CP_Settings_Stroke(CP_Color_Create(0, 0, 0, 255));
-	//draw vertical lines based on how many cells in the column
-	for (int rows = 0; rows < Horizontal_Tile; rows++) {
-		//draw from 0 to end of game window which is 800
-		CP_Graphics_DrawLine(0.f, tilesize * rows, 800, tilesize * rows);
-	}
-	//draw horizontal lines based on how many cells in the row
-	for (int i = 0; i < Vertical_Tile; i++) {
-		//draw from 0 to end of game window which is 800
-		CP_Graphics_DrawLine(tilesize * i, 0.0f, tilesize * i, 800);
-	}
-}
