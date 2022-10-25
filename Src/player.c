@@ -54,6 +54,7 @@ void handlePlayerInput(int tilesize) {
 		if (player.y > 0) {
 			//player.y -= 1;
 			player.y -= checkMove(0, UP);
+			player.direction = 0;		//set direction player is facing to up
 		}
 	}
 	//right
@@ -62,7 +63,7 @@ void handlePlayerInput(int tilesize) {
 		if (player.x < Horizontal_Tile - 1) {
 			player.x += checkMove(RIGHT, 0);
 		//player.x += 1;
-
+			player.direction = 1;		//set direction player is facing to right
 		}
 	}
 
@@ -71,6 +72,7 @@ void handlePlayerInput(int tilesize) {
 		//check out of bounds
 		if (player.y < Vertical_Tile - 1) {
 			player.y += checkMove(0, DOWN);
+			player.direction = 2;		//set direction player is facing to down
 			//player.y += 1;
 		}
 	}
@@ -81,6 +83,7 @@ void handlePlayerInput(int tilesize) {
 			//player.x -= 1;
 			if (checkMove(LEFT, 0)) {
 				player.x -= 1;
+				player.direction = 3;	//set direction player is facing to left
 			}
 		}
 	}
@@ -90,11 +93,12 @@ void handlePlayerInput(int tilesize) {
 	//use setPlayerDirection function to prevent an overflow of logic for int variable as setPlayerDirection 
 	//warps to 0 if params are out of logic values 
 
-	//rotate FOV +90degrees clockwise 
+	//rotate FOV +90degrees clockwise : press E 
 	if (CP_Input_KeyTriggered(KEY_E)) {
 		setPlayerDirection(player.direction + 1);
 	}
-	//rotate FOV +90degrees counter clockwise
+
+	//rotate FOV +90degrees counter clockwise : press Q
 	if (CP_Input_KeyTriggered(KEY_Q)) {
 		setPlayerDirection(player.direction - 1);
 	}
