@@ -26,8 +26,7 @@ void setPlayerFOV(
 void setPlayerFOVFunnel(
 	int const playerXPos,		//horizontal position of player character on the grid
 	int const playerYPos,		//vertical position of player character on the grid
-	int const playerPrevPosX,	//the last stored player character's previous horizontal position
-	int const playerPrevPosY,	//the last stored player character's previous vertical position
+	int const direction,		//the direction the player is currently facing, 0 is up, 1 is right, 2 is down, 3 is left
 	int const gridSizeX,		//horizontal size of grid
 	int const gridSizeY,		//vertical size of grid
 	int const expansionFactor,	//the rate at which the funnel will expand(i.e. grow by 1 tile every (expansionFactor) wort of tiles away from player)

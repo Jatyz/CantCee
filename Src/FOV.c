@@ -188,11 +188,138 @@ void setPlayerFOV(
 }
 	
 //update basic logic for not drawing fog along player's line of sight
+//void setPlayerFOVFunnel(
+//	int const playerXPos,		//player's current X position on the grid
+//	int const playerYPos,		//player's current Y position on the grid
+//	int const playerPrevPosX,	//last X axis position of player on grid
+//	int const playerPrevPosY,	//last Y axis position of player on grid
+//	int const gridSizeX,		//size of the grid in the X axis for the level, used to find the bounds required of the fog grid
+//	int const gridSizeY,		//size of the grid in the Y axis for the level, used to find the bounds required of the fog grid
+//	int const expansionFactor,	//the rate of change of the FOV cone's expansion based on grid space 
+//	int const coneRange			//the range of our FOV funnel
+//)
+//{
+//	//Check if grid size out of array, if is larger than acceptable, return function
+//	if (gridSizeX >= FOG_MAX_X || gridSizeY >= FOG_MAX_Y)
+//	{
+//		return;
+//	}
+//
+//	//	int drawY,			//is one if fov is not blocked by wall, unused till further prototyping
+//	//		drawX;			//is one if fov is not blocked by wall, unused till further prototyping
+//
+//		//these will be used until there is a way to track previous action
+//	int posOffsetX = (playerXPos - playerPrevPosX),		//find the last player movement, values are 0/1
+//		posOffsetY = (playerYPos - playerPrevPosY);		//find last player movement in Y, values are 0/1
+//
+//	int currentFactor = expansionFactor;		//the current rate of the FOV cone's expansion based on grid space, used in loop
+//
+//	// if in an circular area of 4 tiles around the player
+//	if (abs(posOffsetX))								//if moved in X axis
+//	{
+//		switch (posOffsetX > 0)							// if offset > 0, player looks right, else left
+//		{
+//		case 1:
+//			//for each row pass player to right side of screen, up till end of screen or the maximum cone range
+//			for (int i = playerXPos; i < gridSizeX && (i-playerXPos)<=coneRange; i++)
+//			{
+//				//for columns on top, below (increase addtional 1 size  based on expansion factor) and occupied by player (vertical axis)
+//				for (int j = playerYPos - (currentFactor/expansionFactor);
+//					(j < playerPrevPosY + (currentFactor / expansionFactor)+1);
+//					j++)
+//				{
+//					if (!(j >= gridSizeY ) 
+//						&& !(j < 0)
+//						&& !(i >= gridSizeX)
+//						&& !(i < 0))								//dont set value if out of array(vertical check)
+//					{
+//						fog[i][j] = 0;								//set fog in this tile to none
+//					}
+//				}
+//
+//				currentFactor++;									//increase the current factor for FOV size
+//			}
+//			break;
+//		default:
+//			//for each row pass player to the left side of the screen, up till end of screen or the maximum cone range
+//			for (int i = playerXPos; i >= 0 && abs(i-playerXPos) <= coneRange; i--)
+//			{
+//				//for columns on top, below and occupied by player (vertical axis)
+//				for (int j = playerYPos - (currentFactor / expansionFactor);
+//					(j < playerPrevPosY + (currentFactor / expansionFactor)+1);
+//					j++)
+//				{
+//					if (!(j >= gridSizeY) && !(j < 0)
+//						&& !(i >= gridSizeX)
+//						&& !(i < 0))								//dont set value if out of array(vertical check)
+//					{
+//						fog[i][j] = 0;								//set fog in this tile to none
+//					}
+//				}
+//				currentFactor++;									//increase the current factor for FOV size
+//			}
+//			break;
+//		}
+//	}
+//	else
+//	{
+//		if (abs(posOffsetY))							//if moved in Y axis
+//		{
+//			switch (posOffsetY > 0)					// if offset > 0, player looks down
+//			{
+//			case 1:
+//				//for each columns pass player to bottom of screen, up till end of screen or the maximum cone range
+//				for (int j = playerYPos; j < gridSizeY && abs(j - playerYPos) <= coneRange; j++)		 
+//				{
+//					//for rows surrounding/close to player in horizontal axis
+//					for (int i = playerXPos - (currentFactor / expansionFactor);
+//						(i < playerXPos + (currentFactor / expansionFactor)+1 );
+//						i++)
+//					{	
+//						//dont set value if out of array!
+//						if (
+//							!(i >= gridSizeX) 
+//							&& !(i < 0)
+//							&& !(j >= gridSizeY)
+//							&& !(j<0))				
+//						{
+//							fog[i][j] = 0;								//set fog in this tile to none
+//						}
+//					}
+//					currentFactor++;									//increase the current factor for FOV size
+//				}
+//				break;
+//
+//			default:
+//				//for each columns pass player to top of screen, up till end of screen or the maximum cone range
+//				for (int j = playerYPos; j >= 0 && abs(j - playerYPos) <= coneRange; j--)					
+//				{
+//					//for rows surrounding/close to player in horizontal axis
+//					for (int i = playerXPos - (currentFactor / expansionFactor);
+//					(i < playerXPos + (currentFactor / expansionFactor) + 1);
+//					i++)				
+//					{
+//						if (!(i >= gridSizeX) && !(i < 0))				//dont set value if out of array(horizontal check)
+//						{
+//							fog[i][j] = 0;								//set fog in this tile to none
+//						}
+//
+//					}
+//					currentFactor++;									//increase the current factor for FOV size
+//				}
+//				break;
+//			}
+//		}
+//	}
+//
+//}
+
+
+//update basic logic for not drawing fog along player's line of sight
 void setPlayerFOVFunnel(
 	int const playerXPos,		//player's current X position on the grid
 	int const playerYPos,		//player's current Y position on the grid
-	int const playerPrevPosX,	//last X axis position of player on grid
-	int const playerPrevPosY,	//last Y axis position of player on grid
+	int const direction,		//the direction the player is currently facing, 0 is up, 1 is right, 2 is down, 3 is left
 	int const gridSizeX,		//size of the grid in the X axis for the level, used to find the bounds required of the fog grid
 	int const gridSizeY,		//size of the grid in the Y axis for the level, used to find the bounds required of the fog grid
 	int const expansionFactor,	//the rate of change of the FOV cone's expansion based on grid space 
@@ -205,30 +332,46 @@ void setPlayerFOVFunnel(
 		return;
 	}
 
+	// make sure direction is 0 to 3
+	int facingDirection = (abs(direction) % 4);
+
 	//	int drawY,			//is one if fov is not blocked by wall, unused till further prototyping
 	//		drawX;			//is one if fov is not blocked by wall, unused till further prototyping
 
-		//these will be used until there is a way to track previous action
-	int posOffsetX = (playerXPos - playerPrevPosX),		//find the last player movement, values are 0/1
-		posOffsetY = (playerYPos - playerPrevPosY);		//find last player movement in Y, values are 0/1
-
 	int currentFactor = expansionFactor;		//the current rate of the FOV cone's expansion based on grid space, used in loop
 
-	// if in an circular area of 4 tiles around the player
-	if (abs(posOffsetX))								//if moved in X axis
-	{
-		switch (posOffsetX > 0)							// if offset > 0, player looks right, else left
+		switch (facingDirection)							// if 0, face up. 1 faces right, 2 faces down, 3 faces left
 		{
+
+		case 0:														//look up
+			//for each columns pass player to top of screen, up till end of screen or the maximum cone range
+			for (int j = playerYPos; j >= 0 && abs(j - playerYPos) <= coneRange; j--)
+			{
+				//for rows surrounding/close to player in horizontal axis
+				for (int i = playerXPos - (currentFactor / expansionFactor);
+					(i < playerXPos + (currentFactor / expansionFactor) + 1);
+					i++)
+				{
+					if (!(i >= gridSizeX) && !(i < 0))				//dont set value if out of array(horizontal check)
+					{
+						fog[i][j] = 0;								//set fog in this tile to none
+					}
+
+				}
+				currentFactor++;									//increase the current factor for FOV size
+			}
+			break;
+
 		case 1:
 			//for each row pass player to right side of screen, up till end of screen or the maximum cone range
-			for (int i = playerXPos; i < gridSizeX && (i-playerXPos)<=coneRange; i++)
+			for (int i = playerXPos; i < gridSizeX && (i - playerXPos) <= coneRange; i++)
 			{
 				//for columns on top, below (increase addtional 1 size  based on expansion factor) and occupied by player (vertical axis)
-				for (int j = playerYPos - (currentFactor/expansionFactor);
-					(j < playerPrevPosY + (currentFactor / expansionFactor)+1);
+				for (int j = playerYPos - (currentFactor / expansionFactor);
+					(j < playerYPos + (currentFactor / expansionFactor) + 1);
 					j++)
 				{
-					if (!(j >= gridSizeY ) 
+					if (!(j >= gridSizeY)
 						&& !(j < 0)
 						&& !(i >= gridSizeX)
 						&& !(i < 0))								//dont set value if out of array(vertical check)
@@ -240,13 +383,37 @@ void setPlayerFOVFunnel(
 				currentFactor++;									//increase the current factor for FOV size
 			}
 			break;
-		default:
+		
+		case 2:														//look down
+			//for each columns pass player to bottom of screen, up till end of screen or the maximum cone range
+			for (int j = playerYPos; j < gridSizeY && abs(j - playerYPos) <= coneRange; j++)
+			{
+				//for rows surrounding/close to player in horizontal axis
+				for (int i = playerXPos - (currentFactor / expansionFactor);
+					(i < playerXPos + (currentFactor / expansionFactor) + 1);
+					i++)
+				{
+					//dont set value if out of array!
+					if (
+						!(i >= gridSizeX)
+						&& !(i < 0)
+						&& !(j >= gridSizeY)
+						&& !(j < 0))
+					{
+						fog[i][j] = 0;								//set fog in this tile to none
+					}
+				}
+				currentFactor++;									//increase the current factor for FOV size
+			}
+			break;
+
+		case 3:
 			//for each row pass player to the left side of the screen, up till end of screen or the maximum cone range
-			for (int i = playerXPos; i >= 0 && abs(i-playerXPos) <= coneRange; i--)
+			for (int i = playerXPos; i >= 0 && abs(i - playerXPos) <= coneRange; i--)
 			{
 				//for columns on top, below and occupied by player (vertical axis)
 				for (int j = playerYPos - (currentFactor / expansionFactor);
-					(j < playerPrevPosY + (currentFactor / expansionFactor)+1);
+					(j < playerYPos + (currentFactor / expansionFactor) + 1);
 					j++)
 				{
 					if (!(j >= gridSizeY) && !(j < 0)
@@ -260,58 +427,6 @@ void setPlayerFOVFunnel(
 			}
 			break;
 		}
-	}
-	else
-	{
-		if (abs(posOffsetY))							//if moved in Y axis
-		{
-			switch (posOffsetY > 0)					// if offset > 0, player looks down
-			{
-			case 1:
-				//for each columns pass player to bottom of screen, up till end of screen or the maximum cone range
-				for (int j = playerYPos; j < gridSizeY && abs(j - playerYPos) <= coneRange; j++)		 
-				{
-					//for rows surrounding/close to player in horizontal axis
-					for (int i = playerXPos - (currentFactor / expansionFactor);
-						(i < playerXPos + (currentFactor / expansionFactor)+1 );
-						i++)
-					{	
-						//dont set value if out of array!
-						if (
-							!(i >= gridSizeX) 
-							&& !(i < 0)
-							&& !(j >= gridSizeY)
-							&& !(j<0))				
-						{
-							fog[i][j] = 0;								//set fog in this tile to none
-						}
-					}
-					currentFactor++;									//increase the current factor for FOV size
-				}
-				break;
-
-			default:
-				//for each columns pass player to top of screen, up till end of screen or the maximum cone range
-				for (int j = playerYPos; j >= 0 && abs(j - playerYPos) <= coneRange; j--)					
-				{
-					//for rows surrounding/close to player in horizontal axis
-					for (int i = playerXPos - (currentFactor / expansionFactor);
-					(i < playerXPos + (currentFactor / expansionFactor) + 1);
-					i++)				
-					{
-						if (!(i >= gridSizeX) && !(i < 0))				//dont set value if out of array(horizontal check)
-						{
-							fog[i][j] = 0;								//set fog in this tile to none
-						}
-
-					}
-					currentFactor++;									//increase the current factor for FOV size
-				}
-				break;
-			}
-		}
-	}
-
 }
 
 //renders the most basic version of the FOV fog	

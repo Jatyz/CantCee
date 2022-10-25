@@ -72,7 +72,7 @@ void game_update(void)
 	renderGame();
 	//FOV logic handled here
 	setIllumination(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), 2);
-	setPlayerFOVFunnel(player.x, player.y, player.Prev_X, player.Prev_Y, returnBounds(Tile_Size), returnBounds(Tile_Size),2,10);
+	setPlayerFOVFunnel(player.x, player.y, player.direction, returnBounds(Tile_Size), returnBounds(Tile_Size),2,10);
 	
 	
 	//Test code for *AHEM* dynamic *AHEM* style FOV independent of actual grid resolution

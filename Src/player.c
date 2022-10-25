@@ -2,7 +2,6 @@
 #include "player.h"
 #include "grid.h"
 #include "game.h"
-#include <math.h>
 
 Player player;
 
@@ -37,7 +36,7 @@ void setPlayerStartPoint(int tilesize)
 //sets the direction the player is looking in, 0 is up, 1 is right, 2 is down, 3 is left.
 void setPlayerDirection(int directionFacing) 
 {	//set player direction based of absoulute parameter(ensure no negatives) mod by 4 to get result within 0 to 3 
-	player.direction = (abs(directionFacing) % 4); 
+	player.direction = (directionFacing % 4); 
 }
 
 void handlePlayerInput(int tilesize) {
@@ -95,12 +94,13 @@ void handlePlayerInput(int tilesize) {
 
 	//rotate FOV +90degrees clockwise : press E 
 	if (CP_Input_KeyTriggered(KEY_E)) {
-		setPlayerDirection(player.direction + 1);
+		setPlayerDirection(player.direction + 1);				//set direction to 90 degrees clockwise
 	}
 
 	//rotate FOV +90degrees counter clockwise : press Q
 	if (CP_Input_KeyTriggered(KEY_Q)) {
-		setPlayerDirection(player.direction - 1);
+		if (player.direction - 1 < 0) { setPlayerDirection(3); }	//set direction to maximum possible value to warp negative values
+		else {setPlayerDirection(player.direction - 1);}		//set direction to 90 degrees counter clockwise
 	}
 }
 
