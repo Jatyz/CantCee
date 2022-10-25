@@ -7,6 +7,7 @@ typedef struct { // structure to contain player variables
 	int y; //current tile in y axis + 1
 	int Prev_X;
 	int Prev_Y;
+	int direction;//store the direction the player is looking in, 0 is up, 1 is right, 2 is down, 3 is left. mod by 4 to keep from exceeding bounds required for logics
 	int height;
 	int width;
 	int counter;//count number of stage;
@@ -14,7 +15,7 @@ typedef struct { // structure to contain player variables
 }Player;
 
 //Global player variable
-Player player;
+extern Player player;
 
 //method to draw player in the middle of current tile, based on its own size and tile size.
 void drawPlayer(int tilesize);
@@ -28,3 +29,6 @@ _Bool checkMove(int x, int y);
 //handle player movements based on keyboard.
 void handlePlayerInput(int Tile_Size);
 
+//sets the player's facing direction: 0 is up, 1 is right, 2 is down, 3 is left. 
+//Has in-built error warping. Numbers 4 and above are warpped via modulo of 4
+void setPlayerDirection(int directionFacing);

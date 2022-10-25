@@ -212,12 +212,12 @@ void setPlayerFOVFunnel(
 	int posOffsetX = (playerXPos - playerPrevPosX),		//find the last player movement, values are 0/1
 		posOffsetY = (playerYPos - playerPrevPosY);		//find last player movement in Y, values are 0/1
 
-	int currentFactor = 1;		//the current rate of the FOV cone's expansion based on grid space, used in loop
+	int currentFactor = expansionFactor;		//the current rate of the FOV cone's expansion based on grid space, used in loop
 
 	// if in an circular area of 4 tiles around the player
 	if (abs(posOffsetX))								//if moved in X axis
 	{
-		switch (posOffsetX > 0)					// if offset > 0, player looks right, else left
+		switch (posOffsetX > 0)							// if offset > 0, player looks right, else left
 		{
 		case 1:
 			//for each row pass player to right side of screen, up till end of screen or the maximum cone range
