@@ -63,6 +63,13 @@ void game_init(void)
 	tiles[0][9].Tile_Color = Green;
 	setPlayerStartPoint(Tile_Size);
 
+	Vents Test_Vents;
+
+	Test_Vents.tile1 = &tiles[9][0];
+	Test_Vents.tile2 = &tiles[0][8];
+
+	setVents(Test_Vents);
+
 }
 
 void game_update(void)
@@ -97,7 +104,7 @@ void renderGame(void) {
 	drawTile(Tile_Size);
 	drawPlayer(Tile_Size);
 	//drawFOV();
-	renderFOVBasic(returnBounds(Tile_Size) , returnBounds(Tile_Size) , Tile_Size);
+	//renderFOVBasic(returnBounds(Tile_Size) , returnBounds(Tile_Size) , Tile_Size);
 
 	//Test code for *AHEM* dynamic *AHEM* style FOV independent of actual grid resolution
 	//renderFOVBasic(returnBounds(Tile_Size)*6+2, returnBounds(Tile_Size)*6+2,Tile_Size/6);

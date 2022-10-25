@@ -45,6 +45,10 @@ void drawTile(int tilesize) {
 				CP_Settings_Fill(tiles[width][height].Tile_Color);
 				CP_Graphics_DrawRect(width * tilesize, height * tilesize, tilesize - .5f, tilesize - .5f);
 				break;
+			case VENTS:
+				CP_Settings_Fill(CP_Color_Create(100, 100, 100, 255));
+				CP_Graphics_DrawRect(width * tilesize, height * tilesize, tilesize - .5f, tilesize - .5f);
+				break;
 			}
 			//draw the tile
 
@@ -77,3 +81,9 @@ void assignTile(int tilesize) {
 	}
 }
 
+void setVents(Vents vent) {
+
+	vent.tile1->type = VENTS;
+	vent.tile2->type = VENTS;
+
+}

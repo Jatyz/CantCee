@@ -6,16 +6,19 @@
 #define WINDOW_WIDTH 1000  
 
 typedef enum { // enum for the different type of tiles
-	WALL, FLOOR, START, END, DISGUISE, GATE, SWITCH
+	WALL, FLOOR, START, END, DISGUISE, GATE, SWITCH, VENTS
 }Tile_Type;
 
 typedef struct { // method to contain information of the current tile
 	Tile_Type type;
 	int alert; //boolean to check whether enemies checking current tile?
 	CP_Color Tile_Color;
-	int switchX; // key for gate
-	int switchY; // key for gate
 }Tile;
+
+typedef struct {
+	Tile *tile1;
+	Tile *tile2;
+}Vents;
 
 //method to take tile size and draw tiles based on the tiles global variable
 void drawTile(int Tile_Size);
@@ -33,3 +36,4 @@ Tile tiles[1000][1000];
 //returns the horizontal and vertical bounds(no. of elements) in the grid to be used for the level. Assumes grid space used is square
 int returnBounds(int tilesize);
 
+void setVents(Vents vent);
