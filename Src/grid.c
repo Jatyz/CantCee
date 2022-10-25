@@ -1,7 +1,12 @@
 #include "cprocessing.h"
 #include "grid.h"
 #include "game.h"
+#include "player.h"
+#include <stdio.h>
+//declaration of tiles
+Tile tiles[1000][1000];
 
+Vents vents[10];
 
 //axulilary functions are defined first so it wont bloody crash when in a C lang compiler!!(without header)
 //returns the horizontal and vertical bounds(no. of elements) in the grid to be used for the level. Assumes grid space used is square
@@ -81,9 +86,61 @@ void assignTile(int tilesize) {
 	}
 }
 
-void setVents(Vents vent) {
+void setVents() {
 
-	vent.tile1->type = VENTS;
-	vent.tile2->type = VENTS;
+	for (int i = 0; i < sizeof(vents) / sizeof(vents[0]); i++) {
+		if(vents[i].tile1 != NULL)
+		vents[i].tile1->type = VENTS;
+		if (vents[i].tile2 != NULL)
+		vents[i].tile2->type = VENTS;
+	}
+}
 
+void resetVents() {
+
+	for (int i = 0; i < sizeof(vents) / sizeof(vents[0]); i++) {
+		vents[i].tile1 = NULL;
+		vents[i].tile2 = NULL;
+	}
+
+}
+
+void checkVents(Tile *address) {
+	for (int i = 0; i < 10; i++) {
+		if (vents[i].tile1 == address) {
+			
+			Tile* base = &tiles[0][0];
+
+			int difference = vents[i].tile2 - base;
+
+			int col = difference / 1000;
+
+			int row = difference % 1000;
+
+			player.counter++;
+			player.Prev_X = player.x;
+			player.Prev_Y = player.y;
+
+			player.x = col;
+			player.y = row;
+		}
+
+		if (vents[i].tile2 == address) {
+
+			Tile* base = &tiles[0][0];
+
+			int difference = vents[i].tile1 - base;
+			int col = difference / 1000;
+
+			int row = difference % 1000;
+
+			player.counter++;
+			player.Prev_X = player.x;
+			player.Prev_Y = player.y;
+
+			player.x = col;
+			player.y = row;
+		}
+	}
+	return;
 }

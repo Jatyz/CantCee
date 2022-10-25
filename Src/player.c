@@ -113,6 +113,10 @@ _Bool checkMove(int DirectionX, int DirectionY) {
 	case DISGUISE:
 		player.Player_Color = tiles[player.x + DirectionX][player.y + DirectionY].Tile_Color;
 		break;
+	case VENTS:
+		checkVents(&tiles[player.x + DirectionX][player.y + DirectionY]);
+		return FALSE;
+		break;
 	}
 	player.counter++;
 	player.Prev_X = player.x;

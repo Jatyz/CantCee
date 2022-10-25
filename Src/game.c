@@ -63,12 +63,12 @@ void game_init(void)
 	tiles[0][9].Tile_Color = Green;
 	setPlayerStartPoint(Tile_Size);
 
-	Vents Test_Vents;
+	resetVents();
 
-	Test_Vents.tile1 = &tiles[9][0];
-	Test_Vents.tile2 = &tiles[0][8];
+	vents[0].tile1 = &tiles[9][0];
+	vents[0].tile2 = &tiles[0][8];
 
-	setVents(Test_Vents);
+	setVents();
 
 }
 

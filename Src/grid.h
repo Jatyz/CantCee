@@ -31,9 +31,15 @@ void assignTile(int Tile_Size);
 //global tiles variable
 // 1000 1000 is just placeholder values so we can have a large tile map
 //but specific sstage tile map will need to be set by tile size.
-Tile tiles[1000][1000];
+extern Tile tiles[1000][1000];
+
+extern Vents vents[10];
 
 //returns the horizontal and vertical bounds(no. of elements) in the grid to be used for the level. Assumes grid space used is square
 int returnBounds(int tilesize);
 
-void setVents(Vents vent);
+void setVents();
+
+void resetVents();
+
+void checkVents(Tile *address);
