@@ -28,6 +28,7 @@ int Tile_Size;
 
 void game_init(void)
 {
+	//setting game window size
 	CP_System_SetWindowSize(WINDOW_WIDTH, WINIDOW_HEIGHT);
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 	//change this variable to change the number of tiles on the map X by X
@@ -39,6 +40,7 @@ void game_init(void)
 	// small room = 80
 	Tile_Size = MEDIUM;
 	
+	//setting game init states
 	setStartGame();
 
 	//hardcode to test drawing make sure only 1 start point

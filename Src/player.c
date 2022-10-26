@@ -125,18 +125,23 @@ void handlePlayerInput(int tilesize) {
 
 //check the movements of the player, if the player is about to land on a specific tile, if it is a wall, deny movement.
 _Bool checkMove(int DirectionX, int DirectionY) {
-	//if tile is wall, player not allowed to move
+	//switch case on the tile type
 	switch (tiles[player.x + DirectionX][player.y + DirectionY].type) {
 	case WALL:
+		//if it is a wall, do not move
 		return FALSE;
 	case DISGUISE:
+		//set the player to the tile color
 		player.Player_Color = tiles[player.x + DirectionX][player.y + DirectionY].Tile_Color;
 		break;
 	case VENTS:
+		//check where the player shld end up
 		checkVents(&tiles[player.x + DirectionX][player.y + DirectionY]);
+		//player does not move so return false
 		return FALSE;
 		break;
 	}
+	//change player settings
 	player.counter++;
 	player.Prev_X = player.x;
 	player.Prev_Y = player.y;
