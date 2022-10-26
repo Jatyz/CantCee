@@ -4,8 +4,9 @@
 #include "player.h"
 #include <stdio.h>
 //declaration of tiles
-Tile tiles[1000][1000];
+Tile tiles[MAX_TILES][MAX_TILES];
 
+//hardcode max 10 sets of vents
 Vents vents[10];
 
 //axulilary functions are defined first so it wont bloody crash when in a C lang compiler!!(without header)
@@ -14,6 +15,7 @@ int returnBounds(int tilesize) {
 	return (800 / tilesize);
 }
 
+//drawing all the tiles base on their tile type.
 void drawTile(int tilesize) {
 	
 	int Horizontal_Tile = returnBounds(tilesize);
@@ -63,9 +65,12 @@ void drawTile(int tilesize) {
 
 }
 
+//reset all the tiles to only floor and walls. to be called in stage init
 void assignTile(int tilesize) {
 	int height, width;
 	//need to check tht there is only 1 start tile
+
+	//setting all the tiles to walls
 	for (height = 0; height < sizeof(tiles)/sizeof(tiles[0]); height++) {
 
 		for (width = 0; width < sizeof(tiles) / sizeof(tiles[0]); width++) {
@@ -73,19 +78,22 @@ void assignTile(int tilesize) {
 		}
 	}
 
+	//getting the bounds of the map
 	int Horizontal_Tile = returnBounds(tilesize);
 	int Vertical_Tile = Horizontal_Tile;
 
+	//set all the tile within chosen bounds to floor
 	for (height = 0; height < Horizontal_Tile; height++) {
 
 		for (width = 0; width < Vertical_Tile; width++) {
 
-			tiles[width][height].type = 1; //set everything to within map to floor
+			tiles[width][height].type = 1;
 		}
 
 	}
 }
 
+//setting all the vents hard set by the programmer in the stage
 void setVents() {
 
 	for (int i = 0; i < sizeof(vents) / sizeof(vents[0]); i++) {
@@ -96,6 +104,7 @@ void setVents() {
 	}
 }
 
+//reset all the vents in the array to null. To be called on stage init
 void resetVents() {
 
 	for (int i = 0; i < sizeof(vents) / sizeof(vents[0]); i++) {
@@ -105,6 +114,7 @@ void resetVents() {
 
 }
 
+//searching for which vents the player step on, and send them to the linking vent
 void checkVents(Tile *address) {
 	for (int i = 0; i < 10; i++) {
 		if (vents[i].tile1 == address) {
@@ -130,9 +140,9 @@ void checkVents(Tile *address) {
 			Tile* base = &tiles[0][0];
 
 			int difference = vents[i].tile1 - base;
-			int col = difference / 1000;
+			int col = difference / MAX_TILES;
 
-			int row = difference % 1000;
+			int row = difference % MAX_TILES;
 
 			player.counter++;
 			player.Prev_X = player.x;

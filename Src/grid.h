@@ -5,6 +5,7 @@
 #define WINIDOW_HEIGHT 800
 #define WINDOW_WIDTH 1000  
 
+#define MAX_TILES 800
 typedef enum { // enum for the different type of tiles
 	WALL, FLOOR, START, END, DISGUISE, GATE, SWITCH, VENTS
 }Tile_Type;
@@ -31,7 +32,7 @@ void assignTile(int Tile_Size);
 //global tiles variable
 // 1000 1000 is just placeholder values so we can have a large tile map
 //but specific sstage tile map will need to be set by tile size.
-extern Tile tiles[1000][1000];
+extern Tile tiles[MAX_TILES][MAX_TILES];
 
 extern Vents vents[10];
 

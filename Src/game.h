@@ -24,5 +24,5 @@ void renderGame(void);
 void setStartGame(void);
 
 
-//global tile size variable but try not to access this, maybe shld make this a local variable
-int Tile_Size;
+//global tile size variable
+extern int Tile_Size;

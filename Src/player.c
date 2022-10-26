@@ -5,20 +5,38 @@
 
 Player player;
 
+//draw the player
 void drawPlayer(int tilesize) {
+	
+	//outline for player
 	CP_Settings_StrokeWeight(0.75f);
 	CP_Settings_Stroke(CP_Color_Create(0, 0, 0, 255));
-	CP_Settings_Fill(player.Player_Color);
-	CP_Graphics_DrawRect((player.x * tilesize) + (tilesize / 2) - player.width / 2, (player.y * tilesize) + (tilesize / 2) - player.height / 2, player.width, player.height);
-	CP_Settings_NoStroke();
 
+	//setting player color
+	CP_Settings_Fill(player.Player_Color);
+	//Drawing player on center of the tile
+	CP_Graphics_DrawRect((player.x * tilesize) + (tilesize / 2) - player.width / 2, (player.y * tilesize) + (tilesize / 2) - player.height / 2, player.width, player.height);
+	//(player.x * tilesize) + (tilesize/2)
+	//player.x * tilesize is the right most of the tile the player is on
+	//player.width/2 moves the player closer to the center of the tile by half of the player size
+
+	// (player.y * tilesize) + (tilesize / 2) - player.height / 2
+	// player.y * tilesize is the btm most of the tile the player is on
+	// player.heght/2 moves the player closer to the center of the tile by half of the player size
+
+
+	//turn off outline
+	CP_Settings_NoStroke();
 }
 
+//finds the start point in the tiles, set the player position to the start point.
 void setPlayerStartPoint(int tilesize)
 {
+	//get bounds
 	int Horizontal_Tile = returnBounds(tilesize);
 	int Vertical_Tile = Horizontal_Tile;
 	
+	//array variables
 	int y, x;
 
 	//do a check to see there is only one start point
@@ -39,6 +57,7 @@ void setPlayerDirection(int directionFacing)
 	player.direction = (directionFacing % 4); 
 }
 
+//handle all player keyboard inputs
 void handlePlayerInput(int tilesize) {
 
 	int Horizontal_Tile = returnBounds(tilesize);
@@ -104,7 +123,7 @@ void handlePlayerInput(int tilesize) {
 	}
 }
 
-
+//check the movements of the player, if the player is about to land on a specific tile, if it is a wall, deny movement.
 _Bool checkMove(int DirectionX, int DirectionY) {
 	//if tile is wall, player not allowed to move
 	switch (tiles[player.x + DirectionX][player.y + DirectionY].type) {

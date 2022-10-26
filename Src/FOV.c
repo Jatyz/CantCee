@@ -5,8 +5,8 @@
 #include <math.h>
 
 
-#define FOG_MAX_X 1000
-#define FOG_MAX_Y 1000
+#define FOG_MAX_X 800
+#define FOG_MAX_Y 800
 //fog grid of same size as base game to draw over the render layers as FOV, is 1 when FOV is blocked, 0 when FOV not blocked
 int fog[FOG_MAX_X][FOG_MAX_Y];		
 
@@ -26,7 +26,7 @@ void setIllumination
 )
 {
 	//Check if grid size out of array, if is larger than acceptable, return function
-	if (gridSizeX > 1000 || gridSizeY > 1000)
+	if (gridSizeX > FOG_MAX_X || gridSizeY > FOG_MAX_Y)
 	{
 		return;
 	}

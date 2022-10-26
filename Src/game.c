@@ -4,6 +4,7 @@
 #include "FOV.h"
 #include "cprocessing.h"
 #include "level1.h"
+
 /*
 THE CODES UNDER GAME_INIT, GAME_UPDATE IS FOR TESTING
 FOR THE REAL STAGES WE NEED TO CREATE ANOTHER C AND H FILE TO INITIALIZE AND CALL THE FILES UNDER GAME.C
@@ -23,6 +24,7 @@ SET PLAYER START POINT AFTER ASSIGNING TILES
 //DO NOT INITIALIZE ANYMORE TILES AND PLAYER VARIABLES, THEY ARE GLOBAL.
 //IF YOU NEED TO ACCESS PLAYER AND TILES JUST INCLUDE THE SPEICIF HEADER FILES.
 
+int Tile_Size;
 
 void game_init(void)
 {
@@ -36,9 +38,8 @@ void game_init(void)
 	// medium room = 50
 	// small room = 80
 	Tile_Size = MEDIUM;
-
+	
 	setStartGame();
-	assignTile(Tile_Size);//assign all tiles
 
 	//hardcode to test drawing make sure only 1 start point
 	tiles[0][0].type = END;
@@ -63,8 +64,6 @@ void game_init(void)
 	tiles[0][9].Tile_Color = Green;
 	setPlayerStartPoint(Tile_Size);
 
-	resetVents();
-
 	vents[0].tile1 = &tiles[9][0];
 	vents[0].tile2 = &tiles[0][8];
 
@@ -74,7 +73,10 @@ void game_init(void)
 
 void game_update(void)
 {
+	//clears the screen so things can be redrawn
 	CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
+
+	//all the game update methods that needs to be updated every frame
 	handlePlayerInput(Tile_Size);
 	renderGame();
 	//FOV logic handled here
@@ -100,17 +102,18 @@ void game_exit(void)
 
 }
 
+//all the render functions
 void renderGame(void) {
 	drawTile(Tile_Size);
 	drawPlayer(Tile_Size);
-	//drawFOV();
-	//renderFOVBasic(returnBounds(Tile_Size) , returnBounds(Tile_Size) , Tile_Size);
+	renderFOVBasic(returnBounds(Tile_Size) , returnBounds(Tile_Size) , Tile_Size);
 
 	//Test code for *AHEM* dynamic *AHEM* style FOV independent of actual grid resolution
 	//renderFOVBasic(returnBounds(Tile_Size)*6+2, returnBounds(Tile_Size)*6+2,Tile_Size/6);
 	//End FOV render code
 }
 
+//Call this function after setting Tile_Size
 void setStartGame(void) {
 
 	//player color may need to move out of this method to set from the start of the stage itself
@@ -121,7 +124,12 @@ void setStartGame(void) {
 	Red = CP_Color_Create(255, 0, 0, 255);
 	Blue = CP_Color_Create(0, 0, 255, 255);
 
+	//setting player size and counter
 	player.height = Tile_Size / 2;
 	player.width = Tile_Size / 2;
 	player.counter = 0;
+
+	//setting tiles
+	resetVents();
+	assignTile(Tile_Size);//assign all tiles
 }
