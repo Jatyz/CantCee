@@ -127,7 +127,7 @@ void checkVents(Tile *address) {
 		if (vents[i].tile1 == address) {
 			
 			//get the address of tile at 0 0
-			Tile* base = &tiles[0][0];
+			Tile* base = tiles;
 
 			//find the number of tiles between 0 0 and the tile at your current address
 			int difference = vents[i].tile2 - base;
@@ -150,7 +150,7 @@ void checkVents(Tile *address) {
 		if (vents[i].tile2 == address) {
 
 			//get the address of tile at 0 0
-			Tile* base = &tiles[0][0];
+			Tile* base = tiles;
 
 			//find the number of tiles between 0 0 and the tile at your current address
 			int difference = vents[i].tile1 - base;

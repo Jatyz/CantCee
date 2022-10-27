@@ -509,7 +509,7 @@ void setFOVFunnelWallLogic(
 						}
 						wallArray[i] = 1;						//make every row behind the current wall have fog added on further checks
 						//if the next element behind the wall is another wall, let it be not covered in fog
-						if (tiles[i][j + 1].type == WALL) { wallArray[j] = 0; }	
+						if (tiles[i][j - 1].type == WALL) { wallArray[j] = 0; }	
 					}
 				}
 			}
@@ -573,7 +573,7 @@ void setFOVFunnelWallLogic(
 						}
 						wallArray[j] = 1;						//make every row behind the wall have fog added on further checks
 						//if the next element behind the wall is another wall, let it be not covered in fog
-						if (tiles[i + 1][j].type == WALL) { wallArray[j] = 0; }
+						if (tiles[i - 1][j].type == WALL) { wallArray[j] = 0; }
 					}
 				}
 			}
