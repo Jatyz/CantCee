@@ -7,8 +7,8 @@
 Tile tiles[MAX_TILES][MAX_TILES];
 
 //hardcode max 10 sets of vents
-Vents vents[10];
-
+Vent vents[10];
+Gate gates[10];
 //axulilary functions are defined first so it wont bloody crash when in a C lang compiler!!(without header)
 //returns the horizontal and vertical bounds(no. of elements) in the grid to be used for the level. Assumes grid space used is square
 int returnBounds(int tilesize) {
@@ -55,6 +55,18 @@ void drawTile(int tilesize) {
 				break;
 			case VENTS:
 				CP_Settings_Fill(CP_Color_Create(100, 100, 100, 255)); //set tile color
+				CP_Graphics_DrawRect(width * tilesize, height * tilesize, tilesize - .5f, tilesize - .5f); //draw tile
+				break;
+			case CLOSED_DOOR:
+				CP_Settings_Fill(CP_Color_Create(100, 0, 100, 255)); //set tile color
+				CP_Graphics_DrawRect(width * tilesize, height * tilesize, tilesize - .5f, tilesize - .5f); //draw tile
+				break;
+			case OPENED_DOOR:
+				CP_Settings_Fill(CP_Color_Create(200, 0, 200, 255)); //set tile color
+				CP_Graphics_DrawRect(width * tilesize, height * tilesize, tilesize - .5f, tilesize - .5f); //draw tile
+				break;
+			case SWITCH:
+				CP_Settings_Fill(CP_Color_Create(255, 255, 0, 255)); //set tile color
 				CP_Graphics_DrawRect(width * tilesize, height * tilesize, tilesize - .5f, tilesize - .5f); //draw tile
 				break;
 			}
@@ -145,6 +157,7 @@ void checkVents(Tile *address) {
 
 			player.x = col;
 			player.y = row;
+			return;
 		}
 
 		if (vents[i].tile2 == address) {
@@ -168,7 +181,42 @@ void checkVents(Tile *address) {
 
 			player.x = col;
 			player.y = row;
+			return;
 		}
 	}
 	return;
+}
+
+void setGates() {
+	//loop through all gates
+	for (int i = 0; i < sizeof(gates) / sizeof(gates[0]); i++) {
+		//if tile is not null, set the specific tile's tile type to vent
+		if (gates[i].Door != NULL)
+			gates[i].Door->type = CLOSED_DOOR;
+		if (gates[i].Switch != NULL)
+			gates[i].Switch->type = SWITCH;
+	}
+}
+
+//reset all the vents in the array to null. To be called on stage init
+void resetGates() {
+
+	//loop to check through all vents
+	for (int i = 0; i < sizeof(gates) / sizeof(gates[0]); i++) {
+		//set all tiles in vents to null
+		gates[i].Door = NULL;
+		gates[i].Switch = NULL;
+	}
+
+}
+
+void checkGates(Tile* address) {
+
+	for (int i = 0; i < sizeof(gates) / sizeof(gates[0]); i++) {
+		//if the address of the tile the player set on matches the specific tile in the vents
+		if (gates[i].Switch == address) {
+			gates[i].Door->type = OPENED_DOOR;
+			return;
+		}
+	}
 }

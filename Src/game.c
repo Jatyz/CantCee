@@ -64,12 +64,19 @@ void game_init(void)
 	tiles[9][4].Tile_Color = Blue;
 	tiles[0][9].type = DISGUISE;
 	tiles[0][9].Tile_Color = Green;
-	setPlayerStartPoint(Tile_Size);
 
 	vents[0].tile1 = &tiles[9][0];
 	vents[0].tile2 = &tiles[0][8];
 
 	setVents();
+
+	tiles[4][5].type = WALL;
+	gates[0].Door = &tiles[4][6];
+	gates[0].Switch = &tiles[9][8];
+
+	setGates();
+
+	setPlayerStartPoint(Tile_Size);
 
 }
 
@@ -132,5 +139,6 @@ void setStartGame(void) {
 
 	//setting tiles
 	resetVents();
+	resetGates();
 	assignTile(Tile_Size);//assign all tiles
 }

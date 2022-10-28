@@ -139,6 +139,11 @@ _Bool checkMove(int DirectionX, int DirectionY) {
 		checkVents(&tiles[player.x + DirectionX][player.y + DirectionY]);
 		//player does not move so return false
 		return FALSE;
+	case CLOSED_DOOR:
+		return FALSE;
+		break;
+	case SWITCH:
+		checkGates(&tiles[player.x + DirectionX][player.y + DirectionY]);
 		break;
 	}
 	//change player settings

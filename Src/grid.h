@@ -7,7 +7,7 @@
 
 #define MAX_TILES 800
 typedef enum { // enum for the different type of tiles
-	WALL, FLOOR, START, END, DISGUISE, GATE, SWITCH, VENTS
+	WALL, FLOOR, START, END, DISGUISE, CLOSED_DOOR, OPENED_DOOR, SWITCH, VENTS
 }Tile_Type;
 
 typedef struct { // method to contain information of the current tile
@@ -19,7 +19,12 @@ typedef struct { // method to contain information of the current tile
 typedef struct {
 	Tile *tile1;
 	Tile *tile2;
-}Vents;
+}Vent;
+
+typedef struct {
+	Tile* Door;
+	Tile* Switch;
+}Gate;
 
 //method to take tile size and draw tiles based on the tiles global variable
 void drawTile(int Tile_Size);
@@ -34,8 +39,8 @@ void assignTile(int Tile_Size);
 //but specific sstage tile map will need to be set by tile size.
 extern Tile tiles[MAX_TILES][MAX_TILES];
 
-extern Vents vents[10];
-
+extern Vent vents[10];
+extern Gate gates[10];
 //returns the horizontal and vertical bounds(no. of elements) in the grid to be used for the level. Assumes grid space used is square
 int returnBounds(int tilesize);
 
@@ -44,3 +49,9 @@ void setVents();
 void resetVents();
 
 void checkVents(Tile *address);
+
+void setGates();
+
+void resetGates();
+
+void checkGates(Tile* address);
