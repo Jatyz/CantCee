@@ -42,8 +42,28 @@ void level1_init(void)
 	tiles[9][4].Tile_Color = Blue;
 	tiles[0][9].type = DISGUISE;
 	tiles[0][9].Tile_Color = Green;
-	setPlayerStartPoint(Tile_Size);
 
+
+	//top right
+	vents[0].tile1 = &tiles[9][0];
+	tiles[9][2].type = WALL;
+	tiles[8][2].type = WALL;
+	tiles[7][2].type = WALL;
+	tiles[7][1].type = WALL;
+	tiles[7][0].type = WALL;
+	//btm left
+	vents[0].tile2 = &tiles[0][8];
+
+	setVents();
+
+	tiles[4][5].type = WALL;
+	gates[0].Door = &tiles[4][6];
+	gates[0].Switch = &tiles[8][1];
+
+	setGates();
+
+	setPlayerStartPoint(Tile_Size);
+	player.setFOV = 1;
 }
 
 void level1_update(void)
@@ -53,10 +73,9 @@ void level1_update(void)
 	renderGame();
 
 	//FOV logic handled here
-	setIllumination(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), 2);
 	setPlayerFOVFunnel(player.x, player.y, player.direction, returnBounds(Tile_Size), returnBounds(Tile_Size), 1, 3);
-
-
+	setFOVFunnelWallLogic(player.x, player.y, player.direction, returnBounds(Tile_Size), returnBounds(Tile_Size), 1, 3);
+	setIllumination(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), 2);
 	//Test code for *AHEM* dynamic *AHEM* style FOV independent of actual grid resolution
 	//setIllumination(player.x * 6 + 3, (player.y * 6) + 3, returnBounds(Tile_Size) * 6 + 2, returnBounds(Tile_Size) * 6 + 2, 4 * 6);
 

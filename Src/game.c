@@ -78,6 +78,7 @@ void game_init(void)
 
 	setPlayerStartPoint(Tile_Size);
 
+	player.setFOV = 1;
 }
 
 void game_update(void)
@@ -114,6 +115,7 @@ void game_exit(void)
 void renderGame(void) {
 	drawTile(Tile_Size);
 	drawPlayer(Tile_Size);
+	if(player.setFOV)
 	renderFOVBasic(returnBounds(Tile_Size) , returnBounds(Tile_Size) , Tile_Size);
 
 	//Test code for *AHEM* dynamic *AHEM* style FOV independent of actual grid resolution
