@@ -9,3 +9,16 @@ typedef struct { // structure to contain player variables
 	int width;
 	CP_Color Enemy_Color; //for setting current player color
 }Enemy;
+
+Enemy enemies;
+
+typedef enum EnemyType
+{
+	FOUR_WAY_LOOK,
+	AOE_VIEW
+};
+
+
+void drawEnemy(int tilesize);
+
+void setEnemyPoint(int tilesize);
