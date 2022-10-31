@@ -4,6 +4,7 @@
 #include "FOV.h"
 #include "cprocessing.h"
 #include "level1.h"
+#include "panels.h"
 
 /*
 THE CODES UNDER GAME_INIT, GAME_UPDATE IS FOR TESTING
@@ -25,6 +26,7 @@ SET PLAYER START POINT AFTER ASSIGNING TILES
 //IF YOU NEED TO ACCESS PLAYER AND TILES JUST INCLUDE THE SPEICIF HEADER FILES.
 
 int Tile_Size;
+Game_State gameState;
 
 void game_init(void)
 {
@@ -78,16 +80,22 @@ void game_init(void)
 
 	setPlayerStartPoint(Tile_Size);
 
-	player.setFOV = 1;
+	player.setFOV = 0;
+	gameState = PAUSED;
 }
 
 void game_update(void)
 {
+
+
 	//clears the screen so things can be redrawn
 	CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
 
 	//all the game update methods that needs to be updated every frame
-	handlePlayerInput(Tile_Size);
+
+	if (gameState == PLAY) {
+		handlePlayerInput(Tile_Size);
+	}
 	renderGame();
 	//FOV logic handled here
 	clearFogBackground();
@@ -95,17 +103,18 @@ void game_update(void)
 	setFOVFunnelWallLogic(player.x, player.y, player.direction, returnBounds(Tile_Size), returnBounds(Tile_Size), 2, 10);
 	setIlluminationAdvance(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), 2, 3);
 
-	
 	//Test code for *AHEM* dynamic *AHEM* style FOV independent of actual grid resolution
 	//setIllumination(player.x * 6 + 3, (player.y * 6) + 3, returnBounds(Tile_Size) * 6 + 2, returnBounds(Tile_Size) * 6 + 2, 4 * 6);
 	//End FOV logic handled area
-
-
 
 	//level select code
 	if (CP_Input_KeyDown(KEY_F1)) {
 		CP_Engine_SetNextGameStateForced(level1_init, level1_update, level1_exit);
 	}
+	if (gameState != PLAY) {
+		drawFullPanel();
+	}
+
 }
 
 void game_exit(void)
