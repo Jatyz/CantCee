@@ -5,7 +5,7 @@
 #include "cprocessing.h"
 #include "level1.h"
 #include "panels.h"
-
+#include "levelselect.h"
 /*
 THE CODES UNDER GAME_INIT, GAME_UPDATE IS FOR TESTING
 FOR THE REAL STAGES WE NEED TO CREATE ANOTHER C AND H FILE TO INITIALIZE AND CALL THE FILES UNDER GAME.C
@@ -81,7 +81,7 @@ void game_init(void)
 	setPlayerStartPoint(Tile_Size);
 
 	player.setFOV = 0;
-	gameState = PAUSED;
+	gameState = PLAY;
 }
 
 void game_update(void)
@@ -109,10 +109,14 @@ void game_update(void)
 
 	//level select code
 	if (CP_Input_KeyDown(KEY_F1)) {
-		CP_Engine_SetNextGameStateForced(level1_init, level1_update, level1_exit);
+		gameState = WIN;
 	}
 	if (gameState != PLAY) {
 		drawFullPanel();
+		if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
+		{
+			checkClick(startGame, startLevel1);
+		}
 	}
 
 }

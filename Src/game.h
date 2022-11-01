@@ -10,7 +10,7 @@
 #define SMALL 80
 
 typedef enum { // enum for the different type of tiles
-	PLAY, WIN, LOSE, PAUSED
+	PLAY, PAUSED, WIN, LOSE
 }Game_State;
 
 //GLOBAL Color variables

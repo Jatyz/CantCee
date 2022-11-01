@@ -64,6 +64,7 @@ void level1_init(void)
 
 	setPlayerStartPoint(Tile_Size);
 	player.setFOV = 1;
+	gameState = PLAY;
 }
 
 void level1_update(void)
