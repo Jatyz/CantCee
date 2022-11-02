@@ -76,12 +76,80 @@ void setIlluminationWallLogic
 	}
 
 	//int walls[FOG_MAX_X][FOG_MAX_Y];
-	int anglesToBeShaded[48],			//angles to be shaded are stored here, by the degrees in cartesian
-		angleOfAllowance[48],			//the angle of allowance for each angle to be shaded
-		anglesToBeShadedFillSize = 0;	//the number of angles to be shaded currently stored in the above array, increment if new angles are added
+	double anglesToBeShaded[48],			//angles to be shaded are stored here, by the degrees in cartesian
+		   angleOfAllowance[48];			//the angle of allowance for each angle to be shaded
+	int anglesToBeShadedSize = 0;			//the number of angles to be shaded currently stored in the above array, increment if new angles are added
 
-	for (int i = 0;i<fovRadius;i++) 
+	CP_Vector  tilePos;
+
+	double currentTileAngle;
+	int numberOfWallsDebug = 0,
+		numberOfShadesDebug = 0;
+
+	for (int i = 0;i<fovRadius;i++)			//for the size of the radius
 	{
+		numberOfShadesDebug = 0;
+		//DELETE WHEN DONE TESTING
+		for (int xAxis = playerXPos - i; xAxis < (playerXPos + i + 1); xAxis += (i != 0) ? 2 * i : 1)	//check edge of X axis
+		{
+			for (int yAxis = playerYPos - i; yAxis < (playerYPos + i + 1); yAxis++)	//check of Y axis under X edges
+			{
+				if (!(xAxis >= gridSizeX)
+					&& !(xAxis < 0)
+					&& !(yAxis >= gridSizeY)
+					&& !(yAxis < 0))								//dont set value if out of array(horizontal check)
+				{
+					tilePos = CP_Vector_Set(xAxis - playerXPos, yAxis - playerYPos);
+					currentTileAngle = angleOfPointR2(tilePos.x, tilePos.y);
+
+
+					if (tiles[xAxis][yAxis].type == WALL)		//if tile found is wall
+					{
+						anglesToBeShaded[anglesToBeShadedSize] = currentTileAngle;
+						int allowance = 38;
+						for (int x = 0; x < i; x++)
+						{
+							allowance /= 2;
+						}
+						angleOfAllowance[anglesToBeShadedSize] = allowance;
+						anglesToBeShadedSize++;
+						numberOfWallsDebug++;
+					}
+				}
+			}
+		}
+
+		for (int yAxis = playerYPos - i; yAxis < (playerYPos + i + 1); yAxis += (i != 0) ? 2 * i : 1)	//check edge of Y axis that have not been checked
+		{
+			for (int xAxis = playerXPos - (i-1); xAxis < (playerXPos + i); xAxis++)	//check X axis right of Y remain edges
+			{
+				if (!(xAxis >= gridSizeX)
+					&& !(xAxis < 0)
+					&& !(yAxis >= gridSizeY)
+					&& !(yAxis < 0))								//dont set value if out of array(horizontal check)
+				{
+					tilePos = CP_Vector_Set(xAxis - playerXPos, yAxis - playerYPos);
+					currentTileAngle = angleOfPointR2(tilePos.x, tilePos.y);
+
+					Tile_Type wallType = WALL;
+					if (tiles[xAxis][yAxis].type == wallType)		//if tile found is wall
+					{
+						anglesToBeShaded[anglesToBeShadedSize] = currentTileAngle;
+						int allowance = 38;
+						for (int x = 0; x < i; x++)
+						{
+							allowance /= 2;
+						}
+						angleOfAllowance[anglesToBeShadedSize] = allowance;
+						anglesToBeShadedSize++;
+						numberOfWallsDebug++;
+					}
+				}
+			}
+		}
+//DELETE WHEN DONE TESTING
+
+
 		for (int xAxis = playerXPos-i; xAxis<(playerXPos+i+1) ;xAxis+=(i!=0)?2*i:1)	//check edge of X axis
 		{
 			for (int yAxis = playerYPos - i; yAxis < (playerYPos + i + 1); yAxis++)	//check of Y axis under X edges
@@ -91,56 +159,86 @@ void setIlluminationWallLogic
 					&& !(yAxis >= gridSizeY)
 					&& !(yAxis < 0))								//dont set value if out of array(horizontal check)
 				{
+					tilePos = CP_Vector_Set(xAxis-playerXPos, yAxis-playerYPos);
+					currentTileAngle = angleOfPointR2(tilePos.x,tilePos.y);
+
+
+					//if (tiles[xAxis][yAxis].type == WALL)		//if tile found is wall
+					//{
+					//	anglesToBeShaded[anglesToBeShadedSize] = currentTileAngle;
+					//	int allowance = 90;
+					//	for (int x = 0; x<=i;x++) 
+					//	{
+					//		allowance /= 2;
+					//	}
+					//	angleOfAllowance[anglesToBeShadedSize] = allowance;
+					//	anglesToBeShadedSize++;
+					//}
+					double differenceInAngle = 359.0f;
+					for (int iterator = 0; iterator < anglesToBeShadedSize;iterator++) 
+					{
+						differenceInAngle = currentTileAngle - anglesToBeShaded[iterator];
+						differenceInAngle = (fabs(differenceInAngle) >= 360) ? fabs(differenceInAngle) - 360 : fabs(differenceInAngle);
+
+						if (fabs(differenceInAngle) <= angleOfAllowance[iterator] )
+						{
+							fog[xAxis][yAxis] = FOG_MAX;
+							numberOfShadesDebug++;
+						}
+					}
+
+
 					if (tiles[xAxis][yAxis].type == WALL)		//if tile found is wall
 					{
-						anglesToBeShaded[anglesToBeShadedFillSize] = angleBetweenVectorsR2(playerXPos,playerYPos,xAxis,yAxis);
-						int allowance = 90;
-						for (int x = 0; x<=i;x++) 
-						{
-							allowance /= 2;
-						}
-						angleOfAllowance[anglesToBeShadedFillSize] = allowance;
-						anglesToBeShadedFillSize++;
+						fog[xAxis][yAxis] = (int)FOG_MIN;
 					}
-
-					//DEBUG CODE: DELETE AFTER DONE DEBUGGING-------------------------------------------------------------------------------------
-					if (
-						sqrt((xAxis - playerXPos) * (xAxis - playerXPos) + (yAxis - playerYPos) * (yAxis - playerYPos))
-						< fovRadius)
-					{
-						fog[xAxis][yAxis] = FOG_MIN;							//set fog in this tile to none
-					}
-					//END OF DEBUG CODE------------------------------------------------------------------------------------------------------------
-
-
 				}
 			}
 		}
 		
-		for (int yAxis = playerYPos - i; yAxis < (playerYPos + i+1) ; yAxis += (i != 0) ? 2 * i : 1)	//check edge of Y axis that have not been checked
+		for (int yAxis = playerYPos - i; yAxis < (playerYPos + i + 1) ; yAxis += (i != 0) ? 2 * i : 1)	//check edge of Y axis that have not been checked
 		{
-			for (int xAxis = playerXPos - i -1; xAxis < (playerXPos + i+1) ; xAxis++)	//check X axis right of Y remain edges
+			for (int xAxis = playerXPos - i; xAxis < (playerXPos + i) ; xAxis++)	//check X axis right of Y remain edges
 			{
 				if (!(xAxis >= gridSizeX)//??????
 					&& !(xAxis < 0)
 					&& !(yAxis >= gridSizeY)//??????
 					&& !(yAxis < 0))								//dont set value if out of array(horizontal check)
 				{
-					if (tiles[xAxis][yAxis].type == (Tile_Type)WALL)
+					tilePos = CP_Vector_Set(xAxis - playerXPos, yAxis - playerYPos);
+					currentTileAngle = angleOfPointR2(tilePos.x, tilePos.y);
+					if (xAxis == playerXPos && yAxis == playerYPos + 1) 
 					{
-						//walls[xAxis][yAxis] = 1;
+						numberOfShadesDebug == numberOfShadesDebug;
 					}
-
-					//DEBUG CODE: DELETE AFTER DONE DEBUGGING-------------------------------------------------------------------------------------
-					if (
-						sqrt((xAxis - playerXPos) * (xAxis - playerXPos) + (yAxis - playerYPos) * (yAxis - playerYPos))
-						< fovRadius)
+					//Tile_Type wallType = WALL;
+					//if (tiles[xAxis][yAxis].type == wallType)		//if tile found is wall
+					//{
+					//	anglesToBeShaded[anglesToBeShadedSize] = currentTileAngle;
+					//	int allowance = 19;
+					//	//for (int x = 0; x <= i; x++)
+					//	//{
+					//	//	allowance /= 2;
+					//	//}
+					//	angleOfAllowance[anglesToBeShadedSize] = allowance;
+					//	anglesToBeShadedSize++;
+					//}
+					double differenceInAngle = 359.0f;
+					for (int iterator = 0; iterator < anglesToBeShadedSize; iterator++)
 					{
-						fog[xAxis][yAxis] = FOG_MIN;							//set fog in this tile to none
+						differenceInAngle = currentTileAngle - anglesToBeShaded[iterator];
+						differenceInAngle = (fabs(differenceInAngle) >= 360) ? fabs(differenceInAngle) - 360 : fabs(differenceInAngle);
+
+						if (fabs(differenceInAngle) <= angleOfAllowance[iterator] )
+						{
+							fog[xAxis][yAxis] = FOG_MAX;
+							numberOfShadesDebug++;
+						}
 					}
-					//END OF DEBUG CODE------------------------------------------------------------------------------------------------------------
-
-
+					if (tiles[xAxis][yAxis].type == WALL)		//if tile found is wall
+					{
+						fog[xAxis][yAxis] = (int)FOG_MIN;
+					}
 				}
 			}
 		}

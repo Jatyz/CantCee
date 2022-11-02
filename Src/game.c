@@ -59,7 +59,7 @@ void game_init(void)
 	tiles[7][7].type = WALL;
 	tiles[8][7].type = WALL;
 	tiles[9][7].type = WALL;
-	tiles[9][9].type = START;
+	tiles[7][8].type = START;
 	tiles[9][6].type = DISGUISE;
 	tiles[9][6].Tile_Color = Red;
 	tiles[9][4].type = DISGUISE;
@@ -80,7 +80,7 @@ void game_init(void)
 
 	setPlayerStartPoint(Tile_Size);
 
-	player.setFOV = 0;
+	player.setFOV = 1;
 	gameState = PLAY;
 }
 
@@ -99,12 +99,14 @@ void game_update(void)
 	renderGame();
 	//FOV logic handled here
 	clearFogBackground();
-	setPlayerFOVFunnel(player.x, player.y, player.direction, returnBounds(Tile_Size), returnBounds(Tile_Size), 2, 10);
-	setFOVFunnelWallLogic(player.x, player.y, player.direction, returnBounds(Tile_Size), returnBounds(Tile_Size), 2, 10);
-	setIlluminationAdvance(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), 2, 3);
+	//setPlayerFOVFunnel(player.x, player.y, player.direction, returnBounds(Tile_Size), returnBounds(Tile_Size), 2, 10);
+	//setFOVFunnelWallLogic(player.x, player.y, player.direction, returnBounds(Tile_Size), returnBounds(Tile_Size), 2, 10);
+	setIlluminationAdvance(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), 3, 3);
 
 	//Test code for *AHEM* dynamic *AHEM* style FOV independent of actual grid resolution
 	//setIllumination(player.x * 6 + 3, (player.y * 6) + 3, returnBounds(Tile_Size) * 6 + 2, returnBounds(Tile_Size) * 6 + 2, 4 * 6);
+	// 
+	setIlluminationWallLogic(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), 3);
 	//End FOV logic handled area
 
 	//level select code
@@ -131,7 +133,7 @@ void renderGame(void) {
 	drawTile(Tile_Size);
 	drawPlayer(Tile_Size);
 	if(player.setFOV)
-	renderFOVBasic(returnBounds(Tile_Size) , returnBounds(Tile_Size) , Tile_Size);
+	renderFOVAdvance(returnBounds(Tile_Size) , returnBounds(Tile_Size) , Tile_Size);
 
 	//Test code for *AHEM* dynamic *AHEM* style FOV independent of actual grid resolution
 	//renderFOVBasic(returnBounds(Tile_Size)*6+2, returnBounds(Tile_Size)*6+2,Tile_Size/6);
