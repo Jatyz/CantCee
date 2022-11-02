@@ -1,22 +1,10 @@
 #include "cprocessing.h"
 #include "grid.h"
 #include "game.h"
+#include "utils.h"
 
-//panel width and height use whatever number you want, x and y make sure its the tile location * tile size if u want it to cover specific tiles. text[] is just a string
-void drawSmallPanel(int panelWidth, int panelHeight, int x, int y, char text[]) {
-	CP_Settings_Fill(CP_Color_Create(122, 122, 122, 200));
-
-	CP_Graphics_DrawRect(x, y, panelWidth, panelHeight);
-	CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
-	CP_Settings_TextSize(30.f);
-	CP_Font_DrawTextBox(text, 100, 100 + 20, panelWidth);
-
-
-}
-
-
-
-void drawFullPanel() {
+//draws a full button that covers the screen,and there is a small panel with buttons depending on the state the button that shows up are different and does different things.
+void drawFullPanel(void) {
 
 	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 122));
 	CP_Graphics_DrawRect(0, 0, 800, 800);
@@ -106,3 +94,75 @@ void drawFullPanel() {
 	CP_Settings_RectMode(CP_POSITION_CORNER);
 }
 
+//panel width and height use whatever number you want, x and y make sure its the tile location * tile size if u want it to cover specific tiles. text[] is just a string
+void drawSmallPanel(int panelWidth, int panelHeight, int x, int y, char text[]) {
+	CP_Settings_Fill(CP_Color_Create(122, 122, 122, 200));
+
+	CP_Graphics_DrawRect(x, y, panelWidth, panelHeight);
+	CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
+	CP_Settings_TextSize(30.f);
+	CP_Font_DrawTextBox(text, 100, 100 + 20, panelWidth);
+
+
+}
+
+//check which button the player clicked, the buttons are hard coded spots, so the input check is also hard coded area
+void checkClick(void* (currentLevel)(void),void* (nextLevel)(void)) {
+	float smallpanelx = 500, smallpanely = 400;
+
+	float panelStartx = 400 - smallpanelx / 2;
+	float panelStarty = 400 - smallpanely / 2;
+
+	int button = 0;
+	//button 1
+	if (IsAreaClicked(panelStartx + smallpanelx / 2, panelStarty + smallpanely / 2 - 80, 150, 60, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
+		button = 1;
+	}
+	//button 2
+	if (IsAreaClicked(panelStartx + smallpanelx / 2, panelStarty + smallpanely / 2 + 10, 150, 60, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		button = 2;
+	//button 3
+	if (IsAreaClicked(panelStartx + smallpanelx / 2, panelStarty + smallpanely / 2 + 100, 150, 60, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		button = 3;
+
+		switch (gameState)
+		{
+		case PAUSED:
+			switch (button) {
+				//resume
+			case 1:
+				gameState = PLAY;
+				break;
+				//restart
+			case 2:
+				currentLevel();
+				break;
+			case 3:
+				//level select
+				break;
+			}
+			break;
+		case WIN:
+			switch (button) {
+			case 1:
+				nextLevel();
+				break;
+			case 2:
+				currentLevel();
+				break;
+			case 3:
+				//level select
+				break;
+			}
+		case LOSE:
+			switch (button) {
+			case 2:
+				currentLevel();
+				break;
+			case 3:
+				//level select
+				break;
+
+			}
+	}
+}
