@@ -51,6 +51,9 @@
     <ClCompile Include="..\Src\panels.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\Src\vectorMathBasic.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="..\Src\levelselect.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -91,6 +94,9 @@
     </ClInclude>
     <ClInclude Include="..\Src\panels.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\vectorMathBasic.h">
+          <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Src\levelselect.h">
       <Filter>Header Files</Filter>

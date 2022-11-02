@@ -1,6 +1,7 @@
 #include "cprocessing.h"
 #include "grid.h"
 #include "game.h"
+#include "vectorMathBasic.h"
 #include <math.h>
 
 
@@ -57,6 +58,115 @@ void setIllumination
 		}
 	}
 }
+
+//Assumes setIlluminationBasic()/setIllumintationAdvance() was called before hand
+void setIlluminationWallLogic
+(
+	int const playerXPos,		//player's current X position on the grid
+	int const playerYPos,		//player's current Y position on the grid
+	int const gridSizeX,		//size of the grid in the X axis for the level, used to find the bounds required of the fog grid
+	int const gridSizeY,		//size of the grid in the Y axis for the level, used to find the bounds required of the fog grid
+	int const fovRadius			//the radius of the global illumination in terms of number of tiles
+)
+{
+	//Check if grid size out of array, if is larger than acceptable, return function
+	if (gridSizeX > FOG_MAX_X || gridSizeY > FOG_MAX_Y || fovRadius>6)
+	{
+		return;
+	}
+
+	//int walls[FOG_MAX_X][FOG_MAX_Y];
+	int anglesToBeShaded[48],			//angles to be shaded are stored here, by the degrees in cartesian
+		angleOfAllowance[48],			//the angle of allowance for each angle to be shaded
+		anglesToBeShadedFillSize = 0;	//the number of angles to be shaded currently stored in the above array, increment if new angles are added
+
+	for (int i = 0;i<fovRadius;i++) 
+	{
+		for (int xAxis = playerXPos-i; xAxis<(playerXPos+i+1) ;xAxis+=(i!=0)?2*i:1)	//check edge of X axis
+		{
+			for (int yAxis = playerYPos - i; yAxis < (playerYPos + i + 1); yAxis++)	//check of Y axis under X edges
+			{
+				if (!(xAxis >= gridSizeX)
+					&& !(xAxis < 0)
+					&& !(yAxis >= gridSizeY)
+					&& !(yAxis < 0))								//dont set value if out of array(horizontal check)
+				{
+					if (tiles[xAxis][yAxis].type == WALL)		//if tile found is wall
+					{
+						anglesToBeShaded[anglesToBeShadedFillSize] = angleBetweenVectorsR2(playerXPos,playerYPos,xAxis,yAxis);
+						int allowance = 90;
+						for (int x = 0; x<=i;x++) 
+						{
+							allowance /= 2;
+						}
+						angleOfAllowance[anglesToBeShadedFillSize] = allowance;
+						anglesToBeShadedFillSize++;
+					}
+
+					//DEBUG CODE: DELETE AFTER DONE DEBUGGING-------------------------------------------------------------------------------------
+					if (
+						sqrt((xAxis - playerXPos) * (xAxis - playerXPos) + (yAxis - playerYPos) * (yAxis - playerYPos))
+						< fovRadius)
+					{
+						fog[xAxis][yAxis] = FOG_MIN;							//set fog in this tile to none
+					}
+					//END OF DEBUG CODE------------------------------------------------------------------------------------------------------------
+
+
+				}
+			}
+		}
+		
+		for (int yAxis = playerYPos - i; yAxis < (playerYPos + i+1) ; yAxis += (i != 0) ? 2 * i : 1)	//check edge of Y axis that have not been checked
+		{
+			for (int xAxis = playerXPos - i -1; xAxis < (playerXPos + i+1) ; xAxis++)	//check X axis right of Y remain edges
+			{
+				if (!(xAxis >= gridSizeX)//??????
+					&& !(xAxis < 0)
+					&& !(yAxis >= gridSizeY)//??????
+					&& !(yAxis < 0))								//dont set value if out of array(horizontal check)
+				{
+					if (tiles[xAxis][yAxis].type == (Tile_Type)WALL)
+					{
+						//walls[xAxis][yAxis] = 1;
+					}
+
+					//DEBUG CODE: DELETE AFTER DONE DEBUGGING-------------------------------------------------------------------------------------
+					if (
+						sqrt((xAxis - playerXPos) * (xAxis - playerXPos) + (yAxis - playerYPos) * (yAxis - playerYPos))
+						< fovRadius)
+					{
+						fog[xAxis][yAxis] = FOG_MIN;							//set fog in this tile to none
+					}
+					//END OF DEBUG CODE------------------------------------------------------------------------------------------------------------
+
+
+				}
+			}
+		}
+
+	}
+
+	//if (sqrt((xAxis - playerXPos) * (xAxis - playerXPos) + (yAxis - playerYPos) * (yAxis - playerYPos))
+	//	< fovRadius)
+	//{
+	//}
+
+	//for (int i = 0; i < gridSizeX; i++)			//for each row
+	//{
+	//	for (int j = 0; j < gridSizeY; j++)		//for each column
+	//	{
+	//		// if in an circular area with radius of fovRadius tiles around the player
+	//		if (
+	//			sqrt((i - playerXPos) * (i - playerXPos) + (j - playerYPos) * (j - playerYPos))
+	//			< fovRadius)
+	//		{
+
+	//		}
+	//	}
+	//}
+}
+
 
 //update basic logic for drawing a layer of black tiles in the level, except in a circle around the player
 void setIlluminationAdvance
