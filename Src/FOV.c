@@ -103,12 +103,9 @@ void setIlluminationWallLogic
 						// compare to angle of one grid unit forward in x axis, taking the absoulute of their difference as angle of allowance
 						double allowance =
 							fabs( angleOfPointR2(fabs(xAxis - playerXPos), fabs(yAxis - playerYPos))
-								- angleOfPointR2(fabs(xAxis - playerXPos) + 1, fabs(yAxis - playerYPos)));						//set the basic angle of allowance(angle at which tiles will not be blocked by fog) 					//set the basic angle of allowance(angle at which tiles will not be blocked by fog) 
+								- angleOfPointR2(fabs(xAxis - playerXPos) + 1, fabs(yAxis - playerYPos)));						
 						allowance = fmod(allowance, 46);
-						//for (int x = 0; x < currentRadius; x++)	//for each layer of radius till the current radius this check is in
-						//{
-						//	allowance /= 2;						//WIP, factor of allowance reduction needs to be found
-						//}
+
 						angleOfAllowance[anglesToBeShadedSize] = allowance;			//set the angle of allowance to the current angle of allowance
 						anglesToBeShadedSize++;					//increase the counter of the number of angles to check
 					}
@@ -134,10 +131,7 @@ void setIlluminationWallLogic
 							fabs(angleOfPointR2(fabs(xAxis - playerXPos), fabs(yAxis - playerYPos))
 								- angleOfPointR2(fabs(xAxis - playerXPos) + 1, fabs(yAxis - playerYPos)));						
 						allowance = fmod(allowance,46);
-						//for (int x = 0; x < currentRadius; x++)	//for each layer of radius till the current radius this check is in
-						//{
-						//	allowance /= 2;						//WIP, factor of allowance reduction needs to be found
-						//}
+
 						angleOfAllowance[anglesToBeShadedSize] = allowance;			//set the angle of allowance to the current angle of allowance
 						anglesToBeShadedSize++;					//increase the counter of the number of angles to check
 					}
