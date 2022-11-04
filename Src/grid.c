@@ -3,6 +3,7 @@
 #include "game.h"
 #include "player.h"
 #include <stdio.h>
+
 //declaration of tiles
 Tile tiles[MAX_TILES][MAX_TILES];
 

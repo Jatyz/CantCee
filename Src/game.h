@@ -9,6 +9,10 @@
 #define MEDIUM 50
 #define SMALL 80
 
+typedef enum { // enum for the different type of tiles
+	PLAY, PAUSED, WIN, LOSE
+}Game_State;
+
 //GLOBAL Color variables
 CP_Color Green,Red,Blue;
 
@@ -26,3 +30,5 @@ void setStartGame(void);
 
 //global tile size variable
 extern int Tile_Size;
+extern Game_State gameState;
+

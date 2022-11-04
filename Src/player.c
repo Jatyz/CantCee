@@ -2,6 +2,7 @@
 #include "player.h"
 #include "grid.h"
 #include "game.h"
+#include "utils.h"
 
 Player player;
 
@@ -64,7 +65,7 @@ void handlePlayerInput(int tilesize) {
 	int Vertical_Tile = Horizontal_Tile;
 
 	if (CP_Input_KeyDown(KEY_ESCAPE)) {
-		CP_Engine_Terminate();
+		gameState = PAUSED;
 	}
 	//up
 	if (CP_Input_KeyTriggered(KEY_W)) {
@@ -121,6 +122,7 @@ void handlePlayerInput(int tilesize) {
 		if (player.direction - 1 < 0) { setPlayerDirection(3); }	//set direction to maximum possible value to warp negative values
 		else {setPlayerDirection(player.direction - 1);}		//set direction to 90 degrees counter clockwise
 	}
+
 }
 
 //check the movements of the player, if the player is about to land on a specific tile, if it is a wall, deny movement.

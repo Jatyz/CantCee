@@ -14,6 +14,15 @@ void setIllumination
 	int const fovRadius			//radius of the illumination around the player
 );
 
+void setIlluminationWallLogic
+(
+	int const playerXPos,		//player's current X position on the grid
+	int const playerYPos,		//player's current Y position on the grid
+	int const gridSizeX,		//size of the grid in the X axis for the level, used to find the bounds required of the fog grid
+	int const gridSizeY,		//size of the grid in the Y axis for the level, used to find the bounds required of the fog grid
+	int const fovRadius			//the radius of the global illumination in terms of number of tiles
+);
+
 //update basic logic for drawing a layer of black tiles in the level, except in a circle around the player
 void setIlluminationAdvance
 (

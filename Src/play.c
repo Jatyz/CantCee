@@ -1,11 +1,11 @@
 #include "cprocessing.h"
 #include "utils.h"
 
-
 #include "mainmenu.h"
 #include "howToPlay.h"
-#include "options.h"
-
+#include "settings.h"
+#include "levelselect.h"
+#include "level1.h"
 
 
 void play_Init()
@@ -28,31 +28,37 @@ void play_Init()
 void play_Update()
 {
 	// Background: Grey Colour
-	CP_Graphics_ClearBackground(CP_Color_Create(125, 125, 125, 255));
+	CP_Graphics_ClearBackground(CP_Color_Create(125, 125, 125, 0));
 
-	// -----Play Button-----
+	// -----Level 1-----
 	CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-	CP_Graphics_DrawRect((windowWidth / 2.0f - 150), (windowHeight / 2.0f - 150), buttonWidth, buttonHeight);
+	CP_Graphics_DrawRect((windowWidth / 2.0f - 100), (windowHeight / 2.0f - 100), levelButtonWidth, levelButtonHeight);
 	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-	CP_Font_DrawText("1", (windowWidth / 2.0f - 150), (windowHeight / 2.0f) - 150);
+	CP_Font_DrawText("1", (windowWidth / 2.0f - 100), (windowHeight / 2.0f - 100));
 
-	// -----How to Play-----
+	// -----Level 2-----
 	CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-	CP_Graphics_DrawRect((windowWidth / 2.0f - 50), (windowHeight / 2.0f - 50), buttonWidth, buttonHeight);
+	CP_Graphics_DrawRect((windowWidth / 2.0f + 100), (windowHeight / 2.0f - 100), levelButtonWidth, levelButtonHeight);
 	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-	CP_Font_DrawText("2", (windowWidth / 2.0f -50), (windowHeight / 2.0f) - 50);
+	CP_Font_DrawText("2", (windowWidth / 2.0f + 100), (windowHeight / 2.0f - 100));
 
-	// -----Options-----
+	// -----Level 3-----
 	CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-	CP_Graphics_DrawRect((windowWidth / 2.0f + 50), (windowHeight / 2.0f + 50), buttonWidth, buttonHeight);
+	CP_Graphics_DrawRect((windowWidth / 2.0f - 100), (windowHeight / 2.0f + 100), levelButtonWidth, levelButtonHeight);
 	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-	CP_Font_DrawText("3", (windowWidth / 2.0f + 50), (windowHeight / 2.0f) + 50);
+	CP_Font_DrawText("3", (windowWidth / 2.0f - 100), (windowHeight / 2.0f + 100));
 
-	// -----Exit Button-----
+	// -----Level 4-----
 	CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-	CP_Graphics_DrawRect((windowWidth / 2.0f + 150), (windowHeight / 2.0f) + 150, buttonWidth, buttonHeight);
+	CP_Graphics_DrawRect((windowWidth / 2.0f + 100), (windowHeight / 2.0f + 100), levelButtonWidth, levelButtonHeight);
 	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-	CP_Font_DrawText("4", (windowWidth / 2.0f + 150), (windowHeight / 2.0f) + 150);
+	CP_Font_DrawText("4", (windowWidth / 2.0f + 100), (windowHeight / 2.0f + 100));
+
+	// -----Level 5-----
+	//CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
+	//CP_Graphics_DrawRect((windowWidth / 2.0f + 250), (windowHeight / 2.0f), levelButtonWidth, levelButtonHeight);
+	//CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
+	//CP_Font_DrawText("5", (windowWidth / 2.0f + 250), (windowHeight / 2.0f));
 
 
 
@@ -61,27 +67,28 @@ void play_Update()
 	if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
 	{
 		// -----Level 1 Input-----
-		if (IsAreaClicked((windowWidth / 2.0f - 150), (windowHeight / 2.0f) - 150, buttonWidth, buttonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		if (IsAreaClicked((windowWidth / 2.0f - 100), (windowHeight / 2.0f - 100), levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
-			CP_Engine_SetNextGameStateForced(mainMenu_Init, mainMenu_Update, mainMenu_Exit); // play.c > goes to level select > click level to play
+			CP_Engine_SetNextGameStateForced(levelSelection_Init, levelSelection_Update, level1_exit);
+			//CP_Engine_SetNextGameStateForced(level1_init, level1_update, level1_exit); // play.c > goes to level select > click level to play
 		}
 
-		// -----How to Play Input-----
-		if (IsAreaClicked((windowWidth / 2.0f - 50), (windowHeight / 2.0f) - 50, buttonWidth, buttonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		// -----Level 2 Input-----
+		if (IsAreaClicked((windowWidth / 2.0f + 100), (windowHeight / 2.0f - 100), buttonWidth, buttonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
 			CP_Engine_SetNextGameStateForced(mainMenu_Init, mainMenu_Update, mainMenu_Exit);
 			//CP_Engine_SetNextGameStateForced(howToPlay_Init, howToPlay_Update, howToPlay_Exit); // change to an addition howToPlay.c
 		}
 
-		// -----Options Input-----
-		if (IsAreaClicked((windowWidth / 2.0f + 50), (windowHeight / 2.0f) + 50, buttonWidth, buttonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		// -----Level 3 Input-----
+		if (IsAreaClicked((windowWidth / 2.0f - 100), (windowHeight / 2.0f + 100), buttonWidth, buttonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
 			CP_Engine_SetNextGameStateForced(mainMenu_Init, mainMenu_Update, mainMenu_Exit);
 			//CP_Engine_SetNextGameStateForced(options_Init, options_Update, options_Exit); // change to an addition options.c
 		}
 
-		// -----Exit Button Input-----
-		if (IsAreaClicked((windowWidth / 2.0f + 150), (windowHeight / 2.0f) + 150, buttonWidth, buttonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		// -----Level 4 Input-----
+		if (IsAreaClicked((windowWidth / 2.0f - 100), (windowHeight / 2.0f + 100), buttonWidth, buttonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
 			CP_Engine_Terminate();
 		}

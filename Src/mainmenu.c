@@ -4,11 +4,16 @@
 #include "mainmenu.h"
 #include "play.h"
 #include "howToPlay.h"
-#include "options.h"
+#include "settings.h"
+
+CP_Image background;
+int concurrent_Alpha = 0;
 
 // ---------------------------------------------------------------Main Menu Initialisation---------------------------------------------------------------
 void mainMenu_Init()    
 {
+
+
     // Set the window size to a sqaure 800 x 800
     CP_System_SetWindowSize(windowWidth, windowHeight);
 
@@ -26,6 +31,13 @@ void mainMenu_Init()
 // ---------------------------------------------------------------Main Menu Update---------------------------------------------------------------
 void mainMenu_Update()
 {
+
+    //background = CP_Image_Load("Assets/mainMenuBackground.png");
+    //CP_Settings_ImageMode(CP_POSITION_CORNER);
+    //CP_Settings_ImageWrapMode(CP_IMAGE_WRAP_CLAMP);
+
+    //CP_System_SetWindowSize(CP_Image_GetWidth(background), CP_Image_GetHeight(background));
+    // 
     // Background: Grey Colour
     CP_Graphics_ClearBackground(CP_Color_Create(125, 125, 125, 255));
 
@@ -41,7 +53,7 @@ void mainMenu_Update()
     CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
     CP_Font_DrawText("How to Play", windowWidth / 2.0f, (windowHeight / 2.0f) - 50);
 
-    // -----Options-----
+    // -----Settings-----
     CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));                                                                   
     CP_Graphics_DrawRect(windowWidth / 2.0f, (windowHeight / 2.0f + 50), buttonWidth, buttonHeight);                     
     CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
@@ -71,10 +83,10 @@ void mainMenu_Update()
             CP_Engine_SetNextGameStateForced(howToPlay_Init, howToPlay_Update, howToPlay_Exit); // change to an addition howToPlay.c
         }
 
-        // -----Options Input-----
+        // -----Settings Input-----
         if (IsAreaClicked(windowWidth / 2.0f, (windowHeight / 2.0f) + 50, buttonWidth, buttonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
         {
-            CP_Engine_SetNextGameStateForced(options_Init, options_Update, options_Exit); // change to an addition options.c
+            CP_Engine_SetNextGameStateForced(settings_Init, settings_Update, settings_Exit); // change to an addition options.c
         }
 
         // -----Exit Button Input-----

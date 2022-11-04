@@ -16,7 +16,7 @@ void level1_init(void)
 	//e.g. big room = 20
 	// medium room = 50
 	// small room = 80
-	Tile_Size = SMALL;
+	Tile_Size = MEDIUM;
 
 	setStartGame();
 	assignTile(Tile_Size);//assign all tiles
@@ -64,6 +64,7 @@ void level1_init(void)
 
 	setPlayerStartPoint(Tile_Size);
 	player.setFOV = 1;
+	gameState = PLAY;
 }
 
 void level1_update(void)

@@ -5,7 +5,8 @@
 #include "FOV.h"
 #include "cprocessing.h"
 #include "level1.h"
-
+#include "panels.h"
+#include "levelselect.h"
 /*
 THE CODES UNDER GAME_INIT, GAME_UPDATE IS FOR TESTING
 FOR THE REAL STAGES WE NEED TO CREATE ANOTHER C AND H FILE TO INITIALIZE AND CALL THE FILES UNDER GAME.C
@@ -26,6 +27,7 @@ SET PLAYER START POINT AFTER ASSIGNING TILES
 //IF YOU NEED TO ACCESS PLAYER AND TILES JUST INCLUDE THE SPEICIF HEADER FILES.
 
 int Tile_Size;
+Game_State gameState;
 
 void game_init(void)
 {
@@ -58,7 +60,7 @@ void game_init(void)
 	tiles[7][7].type = WALL;
 	tiles[8][7].type = WALL;
 	tiles[9][7].type = WALL;
-	tiles[9][9].type = START;
+	tiles[7][8].type = START;
 	tiles[9][6].type = DISGUISE;
 	tiles[9][6].Tile_Color = Red;
 	tiles[9][4].type = DISGUISE;
@@ -83,33 +85,46 @@ void game_init(void)
 	enemies[0][7].isActive = 1;
 
 	player.setFOV = 1;
+	gameState = PLAY;
 }
 
 void game_update(void)
 {
+
+
 	//clears the screen so things can be redrawn
 	CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
 
 	//all the game update methods that needs to be updated every frame
-	handlePlayerInput(Tile_Size);
+
+	if (gameState == PLAY) {
+		handlePlayerInput(Tile_Size);
+	}
 	renderGame();
 	//FOV logic handled here
 	clearFogBackground();
-	setPlayerFOVFunnel(player.x, player.y, player.direction, returnBounds(Tile_Size), returnBounds(Tile_Size), 2, 10);
-	setFOVFunnelWallLogic(player.x, player.y, player.direction, returnBounds(Tile_Size), returnBounds(Tile_Size), 2, 10);
-	setIlluminationAdvance(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), 2, 3);
+	//setPlayerFOVFunnel(player.x, player.y, player.direction, returnBounds(Tile_Size), returnBounds(Tile_Size), 2, 10);
+	//setFOVFunnelWallLogic(player.x, player.y, player.direction, returnBounds(Tile_Size), returnBounds(Tile_Size), 2, 10);
+	setIlluminationAdvance(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), 5, 5);
 
-	
 	//Test code for *AHEM* dynamic *AHEM* style FOV independent of actual grid resolution
 	//setIllumination(player.x * 6 + 3, (player.y * 6) + 3, returnBounds(Tile_Size) * 6 + 2, returnBounds(Tile_Size) * 6 + 2, 4 * 6);
+	// 
+	setIlluminationWallLogic(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), 5);
 	//End FOV logic handled area
-
-
 
 	//level select code
 	if (CP_Input_KeyDown(KEY_F1)) {
-		CP_Engine_SetNextGameStateForced(level1_init, level1_update, level1_exit);
+		gameState = WIN;
 	}
+	if (gameState != PLAY) {
+		drawFullPanel();
+		if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
+		{
+			checkClick(startGame, startLevel1);
+		}
+	}
+
 }
 
 void game_exit(void)
@@ -128,7 +143,7 @@ void renderGame(void) {
 	enemyFOV(Tile_Size);
 >>>>>>> Stashed changes
 	if(player.setFOV)
-	renderFOVBasic(returnBounds(Tile_Size) , returnBounds(Tile_Size) , Tile_Size);
+	renderFOVAdvance(returnBounds(Tile_Size) , returnBounds(Tile_Size) , Tile_Size);
 
 	//Test code for *AHEM* dynamic *AHEM* style FOV independent of actual grid resolution
 	//renderFOVBasic(returnBounds(Tile_Size)*6+2, returnBounds(Tile_Size)*6+2,Tile_Size/6);

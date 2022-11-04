@@ -5,19 +5,27 @@
 #include "play.h"
 #include "howToPlay.h"
 
-
-void options_Init()
+//load
+// art assets
+void settings_Init()
 {	
-
+	
 }
 
-void options_Update()
+
+
+void settings_Update()
 {
 
 
 }
 
-void options_Exit()
+// draw
+
+//free memory
+
+// unload
+void settings_Exit()
 {
 
 }
