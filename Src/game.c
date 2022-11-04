@@ -79,6 +79,9 @@ void game_init(void)
 
 	setPlayerStartPoint(Tile_Size);
 
+	enemies[0][7].type = TWO_WAY_LOOK;
+	enemies[0][7].isActive = 1;
+
 	player.setFOV = 1;
 }
 
@@ -118,7 +121,12 @@ void game_exit(void)
 void renderGame(void) {
 	drawTile(Tile_Size);
 	drawPlayer(Tile_Size);
+<<<<<<< Updated upstream
 	drawEnemy(Tile_Size);
+=======
+	enemyDraw(Tile_Size);
+	enemyFOV(Tile_Size);
+>>>>>>> Stashed changes
 	if(player.setFOV)
 	renderFOVBasic(returnBounds(Tile_Size) , returnBounds(Tile_Size) , Tile_Size);
 
