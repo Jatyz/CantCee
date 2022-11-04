@@ -1,4 +1,5 @@
 #include "player.h"
+#include "enemy.h"
 #include "grid.h"
 #include "game.h"
 #include "FOV.h"
@@ -80,6 +81,9 @@ void game_init(void)
 
 	setPlayerStartPoint(Tile_Size);
 
+	enemies[0][7].type = TWO_WAY_LOOK;
+	enemies[0][7].isActive = 1;
+
 	player.setFOV = 1;
 	gameState = PLAY;
 }
@@ -132,6 +136,12 @@ void game_exit(void)
 void renderGame(void) {
 	drawTile(Tile_Size);
 	drawPlayer(Tile_Size);
+<<<<<<< Updated upstream
+	drawEnemy(Tile_Size);
+=======
+	enemyDraw(Tile_Size);
+	enemyFOV(Tile_Size);
+>>>>>>> Stashed changes
 	if(player.setFOV)
 	renderFOVAdvance(returnBounds(Tile_Size) , returnBounds(Tile_Size) , Tile_Size);
 
@@ -145,6 +155,7 @@ void setStartGame(void) {
 
 	//player color may need to move out of this method to set from the start of the stage itself
 	player.Player_Color = CP_Color_Create(0, 255, 255, 255);
+	enemies.Enemy_Color = CP_Color_Create(255, 50, 50, 255);
 
 	//settings the colors
 	Green = CP_Color_Create(0, 255, 0, 255);
@@ -155,6 +166,9 @@ void setStartGame(void) {
 	player.height = Tile_Size / 2;
 	player.width = Tile_Size / 2;
 	player.counter = 0;
+
+	enemies.height = Tile_Size / 2;
+	enemies.width = Tile_Size / 2;
 
 	//setting tiles
 	resetVents();
