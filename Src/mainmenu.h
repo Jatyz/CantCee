@@ -3,7 +3,7 @@
 // 
 // ---------------------------------------------------------------Global Variables---------------------------------------------------------------
 // Window Size
-#define windowWidth 800.f
+#define windowWidth 1000.f
 #define windowHeight 800.f
 
 // mainMenu Button Size
