@@ -30,8 +30,7 @@ void setIlluminationAdvance
 	int const playerYPos,		//player's current Y position on the grid
 	int const gridSizeX,		//size of the grid in the X axis for the level, used to find the bounds required of the fog grid
 	int const gridSizeY,		//size of the grid in the Y axis for the level, used to find the bounds required of the fog grid
-	int const fovRadius,		//the radius of the global illumination in terms of number of tiles
-	int const diffuseRadius		//the radius of half illuminated in terms of number of tiles, meant to be a number higher than fovRadius
+	int const fovRadius		//the radius of the global illumination in terms of number of tiles
 );
 
 //set logic for basic line of sight of player before render
