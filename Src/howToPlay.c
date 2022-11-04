@@ -3,7 +3,7 @@
 
 #include "mainMenu.h"
 #include "play.h"
-#include "options.h"
+#include "settings.h"
 
 
 

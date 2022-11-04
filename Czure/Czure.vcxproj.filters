@@ -39,7 +39,7 @@
     <ClCompile Include="..\Src\mainmenu.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Src\options.c">
+    <ClCompile Include="..\Src\settings.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\Src\play.c">
@@ -83,7 +83,7 @@
     <ClInclude Include="..\Src\mainmenu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Src\options.h">
+    <ClInclude Include="..\Src\settings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Src\play.h">
@@ -96,7 +96,7 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Src\vectorMathBasic.h">
-          <Filter>Header Files</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Src\levelselect.h">
       <Filter>Header Files</Filter>
