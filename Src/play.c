@@ -99,5 +99,5 @@ void play_Update()
 // ---------------------------------------------------------------Main Menu Exit---------------------------------------------------------------
 void play_Exit()
 {
-
+	CP_Settings_RectMode(CP_POSITION_CORNER);
 }

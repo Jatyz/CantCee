@@ -2,37 +2,10 @@
 #include "grid.h"
 #include "game.h"
 #include "enemy.h"
-<<<<<<< Updated upstream
-
-
-void drawEnemy(int tilesize) 
-{
-	CP_Settings_Fill(enemies.Enemy_Color);
-	CP_Graphics_DrawRect((enemies.x * tilesize) + (tilesize / 2) - enemies.width / 2, (enemies.y * tilesize) + (tilesize / 2) - enemies.height / 2, enemies.width, enemies.height);
-}
-
-void setEnemyPoint(int tilesize)
-{
-	int Horizontal_Tile = returnBounds(tilesize);
-	int Vertical_Tile = Horizontal_Tile;
-
-	int y, x;
-
-	//do a check to see there is only one start point
-	for (y = 0; y < Horizontal_Tile; y++)
-	{
-		for (x = 0; x < Vertical_Tile; x++)
-		{
-			if (tiles[x][y].type == START)
-			{
-				enemies.x = x;
-				enemies.y = y;
-=======
 #include "player.h"
 #include <math.h>
 
 Enemy enemies[MAX_TILES][MAX_TILES];
-
 
 void enemyDraw(int tileSize)
 {
@@ -62,15 +35,11 @@ void enemyDraw(int tileSize)
 					CP_Graphics_DrawRect(width * tileSize, height * tileSize, tileSize, tileSize);
 					break;
 				}
->>>>>>> Stashed changes
 			}
 		}
 	}
 }
 
-<<<<<<< Updated upstream
-
-=======
 void enemyFOV(tileSize)
 {
 	int Horizontal_Tile = returnBounds(tileSize);
@@ -141,4 +110,3 @@ void enemyFOV(tileSize)
 }
 
 //at end, make gamestate = LOSE;
->>>>>>> Stashed changes
