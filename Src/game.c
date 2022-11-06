@@ -81,8 +81,8 @@ void game_init(void)
 
 	setPlayerStartPoint(Tile_Size);
 
-	enemies[3][10].type = AOE_VIEW;
-	enemies[3][10].isActive = 1;
+	enemies[3][9].type = AOE_VIEW;
+	enemies[3][9].isActive = 2;
 
 	player.setFOV = 1;
 	gameState = PLAY;
