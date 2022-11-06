@@ -1,10 +1,12 @@
 #include "player.h"
+#include "enemy.h"
 #include "grid.h"
 #include "game.h"
 #include "FOV.h"
 #include "cprocessing.h"
 #include "level1.h"
-#include "enemy.h"
+#include "panels.h"
+#include "levelselect.h"
 
 void level1_init(void)
 {
@@ -66,7 +68,7 @@ void level1_init(void)
 	setPlayerStartPoint(Tile_Size);
 
 	enemies[3][10].type = AOE_VIEW;
-	enemies[3][10].isActive = 2;
+	enemies[3][10].isActive = 1;
 
 	player.setFOV = 1;
 	gameState = PLAY;
@@ -75,7 +77,9 @@ void level1_init(void)
 void level1_update(void)
 {
 	CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
-	handlePlayerInput(Tile_Size);
+	if (gameState == PLAY) {
+		handlePlayerInput(Tile_Size);
+	}
 	renderGame();
 
 	//FOV logic handled here
@@ -90,6 +94,14 @@ void level1_update(void)
 	//level select code
 	if (CP_Input_KeyDown(KEY_F1)) {
 		CP_Engine_SetNextGameStateForced(level1_init, level1_update, level1_exit);
+	}
+
+	if (gameState != PLAY) {
+		drawFullPanel();
+		if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
+		{
+			checkClick(startGame, startLevel1);
+		}
 	}
 }
 

@@ -76,7 +76,7 @@ void enemyDraw(int tileSize)
 	}
 }
 
-void enemyFOV(tileSize)
+void enemyFOV(int tileSize)
 {
 	int Horizontal_Tile = returnBounds(tileSize);
 	int Vertical_Tile = Horizontal_Tile;
@@ -86,7 +86,7 @@ void enemyFOV(tileSize)
 	{
 		for (width = 0; width < Vertical_Tile; width++)
 		{
-			if (enemies[width][height].isActive)
+			if (enemies[width][height].isActive >= 1)
 			{
 				int wallXPlus = width;
 				int wallXMinus = width;
