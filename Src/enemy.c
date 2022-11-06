@@ -9,8 +9,9 @@ Enemy enemies[MAX_TILES][MAX_TILES];
 
 //For AOE Enemy
 //(difficulty == 1) Checks 8 grids around AOE Enemy
-//(difficulty == 1) Checks 20 grids around AOE Enemy
-void aoeFOV(int width, int height, int tileSize, int difficulty)
+//(difficulty == 2) Checks 20 grids around AOE Enemy
+
+void fovDraw (int width, int height, int tileSize, int difficulty)
 {
 	if (difficulty == 1)
 	{
@@ -24,14 +25,8 @@ void aoeFOV(int width, int height, int tileSize, int difficulty)
 		CP_Graphics_DrawCircle((width - 0.5) * tileSize, (height - 0.5) * tileSize, tileSize);
 		CP_Graphics_DrawCircle((width - 0.5) * tileSize, (height + 1.5) * tileSize, tileSize);
 		CP_Graphics_DrawCircle((width + 1.5) * tileSize, (height - 0.5) * tileSize, tileSize);
-		if ((width + 1 == player.x && height == player.y) || (width - 1 == player.x && height == player.y)
-			|| (width == player.x && height + 1 == player.y) || (width == player.x && height - 1 == player.y)
-			|| (width + 1 == player.x && height + 1 == player.y) || (width - 1 == player.x && height + 1 == player.y)
-			|| (width + 1 == player.x && height - 1 == player.y) || (width - 1 == player.x && height - 1 == player.y))
-		{
-			gameState = LOSE;
-		}
 	}
+
 	if (difficulty == 2)
 	{
 		CP_Settings_Stroke(CP_Color_Create(255, 0, 0, 40)); //setting stroke color
@@ -62,6 +57,22 @@ void aoeFOV(int width, int height, int tileSize, int difficulty)
 		CP_Graphics_DrawCircle((width + 1.5) * tileSize, (height - 1.5) * tileSize, tileSize);
 		CP_Graphics_DrawCircle((width + 0.5) * tileSize, (height - 1.5) * tileSize, tileSize);
 		CP_Graphics_DrawCircle((width - 0.5) * tileSize, (height - 1.5) * tileSize, tileSize);
+	}
+}
+void aoeFOV(int width, int height, int tileSize, int difficulty)
+{
+	if (difficulty == 1)
+	{
+		if ((width + 1 == player.x && height == player.y) || (width - 1 == player.x && height == player.y)
+			|| (width == player.x && height + 1 == player.y) || (width == player.x && height - 1 == player.y)
+			|| (width + 1 == player.x && height + 1 == player.y) || (width - 1 == player.x && height + 1 == player.y)
+			|| (width + 1 == player.x && height - 1 == player.y) || (width - 1 == player.x && height - 1 == player.y))
+		{
+			gameState = LOSE;
+		}
+	}
+	if (difficulty == 2)
+	{
 		if ((width + 2 == player.x && height == player.y) || (width - 2 == player.x && height == player.y)
 			|| (width == player.x && height + 2 == player.y) || (width == player.x && height - 2 == player.y)
 			|| (width + 2 == player.x && height + 1 == player.y) || (width - 2 == player.x && height + 1 == player.y)
@@ -99,6 +110,7 @@ void enemyDraw(int tileSize)
 					CP_Graphics_DrawCircle((width + 0.5) * tileSize, (height + 0.5) * tileSize, tileSize);
 					break;
 				case AOE_VIEW:
+					fovDraw(width, height, tileSize, enemies[width][height].isActive);
 					CP_Settings_Stroke(CP_Color_Create(255, 0, 0, 255)); //setting stroke color
 					CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));   //setting tile color
 					//CP_Graphics_DrawRect(width * tileSize, height * tileSize, tileSize, tileSize);
