@@ -25,7 +25,7 @@ void game_exit(void);
 void renderGame(void);
 
 //set the initialize values needed in the game.
-void resetGame(void);
+void resetGame(Tile_Size);
 
 void setStartGame(Tile_Size);
 

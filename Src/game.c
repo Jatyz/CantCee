@@ -44,7 +44,7 @@ void game_init(void)
 	Tile_Size = MEDIUM;
 	
 	//setting game init states
-	resetGame();
+	resetGame(Tile_Size);
 
 	//hardcode to test drawing make sure only 1 start point
 	tiles[0][0].type = END;
@@ -80,7 +80,7 @@ void game_init(void)
 	enemies[3][10].isActive = 1;
 
 	setStartGame(Tile_Size);
-	player.setFOV = 1;
+	player.setFOV = 0;
 	gameState = PLAY;
 }
 
@@ -88,7 +88,7 @@ void game_update(void)
 {
 	//level select code
 	if (CP_Input_KeyDown(KEY_F1)) {
-		gameState = WIN;
+		player.counter = 10000;
 	}
 
 	switch (gameState) {
@@ -100,16 +100,19 @@ void game_update(void)
 		renderGame();
 		enemyFOV(Tile_Size);
 		//FOV logic handled here
-		clearFogBackground();
-		//setPlayerFOVFunnel(player.x, player.y, player.direction, returnBounds(Tile_Size), returnBounds(Tile_Size), 2, 10);
-		//setFOVFunnelWallLogic(player.x, player.y, player.direction, returnBounds(Tile_Size), returnBounds(Tile_Size), 2, 10);
-		setIlluminationAdvance(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), 5, 5);
+		if (player.setFOV) {
+			clearFogBackground();
+			//setPlayerFOVFunnel(player.x, player.y, player.direction, returnBounds(Tile_Size), returnBounds(Tile_Size), 2, 10);
+			//setFOVFunnelWallLogic(player.x, player.y, player.direction, returnBounds(Tile_Size), returnBounds(Tile_Size), 2, 10);
+			setIlluminationAdvance(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), 5, 5);
 
-		//Test code for *AHEM* dynamic *AHEM* style FOV independent of actual grid resolution
-		//setIllumination(player.x * 6 + 3, (player.y * 6) + 3, returnBounds(Tile_Size) * 6 + 2, returnBounds(Tile_Size) * 6 + 2, 4 * 6);
-		// 
-		setIlluminationWallLogic(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), 5);
-		//End FOV logic handled area
+			//Test code for *AHEM* dynamic *AHEM* style FOV independent of actual grid resolution
+			//setIllumination(player.x * 6 + 3, (player.y * 6) + 3, returnBounds(Tile_Size) * 6 + 2, returnBounds(Tile_Size) * 6 + 2, 4 * 6);
+			// 
+			setIlluminationWallLogic(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), 5);
+			//End FOV logic handled area	
+		}
+		drawSideBar("Debug level",player.counter);
 		break;
 	case PAUSED:
 		drawFullPanel();
@@ -146,7 +149,7 @@ void renderGame(void) {
 }
 
 //Call this function after setting Tile_Size
-void resetGame(void) {
+void resetGame(Tile_Size) {
 
 	//player color may need to move out of this method to set from the start of the stage itself
 	player.Player_Color = CP_Color_Create(0, 255, 255, 255);

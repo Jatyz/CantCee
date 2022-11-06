@@ -132,5 +132,7 @@ void play_Update()
 // ---------------------------------------------------------------Main Menu Exit---------------------------------------------------------------
 void play_Exit()
 {
+	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 	CP_Settings_RectMode(CP_POSITION_CORNER);
+	CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_LEFT, CP_TEXT_ALIGN_V_BASELINE);
 }
