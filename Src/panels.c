@@ -50,20 +50,20 @@ void drawFullPanel(void) {
 	case LOSE:
 		CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
 		CP_Settings_TextSize(70.f);
-		CP_Font_DrawText("LOSE MENU", panelStartx + 85.f, panelStarty + 60.f);
+		CP_Font_DrawText("LOSE MENU", panelStartx + 250.f, panelStarty + 60.f);
 		// button 2
 		CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
 		CP_Graphics_DrawRect(panelStartx + smallpanelx / 2, panelStarty + smallpanely / 2 + 10, 150, 60);
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 		CP_Settings_TextSize(45.f);
-		CP_Font_DrawText("Restart", panelStartx + 185, panelStarty + 225);
+		CP_Font_DrawText("Restart", panelStartx + 250, panelStarty + 210);
 
 		//button3
 		CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
 		CP_Graphics_DrawRect(panelStartx + smallpanelx / 2, panelStarty + smallpanely / 2 + 100, 150, 60);
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 		CP_Settings_TextSize(30.f);
-		CP_Font_DrawText("Level Select", panelStartx + 180, panelStarty + 310);
+		CP_Font_DrawText("Level Select", panelStartx + 250, panelStarty + 300);
 		break;
 	case WIN:
 		CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
