@@ -51,19 +51,19 @@ void drawFullPanel(void) {
 		CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
 		CP_Settings_TextSize(70.f);
 		CP_Font_DrawText("LOSE MENU", panelStartx + 85.f, panelStarty + 60.f);
+		// button 1
+		CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
+		CP_Graphics_DrawRect(panelStartx + smallpanelx / 2, panelStarty + smallpanely / 2 - 80, 150, 60);
+		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
+		CP_Settings_TextSize(45.f);
+		CP_Font_DrawText("Restart", panelStartx + 180, panelStarty + 135);
+
 		// button 2
 		CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
 		CP_Graphics_DrawRect(panelStartx + smallpanelx / 2, panelStarty + smallpanely / 2 + 10, 150, 60);
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-		CP_Settings_TextSize(45.f);
-		CP_Font_DrawText("Restart", panelStartx + 185, panelStarty + 225);
-
-		//button3
-		CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-		CP_Graphics_DrawRect(panelStartx + smallpanelx / 2, panelStarty + smallpanely / 2 + 100, 150, 60);
-		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 		CP_Settings_TextSize(30.f);
-		CP_Font_DrawText("Level Select", panelStartx + 180, panelStarty + 310);
+		CP_Font_DrawText("Level Select", panelStartx + 185, panelStarty + 225);
 		break;
 	case WIN:
 		CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
@@ -107,62 +107,24 @@ void drawSmallPanel(int panelWidth, int panelHeight, int x, int y, char text[]) 
 }
 
 //check which button the player clicked, the buttons are hard coded spots, so the input check is also hard coded area
-void checkClick(void* (currentLevel)(void),void* (nextLevel)(void)) {
+void checkClick(void* (button1)(void), void* (button2)(void), void* (button3)(void)) {
 	float smallpanelx = 500, smallpanely = 400;
 
 	float panelStartx = 400 - smallpanelx / 2;
 	float panelStarty = 400 - smallpanely / 2;
 
-	int button = 0;
-	//button 1
-	if (IsAreaClicked(panelStartx + smallpanelx / 2, panelStarty + smallpanely / 2 - 80, 150, 60, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
-		button = 1;
-	}
-	//button 2
-	if (IsAreaClicked(panelStartx + smallpanelx / 2, panelStarty + smallpanely / 2 + 10, 150, 60, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
-		button = 2;
-	//button 3
-	if (IsAreaClicked(panelStartx + smallpanelx / 2, panelStarty + smallpanely / 2 + 100, 150, 60, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
-		button = 3;
 
-		switch (gameState)
-		{
-		case PAUSED:
-			switch (button) {
-				//resume
-			case 1:
-				gameState = PLAY;
-				break;
-				//restart
-			case 2:
-				currentLevel();
-				break;
-			case 3:
-				//level select
-				break;
-			}
-			break;
-		case WIN:
-			switch (button) {
-			case 1:
-				nextLevel();
-				break;
-			case 2:
-				currentLevel();
-				break;
-			case 3:
-				//level select
-				break;
-			}
-		case LOSE:
-			switch (button) {
-			case 2:
-				currentLevel();
-				break;
-			case 3:
-				//level select
-				break;
-
-			}
+	if (CP_Input_MouseTriggered(MOUSE_BUTTON_1)) {
+		//button 1
+		if (IsAreaClicked(panelStartx + smallpanelx / 2, panelStarty + smallpanely / 2 - 80, 150, 60, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
+			button1();
+		}
+		//button 2
+		if (IsAreaClicked(panelStartx + smallpanelx / 2, panelStarty + smallpanely / 2 + 10, 150, 60, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+			button2();
+		//button 3
+		if ((IsAreaClicked(panelStartx + smallpanelx / 2, panelStarty + smallpanely / 2 + 100, 150, 60, CP_Input_GetMouseX(), CP_Input_GetMouseY())) && button3 != 0)
+			button3();
 	}
+		
 }

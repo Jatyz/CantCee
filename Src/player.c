@@ -147,6 +147,13 @@ _Bool checkMove(int DirectionX, int DirectionY) {
 	case SWITCH:
 		checkGates(&tiles[player.x + DirectionX][player.y + DirectionY]);
 		break;
+	case END:
+		player.counter++;
+		player.Prev_X = player.x;
+		player.Prev_Y = player.y;
+		gameState = WIN;
+		return TRUE;
+		break;
 	}
 	//change player settings
 	player.counter++;

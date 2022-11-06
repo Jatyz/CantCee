@@ -5,6 +5,7 @@
 #include "cprocessing.h"
 #include "level1.h"
 #include "enemy.h"
+#include "panels.h"
 
 void level1_init(void)
 {
@@ -74,22 +75,38 @@ void level1_init(void)
 
 void level1_update(void)
 {
-	CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
-	handlePlayerInput(Tile_Size);
-	renderGame();
+	switch (gameState) {
+	case PLAY:
+		//clears the screen so things can be redrawn
+		CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
+		handlePlayerInput(Tile_Size);
+		//all the game update methods that needs to be updated every frame
+		renderGame();
+		enemyFOV(Tile_Size);
+		//FOV logic handled here
+		clearFogBackground();
+		//setPlayerFOVFunnel(player.x, player.y, player.direction, returnBounds(Tile_Size), returnBounds(Tile_Size), 2, 10);
+		//setFOVFunnelWallLogic(player.x, player.y, player.direction, returnBounds(Tile_Size), returnBounds(Tile_Size), 2, 10);
+		setIlluminationAdvance(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), 5, 5);
 
-	//FOV logic handled here
-	setPlayerFOVFunnel(player.x, player.y, player.direction, returnBounds(Tile_Size), returnBounds(Tile_Size), 1, 3);
-	setFOVFunnelWallLogic(player.x, player.y, player.direction, returnBounds(Tile_Size), returnBounds(Tile_Size), 1, 3);
-	setIllumination(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), 2);
-	//Test code for *AHEM* dynamic *AHEM* style FOV independent of actual grid resolution
-	//setIllumination(player.x * 6 + 3, (player.y * 6) + 3, returnBounds(Tile_Size) * 6 + 2, returnBounds(Tile_Size) * 6 + 2, 4 * 6);
-
-	//End FOV logic handled area
-
-	//level select code
-	if (CP_Input_KeyDown(KEY_F1)) {
-		CP_Engine_SetNextGameStateForced(level1_init, level1_update, level1_exit);
+		//Test code for *AHEM* dynamic *AHEM* style FOV independent of actual grid resolution
+		//setIllumination(player.x * 6 + 3, (player.y * 6) + 3, returnBounds(Tile_Size) * 6 + 2, returnBounds(Tile_Size) * 6 + 2, 4 * 6);
+		// 
+		setIlluminationWallLogic(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), 5);
+		//End FOV logic handled area
+		break;
+	case PAUSED:
+		drawFullPanel();
+		//checkClick(resumeGame, startGame, startLevelSelect);
+		break;
+	case WIN:
+		drawFullPanel();
+		//checkClick(startLevel1, startGame, startLevelSelect);
+		break;
+	case LOSE:
+		drawFullPanel();
+		//checkClick(startGame, startLevelSelect, 0);
+		break;
 	}
 }
 

@@ -25,8 +25,11 @@ void game_exit(void);
 void renderGame(void);
 
 //set the initialize values needed in the game.
-void setStartGame(void);
+void resetGame(void);
 
+void setStartGame(Tile_Size);
+
+void resumeGame(void);
 
 //global tile size variable
 extern int Tile_Size;
