@@ -41,17 +41,24 @@ extern Tile tiles[MAX_TILES][MAX_TILES];
 
 extern Vent vents[10];
 extern Gate gates[10];
+
 //returns the horizontal and vertical bounds(no. of elements) in the grid to be used for the level. Assumes grid space used is square
 int returnBounds(int tilesize);
 
+//set vents based on assigned
 void setVents();
 
+//reset to null
 void resetVents();
 
+//check if the vents was walked on
 void checkVents(Tile *address);
 
+//set gates and switch based on assigned
 void setGates();
 
+//reset to null
 void resetGates();
 
+//check if a switch was walked on
 void checkGates(Tile* address);

@@ -2,11 +2,12 @@
 #include "grid.h"
 #include "game.h"
 #include "cprocessing.h"
-#include "level1.h"
+#include "level2.h"
 #include "panels.h"
 #include "levelSelect.h"
 
-void level1_init(void)
+
+void level3_init(void)
 {
 	CP_System_SetWindowSize(WINDOW_WIDTH, WINIDOW_HEIGHT);
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
@@ -25,34 +26,33 @@ void level1_init(void)
 	//assign all the floors and walls
 	assignTile(Tile_Size);
 
-	int height, width;
+	int width;
 
 
 	//for loop to go through all the tiles
-	for (height = 0; height < returnBounds(Tile_Size); height++) {
+	for (width = 0; width < returnBounds(Tile_Size); width++) {
 
-		for (width = 0; width < returnBounds(Tile_Size); width++) {
-
-			if (width < 3 || width > 6) {
-				tiles[width][height].type = WALL;
-			}
-			else {
-				tiles[width][height].type = FLOOR;
-
-			}
-
-		}
+		tiles[width][5].type = WALL;
 	}
 
-	
-	tiles[5][9].type = START;
-	tiles[4][0].type = END;
+	tiles[5][0].type = WALL;
+	tiles[5][1].type = WALL;
+	tiles[5][2].type = WALL;
+	tiles[5][3].type = WALL;
+	tiles[5][4].type = WALL;
+	tiles[9][9].type = START;
+	tiles[0][0].type = END;
+	vents[0].tile1 = &tiles[9][0];
+	vents[0].tile2 = &tiles[0][9];
+	gates[0].Door = &tiles[2][5];
+	gates[0].Switch = &tiles[6][4];
+
 	setStartGame(Tile_Size);
 	player.setFOV = 0;
 	gameState = PLAY;
 }
 
-void level1_update(void)
+void level3_update(void)
 {
 	switch (gameState) {
 	case PLAY:
@@ -62,27 +62,25 @@ void level1_update(void)
 		//all the game update methods that needs to be updated every frame
 		renderGame();
 		//End FOV logic handled area
-		drawSideBar("Level 1",player.counter);
-		if (player.counter < 6)
+		drawSideBar("Level 1", player.counter);
+		if (player.counter < 10)
 		{
-			drawSmallPanel((3 - (player.counter / 2)) * Tile_Size, 2 * Tile_Size, 7 * Tile_Size, 6 * Tile_Size, "WASD to move!");
+			drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 7 * Tile_Size, 6 * Tile_Size, "Get to the switch tile to get open the door");
 
 		}
-
-
-		if (player.counter > 6)
+		if (player.counter >28)
 		{
-			drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 0 * Tile_Size, 1 * Tile_Size, "Get to the red tile to win");
+			drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 7 * Tile_Size, 6 * Tile_Size, "After touching the switch, head to the end point through the door tile");
 
 		}
 		break;
 	case PAUSED:
 		drawFullPanel();
-		checkClick(resumeGame, startLevel1, startLevelSelect);
+		checkClick(resumeGame, startLevel3, startLevelSelect);
 		break;
 	case WIN:
 		drawFullPanel();
-		checkClick(startLevel2, startLevel1, startLevelSelect);
+		checkClick(0, startLevel3, startLevelSelect);
 		break;
 	case LOSE:
 		drawFullPanel();
@@ -93,7 +91,7 @@ void level1_update(void)
 
 }
 
-void level1_exit(void)
+void level3_exit(void)
 {
 
 }

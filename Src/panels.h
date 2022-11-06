@@ -1,7 +1,7 @@
 #pragma once
 #include "cprocessing.h"
 
-
+//draw the pause/win/lose menu
 void drawFullPanel(void);
 
 
