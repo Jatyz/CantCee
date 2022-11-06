@@ -28,10 +28,10 @@ void drawFullPanel(void) {
 		CP_Font_DrawText("PAUSE MENU", panelStartx + 85.f, panelStarty + 60.f);
 		// button 1
 		CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-		CP_Graphics_DrawRect(panelStartx+smallpanelx/2, panelStarty + smallpanely/2 - 80 , 150, 60);
+		CP_Graphics_DrawRect(panelStartx + smallpanelx / 2, panelStarty + smallpanely / 2 - 80, 150, 60);
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 		CP_Settings_TextSize(45.f);
-		CP_Font_DrawText("Resume", panelStartx + 180, panelStarty+135);
+		CP_Font_DrawText("Resume", panelStartx + 180, panelStarty + 135);
 
 		// button 2
 		CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
@@ -39,7 +39,7 @@ void drawFullPanel(void) {
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 		CP_Settings_TextSize(45.f);
 		CP_Font_DrawText("Restart", panelStartx + 185, panelStarty + 225);
-		
+
 		//button3
 		CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
 		CP_Graphics_DrawRect(panelStartx + smallpanelx / 2, panelStarty + smallpanely / 2 + 100, 150, 60);
