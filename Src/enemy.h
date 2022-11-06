@@ -27,4 +27,4 @@ typedef struct
 extern Enemy enemies[MAX_TILES][MAX_TILES];
 
 void enemyDraw(int tileSize);
-void enemyFOV(int tileSize);
+void enemyFOV(tileSize);
