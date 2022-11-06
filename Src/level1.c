@@ -4,6 +4,7 @@
 #include "FOV.h"
 #include "cprocessing.h"
 #include "level1.h"
+#include "enemy.h"
 
 void level1_init(void)
 {
@@ -63,6 +64,10 @@ void level1_init(void)
 	setGates();
 
 	setPlayerStartPoint(Tile_Size);
+
+	enemies[3][10].type = AOE_VIEW;
+	enemies[3][10].isActive = 2;
+
 	player.setFOV = 1;
 	gameState = PLAY;
 }

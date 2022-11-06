@@ -2,37 +2,45 @@
 #include "grid.h"
 #include "game.h"
 #include "enemy.h"
-<<<<<<< Updated upstream
-
-
-void drawEnemy(int tilesize) 
-{
-	CP_Settings_Fill(enemies.Enemy_Color);
-	CP_Graphics_DrawRect((enemies.x * tilesize) + (tilesize / 2) - enemies.width / 2, (enemies.y * tilesize) + (tilesize / 2) - enemies.height / 2, enemies.width, enemies.height);
-}
-
-void setEnemyPoint(int tilesize)
-{
-	int Horizontal_Tile = returnBounds(tilesize);
-	int Vertical_Tile = Horizontal_Tile;
-
-	int y, x;
-
-	//do a check to see there is only one start point
-	for (y = 0; y < Horizontal_Tile; y++)
-	{
-		for (x = 0; x < Vertical_Tile; x++)
-		{
-			if (tiles[x][y].type == START)
-			{
-				enemies.x = x;
-				enemies.y = y;
-=======
 #include "player.h"
 #include <math.h>
 
 Enemy enemies[MAX_TILES][MAX_TILES];
 
+//For AOE Enemy
+//(difficulty == 1) Checks 8 grids around AOE Enemy
+//(difficulty == 1) Checks 20 grids around AOE Enemy
+void aoeCheck(int width, int height, int tileSize, int difficulty)
+{
+	if (difficulty == 1)
+	{
+		if ((width + 1 == player.x && height == player.y) || (width - 1 == player.x && height == player.y)
+			|| (width == player.x && height + 1 == player.y) || (width == player.x && height - 1 == player.y)
+			|| (width + 1 == player.x && height + 1 == player.y) || (width - 1 == player.x && height + 1 == player.y)
+			|| (width + 1 == player.x && height - 1 == player.y) || (width - 1 == player.x && height - 1 == player.y))
+		{
+			gameState = LOSE;
+		}
+	}
+	if (difficulty == 2)
+	{
+		if ((width + 1 == player.x && height == player.y) || (width - 1 == player.x && height == player.y)
+			|| (width == player.x && height + 1 == player.y) || (width == player.x && height - 1 == player.y)
+			|| (width + 1 == player.x && height + 1 == player.y) || (width - 1 == player.x && height + 1 == player.y)
+			|| (width + 1 == player.x && height - 1 == player.y) || (width - 1 == player.x && height - 1 == player.y)
+			|| (width + 2 == player.x && height == player.y) || (width - 2 == player.x && height == player.y)
+			|| (width == player.x && height + 2 == player.y) || (width == player.x && height - 2 == player.y)
+			|| (width + 2 == player.x && height + 1 == player.y) || (width - 2 == player.x && height + 1 == player.y)
+			|| (width + 2 == player.x && height - 1 == player.y) || (width - 2 == player.x && height - 1 == player.y)
+			|| (width + 1 == player.x && height + 2 == player.y) || (width - 1 == player.x && height + 2 == player.y)
+			|| (width + 1 == player.x && height - 2 == player.y) || (width - 1 == player.x && height - 2 == player.y)
+			|| (width + 2 == player.x && height + 2 == player.y) || (width - 2 == player.x && height + 2 == player.y)
+			|| (width + 2 == player.x && height - 2 == player.y) || (width - 2 == player.x && height - 2 == player.y))
+		{
+			gameState = LOSE;
+		}
+	}
+}
 
 void enemyDraw(int tileSize)
 {
@@ -52,25 +60,22 @@ void enemyDraw(int tileSize)
 				switch (enemies[width][height].type)
 				{
 				case TWO_WAY_LOOK:
-					CP_Settings_Stroke(CP_Color_Create(255, 0, 0, 255)); //setting stroke color
-					CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));   //setting tile color
-					CP_Graphics_DrawRect(width * tileSize, height * tileSize, tileSize, tileSize);
+					CP_Settings_Stroke(CP_Color_Create(255, 0, 0, 150)); //setting stroke color
+					CP_Settings_Fill(CP_Color_Create(255, 0, 0, 150));   //setting tile color
+					CP_Graphics_DrawCircle((width + 0.5) * tileSize, (height + 0.5) * tileSize, tileSize);
 					break;
 				case AOE_VIEW:
-					CP_Settings_Stroke(CP_Color_Create(255, 0, 0, 255)); //setting stroke color
-					CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));   //setting tile color
-					CP_Graphics_DrawRect(width * tileSize, height * tileSize, tileSize, tileSize);
+					CP_Settings_Stroke(CP_Color_Create(255, 0, 0, 150)); //setting stroke color
+					CP_Settings_Fill(CP_Color_Create(255, 0, 0, 150));   //setting tile color
+					//CP_Graphics_DrawRect(width * tileSize, height * tileSize, tileSize, tileSize);
+					CP_Graphics_DrawCircle((width + 0.5) * tileSize, (height + 0.5) * tileSize, tileSize);
 					break;
 				}
->>>>>>> Stashed changes
 			}
 		}
 	}
 }
 
-<<<<<<< Updated upstream
-
-=======
 void enemyFOV(tileSize)
 {
 	int Horizontal_Tile = returnBounds(tileSize);
@@ -83,43 +88,54 @@ void enemyFOV(tileSize)
 		{
 			if (enemies[width][height].isActive)
 			{
-				int wallX = width;
+				int wallXPlus = width;
+				int wallXMinus = width;
 				int wallY = height;
 
 				switch (enemies[width][height].type)
 				{
 				case TWO_WAY_LOOK:
-					for (int i = 0; i <=4; i++)
+					for (int i = 0 ; i <= 4 ; i++)
 					{
 						if (width + i <= returnBounds(tileSize) && tiles[width + i][height].type == WALL)
 						{
-							wallX = width + i;
+							wallXPlus = width + i;
 							break;
 						}
-						if (width - i == player.x && height == player.y)
+						if (width - i >= 0 && tiles[width - i][height].type == WALL)
+						{
+							wallXMinus = width - i;
+							break;
+						}
+						if ((wallXPlus == player.x && height == player.y) || (wallXMinus == player.x && height == player.y))
 						{
 							//kill player here for shanding in FOV
 							gameState = LOSE;
 							break;
 						}
-						if ( width - i >= 0 && tiles[width - i][height].type == WALL)
-						{
-							wallX = width - i;
-							break;
-						}
 					}
-					if (abs(player.x)>abs(wallX)) 
+					if (abs(player.x) > abs(wallXPlus)) 
 					{
 						break;
 					}
-					for (int i = 0; i <=4; i++)
+
+					if (abs(player.x) < abs(wallXMinus))
+					{
+						break;
+					}
+					for (int i = 0 ; i <=4; i++)
 					{
 						if (height + i <= returnBounds(tileSize) && tiles[width][height + i].type == WALL)
 						{
 							wallY = height + i;
 							break;
 						}
-						//
+						if ((height + i == player.y && width == player.x) || (height - i == player.y && width == player.x))
+						{
+							//kill player here for shanding in FOV
+							gameState = LOSE;
+							break;
+						}
 						if (height - i >= 0 && tiles[width][height - i].type == WALL)
 						{
 							wallY = height - i;
@@ -132,7 +148,7 @@ void enemyFOV(tileSize)
 					}
 					break;
 				case AOE_VIEW:
-
+					aoeCheck(width, height, tileSize, enemies[width][height].isActive);
 					break;
 				}
 			}
@@ -141,4 +157,3 @@ void enemyFOV(tileSize)
 }
 
 //at end, make gamestate = LOSE;
->>>>>>> Stashed changes
