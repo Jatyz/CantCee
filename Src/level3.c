@@ -62,15 +62,16 @@ void level3_update(void)
 		//all the game update methods that needs to be updated every frame
 		renderGame();
 		//End FOV logic handled area
-		drawSideBar("Level 1", player.counter);
+		drawSideBar("Level 3", player.counter);
 		if (player.counter < 10)
 		{
-			drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 7 * Tile_Size, 6 * Tile_Size, "Get to the switch tile to get open the door");
+			drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 6 * Tile_Size, 1 * Tile_Size, "The switch to the door is in this room.");
+			drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 7 * Tile_Size, 6 * Tile_Size, "using the vents you can get over and open the door.");
 
 		}
-		if (player.counter >28)
+		if (player.counter >15)
 		{
-			drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 7 * Tile_Size, 6 * Tile_Size, "After touching the switch, head to the end point through the door tile");
+			drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 7 * Tile_Size, 6 * Tile_Size, "After touching the switch, the door is opened");
 
 		}
 		break;
@@ -80,11 +81,11 @@ void level3_update(void)
 		break;
 	case WIN:
 		drawFullPanel();
-		checkClick(0, startLevel3, startLevelSelect);
+		checkClick(startLevel4, startLevel3, startLevelSelect);
 		break;
 	case LOSE:
 		drawFullPanel();
-		checkClick(startGame, startLevelSelect, 0);
+		checkClick(startLevel3, startLevelSelect, 0);
 		break;
 	}
 

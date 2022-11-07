@@ -2,11 +2,12 @@
 #include "grid.h"
 #include "game.h"
 #include "cprocessing.h"
-#include "level1.h"
+#include "level4.h"
 #include "panels.h"
 #include "levelSelect.h"
+#include "enemy.h"
 
-void level1_init(void)
+void level4_init(void)
 {
 	CP_System_SetWindowSize(WINDOW_WIDTH, WINIDOW_HEIGHT);
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
@@ -44,15 +45,19 @@ void level1_init(void)
 		}
 	}
 
-	
+
 	tiles[5][9].type = START;
 	tiles[4][0].type = END;
+
+	enemies[5][5].type = AOE_VIEW;
+	enemies[5][5].isActive = 1;
+
 	setStartGame(Tile_Size);
 	player.setFOV = 0;
 	gameState = PLAY;
 }
 
-void level1_update(void)
+void level4_update(void)
 {
 	switch (gameState) {
 	case PLAY:
@@ -61,40 +66,41 @@ void level1_update(void)
 		handlePlayerInput(Tile_Size);
 		//all the game update methods that needs to be updated every frame
 		renderGame();
+		enemyFOV(Tile_Size);
 		//End FOV logic handled area
-		drawSideBar("Level 1",player.counter);
+		drawSideBar("Level 4", player.counter);
 		if (player.counter < 6)
 		{
-			drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 0 * Tile_Size, 1 * Tile_Size, "Welcome to basic stealth training. You will be trained to infiltrate the enemy base.");
-			drawSmallPanel((3 - (player.counter / 2)) * Tile_Size, 2 * Tile_Size, 7 * Tile_Size, 6 * Tile_Size, "Press WASD to move.");
+			drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 0 * Tile_Size, 1 * Tile_Size, "Enemy has their own detection system avoid walking into their vision");
+			drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 7 * Tile_Size, 6 * Tile_Size, "You will lose when you walk into their vision");
 
 		}
 
 
 		if (player.counter > 6)
 		{
-			drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 0 * Tile_Size, 1 * Tile_Size, "Get to the red tile proceed to next stage");
+			drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 0 * Tile_Size, 1 * Tile_Size, "Get to the red tile to proceed");
 
 		}
 		break;
 	case PAUSED:
 		drawFullPanel();
-		checkClick(resumeGame, startLevel1, startLevelSelect);
+		checkClick(resumeGame, startLevel4, startLevelSelect);
 		break;
 	case WIN:
 		drawFullPanel();
-		checkClick(startLevel2, startLevel1, startLevelSelect);
+		checkClick(0, startLevel4, startLevelSelect);
 		break;
 	case LOSE:
 		drawFullPanel();
-		checkClick(startLevel1, startLevelSelect, 0);
+		checkClick(startLevel4, startLevelSelect, 0);
 		break;
 	}
 
 
 }
 
-void level1_exit(void)
+void level4_exit(void)
 {
 
 }

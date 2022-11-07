@@ -55,10 +55,10 @@ void level2_update(void)
 		//all the game update methods that needs to be updated every frame
 		renderGame();
 		//End FOV logic handled area
-		drawSideBar("Level 1", player.counter);
-		if (player.counter < 6)
+		drawSideBar("Level 2", player.counter);
+		if (player.counter < 10)
 		{
-			drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 7 * Tile_Size, 6 * Tile_Size, "Get to the vent tile to get to the other side");
+			drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 7 * Tile_Size, 6 * Tile_Size, "Using the vent tiles, you can crawl through vents to end on the other side.");
 
 		}
 
@@ -73,7 +73,7 @@ void level2_update(void)
 		break;
 	case LOSE:
 		drawFullPanel();
-		checkClick(startGame, startLevelSelect, 0);
+		checkClick(startLevel2, startLevelSelect, 0);
 		break;
 	}
 
