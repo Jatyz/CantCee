@@ -158,6 +158,7 @@ void enemyDraw(int tileSize)
 			}
 		}
 	}
+
 }
 
 void enemyFOV(tileSize)

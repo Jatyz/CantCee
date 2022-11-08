@@ -44,7 +44,7 @@ void game_init(void)
 	Tile_Size = MEDIUM;
 	
 	//setting game init states
-	setStartGame();
+	resetGame(Tile_Size);
 
 	//hardcode to test drawing make sure only 1 start point
 	tiles[0][0].type = END;
@@ -71,20 +71,17 @@ void game_init(void)
 	vents[0].tile1 = &tiles[9][0];
 	vents[0].tile2 = &tiles[0][8];
 
-	setVents();
-
 	tiles[4][5].type = WALL;
 	gates[0].Door = &tiles[4][6];
 	gates[0].Switch = &tiles[9][8];
 
-	setGates();
-
-	setPlayerStartPoint(Tile_Size);
 
 	enemies[5][8].type = AOE_VIEW;
 	enemies[5][8].isActive = 1;
 	enemies[5][8].difficulty = 1;
 
+
+	setStartGame(Tile_Size);
 
 	player.setFOV = 0;
 	gameState = PLAY;
@@ -92,42 +89,47 @@ void game_init(void)
 
 void game_update(void)
 {
-
-
-	//clears the screen so things can be redrawn
-	CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
-
-	//all the game update methods that needs to be updated every frame
-
-	if (gameState == PLAY) {
-		handlePlayerInput(Tile_Size);
-	}
-	renderGame();
-	enemyFOV(Tile_Size);
-	//FOV logic handled here
-	clearFogBackground();
-	//setPlayerFOVFunnel(player.x, player.y, player.direction, returnBounds(Tile_Size), returnBounds(Tile_Size), 2, 10);
-	//setFOVFunnelWallLogic(player.x, player.y, player.direction, returnBounds(Tile_Size), returnBounds(Tile_Size), 2, 10);
-	setIlluminationAdvance(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), 5, 5);
-
-	//Test code for *AHEM* dynamic *AHEM* style FOV independent of actual grid resolution
-	//setIllumination(player.x * 6 + 3, (player.y * 6) + 3, returnBounds(Tile_Size) * 6 + 2, returnBounds(Tile_Size) * 6 + 2, 4 * 6);
-	// 
-	setIlluminationWallLogic(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), 5);
-	//End FOV logic handled area
-
 	//level select code
 	if (CP_Input_KeyDown(KEY_F1)) {
-		gameState = WIN;
-	}
-	if (gameState != PLAY) {
-		drawFullPanel();
-		if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
-		{
-			checkClick(startGame, startLevel1);
-		}
+		player.counter = 10000;
 	}
 
+	switch (gameState) {
+	case PLAY:
+		//clears the screen so things can be redrawn
+		CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
+		handlePlayerInput(Tile_Size);
+		//all the game update methods that needs to be updated every frame
+		renderGame();
+		enemyFOV(Tile_Size);
+		//FOV logic handled here
+		if (player.setFOV) {
+			clearFogBackground();
+			//setPlayerFOVFunnel(player.x, player.y, player.direction, returnBounds(Tile_Size), returnBounds(Tile_Size), 2, 10);
+			//setFOVFunnelWallLogic(player.x, player.y, player.direction, returnBounds(Tile_Size), returnBounds(Tile_Size), 2, 10);
+			setIlluminationAdvance(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), 5, 5);
+
+			//Test code for *AHEM* dynamic *AHEM* style FOV independent of actual grid resolution
+			//setIllumination(player.x * 6 + 3, (player.y * 6) + 3, returnBounds(Tile_Size) * 6 + 2, returnBounds(Tile_Size) * 6 + 2, 4 * 6);
+			// 
+			setIlluminationWallLogic(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), 5);
+			//End FOV logic handled area	
+		}
+		drawSideBar("Debug level",player.counter);
+		break;
+	case PAUSED:
+		drawFullPanel();
+		checkClick(resumeGame, startGame, startLevelSelect);
+		break;
+	case WIN:
+		drawFullPanel();
+		checkClick(startLevel1, startGame, startLevelSelect);
+		break;
+	case LOSE:
+		drawFullPanel();
+		checkClick(startGame, startLevelSelect,0);
+		break;
+	}
 }
 
 void game_exit(void)
@@ -150,7 +152,7 @@ void renderGame(void) {
 }
 
 //Call this function after setting Tile_Size
-void setStartGame(void) {
+void resetGame(Tile_Size) {
 
 	//player color may need to move out of this method to set from the start of the stage itself
 	player.Player_Color = CP_Color_Create(0, 255, 255, 255);
@@ -169,4 +171,15 @@ void setStartGame(void) {
 	resetVents();
 	resetGates();
 	assignTile(Tile_Size);//assign all tiles
+}
+
+void resumeGame(void)
+{
+	gameState = PLAY;
+}
+
+void setStartGame(Tile_Size) {
+	setVents();
+	setGates();
+	setPlayerStartPoint(Tile_Size);
 }

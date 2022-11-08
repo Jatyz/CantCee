@@ -1,7 +1,11 @@
 #include "cprocessing.h"
 #include "level1.h"
+#include "level2.h"
+#include "level3.h"
+#include "level4.h"
+#include "level6.h"
 #include "game.h"
-
+#include "play.h"
 #include "mainmenu.h"
 
 
@@ -56,13 +60,37 @@ void startLevel1(void)
 	CP_Engine_SetNextGameStateForced(level1_init, level1_update, level1_exit);
 }
 
+void startLevel2(void)
+{
+	CP_Engine_SetNextGameStateForced(level2_init, level2_update, level2_exit);
+}
+
+void startLevel3(void)
+{
+	CP_Engine_SetNextGameStateForced(level3_init, level3_update, level3_exit);
+}
+
+void startLevel4(void)
+{
+	CP_Engine_SetNextGameStateForced(level4_init, level4_update, level4_exit);
+}
+
+void startLevel6(void)
+{
+	CP_Engine_SetNextGameStateForced(level6_init, level6_update, level6_exit);
+}
+
 void startGame(void)
 {
 	CP_Engine_SetNextGameStateForced(game_init, game_update, game_exit);
 }
 
+void startLevelSelect(void) {
+
+	CP_Engine_SetNextGameStateForced(play_Init, play_Update, play_Exit);
+}
 
 void levelSelection_Exit()
 {
-
+	
 }

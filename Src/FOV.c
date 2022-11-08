@@ -105,6 +105,7 @@ void setIlluminationWallLogic
 							fabs( angleOfPointR2(fabs(xAxis - playerXPos), fabs(yAxis - playerYPos))
 								- angleOfPointR2(fabs(xAxis - playerXPos) + 1, fabs(yAxis - playerYPos)));	
 						allowance = fmod(allowance, 46);
+						allowance += 0.000001;
 
 						angleOfAllowance[anglesToBeShadedSize] = allowance;			//set the angle of allowance to the current angle of allowance
 						anglesToBeShadedSize++;					//increase the counter of the number of angles to check
@@ -131,6 +132,7 @@ void setIlluminationWallLogic
 							fabs(angleOfPointR2(fabs(xAxis - playerXPos), fabs(yAxis - playerYPos))
 								- angleOfPointR2(fabs(xAxis - playerXPos) + 1, fabs(yAxis - playerYPos)));						
 						allowance = fmod(allowance,46);
+						allowance += 0.000001;
 
 						angleOfAllowance[anglesToBeShadedSize] = allowance;			//set the angle of allowance to the current angle of allowance
 						anglesToBeShadedSize++;					//increase the counter of the number of angles to check
