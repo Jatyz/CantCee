@@ -109,6 +109,7 @@ xcopy "$(SolutionDir)Assets\*" "$(OutDir)Assets\" /s /r /y /q
     <ClCompile Include="..\Src\level2.c" />
     <ClCompile Include="..\Src\level3.c" />
     <ClCompile Include="..\Src\level4.c" />
+    <ClCompile Include="..\Src\level6.c" />
     <ClCompile Include="..\Src\levelselect.c" />
     <ClCompile Include="..\Src\main.c" />
     <ClCompile Include="..\Src\mainmenu.c" />
@@ -129,6 +130,7 @@ xcopy "$(SolutionDir)Assets\*" "$(OutDir)Assets\" /s /r /y /q
     <ClInclude Include="..\Src\level2.h" />
     <ClInclude Include="..\Src\level3.h" />
     <ClInclude Include="..\Src\level4.h" />
+    <ClInclude Include="..\Src\level6.h" />
     <ClInclude Include="..\Src\levelselect.h" />
     <ClInclude Include="..\Src\main.h" />
     <ClInclude Include="..\Src\mainmenu.h" />
