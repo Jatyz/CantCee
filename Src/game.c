@@ -76,10 +76,13 @@ void game_init(void)
 	gates[0].Switch = &tiles[9][8];
 
 
-	enemies[3][10].type = AOE_VIEW;
-	enemies[3][10].isActive = 1;
+	enemies[5][8].type = AOE_VIEW;
+	enemies[5][8].isActive = 1;
+	enemies[5][8].difficulty = 1;
+
 
 	setStartGame(Tile_Size);
+
 	player.setFOV = 0;
 	gameState = PLAY;
 }
