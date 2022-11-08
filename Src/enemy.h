@@ -9,7 +9,7 @@
 
 typedef enum
 {
-	FOUR_WAY_LOOK, AOE_VIEW, DIAGONAL_LOOK
+	VERTICAL_HORIZONTAL_LOOK, AOE_VIEW, DIAGONAL_LOOK
 }EnemyType;
 
 typedef struct
@@ -23,5 +23,6 @@ typedef struct
 
 extern Enemy enemies[MAX_TILES][MAX_TILES];
 
-void enemyDraw(int tileSize);
-void enemyFOV(tileSize);
+void drawEnemy(int tileSize);
+void enemyFOV(int tileSize);
+void enemyReset(int tileSize);
