@@ -11,47 +11,148 @@ Enemy enemies[MAX_TILES][MAX_TILES];
 //(difficulty == 1) Checks 8 grids around AOE Enemy
 //(difficulty == 2) Checks 20 grids around AOE Enemy
 
-int enemyBounds(int xdir, int ydir, int enemyXPos, int enemyYPos, int range)
+int enemyBounds(int xdir, int ydir, int enemyXPos, int enemyYPos, int range, int difficulty)
 {
-	for (int counter = 1; counter <= range; counter++)
+	switch (enemies[enemyXPos][enemyYPos].type)
 	{
-		if (tiles[enemyXPos + (xdir * counter)][enemyYPos + (ydir * counter)].type == WALL)
+	case VERTICAL_HORIZONTAL_LOOK:
+		for (int counter = 1; counter <= range; counter++)
 		{
-			return counter;
+			if (tiles[enemyXPos + (xdir * counter)][enemyYPos + (ydir * counter)].type == WALL
+				&& (enemyXPos + (xdir * counter) >= 0)
+				&& (enemyYPos + (ydir * counter) >= 0)
+				&& (enemyXPos + (xdir * counter) <= Tile_Size)
+				&& (enemyYPos + (ydir * counter) <= Tile_Size))
+			{
+				return counter;
+			}
 		}
+		return range;
+		break;
+	case AOE_VIEW:
+		if (difficulty == 1)
+		{
+
+			CP_Settings_Stroke(enemies[enemyXPos][enemyYPos].Enemy_Color);
+			CP_Settings_Fill(enemies[enemyXPos][enemyYPos].Enemy_Color);
+			for (int xPos = enemyXPos - 1; xPos < (enemyXPos + 2); xPos++)
+			{
+				for (int yPos = enemyYPos - 1; yPos < (enemyYPos + 2); yPos++)
+				{
+					int wallXPos;
+					int wallYPos;
+					if (tiles[xPos][yPos].type != WALL)
+					{
+						if (player.x == xPos && player.y == yPos)
+						{
+							return 1;
+						}
+					}
+
+					//else if (tiles[xPos][yPos].type == WALL)
+					//{
+					//	wallXPos = xPos;
+					//	wallYPos = yPos;
+					//}
+				}
+			}
+		}
+
+		if (difficulty == 2)
+		{
+			CP_Settings_Stroke(enemies[enemyXPos][enemyYPos].Enemy_Color);
+			CP_Settings_Fill(enemies[enemyXPos][enemyYPos].Enemy_Color);
+			for (int xPos = enemyXPos - 2; xPos < (enemyXPos + 3); xPos++)
+			{
+				for (int yPos = enemyYPos - 2; yPos < (enemyYPos + 3); yPos++)
+				{
+					int wallXPos;
+					int wallYPos;
+					if (tiles[xPos][yPos].type != WALL)
+					{
+						if (player.x == xPos && player.y == yPos)
+						{
+							return 1;
+						}
+					}
+					//else if (tiles[xPos][yPos].type == WALL)
+					//{
+					//	wallXPos = xPos;
+					//	wallYPos = yPos;
+					//}
+				}
+			}
+		}
+		return 0;
+		break;
+	case DIAGONAL_LOOK:
+		for (int counter = 1; counter <= range; counter++)
+		{
+			if (tiles[enemyXPos + (xdir * counter)][enemyYPos + (ydir * counter)].type == WALL
+				&& (enemyXPos + (xdir * counter) >= 0)
+				&& (enemyYPos + (ydir * counter) >= 0)
+				&& (enemyXPos + (xdir * counter) <= Tile_Size)
+				&& (enemyYPos + (ydir * counter) <= Tile_Size))
+			{
+				return counter;
+			}
+		}
+		return range;
+		break;
 	}
-	return range;
 }
 
 void drawBounds(int xdir, int ydir, int enemyXPos, int enemyYPos, int range, int tileSize, int difficulty)
 {
+	Red = CP_Color_Create(255, 0, 0, 40);
+	Green = CP_Color_Create(0, 255, 0, 40);
+	Blue = CP_Color_Create(0, 0, 255, 40);
+
 	switch (enemies[enemyXPos][enemyYPos].type)
 	{
-	case FOUR_WAY_LOOK:
+	case VERTICAL_HORIZONTAL_LOOK:
 		for (int counter = 1; counter <= range; counter++)
 		{
 			if (tiles[enemyXPos + (xdir * counter)][enemyYPos + (ydir * counter)].type == WALL)
 			{
 				return NULL;
 			}
-			CP_Settings_Stroke(CP_Color_Create(255, 0, 0, 40)); //setting stroke color
-			CP_Settings_Fill(CP_Color_Create(255, 0, 0, 40));   //setting tile color
-			CP_Graphics_DrawCircle((enemyXPos + (xdir * counter) + 0.5) * tileSize, (enemyYPos + (ydir * counter) + 0.5) * tileSize, tileSize);
+			else
+			{
+				CP_Settings_Stroke(enemies[enemyXPos][enemyYPos].Enemy_Color);
+				CP_Settings_Fill(enemies[enemyXPos][enemyYPos].Enemy_Color);
+				CP_Graphics_DrawCircle((enemyXPos + (xdir * counter) + 0.5) * tileSize, (enemyYPos + (ydir * counter) + 0.5) * tileSize, tileSize);
+				CP_Settings_NoStroke();
+			}
 		}
 		break;
 	case AOE_VIEW:
 		if (difficulty == 1)
 		{
 
-			CP_Settings_Stroke(CP_Color_Create(255, 0, 0, 40)); //setting stroke color
-			CP_Settings_Fill(CP_Color_Create(255, 0, 0, 40));   //setting tile color
+			CP_Settings_Stroke(enemies[enemyXPos][enemyYPos].Enemy_Color);
+			CP_Settings_Fill(enemies[enemyXPos][enemyYPos].Enemy_Color);
 			for (int xPos = enemyXPos - 1; xPos < (enemyXPos + 2); xPos++)
 			{
 				for (int yPos = enemyYPos - 1; yPos < (enemyYPos + 2); yPos++)
 				{
+					int wallXPos;
+					int wallYPos;
 					if (tiles[xPos][yPos].type != WALL)
 					{
 						CP_Graphics_DrawCircle((xPos + 0.5) * tileSize, (yPos + 0.5) * tileSize, tileSize);
+						CP_Settings_NoStroke();
+					}
+
+					else if (tiles[xPos][yPos].type == WALL)
+					{
+						wallXPos = xPos;
+						wallYPos = yPos;
+						if (wallXPos > enemyXPos && wallYPos < enemyYPos)
+						{
+							CP_Settings_NoFill();
+							CP_Settings_NoStroke();
+						}
 					}
 				}
 			}
@@ -59,59 +160,45 @@ void drawBounds(int xdir, int ydir, int enemyXPos, int enemyYPos, int range, int
 
 		if (difficulty == 2)
 		{
-			CP_Settings_Stroke(CP_Color_Create(255, 0, 0, 40)); //setting stroke color
-			CP_Settings_Fill(CP_Color_Create(255, 0, 0, 40));   //setting tile color
+			CP_Settings_Stroke(enemies[enemyXPos][enemyYPos].Enemy_Color);
+			CP_Settings_Fill(enemies[enemyXPos][enemyYPos].Enemy_Color);
 			for (int xPos = enemyXPos - 2; xPos < (enemyXPos + 3); xPos++)
 			{
 				for (int yPos = enemyYPos - 2; yPos < (enemyYPos + 3); yPos++)
 				{
+					int wallXPos;
+					int wallYPos;
 					if (tiles[xPos][yPos].type != WALL)
 					{
 						CP_Graphics_DrawCircle((xPos + 0.5) * tileSize, (yPos + 0.5) * tileSize, tileSize);
+						CP_Settings_NoStroke();
+					}
+					else if (tiles[xPos][yPos].type == WALL)
+					{
+						wallXPos = xPos;
+						wallYPos = yPos;
 					}
 				}
 			}
 		}
 		break;
+	case DIAGONAL_LOOK:
+		for (int counter = 1; counter <= range; counter++)
+		{
+			if (tiles[enemyXPos + (xdir * counter)][enemyYPos + (ydir * counter)].type == WALL)
+			{
+				return NULL;
+			}
+			CP_Settings_Stroke(enemies[enemyXPos][enemyYPos].Enemy_Color);
+			CP_Settings_Fill(enemies[enemyXPos][enemyYPos].Enemy_Color);
+			CP_Graphics_DrawCircle((enemyXPos + (xdir * counter) + 0.5) * tileSize, (enemyYPos + (ydir * counter) + 0.5) * tileSize, tileSize);
+			CP_Settings_NoStroke();
+		}
+		break;
 	}
 }
 
-void aoeFOV(int width, int height, int tileSize, int difficulty)
-{
-	if (difficulty == 1)
-	{
-		if ((width + 1 == player.x && height == player.y) || (width - 1 == player.x && height == player.y)
-			|| (width == player.x && height + 1 == player.y) || (width == player.x && height - 1 == player.y)
-			|| (width + 1 == player.x && height + 1 == player.y) || (width - 1 == player.x && height + 1 == player.y)
-			|| (width + 1 == player.x && height - 1 == player.y) || (width - 1 == player.x && height - 1 == player.y))
-		{
-			gameState = LOSE;
-		}
-	}
-	if (difficulty == 2)
-	{
-		if ((width + 1 == player.x && height == player.y && tiles[width + 1][height].type != WALL)
-			|| (width - 1 == player.x && height == player.y && tiles[width - 1][height].type != WALL)
-			|| (width == player.x && height + 1 == player.y && tiles[width][height + 1].type != WALL)
-			|| (width == player.x && height - 1 == player.y && tiles[width][height - 1].type != WALL)
-			|| (width + 1 == player.x && height + 1 == player.y && tiles[width + 1][height + 1].type != WALL)
-			|| (width - 1 == player.x && height + 1 == player.y && tiles[width - 1][height + 1].type != WALL)
-			|| (width + 1 == player.x && height - 1 == player.y) || (width - 1 == player.x && height - 1 == player.y)
-			|| (width + 2 == player.x && height == player.y) || (width - 2 == player.x && height == player.y)
-			|| (width == player.x && height + 2 == player.y) || (width == player.x && height - 2 == player.y)
-			|| (width + 2 == player.x && height + 1 == player.y) || (width - 2 == player.x && height + 1 == player.y)
-			|| (width + 2 == player.x && height - 1 == player.y) || (width - 2 == player.x && height - 1 == player.y)
-			|| (width + 1 == player.x && height + 2 == player.y) || (width - 1 == player.x && height + 2 == player.y)
-			|| (width + 1 == player.x && height - 2 == player.y) || (width - 1 == player.x && height - 2 == player.y)
-			|| (width + 2 == player.x && height + 2 == player.y) || (width - 2 == player.x && height + 2 == player.y)
-			|| (width + 2 == player.x && height - 2 == player.y) || (width - 2 == player.x && height - 2 == player.y))
-		{
-			gameState = LOSE;
-		}
-	}
-}
-
-void enemyDraw(int tileSize)
+void drawEnemy(int tileSize)
 {
 	//getting array bounds
 	int Horizontal_Tile = returnBounds(tileSize);
@@ -128,37 +215,55 @@ void enemyDraw(int tileSize)
 			{
 				switch (enemies[width][height].type)
 				{
-				case FOUR_WAY_LOOK:
-					drawBounds(1, 0, width, height, enemies[width][height].range, tileSize, 0);
-					drawBounds(-1, 0, width, height, enemies[width][height].range, tileSize, 0);
-					drawBounds(0, 1, width, height, enemies[width][height].range, tileSize, 0);
-					drawBounds(0, -1, width, height, enemies[width][height].range, tileSize, 0);
-					CP_Settings_Stroke(CP_Color_Create(255, 0, 0, 255)); //setting stroke color
-					CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));   //setting tile color
+				case VERTICAL_HORIZONTAL_LOOK:
+					drawBounds(1, 0, width, height, enemies[width][height].range, tileSize, enemies[width][height].difficulty);
+					drawBounds(-1, 0, width, height, enemies[width][height].range, tileSize, enemies[width][height].difficulty);
+					drawBounds(0, 1, width, height, enemies[width][height].range, tileSize, enemies[width][height].difficulty);
+					drawBounds(0, -1, width, height, enemies[width][height].range, tileSize, enemies[width][height].difficulty);
+					CP_Settings_Stroke(enemies[width][height].Enemy_Color);
+					CP_Settings_Fill(enemies[width][height].Enemy_Color);
 					CP_Graphics_DrawCircle((width + 0.5) * tileSize, (height + 0.5) * tileSize, tileSize);
+					CP_Settings_NoStroke();
 					break;
 				case AOE_VIEW:
 					drawBounds(0, 0, width, height, enemies[width][height].range, tileSize, enemies[width][height].difficulty);
-					CP_Settings_Stroke(CP_Color_Create(255, 0, 0, 255)); //setting stroke color
-					CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));   //setting tile color
-					//CP_Graphics_DrawRect(width * tileSize, height * tileSize, tileSize, tileSize);
+					CP_Settings_Stroke(enemies[width][height].Enemy_Color);
+					CP_Settings_Fill(enemies[width][height].Enemy_Color);
 					CP_Graphics_DrawCircle((width + 0.5) * tileSize, (height + 0.5) * tileSize, tileSize);
+					CP_Settings_NoStroke();
 					break;
 				case DIAGONAL_LOOK:
-					drawBounds(1, 1, width, height, enemies[width][height].range, tileSize, 0);
-					drawBounds(1, -1, width, height, enemies[width][height].range, tileSize, 0);
-					drawBounds(-1, 1, width, height, enemies[width][height].range, tileSize, 0);
-					drawBounds(-1, -1, width, height, enemies[width][height].range, tileSize, 0);
-					CP_Settings_Stroke(CP_Color_Create(255, 0, 0, 255)); //setting stroke color
-					CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));   //setting tile color
-					//CP_Graphics_DrawRect(width * tileSize, height * tileSize, tileSize, tileSize);
+					drawBounds(1, 1, width, height, enemies[width][height].range, tileSize, enemies[width][height].difficulty);
+					drawBounds(1, -1, width, height, enemies[width][height].range, tileSize, enemies[width][height].difficulty);
+					drawBounds(-1, 1, width, height, enemies[width][height].range, tileSize, enemies[width][height].difficulty);
+					drawBounds(-1, -1, width, height, enemies[width][height].range, tileSize, enemies[width][height].difficulty);
+					CP_Settings_Stroke(enemies[width][height].Enemy_Color);
+					CP_Settings_Fill(enemies[width][height].Enemy_Color);
 					CP_Graphics_DrawCircle((width + 0.5) * tileSize, (height + 0.5) * tileSize, tileSize);
+					CP_Settings_NoStroke();
 					break;
 				}
 			}
 		}
 	}
 
+}
+
+void enemyReset(int tileSize)
+{
+
+	int Horizontal_Tile = returnBounds(tileSize);
+	int Vertical_Tile = Horizontal_Tile;
+	int height, width;
+
+	for (int width = 0; width < Horizontal_Tile; width++)
+	{
+		for (int height = 0; height < Vertical_Tile; height++)
+		{
+			CP_Settings_NoStroke();
+			CP_Settings_NoFill();
+		}
+	}
 }
 
 void enemyFOV(tileSize)
@@ -175,78 +280,102 @@ void enemyFOV(tileSize)
 			{
 				switch (enemies[width][height].type)
 				{
-					case FOUR_WAY_LOOK:
-					//checks to the right of the enemy
+					case VERTICAL_HORIZONTAL_LOOK:
+					//checks to the right of the enemy and checks if player has entered enemy's FOV
 					if (width - player.x > 0 && player.y == height)
 					{
-						if (abs(width - player.x) <= enemyBounds(1, 0, width, height, enemies[width][height].range))
+						if (abs(width - player.x) <= enemyBounds(1, 0, width, height, enemies[width][height].range, enemies[width][height].difficulty))
 						{
+							//if (player.Player_Color == enemies[width][height].Enemy_Color)
+							//{
 							gameState = LOSE;
+							//}
 						}
 					}
-					//checks to the left of the enemy
+					//checks to the left of the enemy and checks if player has entered enemy's FOV
 					if (width - player.x < 0 && player.y == height)
 					{
 
-						if (abs(width - player.x) <= enemyBounds(-1, 0, width, height, enemies[width][height].range))
+						if (abs(width - player.x) <= enemyBounds(-1, 0, width, height, enemies[width][height].range, enemies[width][height].difficulty))
 						{
 							gameState = LOSE;
 						}
 					}
-
-					//checks to the bottom of the enemy
+					//checks to the bottom of the enemy and checks if player has entered enemy's FOV
 					if (player.x == width && height - player.y > 0)
 					{
-						if (abs(height - player.y) <= enemyBounds(0, -1, width, height, enemies[width][height].range))
+						if (abs(height - player.y) <= enemyBounds(0, -1, width, height, enemies[width][height].range, enemies[width][height].difficulty))
 						{
 							gameState = LOSE;
 						}
 					}
-
-					//checks to the top of the enemy
+					//checks to the top of the enemy and checks if player has entered enemy's FOV
 					if (player.x == width && height - player.y < 0)
 					{
-						if (abs(height - player.y) <= enemyBounds(0, 1, width, height, enemies[width][height].range))
+						if (abs(height - player.y) <= enemyBounds(0, 1, width, height, enemies[width][height].range, enemies[width][height].difficulty))
 						{
 							gameState = LOSE;
 						}
 					}
 					break;
 				case AOE_VIEW:
-					aoeFOV(width, height, tileSize, enemies[width][height].isActive);
+					//checks if player has entered enemy's FOV
+					if (enemyBounds(0, 0, width, height, enemies[width][height].range, enemies[width][height].difficulty) == 1)
+					{
+						gameState = LOSE;
+					}
 					break;
 				case DIAGONAL_LOOK:
 					//checks to the right of the enemy
-					if (abs(width - player.x) <= enemyBounds(1, 1, width, height, enemies[width][height].range))
-					{
-						gameState = LOSE;
-					}
+					//if (abs(width - player.x) <= enemyBounds(1, 0, width, height, enemies[width][height].range, enemies[width][height].difficulty)
+					//	&& abs(height - player.y) <= enemyBounds(0, 1, width, height, enemies[width][height].range, enemies[width][height].difficulty))
+					//{
+					//	gameState = LOSE;
+					//}
+					////checks to the left of the enemy
+					//if (abs(width - player.x) <= enemyBounds(-1, 0, width, height, enemies[width][height].range, enemies[width][height].difficulty)
+					//	&& abs(height - player.y) <= enemyBounds(0, 1, width, height, enemies[width][height].range, enemies[width][height].difficulty))
+					//{
+					//	gameState = LOSE;
+					//}
+					////checks to the bottom of the enemy
+					//if (abs(width - player.x) <= enemyBounds(1, 0, width, height, enemies[width][height].range, enemies[width][height].difficulty)
+					//	&& abs(height - player.y) <= enemyBounds(0, -1, width, height, enemies[width][height].range, enemies[width][height].difficulty))
+					//{
+					//	gameState = LOSE;
+					//}
+					////checks to the top of the enemy
+					//if (abs(width - player.x) <= enemyBounds(-1, -1, width, height, enemies[width][height].range, enemies[width][height].difficulty)
+					//	&& abs(height - player.y) <= enemyBounds(0, -1, width, height, enemies[width][height].range, enemies[width][height].difficulty))
+					//{
+					//	gameState = LOSE;
+					//}
 					
-					//checks to the left of the enemy
-					if (abs(width - player.x) <= enemyBounds(-1, 1, width, height, enemies[width][height].range))
+
+
+					if (abs(width - player.x) <= enemyBounds(1, 1, width, height, enemies[width][height].range, enemies[width][height].difficulty)
+						&& abs(height - player.y) <= enemyBounds(1, 1, width, height, enemies[width][height].range, enemies[width][height].difficulty))
 					{
 						gameState = LOSE;
 					}
-
-
-					//checks to the bottom of the enemy
-					if (abs(height - player.y) <= enemyBounds(1, -1, width, height, enemies[width][height].range))
+					if (abs(width - player.x) <= enemyBounds(1, -1, width, height, enemies[width][height].range, enemies[width][height].difficulty)
+						&& abs(height - player.y) <= enemyBounds(1, -1, width, height, enemies[width][height].range, enemies[width][height].difficulty))
 					{
 						gameState = LOSE;
 					}
-
-					//checks to the top of the enemy
-
-					if (abs(height - player.y) <= enemyBounds(-1, -1, width, height, enemies[width][height].range))
+					if (abs(width - player.x) <= enemyBounds(-1, 1, width, height, enemies[width][height].range, enemies[width][height].difficulty)
+						&& abs(height - player.y) <= enemyBounds(-1, 1, width, height, enemies[width][height].range, enemies[width][height].difficulty))
 					{
 						gameState = LOSE;
 					}
-
+					if (abs(width - player.x) <= enemyBounds(-1, -1, width, height, enemies[width][height].range, enemies[width][height].difficulty)
+						&& abs(height - player.y) <= enemyBounds(-1, -1, width, height, enemies[width][height].range, enemies[width][height].difficulty))
+					{
+						gameState = LOSE;
+					}
 					break;
 				}
 			}
 		}
 	}
 }
-
-//at end, make gamestate = LOSE;

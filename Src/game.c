@@ -76,10 +76,22 @@ void game_init(void)
 	gates[0].Switch = &tiles[9][8];
 
 
-	enemies[5][8].type = AOE_VIEW;
-	enemies[5][8].isActive = 1;
-	enemies[5][8].difficulty = 1;
+	//enemies[3][10].type = VERTICAL_HORIZONTAL_LOOK;
+	//enemies[3][10].isActive = 1;
+	//enemies[3][10].difficulty = 1;
+	//enemies[3][10].range = 2;
+	//enemies[3][10].Enemy_Color = Blue;
 
+	enemies[3][8].type = DIAGONAL_LOOK;
+	enemies[3][8].isActive = 1;
+	enemies[3][8].difficulty = 1;
+	enemies[3][8].range = 1;
+	enemies[3][8].Enemy_Color = Blue;
+	
+	//enemies[3][8].type = AOE_VIEW;
+	//enemies[3][8].isActive = 1;
+	//enemies[3][8].difficulty = 2;
+	//enemies[3][8].Enemy_Color = Blue;
 
 	setStartGame(Tile_Size);
 
@@ -141,8 +153,9 @@ void game_exit(void)
 void renderGame(void) {
 	drawTile(Tile_Size);
 	drawPlayer(Tile_Size);
-	enemyDraw(Tile_Size);
+	drawEnemy(Tile_Size);
 	enemyFOV(Tile_Size);
+	enemyReset(Tile_Size);
 	if(player.setFOV)
 	renderFOVAdvance(returnBounds(Tile_Size) , returnBounds(Tile_Size) , Tile_Size);
 
@@ -158,8 +171,8 @@ void resetGame(Tile_Size) {
 	player.Player_Color = CP_Color_Create(0, 255, 255, 255);
 
 	//settings the colors
-	Green = CP_Color_Create(0, 255, 0, 255);
 	Red = CP_Color_Create(255, 0, 0, 255);
+	Green = CP_Color_Create(0, 255, 0, 255);
 	Blue = CP_Color_Create(0, 0, 255, 255);
 
 	//setting player size and counter
