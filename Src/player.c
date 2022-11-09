@@ -144,7 +144,8 @@ _Bool checkMove(int DirectionX, int DirectionY) {
 	case CLOSED_DOOR:
 		return FALSE;
 		break;
-	case SWITCH:
+	case SWITCH_ON:
+	case SWITCH_OFF:
 		checkGates(&tiles[player.x + DirectionX][player.y + DirectionY]);
 		break;
 	case END:

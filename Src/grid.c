@@ -66,8 +66,12 @@ void drawTile(int tilesize) {
 				CP_Settings_Fill(CP_Color_Create(200, 0, 200, 255)); //set tile color
 				CP_Graphics_DrawRect(width * tilesize, height * tilesize, tilesize - .5f, tilesize - .5f); //draw tile
 				break;
-			case SWITCH:
+			case SWITCH_OFF:
 				CP_Settings_Fill(CP_Color_Create(255, 255, 0, 255)); //set tile color
+				CP_Graphics_DrawRect(width * tilesize, height * tilesize, tilesize - .5f, tilesize - .5f); //draw tile
+				break;
+			case SWITCH_ON:
+				CP_Settings_Fill(CP_Color_Create(122, 122, 0, 255)); //set tile color
 				CP_Graphics_DrawRect(width * tilesize, height * tilesize, tilesize - .5f, tilesize - .5f); //draw tile
 				break;
 			}
@@ -195,7 +199,7 @@ void setGates() {
 		if (gates[i].Door != NULL)
 			gates[i].Door->type = CLOSED_DOOR;
 		if (gates[i].Switch != NULL)
-			gates[i].Switch->type = SWITCH;
+			gates[i].Switch->type = SWITCH_OFF;
 	}
 }
 
@@ -215,8 +219,14 @@ void checkGates(Tile* address) {
 
 	for (int i = 0; i < sizeof(gates) / sizeof(gates[0]); i++) {
 		//if the address of the tile the player set on matches the specific tile in the vents
-		if (gates[i].Switch == address) {
+		if (gates[i].Switch == address && gates[i].Switch->type == SWITCH_OFF) {
+			gates[i].Switch->type = SWITCH_ON;
 			gates[i].Door->type = OPENED_DOOR;
+			return;
+		}
+		if (gates[i].Switch == address && gates[i].Switch->type == SWITCH_ON) {
+			gates[i].Switch->type = SWITCH_OFF;
+			gates[i].Door->type = CLOSED_DOOR;
 			return;
 		}
 	}

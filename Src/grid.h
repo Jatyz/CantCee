@@ -7,7 +7,9 @@
 
 #define MAX_TILES 800
 typedef enum { // enum for the different type of tiles
-	WALL, FLOOR, START, END, DISGUISE, CLOSED_DOOR, OPENED_DOOR, SWITCH, VENTS
+	WALL, FLOOR, START, END, DISGUISE, CLOSED_DOOR, OPENED_DOOR, SWITCH_ON, SWITCH_OFF, VENTS
+	//switch off means closed door
+	//switch on means open door
 }Tile_Type;
 
 typedef struct { // method to contain information of the current tile
