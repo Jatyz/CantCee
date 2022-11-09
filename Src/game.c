@@ -7,6 +7,9 @@
 #include "level1.h"
 #include "panels.h"
 #include "levelselect.h"
+#include <stdio.h>
+#include <stdlib.h>
+
 /*
 THE CODES UNDER GAME_INIT, GAME_UPDATE IS FOR TESTING
 FOR THE REAL STAGES WE NEED TO CREATE ANOTHER C AND H FILE TO INITIALIZE AND CALL THE FILES UNDER GAME.C
@@ -28,6 +31,7 @@ SET PLAYER START POINT AFTER ASSIGNING TILES
 
 int Tile_Size;
 Game_State gameState;
+int Score[30];//number in array base on number of lvls 30 as placeholder for now to test writing in and out
 
 void game_init(void)
 {
@@ -97,6 +101,9 @@ void game_init(void)
 
 	player.setFOV = 0;
 	gameState = PLAY;
+
+	readScore();
+	writeScore();
 }
 
 void game_update(void)
@@ -146,7 +153,7 @@ void game_update(void)
 
 void game_exit(void)
 {
-
+	writeScore();
 }
 
 //all the render functions
@@ -191,8 +198,36 @@ void resumeGame(void)
 	gameState = PLAY;
 }
 
-void setStartGame(Tile_Size) {
+void setStartGame(Tile_Size) {	
 	setVents();
 	setGates();
 	setPlayerStartPoint(Tile_Size);
+}
+
+void writeScore() {
+	FILE* output;
+	if (fopen_s(&output, "Assets/ScoreTest.txt", "w") != 0) {
+		exit(EXIT_FAILURE);
+	}
+	//fprintf(output, "Hello");
+	for (int i = 0; i < sizeof(Score)/sizeof(Score[0]); i++) {
+
+		fprintf(output, "%d\n", Score[i]);
+	}
+	fclose(output);
+}
+
+void readScore() {
+	FILE* output;
+	if (fopen_s(&output, "Assets/Score.txt", "r") != 0) {
+		exit(EXIT_FAILURE);
+	}
+	//fprintf(output, "Hello");
+	char buf[50];
+	int i = 0;
+	while (fgets(buf,50,output) && i < 30) {
+		sscanf_s(buf, "%d", &Score[i],50);
+		i++;
+	}
+	fclose(output);
 }

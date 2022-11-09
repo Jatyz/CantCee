@@ -33,7 +33,11 @@ void setStartGame(Tile_Size);
 //unpause the game
 void resumeGame(void);
 
+void readScore();
+void writeScore();
+
+
 //global tile size variable
 extern int Tile_Size;
 extern Game_State gameState;
-
+extern int Score[];
