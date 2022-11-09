@@ -95,7 +95,7 @@ void game_init(void)
 	enemies[5][5].type = AOE_VIEW;
 	enemies[5][5].isActive = 1;
 	enemies[5][5].difficulty = 2;
-	enemies[5][5].Enemy_Color = Blue;
+	enemies[5][5].Enemy_Color = Red;
 
 	setStartGame(Tile_Size);
 

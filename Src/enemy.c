@@ -578,13 +578,15 @@ void drawEnemy(int tileSize)
 					CP_Settings_Fill(enemies[width][height].Enemy_Color);
 					CP_Graphics_DrawCircle((width + 0.5) * tileSize, (height + 0.5) * tileSize, tileSize);
 					CP_Settings_NoStroke();
+					CP_Settings_NoFill();
 					break;
 				case AOE_VIEW:
 					drawBounds(0, 0, width, height, enemies[width][height].range, tileSize, enemies[width][height].difficulty);
 					CP_Settings_Stroke(enemies[width][height].Enemy_Color);
-					CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
+					CP_Settings_Fill(enemies[width][height].Enemy_Color);
 					CP_Graphics_DrawCircle((width + 0.5) * tileSize, (height + 0.5) * tileSize, tileSize);
 					CP_Settings_NoStroke();
+					CP_Settings_NoFill();
 					break;
 				case DIAGONAL_LOOK:
 					drawBounds(1, 1, width, height, enemies[width][height].range, tileSize, enemies[width][height].difficulty);
@@ -595,6 +597,7 @@ void drawEnemy(int tileSize)
 					CP_Settings_Fill(enemies[width][height].Enemy_Color);
 					CP_Graphics_DrawCircle((width + 0.5) * tileSize, (height + 0.5) * tileSize, tileSize);
 					CP_Settings_NoStroke();
+					CP_Settings_NoFill();
 					break;
 				}
 			}
@@ -640,10 +643,10 @@ void enemyFOV(tileSize)
 					{
 						if (abs(width - player.x) <= enemyBounds(1, 0, width, height, enemies[width][height].range, enemies[width][height].difficulty))
 						{
-							//if (player.Player_Color == enemies[width][height].Enemy_Color)
-							//{
+							if (player.Player_Color != enemies[width][height].Color)
+							{
 							gameState = LOSE;
-							//}
+							}
 						}
 					}
 					//checks to the left of the enemy and checks if player has entered enemy's FOV
@@ -652,7 +655,10 @@ void enemyFOV(tileSize)
 
 						if (abs(width - player.x) <= enemyBounds(-1, 0, width, height, enemies[width][height].range, enemies[width][height].difficulty))
 						{
-							gameState = LOSE;
+							if (player.Player_Color != enemies[width][height].Color)
+							{
+								gameState = LOSE;
+							}
 						}
 					}
 					//checks to the bottom of the enemy and checks if player has entered enemy's FOV
@@ -660,7 +666,10 @@ void enemyFOV(tileSize)
 					{
 						if (abs(height - player.y) <= enemyBounds(0, -1, width, height, enemies[width][height].range, enemies[width][height].difficulty))
 						{
-							gameState = LOSE;
+							if (player.Player_Color != enemies[width][height].Color)
+							{
+								gameState = LOSE;
+							}
 						}
 					}
 					//checks to the top of the enemy and checks if player has entered enemy's FOV
@@ -668,7 +677,10 @@ void enemyFOV(tileSize)
 					{
 						if (abs(height - player.y) <= enemyBounds(0, 1, width, height, enemies[width][height].range, enemies[width][height].difficulty))
 						{
-							gameState = LOSE;
+							if (player.Player_Color != enemies[width][height].Color)
+							{
+								gameState = LOSE;
+							}
 						}
 					}
 					break;
@@ -676,7 +688,10 @@ void enemyFOV(tileSize)
 					//checks if player has entered enemy's FOV
 					if (enemyBounds(0, 0, width, height, enemies[width][height].range, enemies[width][height].difficulty) == 1)
 					{
-						gameState = LOSE;
+						if (player.Player_Color != enemies[width][height].Color)
+						{
+							gameState = LOSE;
+						}
 					}
 					break;
 				case DIAGONAL_LOOK:

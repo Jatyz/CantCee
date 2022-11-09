@@ -1,5 +1,6 @@
 #pragma once
 #include "cprocessing.h"
+#include "player.h"
 #define ENEMY_FOV 8
 #define WINIDOW_HEIGHT 800
 #define WINDOW_WIDTH 1000  
@@ -14,7 +15,8 @@ typedef enum
 
 typedef struct
 {
-	CP_Color Enemy_Color; //for setting current player color
+	CP_Color Enemy_Color;
+	Color Color; //for setting current player color
 	int isActive;//0 is not active, all other values is active
 	int difficulty;
 	int range;
