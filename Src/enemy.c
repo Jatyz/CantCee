@@ -5,6 +5,24 @@
 #include "player.h"
 #include <math.h>
 
+
+//Enemy array reset function
+//> set all the enemy array structure to 0
+//
+//Enemy setter function
+//So a function that i js pass in all the element of the structure in an enemy to set instead of writing
+//Enemy[][].isactive = 1
+//Enemy[][].type = whatever
+//Enemy.range = whatever
+//
+//Can js be enemyset(x, y, active, ...)
+//
+//Under draw enemy before retuen set cp no stroke
+//
+//
+//Enemy check player color
+//Enemy draw fov
+
 Enemy enemies[MAX_TILES][MAX_TILES];
 
 //For AOE Enemy
@@ -18,7 +36,7 @@ int enemyBounds(int xdir, int ydir, int enemyXPos, int enemyYPos, int range, int
 	case VERTICAL_HORIZONTAL_LOOK:
 		for (int counter = 1; counter <= range; counter++)
 		{
-			if (tiles[enemyXPos + (xdir * counter)][enemyYPos + (ydir * counter)].type == WALL
+			if ((tiles[enemyXPos + (xdir * counter)][enemyYPos + (ydir * counter)].type == WALL || tiles[enemyXPos + (xdir * counter)][enemyYPos + (ydir * counter)].type == CLOSED_DOOR)
 				&& (enemyXPos + (xdir * counter) >= 0)
 				&& (enemyYPos + (ydir * counter) >= 0)
 				&& (enemyXPos + (xdir * counter) <= Tile_Size)
@@ -30,61 +48,230 @@ int enemyBounds(int xdir, int ydir, int enemyXPos, int enemyYPos, int range, int
 		return range;
 		break;
 	case AOE_VIEW:
-		if (difficulty == 1)
+		switch (enemies[enemyXPos][enemyYPos].difficulty)
 		{
-
+		case 1:
 			CP_Settings_Stroke(enemies[enemyXPos][enemyYPos].Enemy_Color);
 			CP_Settings_Fill(enemies[enemyXPos][enemyYPos].Enemy_Color);
 			for (int xPos = enemyXPos - 1; xPos < (enemyXPos + 2); xPos++)
 			{
 				for (int yPos = enemyYPos - 1; yPos < (enemyYPos + 2); yPos++)
 				{
-					int wallXPos;
-					int wallYPos;
-					if (tiles[xPos][yPos].type != WALL)
+					if (tiles[xPos][yPos].type == WALL || (tiles[xPos][yPos].type == CLOSED_DOOR))
+					{
+						goto notTrue;
+					}
+					else
 					{
 						if (player.x == xPos && player.y == yPos)
 						{
 							return 1;
 						}
 					}
-
-					//else if (tiles[xPos][yPos].type == WALL)
-					//{
-					//	wallXPos = xPos;
-					//	wallYPos = yPos;
-					//}
+				notTrue:;
 				}
 			}
-		}
-
-		if (difficulty == 2)
-		{
+			break;
+		case 2:
 			CP_Settings_Stroke(enemies[enemyXPos][enemyYPos].Enemy_Color);
 			CP_Settings_Fill(enemies[enemyXPos][enemyYPos].Enemy_Color);
 			for (int xPos = enemyXPos - 2; xPos < (enemyXPos + 3); xPos++)
 			{
 				for (int yPos = enemyYPos - 2; yPos < (enemyYPos + 3); yPos++)
 				{
-					int wallXPos;
-					int wallYPos;
-					if (tiles[xPos][yPos].type != WALL)
+					if (xPos < enemyXPos)
 					{
-						if (player.x == xPos && player.y == yPos)
+						if (yPos < enemyYPos)
 						{
-							return 1;
+							if (tiles[xPos][yPos].type == WALL || (tiles[xPos][yPos].type == CLOSED_DOOR))
+							{
+								goto notTruee;
+							}
+							else if (tiles[xPos + 1][yPos].type == WALL || (tiles[xPos + 1][yPos].type == CLOSED_DOOR))
+							{
+
+								goto notTruee;
+							}
+							else if (tiles[xPos][yPos + 1].type == WALL || (tiles[xPos][yPos + 1].type == CLOSED_DOOR))
+							{
+								goto notTruee;
+							}
+							else if (tiles[xPos + 1][yPos + 1].type == WALL || (tiles[xPos + 1][yPos + 1].type == CLOSED_DOOR))
+							{
+								goto notTruee;
+							}
+							else
+							{
+								if (player.x == xPos && player.y == yPos)
+								{
+									return 1;
+								}
+							}
+						}
+						if (yPos == enemyYPos)
+						{
+
+							if (tiles[xPos][yPos].type == WALL || (tiles[xPos][yPos].type == CLOSED_DOOR))
+							{
+								goto notTruee;
+							}
+							else if (tiles[xPos + 1][yPos].type == WALL || (tiles[xPos + 1][yPos].type == CLOSED_DOOR))
+							{
+								goto notTruee;
+							}
+							else
+							{
+								if (player.x == xPos && player.y == yPos)
+								{
+									return 1;
+								}
+							}
+						}
+						if (yPos > enemyYPos)
+						{
+
+							if (tiles[xPos][yPos].type == WALL || (tiles[xPos][yPos].type == CLOSED_DOOR))
+							{
+								goto notTruee;
+							}
+							else if (tiles[xPos + 1][yPos].type == WALL || (tiles[xPos + 1][yPos].type == CLOSED_DOOR))
+							{
+								goto notTruee;
+							}
+							if (tiles[xPos][yPos - 1].type == WALL || (tiles[xPos][yPos - 1].type == CLOSED_DOOR))
+							{
+								goto notTruee;
+							}
+							if (tiles[xPos + 1][yPos - 1].type == WALL || (tiles[xPos + 1][yPos - 1].type == CLOSED_DOOR))
+							{
+								goto notTruee;
+							}
+							else
+							{
+								if (player.x == xPos && player.y == yPos)
+								{
+									return 1;
+								}
+							}
 						}
 					}
-					//else if (tiles[xPos][yPos].type == WALL)
-					//{
-					//	wallXPos = xPos;
-					//	wallYPos = yPos;
-					//}
+					else if (xPos == enemyXPos)
+					{
+						if (yPos < enemyYPos)
+						{
+							if (tiles[xPos][yPos].type == WALL || (tiles[xPos][yPos].type == CLOSED_DOOR))
+							{
+								goto notTruee;
+							}
+							else if (tiles[xPos][yPos + 1].type == WALL || (tiles[xPos][yPos + 1].type == CLOSED_DOOR))
+							{
+								goto notTruee;
+							}
+							else
+							{
+								if (player.x == xPos && player.y == yPos)
+								{
+									return 1;
+								}
+							}
+						}
+						else if (yPos > enemyYPos)
+						{
+							if (tiles[xPos][yPos].type == WALL || (tiles[xPos][yPos].type == CLOSED_DOOR))
+							{
+								goto notTruee;
+							}
+							else if (tiles[xPos][yPos - 1].type == WALL || (tiles[xPos][yPos - 1].type == CLOSED_DOOR))
+							{
+								goto notTruee;
+							}
+							else
+							{
+								if (player.x == xPos && player.y == yPos)
+								{
+									return 1;
+								}
+							}
+						}
+					}
+					else if (xPos > enemyXPos)
+					{
+						if (yPos < enemyYPos)
+						{
+							if (tiles[xPos][yPos].type == WALL || (tiles[xPos][yPos].type == CLOSED_DOOR))
+							{
+								goto notTruee;
+							}
+							else if (tiles[xPos - 1][yPos].type == WALL || (tiles[xPos - 1][yPos].type == CLOSED_DOOR))
+							{
+								goto notTruee;
+							}
+							else if (tiles[xPos][yPos + 1].type == WALL || (tiles[xPos][yPos + 1].type == CLOSED_DOOR))
+							{
+								goto notTruee;
+							}
+							else if (tiles[xPos - 1][yPos + 1].type == WALL || (tiles[xPos - 1][yPos + 1].type == CLOSED_DOOR))
+							{
+								goto notTruee;
+							}
+							else
+							{
+								if (player.x == xPos && player.y == yPos)
+								{
+									return 1;
+								}
+							}
+						}
+						else if (yPos == enemyYPos)
+						{
+							if (tiles[xPos][yPos].type == WALL || (tiles[xPos][yPos].type == CLOSED_DOOR))
+							{
+								goto notTruee;
+							}
+							else if (tiles[xPos - 1][yPos].type == WALL || (tiles[xPos - 1][yPos].type == CLOSED_DOOR))
+							{
+								goto notTruee;
+							}
+							else
+							{
+								if (player.x == xPos && player.y == yPos)
+								{
+									return 1;
+								}
+							}
+						}
+						else if (yPos > enemyYPos)
+						{
+							if ((tiles[xPos][yPos].type == WALL) || (tiles[xPos][yPos].type == CLOSED_DOOR))
+							{
+								goto notTruee;
+							}
+							else if (tiles[xPos - 1][yPos].type == WALL || (tiles[xPos - 1][yPos].type == CLOSED_DOOR))
+							{
+								goto notTruee;
+							}
+							else if (tiles[xPos][yPos - 1].type == WALL || (tiles[xPos][yPos - 1].type == CLOSED_DOOR))
+							{
+								goto notTruee;
+							}
+							else if (tiles[xPos - 1][yPos - 1].type == WALL || (tiles[xPos][yPos - 1].type == CLOSED_DOOR))
+							{
+								goto notTruee;
+							}
+							else
+							{
+								if (player.x == xPos && player.y == yPos)
+								{
+									return 1;
+								}
+							}
+						}
+					}
+				notTruee:;
 				}
 			}
+			break;
 		}
-		return 0;
-		break;
 	case DIAGONAL_LOOK:
 		for (int counter = 1; counter <= range; counter++)
 		{
@@ -104,13 +291,12 @@ int enemyBounds(int xdir, int ydir, int enemyXPos, int enemyYPos, int range, int
 
 void drawBounds(int xdir, int ydir, int enemyXPos, int enemyYPos, int range, int tileSize, int difficulty)
 {
-
 	switch (enemies[enemyXPos][enemyYPos].type)
 	{
 	case VERTICAL_HORIZONTAL_LOOK:
 		for (int counter = 1; counter <= range; counter++)
 		{
-			if (tiles[enemyXPos + (xdir * counter)][enemyYPos + (ydir * counter)].type == WALL)
+			if ((tiles[enemyXPos + (xdir * counter)][enemyYPos + (ydir * counter)].type == WALL || tiles[enemyXPos + (xdir * counter)][enemyYPos + (ydir * counter)].type == CLOSED_DOOR))
 			{
 				return NULL;
 			}
@@ -124,61 +310,230 @@ void drawBounds(int xdir, int ydir, int enemyXPos, int enemyYPos, int range, int
 		}
 		break;
 	case AOE_VIEW:
-		if (difficulty == 1)
+		switch (enemies[enemyXPos][enemyYPos].difficulty)
 		{
-
+		case 1:
 			CP_Settings_Stroke(enemies[enemyXPos][enemyYPos].Enemy_Color);
 			CP_Settings_Fill(enemies[enemyXPos][enemyYPos].Enemy_Color);
 			for (int xPos = enemyXPos - 1; xPos < (enemyXPos + 2); xPos++)
 			{
 				for (int yPos = enemyYPos - 1; yPos < (enemyYPos + 2); yPos++)
 				{
-					int wallXPos;
-					int wallYPos;
-					if (tiles[xPos][yPos].type != WALL)
+					if (tiles[xPos][yPos].type == WALL || (tiles[xPos][yPos].type == CLOSED_DOOR))
 					{
+						goto notTrue;
+					}
+					else
+					{
+						CP_Settings_Stroke(enemies[enemyXPos][enemyYPos].Enemy_Color);
+						CP_Settings_Fill(enemies[enemyXPos][enemyYPos].Enemy_Color);
 						CP_Graphics_DrawCircle((xPos + 0.5) * tileSize, (yPos + 0.5) * tileSize, tileSize);
 						CP_Settings_NoStroke();
 					}
-
-					else if (tiles[xPos][yPos].type == WALL)
-					{
-						wallXPos = xPos;
-						wallYPos = yPos;
-						if (wallXPos > enemyXPos && wallYPos < enemyYPos)
-						{
-							CP_Settings_NoFill();
-							CP_Settings_NoStroke();
-						}
-					}
+				notTrue:;
 				}
 			}
-		}
-
-		if (difficulty == 2)
-		{
+			break;
+		case 2:
 			CP_Settings_Stroke(enemies[enemyXPos][enemyYPos].Enemy_Color);
 			CP_Settings_Fill(enemies[enemyXPos][enemyYPos].Enemy_Color);
 			for (int xPos = enemyXPos - 2; xPos < (enemyXPos + 3); xPos++)
 			{
 				for (int yPos = enemyYPos - 2; yPos < (enemyYPos + 3); yPos++)
 				{
-					int wallXPos;
-					int wallYPos;
-					if (tiles[xPos][yPos].type != WALL)
+					if (xPos < enemyXPos)
 					{
-						CP_Graphics_DrawCircle((xPos + 0.5) * tileSize, (yPos + 0.5) * tileSize, tileSize);
-						CP_Settings_NoStroke();
+						if (yPos < enemyYPos)
+						{
+							if (tiles[xPos][yPos].type == WALL || (tiles[xPos][yPos].type == CLOSED_DOOR))
+							{
+								goto notTruee;
+							}
+							else if (tiles[xPos + 1][yPos].type == WALL || (tiles[xPos + 1][yPos].type == CLOSED_DOOR))
+							{
+
+								goto notTruee;
+							}
+							else if (tiles[xPos][yPos + 1].type == WALL || (tiles[xPos][yPos + 1].type == CLOSED_DOOR))
+							{
+								goto notTruee;
+							}
+							else if (tiles[xPos + 1][yPos + 1].type == WALL || (tiles[xPos + 1][yPos + 1].type == CLOSED_DOOR))
+							{
+								goto notTruee;
+							}
+							else
+							{
+								CP_Settings_Stroke(enemies[enemyXPos][enemyYPos].Enemy_Color);
+								CP_Settings_Fill(enemies[enemyXPos][enemyYPos].Enemy_Color);
+								CP_Graphics_DrawCircle((xPos + 0.5) * tileSize, (yPos + 0.5) * tileSize, tileSize);
+								CP_Settings_NoStroke();
+							}
+						}
+						if (yPos == enemyYPos)
+						{
+
+							if (tiles[xPos][yPos].type == WALL || (tiles[xPos][yPos].type == CLOSED_DOOR))
+							{
+								goto notTruee;
+							}
+							else if (tiles[xPos + 1][yPos].type == WALL || (tiles[xPos + 1][yPos].type == CLOSED_DOOR))
+							{
+								goto notTruee;
+							}
+							else
+							{
+								CP_Settings_Stroke(enemies[enemyXPos][enemyYPos].Enemy_Color);
+								CP_Settings_Fill(enemies[enemyXPos][enemyYPos].Enemy_Color);
+								CP_Graphics_DrawCircle((xPos + 0.5) * tileSize, (yPos + 0.5) * tileSize, tileSize);
+								CP_Settings_NoStroke();
+							}
+						}
+						if (yPos > enemyYPos)
+						{
+
+							if (tiles[xPos][yPos].type == WALL || (tiles[xPos][yPos].type == CLOSED_DOOR))
+							{
+								goto notTruee;
+							}
+							else if (tiles[xPos + 1][yPos].type == WALL || (tiles[xPos + 1][yPos].type == CLOSED_DOOR))
+							{
+								goto notTruee;
+							}
+							if (tiles[xPos][yPos - 1].type == WALL || (tiles[xPos][yPos - 1].type == CLOSED_DOOR))
+							{
+								goto notTruee;
+							}
+							if (tiles[xPos + 1][yPos - 1].type == WALL || (tiles[xPos + 1][yPos - 1].type == CLOSED_DOOR))
+							{
+								goto notTruee;
+							}
+							else
+							{
+								CP_Settings_Stroke(enemies[enemyXPos][enemyYPos].Enemy_Color);
+								CP_Settings_Fill(enemies[enemyXPos][enemyYPos].Enemy_Color);
+								CP_Graphics_DrawCircle((xPos + 0.5) * tileSize, (yPos + 0.5) * tileSize, tileSize);
+								CP_Settings_NoStroke();
+							}
+						}
 					}
-					else if (tiles[xPos][yPos].type == WALL)
+					else if (xPos == enemyXPos)
 					{
-						wallXPos = xPos;
-						wallYPos = yPos;
+						if (yPos < enemyYPos)
+						{
+							if (tiles[xPos][yPos].type == WALL || (tiles[xPos][yPos].type == CLOSED_DOOR))
+							{
+								goto notTruee;
+							}
+							else if (tiles[xPos][yPos + 1].type == WALL || (tiles[xPos][yPos + 1].type == CLOSED_DOOR))
+							{
+								goto notTruee;
+							}
+							else
+							{
+								CP_Settings_Stroke(enemies[enemyXPos][enemyYPos].Enemy_Color);
+								CP_Settings_Fill(enemies[enemyXPos][enemyYPos].Enemy_Color);
+								CP_Graphics_DrawCircle((xPos + 0.5) * tileSize, (yPos + 0.5) * tileSize, tileSize);
+								CP_Settings_NoStroke();
+							}
+						}
+						else if (yPos > enemyYPos)
+						{
+							if (tiles[xPos][yPos].type == WALL || (tiles[xPos][yPos].type == CLOSED_DOOR))
+							{
+								goto notTruee;
+							}
+							else if (tiles[xPos][yPos - 1].type == WALL || (tiles[xPos][yPos - 1].type == CLOSED_DOOR))
+							{
+								goto notTruee;
+							}
+							else
+							{
+								CP_Settings_Stroke(enemies[enemyXPos][enemyYPos].Enemy_Color);
+								CP_Settings_Fill(enemies[enemyXPos][enemyYPos].Enemy_Color);
+								CP_Graphics_DrawCircle((xPos + 0.5) * tileSize, (yPos + 0.5) * tileSize, tileSize);
+								CP_Settings_NoStroke();
+							}
+						}
 					}
+					else if (xPos > enemyXPos)
+					{
+						if (yPos < enemyYPos)
+						{
+							if (tiles[xPos][yPos].type == WALL || (tiles[xPos][yPos].type == CLOSED_DOOR))
+							{
+								goto notTruee;
+							}
+							else if (tiles[xPos - 1][yPos].type == WALL || (tiles[xPos - 1][yPos].type == CLOSED_DOOR))
+							{
+								goto notTruee;
+							}
+							else if (tiles[xPos][yPos + 1].type == WALL || (tiles[xPos][yPos + 1].type == CLOSED_DOOR))
+							{
+								goto notTruee;
+							}
+							else if (tiles[xPos - 1][yPos + 1].type == WALL || (tiles[xPos - 1][yPos + 1].type == CLOSED_DOOR))
+							{
+								goto notTruee;
+							}
+							else
+							{
+								CP_Settings_Stroke(enemies[enemyXPos][enemyYPos].Enemy_Color);
+								CP_Settings_Fill(enemies[enemyXPos][enemyYPos].Enemy_Color);
+								CP_Graphics_DrawCircle((xPos + 0.5) * tileSize, (yPos + 0.5) * tileSize, tileSize);
+								CP_Settings_NoStroke();
+							}
+						}
+						else if (yPos == enemyYPos)
+						{
+							if (tiles[xPos][yPos].type == WALL || (tiles[xPos][yPos].type == CLOSED_DOOR))
+							{
+								goto notTruee;
+							}
+							else if (tiles[xPos - 1][yPos].type == WALL || (tiles[xPos - 1][yPos].type == CLOSED_DOOR))
+							{
+								goto notTruee;
+							}
+							else
+							{
+								CP_Settings_Stroke(enemies[enemyXPos][enemyYPos].Enemy_Color);
+								CP_Settings_Fill(enemies[enemyXPos][enemyYPos].Enemy_Color);
+								CP_Graphics_DrawCircle((xPos + 0.5) * tileSize, (yPos + 0.5) * tileSize, tileSize);
+								CP_Settings_NoStroke();
+							}
+						}
+						else if (yPos > enemyYPos)
+						{
+							if ((tiles[xPos][yPos].type == WALL) || (tiles[xPos][yPos].type == CLOSED_DOOR))
+							{
+								goto notTruee;
+							}
+							else if (tiles[xPos - 1][yPos].type == WALL || (tiles[xPos - 1][yPos].type == CLOSED_DOOR))
+							{
+								goto notTruee;
+							}
+							else if (tiles[xPos][yPos - 1].type == WALL || (tiles[xPos][yPos - 1].type == CLOSED_DOOR))
+							{
+								goto notTruee;
+							}
+							else if (tiles[xPos - 1][yPos - 1].type == WALL || (tiles[xPos][yPos - 1].type == CLOSED_DOOR))
+							{
+								goto notTruee;
+							}
+							else
+							{
+								CP_Settings_Stroke(enemies[enemyXPos][enemyYPos].Enemy_Color);
+								CP_Settings_Fill(enemies[enemyXPos][enemyYPos].Enemy_Color);
+								CP_Graphics_DrawCircle((xPos + 0.5) * tileSize, (yPos + 0.5) * tileSize, tileSize);
+								CP_Settings_NoStroke();
+							}
+						}
+					}
+				notTruee:;
 				}
 			}
+			break;
 		}
-		break;
 	case DIAGONAL_LOOK:
 		for (int counter = 1; counter <= range; counter++)
 		{
@@ -194,6 +549,8 @@ void drawBounds(int xdir, int ydir, int enemyXPos, int enemyYPos, int range, int
 		break;
 	}
 }
+
+
 
 void drawEnemy(int tileSize)
 {
@@ -225,7 +582,7 @@ void drawEnemy(int tileSize)
 				case AOE_VIEW:
 					drawBounds(0, 0, width, height, enemies[width][height].range, tileSize, enemies[width][height].difficulty);
 					CP_Settings_Stroke(enemies[width][height].Enemy_Color);
-					CP_Settings_Fill(enemies[width][height].Enemy_Color);
+					CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
 					CP_Graphics_DrawCircle((width + 0.5) * tileSize, (height + 0.5) * tileSize, tileSize);
 					CP_Settings_NoStroke();
 					break;
@@ -277,7 +634,7 @@ void enemyFOV(tileSize)
 			{
 				switch (enemies[width][height].type)
 				{
-					case VERTICAL_HORIZONTAL_LOOK:
+				case VERTICAL_HORIZONTAL_LOOK:
 					//checks to the right of the enemy and checks if player has entered enemy's FOV
 					if (width - player.x > 0 && player.y == height)
 					{
@@ -347,7 +704,7 @@ void enemyFOV(tileSize)
 					//{
 					//	gameState = LOSE;
 					//}
-					
+
 
 
 					if (abs(width - player.x) <= enemyBounds(1, 1, width, height, enemies[width][height].range, enemies[width][height].difficulty)
@@ -373,6 +730,30 @@ void enemyFOV(tileSize)
 					break;
 				}
 			}
+		}
+	}
+}
+
+void enemyStats(int tileSize)
+{
+	int Horizontal_Tile = returnBounds(tileSize);
+	int Vertical_Tile = Horizontal_Tile;
+	int height, width;
+
+	for (width = 0; width < Vertical_Tile; width++)
+	{
+		for (height = 0; height < Horizontal_Tile; height++)
+		{
+			switch (enemies[width][height].type)
+			{
+			case VERTICAL_HORIZONTAL_LOOK:
+				enemies[width][height].isActive = 1;
+				break;
+			case AOE_VIEW:
+				enemies[width][height].isActive = 1;
+				break;
+			}
+
 		}
 	}
 }

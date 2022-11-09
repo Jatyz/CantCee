@@ -86,16 +86,16 @@ void game_init(void)
 	//enemies[3][10].range = 2;
 	//enemies[3][10].Enemy_Color = Blue;
 
-	enemies[3][8].type = DIAGONAL_LOOK;
-	enemies[3][8].isActive = 1;
-	enemies[3][8].difficulty = 1;
-	enemies[3][8].range = 1;
-	enemies[3][8].Enemy_Color = Blue;
-	
-	//enemies[3][8].type = AOE_VIEW;
+	//enemies[3][8].type = DIAGONAL_LOOK;
 	//enemies[3][8].isActive = 1;
-	//enemies[3][8].difficulty = 2;
+	//enemies[3][8].difficulty = 1;
+	//enemies[3][8].range = 1;
 	//enemies[3][8].Enemy_Color = Blue;
+	
+	enemies[5][5].type = AOE_VIEW;
+	enemies[5][5].isActive = 1;
+	enemies[5][5].difficulty = 2;
+	enemies[5][5].Enemy_Color = Blue;
 
 	setStartGame(Tile_Size);
 
@@ -120,7 +120,6 @@ void game_update(void)
 		handlePlayerInput(Tile_Size);
 		//all the game update methods that needs to be updated every frame
 		renderGame();
-		enemyFOV(Tile_Size);
 		//FOV logic handled here
 		if (player.setFOV) {
 			clearFogBackground();
