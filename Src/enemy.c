@@ -16,12 +16,6 @@
 //Enemy.range = whatever
 //
 //Can js be enemyset(x, y, active, ...)
-//
-//Under draw enemy before retuen set cp no stroke
-//
-//
-//Enemy check player color
-//Enemy draw fov
 
 Enemy enemies[MAX_TILES][MAX_TILES];
 
@@ -550,8 +544,6 @@ void drawBounds(int xdir, int ydir, int enemyXPos, int enemyYPos, int range, int
 	}
 }
 
-
-
 void drawEnemy(int tileSize)
 {
 	//getting array bounds
@@ -606,23 +598,6 @@ void drawEnemy(int tileSize)
 
 }
 
-void enemyReset(int tileSize)
-{
-
-	int Horizontal_Tile = returnBounds(tileSize);
-	int Vertical_Tile = Horizontal_Tile;
-	int height, width;
-
-	for (int width = 0; width < Horizontal_Tile; width++)
-	{
-		for (int height = 0; height < Vertical_Tile; height++)
-		{
-			CP_Settings_NoStroke();
-			CP_Settings_NoFill();
-		}
-	}
-}
-
 void enemyFOV(int tileSize)
 {
 	int Horizontal_Tile = returnBounds(tileSize);
@@ -638,18 +613,18 @@ void enemyFOV(int tileSize)
 				switch (enemies[width][height].type)
 				{
 				case VERTICAL_HORIZONTAL_LOOK:
-					//checks to the right of the enemy and checks if player has entered enemy's FOV
+						//checks to the right of the enemy and checks if player has entered enemy's FOV
 					if (width - player.x > 0 && player.y == height)
 					{
 						if (abs(width - player.x) <= enemyBounds(1, 0, width, height, enemies[width][height].range, enemies[width][height].difficulty))
 						{
 							if (player.Player_Color != enemies[width][height].Color)
 							{
-							gameState = LOSE;
+								gameState = LOSE;
 							}
 						}
 					}
-					//checks to the left of the enemy and checks if player has entered enemy's FOV
+						//checks to the left of the enemy and checks if player has entered enemy's FOV
 					if (width - player.x < 0 && player.y == height)
 					{
 
@@ -661,7 +636,7 @@ void enemyFOV(int tileSize)
 							}
 						}
 					}
-					//checks to the bottom of the enemy and checks if player has entered enemy's FOV
+						//checks to the bottom of the enemy and checks if player has entered enemy's FOV
 					if (player.x == width && height - player.y > 0)
 					{
 						if (abs(height - player.y) <= enemyBounds(0, -1, width, height, enemies[width][height].range, enemies[width][height].difficulty))
@@ -672,7 +647,7 @@ void enemyFOV(int tileSize)
 							}
 						}
 					}
-					//checks to the top of the enemy and checks if player has entered enemy's FOV
+						//checks to the top of the enemy and checks if player has entered enemy's FOV
 					if (player.x == width && height - player.y < 0)
 					{
 						if (abs(height - player.y) <= enemyBounds(0, 1, width, height, enemies[width][height].range, enemies[width][height].difficulty))
@@ -686,6 +661,7 @@ void enemyFOV(int tileSize)
 					break;
 				case AOE_VIEW:
 					//checks if player has entered enemy's FOV
+
 					if (enemyBounds(0, 0, width, height, enemies[width][height].range, enemies[width][height].difficulty) == 1)
 					{
 						if (player.Player_Color != enemies[width][height].Color)
@@ -695,6 +671,7 @@ void enemyFOV(int tileSize)
 					}
 					break;
 				case DIAGONAL_LOOK:
+
 					if (abs(width - player.x) <= enemyBounds(1, 1, width, height, enemies[width][height].range, enemies[width][height].difficulty)
 						&& abs(height - player.y) <= enemyBounds(1, 1, width, height, enemies[width][height].range, enemies[width][height].difficulty))
 					{
@@ -722,7 +699,7 @@ void enemyFOV(int tileSize)
 	}
 }
 
-void enemyStats(int tileSize)
+void enemySet(int tileSize)
 {
 	int Horizontal_Tile = returnBounds(tileSize);
 	int Vertical_Tile = Horizontal_Tile;
@@ -746,7 +723,7 @@ void enemyStats(int tileSize)
 	}
 }
 
-void resetEnemyStats(int tileSize)
+void enemyReset(int tileSize)
 {
 	int Horizontal_Tile = returnBounds(tileSize);
 	int Vertical_Tile = Horizontal_Tile;
@@ -756,6 +733,8 @@ void resetEnemyStats(int tileSize)
 	{
 		for (height = 0; height < Horizontal_Tile; height++)
 		{
+			CP_Settings_NoStroke();
+			CP_Settings_NoFill();
 			switch (enemies[width][height].type)
 			{
 			case VERTICAL_HORIZONTAL_LOOK:

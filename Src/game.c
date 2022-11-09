@@ -93,7 +93,7 @@ void game_init(void)
 	//enemies[3][8].Enemy_Color = Blue;
 	
 	enemies[5][5].type = AOE_VIEW;
-	enemies[5][5].difficulty = 2;
+	enemies[5][5].difficulty = 1;
 	enemies[5][5].Enemy_Color = Red;
 
 	setStartGame(Tile_Size);
@@ -158,7 +158,7 @@ void game_exit(void)
 void renderGame(void) {
 	drawTile(Tile_Size);
 	drawPlayer(Tile_Size);
-	enemyStats(Tile_Size);
+	enemySet(Tile_Size);
 	drawEnemy(Tile_Size);
 	enemyFOV(Tile_Size);
 	enemyReset(Tile_Size);
