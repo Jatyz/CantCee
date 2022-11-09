@@ -66,11 +66,11 @@ void game_init(void)
 	tiles[9][7].type = WALL;
 	tiles[7][8].type = START;
 	tiles[9][6].type = DISGUISE;
-	tiles[9][6].Tile_Color = Red;
+	tiles[9][6].Tile_Color = RED;
 	tiles[9][4].type = DISGUISE;
-	tiles[9][4].Tile_Color = Blue;
+	tiles[9][4].Tile_Color = BLUE;
 	tiles[0][9].type = DISGUISE;
-	tiles[0][9].Tile_Color = Green;
+	tiles[0][9].Tile_Color = GREEN;
 
 	vents[0].tile1 = &tiles[9][0];
 	vents[0].tile2 = &tiles[0][8];
@@ -175,12 +175,7 @@ void renderGame(void) {
 void resetGame(Tile_Size) {
 
 	//player color may need to move out of this method to set from the start of the stage itself
-	player.Player_Color = CP_Color_Create(0, 255, 255, 255);
-
-	//settings the colors
-	Red = CP_Color_Create(255, 0, 0, 255);
-	Green = CP_Color_Create(0, 255, 0, 255);
-	Blue = CP_Color_Create(0, 0, 255, 255);
+	player.Player_Color = DEFAULT;
 
 	//setting player size and counter
 	player.height = Tile_Size / 2;
@@ -206,7 +201,7 @@ void setStartGame(Tile_Size) {
 
 void writeScore() {
 	FILE* output;
-	if (fopen_s(&output, "Assets/ScoreTest.txt", "w") != 0) {
+	if (fopen_s(&output, "Assets/Score.txt", "w") != 0) {
 		exit(EXIT_FAILURE);
 	}
 	//fprintf(output, "Hello");
@@ -219,7 +214,7 @@ void writeScore() {
 
 void readScore() {
 	FILE* output;
-	if (fopen_s(&output, "Assets/Score.txt", "r") != 0) {
+	if (fopen_s(&output, "Assets/Score.txt", "w+") != 0) {
 		exit(EXIT_FAILURE);
 	}
 	//fprintf(output, "Hello");

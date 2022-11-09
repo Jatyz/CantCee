@@ -1,5 +1,6 @@
 #pragma once
 #include "cprocessing.h"
+#include "player.h"
 //Window size is 800 x 1000
 //Actual game window is 800 by 800
 #define WINIDOW_HEIGHT 800
@@ -14,8 +15,7 @@ typedef enum { // enum for the different type of tiles
 
 typedef struct { // method to contain information of the current tile
 	Tile_Type type;
-	int alert; //boolean to check whether enemies checking current tile?
-	CP_Color Tile_Color;
+	Color Tile_Color;
 }Tile;
 
 typedef struct {

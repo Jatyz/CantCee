@@ -9,12 +9,16 @@
 #define MEDIUM 50
 #define SMALL 80
 
+#define Green CP_Color_Create(0, 255, 0, 255)
+#define Blue CP_Color_Create(0, 0, 255, 255)
+#define Red CP_Color_Create(255, 0, 0, 255)
+
 typedef enum { // enum for the different type of tiles
 	PLAY, PAUSED, WIN, LOSE
 }Game_State;
 
 //GLOBAL Color variables
-CP_Color Green,Red,Blue;
+//CP_Color Green,Red,Blue;
 
 //game codes
 void game_init(void);

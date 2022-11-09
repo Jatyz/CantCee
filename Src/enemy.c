@@ -104,9 +104,6 @@ int enemyBounds(int xdir, int ydir, int enemyXPos, int enemyYPos, int range, int
 
 void drawBounds(int xdir, int ydir, int enemyXPos, int enemyYPos, int range, int tileSize, int difficulty)
 {
-	Red = CP_Color_Create(255, 0, 0, 40);
-	Green = CP_Color_Create(0, 255, 0, 40);
-	Blue = CP_Color_Create(0, 0, 255, 40);
 
 	switch (enemies[enemyXPos][enemyYPos].type)
 	{

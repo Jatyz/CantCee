@@ -13,8 +13,16 @@ void drawPlayer(int tilesize) {
 	CP_Settings_StrokeWeight(0.75f);
 	CP_Settings_Stroke(CP_Color_Create(0, 0, 0, 255));
 
-	//setting player color
-	CP_Settings_Fill(player.Player_Color);
+	switch (player.Player_Color) {
+	case RED: CP_Settings_Fill(Red);
+		break;
+	case BLUE: CP_Settings_Fill(Blue);
+		break;
+	case GREEN: CP_Settings_Fill(Green);
+		break;
+	case DEFAULT: CP_Settings_Fill(CP_Color_Create(0, 255, 255, 255));
+		break;
+	}
 	//Drawing player on center of the tile
 	CP_Graphics_DrawRect((player.x * tilesize) + (tilesize / 2) - player.width / 2, (player.y * tilesize) + (tilesize / 2) - player.height / 2, player.width, player.height);
 	//(player.x * tilesize) + (tilesize/2)

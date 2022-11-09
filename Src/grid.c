@@ -51,7 +51,18 @@ void drawTile(int tilesize) {
 				CP_Graphics_DrawRect(width * tilesize, height * tilesize, tilesize - .5f, tilesize - .5f); //draw tile
 				break;
 			case DISGUISE:
-				CP_Settings_Fill(tiles[width][height].Tile_Color); //set tile color to specific color
+				switch (tiles[width][height].Tile_Color)
+				{
+				case RED:
+					CP_Settings_Fill(Red);
+					break;
+				case GREEN:
+					CP_Settings_Fill(Green);
+					break;
+				case BLUE:
+					CP_Settings_Fill(Blue);
+					break;
+				}
 				CP_Graphics_DrawRect(width * tilesize, height * tilesize, tilesize - .5f, tilesize - .5f); // draw tile
 				break;
 			case VENTS:

@@ -1,6 +1,9 @@
 #pragma once
 #include "cprocessing.h"
 
+typedef enum {
+	RED,GREEN,BLUE,DEFAULT
+}Color;
 
 typedef struct { // structure to contain player variables
 	int x; //current tile in x axis + 1
@@ -12,7 +15,7 @@ typedef struct { // structure to contain player variables
 	int width;
 	int counter;//count number of stage;
 	int setFOV;
-	CP_Color Player_Color; //for setting current player color
+	Color Player_Color;
 }Player;
 
 //Global player variable
