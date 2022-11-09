@@ -623,7 +623,7 @@ void enemyReset(int tileSize)
 	}
 }
 
-void enemyFOV(tileSize)
+void enemyFOV(int tileSize)
 {
 	int Horizontal_Tile = returnBounds(tileSize);
 	int Vertical_Tile = Horizontal_Tile;
@@ -695,33 +695,6 @@ void enemyFOV(tileSize)
 					}
 					break;
 				case DIAGONAL_LOOK:
-					//checks to the right of the enemy
-					//if (abs(width - player.x) <= enemyBounds(1, 0, width, height, enemies[width][height].range, enemies[width][height].difficulty)
-					//	&& abs(height - player.y) <= enemyBounds(0, 1, width, height, enemies[width][height].range, enemies[width][height].difficulty))
-					//{
-					//	gameState = LOSE;
-					//}
-					////checks to the left of the enemy
-					//if (abs(width - player.x) <= enemyBounds(-1, 0, width, height, enemies[width][height].range, enemies[width][height].difficulty)
-					//	&& abs(height - player.y) <= enemyBounds(0, 1, width, height, enemies[width][height].range, enemies[width][height].difficulty))
-					//{
-					//	gameState = LOSE;
-					//}
-					////checks to the bottom of the enemy
-					//if (abs(width - player.x) <= enemyBounds(1, 0, width, height, enemies[width][height].range, enemies[width][height].difficulty)
-					//	&& abs(height - player.y) <= enemyBounds(0, -1, width, height, enemies[width][height].range, enemies[width][height].difficulty))
-					//{
-					//	gameState = LOSE;
-					//}
-					////checks to the top of the enemy
-					//if (abs(width - player.x) <= enemyBounds(-1, -1, width, height, enemies[width][height].range, enemies[width][height].difficulty)
-					//	&& abs(height - player.y) <= enemyBounds(0, -1, width, height, enemies[width][height].range, enemies[width][height].difficulty))
-					//{
-					//	gameState = LOSE;
-					//}
-
-
-
 					if (abs(width - player.x) <= enemyBounds(1, 1, width, height, enemies[width][height].range, enemies[width][height].difficulty)
 						&& abs(height - player.y) <= enemyBounds(1, 1, width, height, enemies[width][height].range, enemies[width][height].difficulty))
 					{
@@ -766,6 +739,30 @@ void enemyStats(int tileSize)
 				break;
 			case AOE_VIEW:
 				enemies[width][height].isActive = 1;
+				break;
+			}
+
+		}
+	}
+}
+
+void resetEnemyStats(int tileSize)
+{
+	int Horizontal_Tile = returnBounds(tileSize);
+	int Vertical_Tile = Horizontal_Tile;
+	int height, width;
+
+	for (width = 0; width < Vertical_Tile; width++)
+	{
+		for (height = 0; height < Horizontal_Tile; height++)
+		{
+			switch (enemies[width][height].type)
+			{
+			case VERTICAL_HORIZONTAL_LOOK:
+				enemies[width][height].isActive = 0;
+				break;
+			case AOE_VIEW:
+				enemies[width][height].isActive = 0;
 				break;
 			}
 
