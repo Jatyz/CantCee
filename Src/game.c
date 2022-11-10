@@ -98,7 +98,7 @@ void game_init(void)
 
 	setStartGame(Tile_Size);
 
-	player.setFOV = 0;
+	player.setFOV = 1;
 	gameState = PLAY;
 
 	readScore();

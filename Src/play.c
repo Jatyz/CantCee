@@ -7,11 +7,13 @@
 #include "levelselect.h"
 #include "level1.h"
 
+CP_Image square = NULL;
+
 int clicked = 0;
 
 void play_Init()
 {
-	// Set the window size to a sqaure 800 x 800
+	// Set the window size to a sqaure 1000 x 800
 	CP_System_SetWindowSize(windowWidth, windowHeight);
 
 	// Set the rectangle drawing mode to CENTER
@@ -22,6 +24,9 @@ void play_Init()
 
 	// All Text allignment
 	CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
+
+	square = CP_Image_Load("./Assets/square.png");
+
 }
 
 
@@ -29,9 +34,11 @@ void play_Init()
 void play_Update()
 {
 	// Background: Grey Colour
-	CP_Graphics_ClearBackground(CP_Color_Create(125, 125, 125, 0));
+	CP_Graphics_ClearBackground(CP_Color_Create(255, 255, 255, 255));
+
 	if (clicked == 0) {
 		// -----Level 1-----
+		CP_Image_Draw(square, windowWidth / 2, windowHeight / 2, levelButtonWidth, levelButtonHeight, 255);
 		CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
 		CP_Graphics_DrawRect((windowWidth / 2.0f - 100), (windowHeight / 2.0f - 100), levelButtonWidth, levelButtonHeight);
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));

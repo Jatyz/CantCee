@@ -4,6 +4,8 @@
 #include "player.h"
 #include <stdio.h>
 
+CP_Image wall_Vertical = NULL;
+
 //declaration of tiles
 Tile tiles[MAX_TILES][MAX_TILES];
 
@@ -24,8 +26,11 @@ void drawTile(int tilesize) {
 	int Vertical_Tile = Horizontal_Tile;
 	int height, width;
 
+
+	wall_Vertical = CP_Image_Load("./Assets/wall_Vertical.png");
+
 	CP_Settings_NoStroke();
-	
+	CP_Settings_ImageMode(CP_POSITION_CORNER);
 	//for loop to go through all the tiles
 	for (height = 0; height < Horizontal_Tile; height++) {
 
@@ -35,7 +40,8 @@ void drawTile(int tilesize) {
 			case WALL:
 				CP_Settings_Stroke(CP_Color_Create(125, 125, 125, 255)); //setting stroke color
 				CP_Settings_Fill(CP_Color_Create(125, 125, 125, 255));   //setting tile color
-				CP_Graphics_DrawRect(width * tilesize, height * tilesize, tilesize, tilesize); //draw tile
+				CP_Image_Draw(wall_Vertical, width * tilesize, height * tilesize, tilesize, tilesize, 255);
+				//CP_Graphics_DrawRect(width * tilesize, height * tilesize, tilesize, tilesize); //draw tile
 				break;
 			case FLOOR:
 				CP_Settings_NoStroke(); //turn off outline, to make grid
@@ -91,7 +97,7 @@ void drawTile(int tilesize) {
 		}
 
 	}
-
+	CP_Settings_ImageMode(CP_POSITION_CENTER);
 }
 
 //reset all the tiles to only floor and walls. to be called in stage init
