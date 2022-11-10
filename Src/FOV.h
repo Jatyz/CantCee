@@ -4,6 +4,23 @@
 //sets all value in fog to be fully obscured
 void clearFogBackground(void);
 
+//set a tile at a given X and Y position to not be covered by a fog 
+void setTileLit(
+	int xPos,					// X position of the tile, in grid terms, to be illuminated
+	int yPos					// Y position of the tile, in grid terms, to be illuminated
+);
+
+//set a tile at a given X and Y position to be covered by a fog 
+void setTileUnlit(
+	int xPos,					// X position of the tile, in grid terms, to be covered by fog
+	int yPos					// Y position of the tile, in grid terms, to be covered by fog
+);
+
+void setTileHalfLit(
+	int xPos,					// X position of the tile, in grid terms, to be covered by fog
+	int yPos					// Y position of the tile, in grid terms, to be covered by fog
+);
+
 //set logic to do general illumination of area around player
 void setIllumination
 (
@@ -15,6 +32,15 @@ void setIllumination
 );
 
 void setIlluminationWallLogic
+(
+	int const playerXPos,		//player's current X position on the grid
+	int const playerYPos,		//player's current Y position on the grid
+	int const gridSizeX,		//size of the grid in the X axis for the level, used to find the bounds required of the fog grid
+	int const gridSizeY,		//size of the grid in the Y axis for the level, used to find the bounds required of the fog grid
+	int const fovRadius			//the radius of the global illumination in terms of number of tiles
+);
+
+void setIlluminationWallLogicOnce
 (
 	int const playerXPos,		//player's current X position on the grid
 	int const playerYPos,		//player's current Y position on the grid

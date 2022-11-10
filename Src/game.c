@@ -82,9 +82,8 @@ void game_init(void)
 
 	//enemies[3][10].type = VERTICAL_HORIZONTAL_LOOK;
 	//enemies[3][10].isActive = 1;
-	//enemies[3][10].difficulty = 1;
 	//enemies[3][10].range = 2;
-	//enemies[3][10].Enemy_Color = Blue;
+	//enemies[3][10].Color = GREEN;
 
 	//enemies[3][8].type = DIAGONAL_LOOK;
 	//enemies[3][8].isActive = 1;
@@ -92,9 +91,15 @@ void game_init(void)
 	//enemies[3][8].range = 1;
 	//enemies[3][8].Enemy_Color = Blue;
 	
-	enemies[5][5].type = AOE_VIEW;
-	enemies[5][5].difficulty = 2;
-	enemies[5][5].Enemy_Color = Red;
+	//enemies[5][5].type = AOE_VIEW;
+	//enemies[5][5].isActive = 1;
+	//enemies[5][5].difficulty = 2;
+	//enemies[5][5].Color = BLUE;
+
+	enemies[5][12].type = AOE_VIEW;
+	enemies[5][12].isActive = 1;
+	enemies[5][12].difficulty = 1;
+	enemies[5][12].Color = RED;
 
 	setStartGame(Tile_Size);
 
@@ -158,10 +163,8 @@ void game_exit(void)
 void renderGame(void) {
 	drawTile(Tile_Size);
 	drawPlayer(Tile_Size);
-	enemyStats(Tile_Size);
 	drawEnemy(Tile_Size);
 	enemyFOV(Tile_Size);
-	enemyReset(Tile_Size);
 	if(player.setFOV)
 	renderFOVAdvance(returnBounds(Tile_Size) , returnBounds(Tile_Size) , Tile_Size);
 
@@ -185,6 +188,7 @@ void resetGame(Tile_Size) {
 	resetVents();
 	resetGates();
 	assignTile(Tile_Size);//assign all tiles
+	enemyReset(Tile_Size);
 }
 
 void resumeGame(void)

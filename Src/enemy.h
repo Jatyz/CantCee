@@ -15,7 +15,6 @@ typedef enum
 
 typedef struct
 {
-	CP_Color Enemy_Color;
 	Color Color; //for setting current player color
 	int isActive;//0 is not active, all other values is active
 	int difficulty;
@@ -28,5 +27,4 @@ extern Enemy enemies[MAX_TILES][MAX_TILES];
 void drawEnemy(int tileSize);
 void enemyFOV(int tileSize);
 void enemyReset(int tileSize);
-void enemyStats(int tileSize);
-void resetEnemyStats(int tileSize);
+void enemySet(int width, int height, int difficulty, int range, EnemyType type, Color Color);
