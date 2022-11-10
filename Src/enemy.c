@@ -478,8 +478,8 @@ void drawBounds(int xdir, int ydir, int enemyXPos, int enemyYPos, int range, int
 					}
 					else
 					{
-						CP_Settings_Stroke(enemies[enemyXPos][enemyYPos].Enemy_Color);
-						CP_Settings_Fill(enemies[enemyXPos][enemyYPos].Enemy_Color);
+
+						enemyFOVColorSet(enemyXPos, enemyYPos);
 						CP_Graphics_DrawCircle((xPos + 0.5) * tileSize, (yPos + 0.5) * tileSize, tileSize);
 						CP_Settings_NoStroke();
 					}
