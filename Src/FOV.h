@@ -4,6 +4,23 @@
 //sets all value in fog to be fully obscured
 void clearFogBackground(void);
 
+//set a tile at a given X and Y position to not be covered by a fog 
+void setTileLit(
+	int xPos,					// X position of the tile, in grid terms, to be illuminated
+	int yPos					// Y position of the tile, in grid terms, to be illuminated
+);
+
+//set a tile at a given X and Y position to be covered by a fog 
+void setTileUnlit(
+	int xPos,					// X position of the tile, in grid terms, to be covered by fog
+	int yPos					// Y position of the tile, in grid terms, to be covered by fog
+);
+
+void setTileHalfLit(
+	int xPos,					// X position of the tile, in grid terms, to be covered by fog
+	int yPos					// Y position of the tile, in grid terms, to be covered by fog
+);
+
 //set logic to do general illumination of area around player
 void setIllumination
 (

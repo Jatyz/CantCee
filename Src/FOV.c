@@ -16,7 +16,7 @@ enum FogDensity {
 	FOG_MIN = 0,
 };
 
-struct AllowanceAngle
+static struct AllowanceAngle
 {
 	double angle;
 	double allowance;
@@ -38,7 +38,7 @@ static void resetAllowanceAngles(void)
 	}
 }
 
-int isAngleAlreadyAdded(double angleToCheck)
+static int isAngleAlreadyAdded(double angleToCheck)
 {
 	for (int i = 0; i < (sizeof(allowanceAngles) / sizeof(allowanceAngles[0])); i++)
 	{
@@ -51,7 +51,7 @@ int isAngleAlreadyAdded(double angleToCheck)
 	return 0;
 }
 
-int isTileBlockedByWall(double tileAngle) 
+static int isTileBlockedByWall(double tileAngle) 
 {
 	double differenceInAngle = 359.0f;				//create variable to store difference in player-to-tile and allowance angles
 	
@@ -68,7 +68,7 @@ int isTileBlockedByWall(double tileAngle)
 	return 0;
 }
 
-int isWallBlockedByWall(double tileAngle)
+static int isWallBlockedByWall(double tileAngle)
 {
 	double differenceInAngle = 359.0f;				//create variable to store difference in player-to-tile and allowance angles
 
@@ -86,7 +86,7 @@ int isWallBlockedByWall(double tileAngle)
 	return 0;
 }
 
-int wallBlockingTile(double tileAngle)
+static int wallBlockingTile(double tileAngle)
 {
 	double differenceInAngle = 359.0f;				//create variable to store difference in player-to-tile and allowance angles
 
@@ -103,46 +103,29 @@ int wallBlockingTile(double tileAngle)
 	return 999;
 }
 
-int hasAngleWallBeenRendered(double tileAngle)
-{
-	double differenceInAngle = 359.0f;				//create variable to store difference in player-to-tile and allowance angles
-
-	for (int iterator = 0; iterator < (sizeof(allowanceAngles) / sizeof(allowanceAngles[0])); iterator++)	//for all the angles that was added due to a wall
-	{
-		differenceInAngle = tileAngle - allowanceAngles[iterator].angle;
-		differenceInAngle = (fabs(differenceInAngle) >= 180) ? fabs(fabs(differenceInAngle) - 360) : fabs(differenceInAngle);
-		//if the difference in player-to-tile and allowance angles is less than equals to the angle of allowance
-		if (differenceInAngle <= allowanceAngles[iterator].allowance)
-		{
-			return 0;
-		}
-	}
-	return 0;
-}
-
-void setWallRenderedOnce(double tileAngle)
-{
-	double differenceInAngle = 359.0f;				//create variable to store difference in player-to-tile and allowance angles
-
-	for (int iterator = 0; iterator < (sizeof(allowanceAngles) / sizeof(allowanceAngles[0])); iterator++)	//for all the angles that was added due to a wall
-	{
-		differenceInAngle = tileAngle - allowanceAngles[iterator].angle;
-		differenceInAngle = (fabs(differenceInAngle) >= 180) ? fabs(fabs(differenceInAngle) - 360) : fabs(differenceInAngle);
-		//if the difference in player-to-tile and allowance angles is less than equals to the angle of allowance
-		if (differenceInAngle <= allowanceAngles[iterator].allowance)
-		{
-			break;
-		}
-	}
-	return 0;
-}
-
 /*!
 /
 /	END OF ALLOWANCE ANGLE FUNCTIONS
 /	
 */
 
+void setIlluminated(int xPos, int yPos) 
+{
+	fog[xPos][yPos] = FOG_MIN;
+	return;
+}
+
+void setFogCoveredHalf(int xPos, int yPos)
+{
+	fog[xPos][yPos] = FOG_HALF;
+	return;
+}
+
+void setFogCovered(int xPos, int yPos)
+{
+	fog[xPos][yPos] = FOG_MAX;
+	return;
+}
 
 //sets all value in fog to be fully obscured
 void clearFogBackground(void)
@@ -1100,22 +1083,24 @@ void renderFOVBasic(
 	int const tileSizePX		//tile size in pixels
 )
 {
-		//Check if grid size out of array, if is larger than acceptable, return function
-		if (gridSizeX >= FOG_MAX_X || gridSizeY >= FOG_MAX_Y)
-		{
-			return;
-		}
-
+	//Check if grid size out of array, if is larger than acceptable, return function
+	if (gridSizeX >= FOG_MAX_X || gridSizeY >= FOG_MAX_Y)
+	{
+		return;
+	}
+	int fogLevel = 0;
+	
 	for (int i = 0; i < gridSizeX; i++)			//for each row
 	{
 		for (int j = 0; j < gridSizeY; j++)		//for each column
 		{
-			switch (fog[i][j]>0) {
+			fogLevel = (fog[i][j] > 0);
+			switch (fogLevel) {
 				case 1:
 					CP_Settings_Stroke(CP_Color_Create(0, 0, 0, 255));	//set outline black	
 					CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));	//set block color black
 					//draw the tile
-					CP_Graphics_DrawRect(i * tileSizePX, j * tileSizePX, tileSizePX, tileSizePX);
+					CP_Graphics_DrawRect((float)(i * tileSizePX), (float)(j * tileSizePX), (float)(tileSizePX), (float)(tileSizePX));
 					break;
 				default:
 					break;
@@ -1146,15 +1131,19 @@ void renderFOVAdvance(
 				CP_Settings_Stroke(CP_Color_Create(0, 0, 0, 255));	//set outline black	
 				CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));	//set block color black
 				//draw the tile
-				CP_Graphics_DrawRect(i * tileSizePX, j * tileSizePX, tileSizePX, tileSizePX);
+				CP_Graphics_DrawRect((float)(i * tileSizePX), (float)(j * tileSizePX), (float)(tileSizePX), (float)(tileSizePX));
 				break;
 			case FOG_HALF:
 				CP_Settings_Stroke(CP_Color_Create(0, 0, 0, 127));	//set outline black	of half opacity
 				CP_Settings_Fill(CP_Color_Create(0, 0, 0, 127));	//set block color black of half opacity
 				//draw the tile
-				CP_Graphics_DrawRect(i * tileSizePX, j * tileSizePX, tileSizePX, tileSizePX);
+				CP_Graphics_DrawRect((float)(i * tileSizePX), (float)(j * tileSizePX), (float)(tileSizePX), (float)(tileSizePX));
 				break;
 			default:
+				CP_Settings_Stroke(CP_Color_Create(0, 0, 0, 255));	//set outline black	
+				CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));	//set block color black
+				//draw the tile
+				CP_Graphics_DrawRect((float)(i * tileSizePX), (float)(j * tileSizePX), (float)(tileSizePX), (float)(tileSizePX));
 				break;
 			}
 		}
