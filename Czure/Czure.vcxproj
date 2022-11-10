@@ -109,7 +109,10 @@ xcopy "$(SolutionDir)Assets\*" "$(OutDir)Assets\" /s /r /y /q
     <ClCompile Include="..\Src\level2.c" />
     <ClCompile Include="..\Src\level3.c" />
     <ClCompile Include="..\Src\level4.c" />
+    <ClCompile Include="..\Src\level5.c" />
     <ClCompile Include="..\Src\level6.c" />
+    <ClCompile Include="..\Src\level7.c" />
+    <ClCompile Include="..\Src\level8.c" />
     <ClCompile Include="..\Src\levelselect.c" />
     <ClCompile Include="..\Src\main.c" />
     <ClCompile Include="..\Src\mainmenu.c" />
@@ -121,16 +124,19 @@ xcopy "$(SolutionDir)Assets\*" "$(OutDir)Assets\" /s /r /y /q
     <ClCompile Include="..\Src\vectorMathBasic.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Inc\level1.h" />
+    <ClInclude Include="..\Inc\level2.h" />
+    <ClInclude Include="..\Inc\level3.h" />
+    <ClInclude Include="..\Inc\level4.h" />
+    <ClInclude Include="..\Inc\level5.h" />
+    <ClInclude Include="..\Inc\level6.h" />
+    <ClInclude Include="..\Inc\level7.h" />
+    <ClInclude Include="..\Inc\level8.h" />
     <ClInclude Include="..\Src\enemy.h" />
     <ClInclude Include="..\Src\FOV.h" />
     <ClInclude Include="..\Src\game.h" />
     <ClInclude Include="..\Src\grid.h" />
     <ClInclude Include="..\Src\howToPlay.h" />
-    <ClInclude Include="..\Src\level1.h" />
-    <ClInclude Include="..\Src\level2.h" />
-    <ClInclude Include="..\Src\level3.h" />
-    <ClInclude Include="..\Src\level4.h" />
-    <ClInclude Include="..\Src\level6.h" />
     <ClInclude Include="..\Src\levelselect.h" />
     <ClInclude Include="..\Src\main.h" />
     <ClInclude Include="..\Src\mainmenu.h" />

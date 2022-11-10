@@ -3,7 +3,10 @@
 #include "level2.h"
 #include "level3.h"
 #include "level4.h"
+#include "level5.h"
 #include "level6.h"
+#include "level7.h"
+#include "level8.h"
 #include "game.h"
 #include "play.h"
 #include "mainmenu.h"
@@ -75,9 +78,25 @@ void startLevel4(void)
 	CP_Engine_SetNextGameStateForced(level4_init, level4_update, level4_exit);
 }
 
+void startLevel5(void)
+{
+	CP_Engine_SetNextGameStateForced(level5_init, level5_update, level5_exit);
+}
+
+
 void startLevel6(void)
 {
 	CP_Engine_SetNextGameStateForced(level6_init, level6_update, level6_exit);
+}
+
+void startLevel7(void)
+{
+	CP_Engine_SetNextGameStateForced(level7_init, level7_update, level7_exit);
+}
+
+void startLevel8(void)
+{
+	CP_Engine_SetNextGameStateForced(level8_init, level8_update, level8_exit);
 }
 
 void startGame(void)

@@ -5,7 +5,7 @@
 #include "level6.h"
 #include "panels.h"
 #include "levelSelect.h"
-
+#include "enemy.h"
 
 void level6_init(void)
 {
@@ -26,53 +26,36 @@ void level6_init(void)
 	//assign all the floors and walls
 	assignTile(Tile_Size);
 
-	int width;
+	int height, width;
 
 
 	//for loop to go through all the tiles
+	for (height = 0; height < returnBounds(Tile_Size); height++) {
+
 		for (width = 0; width < returnBounds(Tile_Size); width++) {
 
-				tiles[width][3].type = WALL;
-				tiles[width][6].type = WALL;
+			if (width < 3 || width > 6) {
+				tiles[width][height].type = WALL;
+			}
+			else {
+				tiles[width][height].type = FLOOR;
+
+			}
+
 		}
+	}
 
 
-	tiles[9][9].type = START;
-	tiles[0][4].type = END;
+	tiles[5][9].type = START;
+	tiles[4][0].type = END;
 
-	vents[0].tile1 = &tiles[9][0];
-	vents[0].tile2 = &tiles[0][9];
-
-	vents[1].tile1 = &tiles[0][0];
-	vents[1].tile2 = &tiles[3][9];
-
-	vents[2].tile1 = &tiles[9][5];
-	vents[2].tile2 = &tiles[3][0];
-
-	vents[3].tile1 = &tiles[9][0];
-	vents[3].tile2 = &tiles[6][9];
-
-	vents[4].tile1 = &tiles[9][2];
-	vents[4].tile2 = &tiles[0][7];
-
-	vents[5].tile1 = &tiles[6][2];
-	vents[5].tile2 = &tiles[3][7];
-
-	vents[6].tile1 = &tiles[6][0];
-	vents[6].tile2 = &tiles[0][7];
-
-	vents[7].tile1 = &tiles[6][7];
-	vents[7].tile2 = &tiles[9][0];
-
-	vents[8].tile1 = &tiles[0][2];
-	vents[8].tile2 = &tiles[9][7];
-
-	vents[9].tile1 = &tiles[3][2];
-	vents[9].tile2 = &tiles[9][7];
-
+	/*enemies[5][5].type = AOE_VIEW;
+	enemies[5][5].isActive = 1;*/
+	enemySet(5, 6, 1, 0, AOE_VIEW, 0);
 	setStartGame(Tile_Size);
 	player.setFOV = 0;
 	gameState = PLAY;
+	player.currentStage = 6;
 }
 
 void level6_update(void)
@@ -84,14 +67,22 @@ void level6_update(void)
 		handlePlayerInput(Tile_Size);
 		//all the game update methods that needs to be updated every frame
 		renderGame();
+		enemyFOV(Tile_Size);
 		//End FOV logic handled area
 		drawSideBar("Level 6", player.counter);
-		if (player.counter < 10)
+		if (player.counter < 6)
 		{
-			//drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 7 * Tile_Size, 6 * Tile_Size, "Using the vent tiles, you can crawl through vents to end on the other side.");
+			drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 0 * Tile_Size, 1 * Tile_Size, "Enemy has their own detection system avoid walking into their vision");
+			drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 7 * Tile_Size, 6 * Tile_Size, "You will lose when you walk into their vision");
 
 		}
 
+
+		if (player.counter > 6)
+		{
+			drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 0 * Tile_Size, 1 * Tile_Size, "Get to the red tile to proceed");
+
+		}
 		break;
 	case PAUSED:
 		drawFullPanel();
@@ -99,7 +90,7 @@ void level6_update(void)
 		break;
 	case WIN:
 		drawFullPanel();
-		checkClick(0, startLevel6, startLevelSelect);
+		checkClick(startLevel7, startLevel6, startLevelSelect);
 		break;
 	case LOSE:
 		drawFullPanel();

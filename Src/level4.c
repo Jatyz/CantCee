@@ -5,7 +5,7 @@
 #include "level4.h"
 #include "panels.h"
 #include "levelSelect.h"
-#include "enemy.h"
+
 
 void level4_init(void)
 {
@@ -26,35 +26,31 @@ void level4_init(void)
 	//assign all the floors and walls
 	assignTile(Tile_Size);
 
-	int height, width;
+	int width;
 
 
 	//for loop to go through all the tiles
-	for (height = 0; height < returnBounds(Tile_Size); height++) {
+	for (width = 0; width < returnBounds(Tile_Size); width++) {
 
-		for (width = 0; width < returnBounds(Tile_Size); width++) {
-
-			if (width < 3 || width > 6) {
-				tiles[width][height].type = WALL;
-			}
-			else {
-				tiles[width][height].type = FLOOR;
-
-			}
-
-		}
+		tiles[width][5].type = WALL;
 	}
 
+	tiles[5][0].type = WALL;
+	tiles[5][1].type = WALL;
+	tiles[5][2].type = WALL;
+	tiles[5][3].type = WALL;
+	tiles[5][4].type = WALL;
+	tiles[9][9].type = START;
+	tiles[0][0].type = END;
+	vents[0].tile1 = &tiles[9][0];
+	vents[0].tile2 = &tiles[0][9];
+	gates[0].Door = &tiles[2][5];
+	gates[0].Switch = &tiles[6][4];
 
-	tiles[5][9].type = START;
-	tiles[4][0].type = END;
-
-	/*enemies[5][5].type = AOE_VIEW;
-	enemies[5][5].isActive = 1;*/
-	enemySet(5, 6, 1, 0, AOE_VIEW, 0);
 	setStartGame(Tile_Size);
 	player.setFOV = 0;
 	gameState = PLAY;
+	player.currentStage = 4;
 }
 
 void level4_update(void)
@@ -66,20 +62,17 @@ void level4_update(void)
 		handlePlayerInput(Tile_Size);
 		//all the game update methods that needs to be updated every frame
 		renderGame();
-		enemyFOV(Tile_Size);
 		//End FOV logic handled area
-		drawSideBar("Level 4", player.counter);
-		if (player.counter < 6)
+		drawSideBar("Level 3", player.counter);
+		if (player.counter < 10)
 		{
-			drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 0 * Tile_Size, 1 * Tile_Size, "Enemy has their own detection system avoid walking into their vision");
-			drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 7 * Tile_Size, 6 * Tile_Size, "You will lose when you walk into their vision");
+			drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 6 * Tile_Size, 1 * Tile_Size, "The switch to the door is in this room.");
+			drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 7 * Tile_Size, 6 * Tile_Size, "using the vents you can get over and open the door.");
 
 		}
-
-
-		if (player.counter > 6)
+		if (player.counter > 15)
 		{
-			drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 0 * Tile_Size, 1 * Tile_Size, "Get to the red tile to proceed");
+			drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 7 * Tile_Size, 6 * Tile_Size, "After touching the switch, the door is opened");
 
 		}
 		break;
@@ -89,7 +82,7 @@ void level4_update(void)
 		break;
 	case WIN:
 		drawFullPanel();
-		checkClick(0, startLevel4, startLevelSelect);
+		checkClick(startLevel5, startLevel4, startLevelSelect);
 		break;
 	case LOSE:
 		drawFullPanel();

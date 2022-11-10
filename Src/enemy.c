@@ -846,7 +846,7 @@ void enemyFOV(int tileSize)
 						//checks to the right of the enemy and checks if player has entered enemy's FOV
 					if (width - player.x > 0 && player.y == height)
 					{
-						if (abs(width - player.x) <= enemyBounds(1, 0, width, height, enemies[width][height].range, enemies[width][height].difficulty))
+						if (abs(width - player.x) <= enemyBounds(-1, 0, width, height, enemies[width][height].range, enemies[width][height].difficulty))
 						{
 							if (player.Player_Color != enemies[width][height].Color)
 							{
@@ -858,7 +858,7 @@ void enemyFOV(int tileSize)
 					else if (width - player.x < 0 && player.y == height)
 					{
 
-						if (abs(width - player.x) <= enemyBounds(-1, 0, width, height, enemies[width][height].range, enemies[width][height].difficulty))
+						if (abs(width - player.x) <= enemyBounds(1, 0, width, height, enemies[width][height].range, enemies[width][height].difficulty))
 						{
 							if (player.Player_Color != enemies[width][height].Color)
 							{

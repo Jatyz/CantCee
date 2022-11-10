@@ -2,7 +2,7 @@
 #include "grid.h"
 #include "game.h"
 #include "cprocessing.h"
-#include "level2.h"
+#include "level3.h"
 #include "panels.h"
 #include "levelSelect.h"
 
@@ -32,20 +32,43 @@ void level3_init(void)
 	//for loop to go through all the tiles
 	for (width = 0; width < returnBounds(Tile_Size); width++) {
 
-		tiles[width][5].type = WALL;
+		tiles[width][3].type = WALL;
+		tiles[width][6].type = WALL;
 	}
 
-	tiles[5][0].type = WALL;
-	tiles[5][1].type = WALL;
-	tiles[5][2].type = WALL;
-	tiles[5][3].type = WALL;
-	tiles[5][4].type = WALL;
+
 	tiles[9][9].type = START;
-	tiles[0][0].type = END;
+	tiles[0][4].type = END;
+
 	vents[0].tile1 = &tiles[9][0];
 	vents[0].tile2 = &tiles[0][9];
-	gates[0].Door = &tiles[2][5];
-	gates[0].Switch = &tiles[6][4];
+
+	vents[1].tile1 = &tiles[0][0];
+	vents[1].tile2 = &tiles[3][9];
+
+	vents[2].tile1 = &tiles[9][5];
+	vents[2].tile2 = &tiles[3][0];
+
+	vents[3].tile1 = &tiles[9][0];
+	vents[3].tile2 = &tiles[6][9];
+
+	vents[4].tile1 = &tiles[9][2];
+	vents[4].tile2 = &tiles[0][7];
+
+	vents[5].tile1 = &tiles[6][2];
+	vents[5].tile2 = &tiles[3][7];
+
+	vents[6].tile1 = &tiles[6][0];
+	vents[6].tile2 = &tiles[0][7];
+
+	vents[7].tile1 = &tiles[6][7];
+	vents[7].tile2 = &tiles[9][0];
+
+	vents[8].tile1 = &tiles[0][2];
+	vents[8].tile2 = &tiles[9][7];
+
+	vents[9].tile1 = &tiles[3][2];
+	vents[9].tile2 = &tiles[9][7];
 
 	setStartGame(Tile_Size);
 	player.setFOV = 0;
@@ -64,17 +87,12 @@ void level3_update(void)
 		renderGame();
 		//End FOV logic handled area
 		drawSideBar("Level 3", player.counter);
-		if (player.counter < 10)
+		if (player.counter < 6)
 		{
-			drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 6 * Tile_Size, 1 * Tile_Size, "The switch to the door is in this room.");
-			drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 7 * Tile_Size, 6 * Tile_Size, "using the vents you can get over and open the door.");
+			drawSmallPanel(4 * Tile_Size, 2 * Tile_Size, 3 * Tile_Size, 4 * Tile_Size, "Vents are interconnected in unknown ways., you will need to remember which vents leads to which.");
 
 		}
-		if (player.counter >15)
-		{
-			drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 7 * Tile_Size, 6 * Tile_Size, "After touching the switch, the door is opened");
 
-		}
 		break;
 	case PAUSED:
 		drawFullPanel();
