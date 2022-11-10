@@ -44,25 +44,25 @@ Enemy enemies[MAX_TILES][MAX_TILES];
 //	}
 //}
 
-void enemyFOVColorSet(int enemyXPos, int enemyYPos)
+CP_Color enemyFOVColorSet(int enemyXPos, int enemyYPos)
 {
 	if (enemies[enemyXPos][enemyYPos].Color == RED)
 	{
 
-		CP_Settings_Stroke(CP_Color_Create(255, 0, 0, 40));
-		CP_Settings_Fill(CP_Color_Create(255, 0, 0, 40));
+		CP_Settings_Stroke(CP_Color_Create(255, 0, 0, 60));
+		CP_Settings_Fill(CP_Color_Create(255, 0, 0, 60));
 	}
 
 	if (enemies[enemyXPos][enemyYPos].Color == GREEN)
 	{
-		CP_Settings_Stroke(CP_Color_Create(0, 255, 0, 40));
-		CP_Settings_Fill(CP_Color_Create(0, 255, 0, 40));
+		CP_Settings_Stroke(CP_Color_Create(0, 255, 0, 60));
+		CP_Settings_Fill(CP_Color_Create(0, 255, 0, 60));
 	}
 
 	if (enemies[enemyXPos][enemyYPos].Color == BLUE)
 	{
-		CP_Settings_Stroke(CP_Color_Create(0, 0, 255, 40));
-		CP_Settings_Fill(CP_Color_Create(0, 0, 255, 40));
+		CP_Settings_Stroke(CP_Color_Create(0, 0, 255, 60));
+		CP_Settings_Fill(CP_Color_Create(0, 0, 255, 60));
 	}
 }
 
@@ -478,7 +478,6 @@ void drawBounds(int xdir, int ydir, int enemyXPos, int enemyYPos, int range, int
 					}
 					else
 					{
-
 						enemyFOVColorSet(enemyXPos, enemyYPos);
 						CP_Graphics_DrawCircle((xPos + 0.5) * tileSize, (yPos + 0.5) * tileSize, tileSize);
 						CP_Settings_NoStroke();
