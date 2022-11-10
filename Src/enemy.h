@@ -27,5 +27,5 @@ extern Enemy enemies[MAX_TILES][MAX_TILES];
 
 void drawEnemy(int tileSize);
 void enemyFOV(int tileSize);
-void enemySet(int tileSize);
 void enemyReset(int tileSize);
+
