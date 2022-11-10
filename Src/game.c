@@ -103,7 +103,7 @@ void game_init(void)
 
 	setStartGame(Tile_Size);
 
-	player.setFOV = 0;
+	player.setFOV = 1;
 	gameState = PLAY;
 
 	readScore();
@@ -188,6 +188,7 @@ void resetGame(Tile_Size) {
 	resetVents();
 	resetGates();
 	assignTile(Tile_Size);//assign all tiles
+	enemyReset(Tile_Size);
 }
 
 void resumeGame(void)
