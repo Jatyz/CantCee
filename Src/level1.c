@@ -50,6 +50,9 @@ void level1_init(void)
 	setStartGame(Tile_Size);
 	player.setFOV = 0;
 	gameState = PLAY;
+	createScore();
+	readScore();
+	player.currentStage = 1;
 }
 
 void level1_update(void)

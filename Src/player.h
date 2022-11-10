@@ -15,6 +15,7 @@ typedef struct { // structure to contain player variables
 	int width;
 	int counter;//count number of stage;
 	int setFOV;
+	int currentStage;
 	Color Player_Color;
 }Player;
 

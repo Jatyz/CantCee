@@ -160,6 +160,9 @@ _Bool checkMove(int DirectionX, int DirectionY) {
 		player.counter++;
 		player.Prev_X = player.x;
 		player.Prev_Y = player.y;
+		if(Score[player.currentStage] == 0 || player.counter < Score[player.currentStage])
+		Score[player.currentStage] = player.counter;
+		writeScore();
 		gameState = WIN;
 		return TRUE;
 		break;

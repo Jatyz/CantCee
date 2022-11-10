@@ -39,9 +39,10 @@ void resumeGame(void);
 
 void readScore();
 void writeScore();
-
+void createScore();
 
 //global tile size variable
 extern int Tile_Size;
 extern Game_State gameState;
 extern int Score[];
+//extern int parScore[]; see game.c

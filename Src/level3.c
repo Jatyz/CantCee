@@ -50,6 +50,7 @@ void level3_init(void)
 	setStartGame(Tile_Size);
 	player.setFOV = 0;
 	gameState = PLAY;
+	player.currentStage = 3;
 }
 
 void level3_update(void)

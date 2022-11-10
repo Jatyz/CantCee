@@ -80,8 +80,8 @@ void mainMenu_Update()
 
 // ---------------------------------------------------------------Mouse Inputs/Checking---------------------------------------------------------------
     // -----Checking for MouseInput-----
-    if (CP_Input_MouseTrigger(MOUSE_BUTTON_LEFT) == 1)
-    {   
+   // if (CP_Input_MouseTrigger(MOUSE_BUTTON_LEFT) == 1)
+  //  {   
         // -----Play Button Input-----
         if (IsAreaClicked(startWordWidth, startWordHeight, CP_Image_GetWidth(startWord), CP_Image_GetHeight(startWord), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
         {
@@ -111,7 +111,7 @@ void mainMenu_Update()
         {
             CP_Engine_Terminate();
         }
-    }
+   // }
 }
 
 

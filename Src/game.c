@@ -214,18 +214,29 @@ void writeScore() {
 	}
 	fclose(output);
 }
-
+//called after create score in main menu
 void readScore() {
 	FILE* output;
-	if (fopen_s(&output, "Assets/Score.txt", "w+") != 0) {
+	if (fopen_s(&output, "Assets/Score.txt", "r") != 0) {
 		exit(EXIT_FAILURE);
 	}
-	//fprintf(output, "Hello");
-	char buf[50];
+	fseek(output,0,SEEK_SET);
+	char buf[6];
 	int i = 0;
-	while (fgets(buf,50,output) && i < 30) {
-		sscanf_s(buf, "%d", &Score[i],50);
+	while (fgets(buf,6,output) && i < 30) {
+		sscanf_s(buf, "%d", &Score[i]);
 		i++;
 	}
 	fclose(output);
+}
+
+//needs to be called in main menu
+void createScore() {
+	FILE* output;
+	if (fopen_s(&output, "Assets/Score.txt", "rb+") != 0) {
+		fopen_s(&output, "Assets/Score.txt", "wb");
+	}
+	if (output) {
+		fclose(output);
+	}
 }

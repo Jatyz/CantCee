@@ -43,6 +43,7 @@ void level2_init(void)
 	setStartGame(Tile_Size);
 	player.setFOV = 0;
 	gameState = PLAY;
+	player.currentStage = 2;
 }
 
 void level2_update(void)

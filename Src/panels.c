@@ -144,7 +144,7 @@ void drawSideBar(char levelNumber[], int noOfStep) {
 	char* number;
 	number = malloc(28 + 6);
 	if (number != NULL) {
-		sprintf_s(number, 32, "Current Number of Steps : %d", noOfStep);
+		sprintf_s(number, 34, "Current Number of Steps : %d", noOfStep);
 	}
 	CP_Settings_TextSize(25.f);
 	CP_Font_DrawTextBox(number, 810, 70, 200);
