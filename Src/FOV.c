@@ -109,19 +109,19 @@ static int wallBlockingTile(double tileAngle)
 /	
 */
 
-void setIlluminated(int xPos, int yPos) 
+void setTileLit(int xPos, int yPos) 
 {
 	fog[xPos][yPos] = FOG_MIN;
 	return;
 }
 
-void setFogCoveredHalf(int xPos, int yPos)
+void setTileHalfLit(int xPos, int yPos)
 {
 	fog[xPos][yPos] = FOG_HALF;
 	return;
 }
 
-void setFogCovered(int xPos, int yPos)
+void setTileUnlit(int xPos, int yPos)
 {
 	fog[xPos][yPos] = FOG_MAX;
 	return;
