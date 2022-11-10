@@ -23,26 +23,14 @@ Enemy enemies[MAX_TILES][MAX_TILES];
 //(difficulty == 1) Checks 8 grids around AOE Enemy
 //(difficulty == 2) Checks 20 grids around AOE Enemy
 
-//Enemy enemySet(int width, int height, int difficulty, int range, EnemyType type, Color Color)
-//{
-//	enemies[width][height].type = type;
-//	enemies[width][height].range = range;
-//	enemies[width][height].difficulty = difficulty;
-//	enemies[width][height].isActive = 1;
-//	enemies[width][height].Color = Color;
-//	if (enemies[width][height].Color == RED)
-//	{
-//		enemies[width][height].Enemy_Color = Red;
-//	}
-//	else if (enemies[width][height].Color == BLUE)
-//	{
-//		enemies[width][height].Enemy_Color = Blue;
-//	}
-//	else if (enemies[width][height].Color == GREEN)
-//	{
-//		enemies[width][height].Enemy_Color = Green;
-//	}
-//}
+void enemySet(int width, int height, int difficulty, int range, EnemyType type, Color Color)
+{
+	enemies[width][height].isActive = 1;
+	enemies[width][height].type = type;
+	enemies[width][height].range = range;
+	enemies[width][height].difficulty = difficulty;
+	enemies[width][height].Color = Color;
+}
 
 CP_Color enemyFOVColorSet(int enemyXPos, int enemyYPos)
 {
@@ -770,8 +758,8 @@ void drawBounds(int xdir, int ydir, int enemyXPos, int enemyYPos, int range, int
 			{
 				return NULL;
 			}
-			CP_Settings_Stroke(enemies[enemyXPos][enemyYPos].Enemy_Color);
-			CP_Settings_Fill(enemies[enemyXPos][enemyYPos].Enemy_Color);
+			//CP_Settings_Stroke(enemies[enemyXPos][enemyYPos].Enemy_Color);
+			CP_Settings_Fill(enemyFOVColorSet(enemyXPos,enemyYPos));
 			CP_Graphics_DrawCircle((enemyXPos + (xdir * counter) + 0.5) * tileSize, (enemyYPos + (ydir * counter) + 0.5) * tileSize, tileSize);
 			CP_Settings_NoStroke();
 		}
@@ -952,32 +940,32 @@ void enemyFOV(int tileSize)
 	}
 }
 
-void enemySet(int tileSize)
-{
-	int Horizontal_Tile = returnBounds(tileSize);
-	int Vertical_Tile = Horizontal_Tile;
-	int height, width;
-
-	for (width = 0; width < Vertical_Tile; width++)
-	{
-		for (height = 0; height < Horizontal_Tile; height++)
-		{
-			switch (enemies[width][height].type)
-			{
-			case VERTICAL_HORIZONTAL_LOOK:
-				enemies[width][height].isActive = 1;
-				break;
-			case AOE_VIEW:
-				enemies[width][height].isActive = 1;
-				break;
-			default:
-				enemies[width][height].isActive = 0;
-				break;
-			}
-
-		}
-	}
-}
+//void enemySet(int tileSize)
+//{
+//	int Horizontal_Tile = returnBounds(tileSize);
+//	int Vertical_Tile = Horizontal_Tile;
+//	int height, width;
+//
+//	for (width = 0; width < Vertical_Tile; width++)
+//	{
+//		for (height = 0; height < Horizontal_Tile; height++)
+//		{
+//			switch (enemies[width][height].type)
+//			{
+//			case VERTICAL_HORIZONTAL_LOOK:
+//				enemies[width][height].isActive = 1;
+//				break;
+//			case AOE_VIEW:
+//				enemies[width][height].isActive = 1;
+//				break;
+//			default:
+//				enemies[width][height].isActive = 0;
+//				break;
+//			}
+//
+//		}
+//	}
+//}
 
 void enemyReset(int tileSize)
 {
@@ -991,15 +979,9 @@ void enemyReset(int tileSize)
 		{
 			CP_Settings_NoStroke();
 			CP_Settings_NoFill();
-			switch (enemies[width][height].type)
-			{
-			case VERTICAL_HORIZONTAL_LOOK:
-				enemies[width][height].isActive = 0;
-				break;
-			case AOE_VIEW:
-				enemies[width][height].isActive = 0;
-				break;
-			}
+			enemies[width][height].isActive = 0;
+			enemies[width][height].range = 0;
+			enemies[width][height].difficulty = 0;
 
 		}
 	}

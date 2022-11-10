@@ -49,9 +49,9 @@ void level4_init(void)
 	tiles[5][9].type = START;
 	tiles[4][0].type = END;
 
-	enemies[5][5].type = AOE_VIEW;
-	enemies[5][5].isActive = 1;
-
+	/*enemies[5][5].type = AOE_VIEW;
+	enemies[5][5].isActive = 1;*/
+	enemySet(5, 6, 1, 0, AOE_VIEW, 0);
 	setStartGame(Tile_Size);
 	player.setFOV = 0;
 	gameState = PLAY;
