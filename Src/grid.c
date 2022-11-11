@@ -239,11 +239,40 @@ void checkGates(Tile* address) {
 		if (gates[i].Switch == address && gates[i].Switch->type == SWITCH_OFF) {
 			gates[i].Switch->type = SWITCH_ON;
 			gates[i].Door->type = OPENED_DOOR;
+
+			//get the address of tile at 0 0
+			Tile* base = tiles;
+
+			//find the number of tiles between 0 0 and the tile at your current address
+			int difference = gates[i].Door - base;
+
+			//get column of 2d array
+			int col = difference / MAX_TILES;
+
+			//get row of 2d array
+			int row = difference % MAX_TILES;
+			
+			lightTiles(col, row, doorLightRange);
+			doorLightCounter++;
 			return;
 		}
 		if (gates[i].Switch == address && gates[i].Switch->type == SWITCH_ON) {
 			gates[i].Switch->type = SWITCH_OFF;
 			gates[i].Door->type = CLOSED_DOOR;
+				//get the address of tile at 0 0
+				Tile * base = tiles;
+
+			//find the number of tiles between 0 0 and the tile at your current address
+			int difference = gates[i].Door - base;
+
+			//get column of 2d array
+			int col = difference / MAX_TILES;
+
+			//get row of 2d array
+			int row = difference % MAX_TILES;
+
+			lightTiles(col, row, doorLightRange);
+			doorLightCounter++;
 			return;
 		}
 	}

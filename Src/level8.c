@@ -93,6 +93,11 @@ void level8_update(void)
 		renderGame();
 		enemyFOV(Tile_Size);
 		//End FOV logic handled area
+		if (player.counter < 10)
+		{
+			drawSmallPanel(4 * Tile_Size, 2 * Tile_Size, 3 * Tile_Size, 4 * Tile_Size, "Enemies cannot see through closed doors, but they can see through opened ones.");
+
+		}
 		drawSideBar("Level 8", player.counter);
 		break;
 	case PAUSED:
@@ -101,7 +106,7 @@ void level8_update(void)
 		break;
 	case WIN:
 		drawFullPanel();
-		checkClick(0, startLevel8, startLevelSelect);
+		checkClick(startLevel9, startLevel8, startLevelSelect);
 		break;
 	case LOSE:
 		drawFullPanel();

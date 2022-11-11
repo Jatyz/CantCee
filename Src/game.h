@@ -41,8 +41,12 @@ void readScore();
 void writeScore();
 void createScore();
 
+void lightTiles(int x, int y,int range);
+
 //global tile size variable
 extern int Tile_Size;
 extern Game_State gameState;
 extern int Score[];
+extern double doorLightCounter;
+extern int doorLightRange;
 //extern int parScore[]; see game.c

@@ -2,13 +2,13 @@
 #include "grid.h"
 #include "game.h"
 #include "cprocessing.h"
-#include "level10.h"
+#include "level9.h"
 #include "panels.h"
 #include "levelSelect.h"
 #include "enemy.h"
 #include "FOV.h"
 
-void level10_init(void)
+void level9_init(void)
 {
 	CP_System_SetWindowSize(WINDOW_WIDTH, WINIDOW_HEIGHT);
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
@@ -29,54 +29,57 @@ void level10_init(void)
 
 	int height, width;
 
-	tiles[4][0].type = WALL;
+	tiles[1][1].type = WALL;
+	tiles[2][1].type = WALL;
+	tiles[3][1].type = WALL;
 	tiles[4][1].type = WALL;
-	tiles[4][2].type = WALL;
-	tiles[4][3].type = WALL;
-	tiles[0][3].type = WALL;
+	tiles[5][1].type = WALL;
+	tiles[6][1].type = WALL;
+	tiles[7][1].type = WALL;
+	tiles[8][1].type = WALL;
+	tiles[1][2].type = WALL;
 	tiles[1][3].type = WALL;
-	tiles[2][3].type = WALL;
+	tiles[1][4].type = WALL;
+	tiles[1][5].type = WALL;
+	tiles[1][6].type = WALL;
+	tiles[1][7].type = WALL;
+	tiles[1][8].type = WALL;
+	tiles[2][8].type = WALL;
+	tiles[3][8].type = WALL;
+	tiles[6][8].type = WALL;
+	tiles[7][8].type = WALL;
+	tiles[8][8].type = WALL;
+	tiles[8][7].type = WALL;
+	tiles[8][6].type = WALL;
+	tiles[8][5].type = WALL;
+	tiles[8][4].type = WALL;
+	tiles[8][3].type = WALL;
+	tiles[8][2].type = WALL;
+	tiles[8][1].type = WALL;
 	tiles[3][3].type = WALL;
+	tiles[4][3].type = WALL;
 	tiles[5][3].type = WALL;
 	tiles[6][3].type = WALL;
-	tiles[7][3].type = WALL;
-	tiles[8][3].type = WALL;
-	tiles[9][3].type = WALL;
-	tiles[8][6].type = WALL;
-	tiles[7][6].type = WALL;
+	tiles[6][4].type = WALL;
+	tiles[6][5].type = WALL;
 	tiles[6][6].type = WALL;
-	tiles[5][6].type = WALL;
+	tiles[3][4].type = WALL;
+	tiles[3][5].type = WALL;
 	tiles[3][6].type = WALL;
-	tiles[1][6].type = WALL;
-	tiles[0][6].type = WALL;
-	tiles[3][7].type = WALL;
-	tiles[5][7].type = WALL;
-	tiles[3][8].type = WALL;
-	tiles[5][8].type = WALL;
-	tiles[3][9].type = WALL;
-	tiles[5][9].type = WALL;
+	tiles[4][6].type = WALL;
+	tiles[5][6].type = WALL;
+
+	tiles[5][5].type = END;
+	tiles[0][9].type = START;
 
 
-	tiles[9][9].type = START;
-	tiles[0][0].type = END;
+	gates[0].Door = &tiles[5][3];
+	gates[0].Switch = &tiles[9][0];
 
-	tiles[4][9].type = DISGUISE;
-	tiles[4][9].Tile_Color = GREEN;
-	tiles[6][7].type = DISGUISE;
-	tiles[6][7].Tile_Color = RED;
+	tiles[0][0].type = DISGUISE;
+	tiles[0][0].Tile_Color = RED;
 
-	vents[0].tile1 = &tiles[6][9];
-	vents[0].tile2 = &tiles[9][0];
-
-	gates[0].Door = &tiles[1][3];
-	gates[0].Switch = &tiles[0][7];
-	gates[1].Door = &tiles[2][6];
-	gates[1].Switch = &tiles[5][2];
-
-	enemySet(2, 1, 1, 0, AOE_VIEW, GREEN);
-	enemySet(7, 1, 1, 0, AOE_VIEW, GREEN);
-	enemySet(2, 9, 0, 5, VERTICAL_HORIZONTAL_LOOK, RED);
-
+	enemySet(2, 7, 0, 3, VERTICAL_HORIZONTAL_LOOK, RED);
 	setStartGame(Tile_Size);
 	player.setFOV = 1;
 	doorLightRange = 2;
@@ -84,7 +87,7 @@ void level10_init(void)
 	player.currentStage = 10;
 }
 
-void level10_update(void)
+void level9_update(void)
 {
 	//need this for light shine on door
 	if (doorLightCounter > 0) {
@@ -96,10 +99,8 @@ void level10_update(void)
 		case PLAY:
 			//clears the screen so things can be redrawn
 			CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
-			//renderGame();
-
-			//all the game update methods that needs to be updated every frame
 			enemyFOV(Tile_Size);
+			//all the game update methods that needs to be updated every frame
 			if (player.setFOV) {
 				clearFogBackground();
 				setIlluminationWallLogicOnce(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), 4);
@@ -110,31 +111,31 @@ void level10_update(void)
 
 			if (player.counter < 10)
 			{
-				drawSmallPanel(4 * Tile_Size, 2 * Tile_Size, 3 * Tile_Size, 4 * Tile_Size, "Try to remember the way.");
+				drawSmallPanel(4 * Tile_Size, 2 * Tile_Size, 3 * Tile_Size, 4 * Tile_Size, "The enemy base is really dark.");
 
 			}
 			//End FOV logic handled area
-			drawSideBar("Level 10", player.counter);
+			drawSideBar("Level 9", player.counter);
 
 			break;
 		case PAUSED:
 			drawFullPanel();
-			checkClick(resumeGame, startLevel10, startLevelSelect);
+			checkClick(resumeGame, startLevel9, startLevelSelect);
 			break;
 		case WIN:
 			drawFullPanel();
-			checkClick(0, startLevel10, startLevelSelect);
+			checkClick(startLevel10, startLevel9, startLevelSelect);
 			break;
 		case LOSE:
 			drawFullPanel();
-			checkClick(startLevel10, startLevelSelect, 0);
+			checkClick(startLevel9, startLevelSelect, 0);
 			break;
 		}
 
 	}
 }
 
-void level10_exit(void)
+void level9_exit(void)
 {
 
 }
