@@ -33,16 +33,13 @@ SET PLAYER START POINT AFTER ASSIGNING TILES
 int Tile_Size;
 Game_State gameState;
 int Score[30];//number in array base on number of lvls 30 as placeholder for now to test writing in and out
-<<<<<<< Updated upstream
 
 //static variable for animation use
 static int levelExited = 0,
 		   levelStarted = 1;
 
-=======
 double doorLightCounter;
 int doorLightRange;
->>>>>>> Stashed changes
 void game_init(void)
 {
 	//setting game window size
