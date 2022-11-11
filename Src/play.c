@@ -16,6 +16,9 @@
 #include "level8.h"
 #include "panels.h"
 #include "game.h"
+
+CP_Image gradientAccentBackground2 = NULL;
+
 CP_Image lvl1 = NULL;
 CP_Image lvl2 = NULL;
 CP_Image lvl3 = NULL;
@@ -34,6 +37,8 @@ CP_Image lvl13= NULL;
 CP_Image lvl14 = NULL;
 CP_Image lvl15 = NULL;
 
+
+
 int clicked = 0;
 
 void play_Init()
@@ -46,6 +51,8 @@ void play_Init()
 
 	// All Text allignment
 	CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
+
+	gradientAccentBackground2 = CP_Image_Load("./Assets/gradientAccentBackground2.png");
 
 	lvl1 = CP_Image_Load("./Assets/lvl1.png");
 	lvl2 = CP_Image_Load("./Assets/lvl2.png");
@@ -65,6 +72,7 @@ void play_Init()
 	lvl14 = CP_Image_Load("./Assets/lvl14.png");
 	lvl15 = CP_Image_Load("./Assets/lvl15.png");
 
+	
 }
 
 int once = 0; int levelSelected = 0;
@@ -85,6 +93,8 @@ void play_Update()
 	// black area
 	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 	CP_Graphics_DrawRect(0, 0, 800, 800);
+
+	CP_Image_Draw(gradientAccentBackground2, windowWidth / 2, windowHeight / 2, windowWidth, windowHeight, 255);
 
 	if (clicked == 0) {
 		// -----Level 1 TO 5-----
@@ -129,45 +139,55 @@ void play_Update()
 		// -----Checking for MouseInput-----
 	if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
 	{
-		// lvl 
+		
+		// lvl 1
 		if (IsAreaClicked(firstColumn, firstRowHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
 			//CP_Engine_SetNextGameStateForced(level1_init, level1_update, level1_exit);
 			//clicked = 1;
 			once = 1;
 			levelSelected = 1;
-			sprintf_s(&test,100, "level 1");
-		}
-		if (IsAreaClicked(secondColumn, firstRowHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
-		{
-			CP_Engine_SetNextGameStateForced(level2_init, level2_update, level2_exit);
-		}
-		if (IsAreaClicked(thirdColumn, firstRowHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
-		{
-			CP_Engine_SetNextGameStateForced(level3_init, level3_update, level3_exit);
-		}
-		if (IsAreaClicked(fourthColumn, firstRowHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
-		{
-			CP_Engine_SetNextGameStateForced(level4_init, level4_update, level4_exit);
-		}
-		if (IsAreaClicked(fifthColumn, firstRowHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
-		{
-			CP_Engine_SetNextGameStateForced(level5_init, level5_update, level5_exit);
-		}
+			sprintf_s(&test, 100, "level 1");
 
-		// Level 6 TO 10
-		if (IsAreaClicked(firstColumn, secondRowHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
-		{
-			CP_Engine_SetNextGameStateForced(level6_init, level6_update, level6_exit);
+			if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
+			{
+				if (IsAreaClicked(fifthColumn, playHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+				{
+					CP_Engine_SetNextGameStateForced(level1_init, level1_update, level1_exit);
+				}
+			}
 		}
-		if (IsAreaClicked(secondColumn, secondRowHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
-		{
-			CP_Engine_SetNextGameStateForced(level7_init, level7_update, level7_exit);
-		}
-		if (IsAreaClicked(thirdColumn, secondRowHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
-		{
-			CP_Engine_SetNextGameStateForced(level8_init, level8_update, level8_exit);
-		}
+	}
+		//if (IsAreaClicked(secondColumn, firstRowHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		//{
+		//	CP_Engine_SetNextGameStateForced(level2_init, level2_update, level2_exit);
+		//}
+		//if (IsAreaClicked(thirdColumn, firstRowHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		//{
+		//	CP_Engine_SetNextGameStateForced(level3_init, level3_update, level3_exit);
+		//}
+		//if (IsAreaClicked(fourthColumn, firstRowHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		//{
+		//	CP_Engine_SetNextGameStateForced(level4_init, level4_update, level4_exit);
+		//}
+		//if (IsAreaClicked(fifthColumn, firstRowHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		//{
+		//	CP_Engine_SetNextGameStateForced(level5_init, level5_update, level5_exit);
+		//}
+
+		//// Level 6 TO 10
+		//if (IsAreaClicked(firstColumn, secondRowHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		//{
+		//	CP_Engine_SetNextGameStateForced(level6_init, level6_update, level6_exit);
+		//}
+		//if (IsAreaClicked(secondColumn, secondRowHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		//{
+		//	CP_Engine_SetNextGameStateForced(level7_init, level7_update, level7_exit);
+		//}
+		//if (IsAreaClicked(thirdColumn, secondRowHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		//{
+		//	CP_Engine_SetNextGameStateForced(level8_init, level8_update, level8_exit);
+		//}
 		//if (IsAreaClicked(fourthColumn, secondRowHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		//{
 		//	CP_Engine_SetNextGameStateForced(level9_init, level9_update, level9_exit);
@@ -199,30 +219,22 @@ void play_Update()
 		//	CP_Engine_SetNextGameStateForced(level15_init, level15_update, level15_exit);
 		//}
 
-		// Back to main menu
-		if (IsAreaClicked(firstColumn, exitHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
-		{
-			CP_Engine_SetNextGameStateForced(mainMenu_Init, mainMenu_Update, mainMenu_Exit);
-		}
-		// Play Button
-		if (IsAreaClicked(fifthColumn, playHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
-		{
-			CP_Engine_SetNextGameStateForced(mainMenu_Init, mainMenu_Update, mainMenu_Exit);
-		}
+		//// Back to main menu
+		//if (IsAreaClicked(firstColumn, exitHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		//{
+		//	CP_Engine_SetNextGameStateForced(mainMenu_Init, mainMenu_Update, mainMenu_Exit);
+		//}
+		//// Play Button
+		//if (IsAreaClicked(fifthColumn, playHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		//{
+		//	CP_Engine_SetNextGameStateForced(mainMenu_Init, mainMenu_Update, mainMenu_Exit);
+		//}
 
 
-	}
-
-
-
-
-
-
-
-
-
-
-
+	//}
+	//if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1 && clicked == 1) {
+	//	CP_Engine_Terminate();
+	//}
 
 
 	//	// -----Level 1 Input-----
@@ -282,6 +294,8 @@ void play_Update()
 // ---------------------------------------------------------------Main Menu Exit---------------------------------------------------------------
 void play_Exit()
 {
+	CP_Image_Free(&gradientAccentBackground2);
+
 	CP_Image_Free(&lvl1);
 	CP_Image_Free(&lvl2);
 	CP_Image_Free(&lvl3);

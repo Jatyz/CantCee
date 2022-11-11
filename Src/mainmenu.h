@@ -7,8 +7,8 @@
 #define windowHeight 800.f
 
 // Button Size
-#define buttonWidth 300.f
-#define buttonHeight 76.f // for all 4 buttons on main menu
+#define buttonWidth 60.f
+#define buttonHeight 60.f // for all 4 buttons on main menu
 
 // levelSelection buttons
 #define levelButtonWidth 100.f

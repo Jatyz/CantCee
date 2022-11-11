@@ -3,9 +3,11 @@
 
 #include "mainmenu.h"
 #include "play.h"
+#include "credits1.h"
 #include "howToPlay.h"
 #include "settings.h"
 #include "game.h"
+
 CP_Image mainMenuBackground1 = NULL;
 
 CP_Image cLogo = NULL;
@@ -61,7 +63,7 @@ void mainMenu_Init()
 // ---------------------------------------------------------------Main Menu Update---------------------------------------------------------------
 void mainMenu_Update()
 {
-    // Background: Grey Colour
+    // Background: Black Colour
     CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 
     CP_Image_Draw(mainMenuBackground1, windowWidth / 2, windowHeight / 2, windowWidth, windowHeight, 255);
@@ -101,7 +103,7 @@ void mainMenu_Update()
         // -----Credit Input-----
         if (IsAreaClicked(creditsWordWidth, creditsWordHeight, CP_Image_GetWidth(creditsWord), CP_Image_GetHeight(creditsWord), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
         {
-            CP_Engine_SetNextGameStateForced(settings_Init, settings_Update, settings_Exit);
+            CP_Engine_SetNextGameStateForced(credits1_Init, credits1_Update, credits1_Exit);
         }
 
         // -----Settings Input-----
