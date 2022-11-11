@@ -1139,6 +1139,8 @@ void renderFOVAdvance(
 				//draw the tile
 				CP_Graphics_DrawRect((float)(i * tileSizePX), (float)(j * tileSizePX), (float)(tileSizePX), (float)(tileSizePX));
 				break;
+			case FOG_MIN:
+				break;
 			default:
 				CP_Settings_Stroke(CP_Color_Create(0, 0, 0, 255));	//set outline black	
 				CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));	//set block color black
