@@ -2,12 +2,29 @@
 #include "utils.h"
 
 #include "mainmenu.h"
+#include "play.h"
 #include "howToPlay.h"
 #include "settings.h"
 #include "levelselect.h"
 #include "level1.h"
 
-CP_Image square = NULL;
+CP_Image lvl1 = NULL;
+CP_Image lvl2 = NULL;
+CP_Image lvl3 = NULL;
+CP_Image lvl4 = NULL;
+CP_Image lvl5 = NULL;
+
+CP_Image lvl6 = NULL;
+CP_Image lvl7 = NULL;
+CP_Image lvl8 = NULL;
+CP_Image lvl9 = NULL;
+CP_Image lvl10 = NULL;
+
+CP_Image lvl11 = NULL;
+CP_Image lvl12 = NULL;
+CP_Image lvl13= NULL;
+CP_Image lvl14 = NULL;
+CP_Image lvl15 = NULL;
 
 int clicked = 0;
 
@@ -16,8 +33,6 @@ void play_Init()
 	// Set the window size to a sqaure 1000 x 800
 	CP_System_SetWindowSize(windowWidth, windowHeight);
 
-	// Set the rectangle drawing mode to CENTER
-	CP_Settings_RectMode(CP_POSITION_CENTER);
 
 	// All Text size
 	CP_Settings_TextSize(20.0f);
@@ -25,7 +40,23 @@ void play_Init()
 	// All Text allignment
 	CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
 
-	square = CP_Image_Load("./Assets/square.png");
+	lvl1 = CP_Image_Load("./Assets/lvl1.png");
+	lvl2 = CP_Image_Load("./Assets/lvl2.png");
+	lvl3 = CP_Image_Load("./Assets/lvl3.png");
+	lvl4 = CP_Image_Load("./Assets/lvl4.png");
+	lvl5 = CP_Image_Load("./Assets/lvl5.png");
+
+	lvl6 = CP_Image_Load("./Assets/lvl6.png");
+	lvl7 = CP_Image_Load("./Assets/lvl7.png");
+	lvl8 = CP_Image_Load("./Assets/lvl8.png");
+	lvl9 = CP_Image_Load("./Assets/lvl9.png");
+	lvl10 = CP_Image_Load("./Assets/lvl10.png");
+
+	lvl11 = CP_Image_Load("./Assets/lvl11.png");
+	lvl12 = CP_Image_Load("./Assets/lvl12.png");
+	lvl13 = CP_Image_Load("./Assets/lvl13.png");
+	lvl14 = CP_Image_Load("./Assets/lvl14.png");
+	lvl15 = CP_Image_Load("./Assets/lvl15.png");
 
 }
 
@@ -36,39 +67,34 @@ void play_Update()
 	// Background: Grey Colour
 	CP_Graphics_ClearBackground(CP_Color_Create(255, 255, 255, 255));
 
+	// Set the rectangle drawing mode to CORNER
+	CP_Settings_RectMode(CP_POSITION_CORNER);
+
+	//
+	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
+	CP_Graphics_DrawRect(0, 0, 800, 800);
+
 	if (clicked == 0) {
-		// -----Level 1-----
-		CP_Image_Draw(square, windowWidth / 2, windowHeight / 2, levelButtonWidth, levelButtonHeight, 255);
-		CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-		CP_Graphics_DrawRect((windowWidth / 2.0f - 100), (windowHeight / 2.0f - 100), levelButtonWidth, levelButtonHeight);
-		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-		CP_Font_DrawText("1", (windowWidth / 2.0f - 100), (windowHeight / 2.0f - 100));
+		// -----Level 1 TO 5-----
+		CP_Image_Draw(lvl1, firstColumn, firstRowHeight, levelButtonWidth, levelButtonHeight, 255);
+		CP_Image_Draw(lvl2, secondColumn, firstRowHeight, levelButtonWidth, levelButtonHeight, 255);
+		CP_Image_Draw(lvl3, thirdColumn, firstRowHeight, levelButtonWidth, levelButtonHeight, 255);
+		CP_Image_Draw(lvl4, fourthColumn, firstRowHeight, levelButtonWidth, levelButtonHeight, 255);
+		CP_Image_Draw(lvl5, fifthColumn, firstRowHeight, levelButtonWidth, levelButtonHeight, 255);
 
-		// -----Level 2-----
-		CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-		CP_Graphics_DrawRect((windowWidth / 2.0f + 100), (windowHeight / 2.0f - 100), levelButtonWidth, levelButtonHeight);
-		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-		CP_Font_DrawText("2", (windowWidth / 2.0f + 100), (windowHeight / 2.0f - 100));
+		CP_Image_Draw(lvl6, firstColumn, secondRowHeight, levelButtonWidth, levelButtonHeight, 255);
+		CP_Image_Draw(lvl7, secondColumn, secondRowHeight, levelButtonWidth, levelButtonHeight, 255);
+		CP_Image_Draw(lvl8, thirdColumn, secondRowHeight, levelButtonWidth, levelButtonHeight, 255);
+		CP_Image_Draw(lvl9, fourthColumn, secondRowHeight, levelButtonWidth, levelButtonHeight, 255);
+		CP_Image_Draw(lvl10, fifthColumn, secondRowHeight, levelButtonWidth, levelButtonHeight, 255);
 
-		// -----Level 3-----
-		CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-		CP_Graphics_DrawRect((windowWidth / 2.0f - 100), (windowHeight / 2.0f + 100), levelButtonWidth, levelButtonHeight);
-		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-		CP_Font_DrawText("3", (windowWidth / 2.0f - 100), (windowHeight / 2.0f + 100));
-
-		// -----Level 4-----
-		CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-		CP_Graphics_DrawRect((windowWidth / 2.0f + 100), (windowHeight / 2.0f + 100), levelButtonWidth, levelButtonHeight);
-		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-		CP_Font_DrawText("4", (windowWidth / 2.0f + 100), (windowHeight / 2.0f + 100));
+		CP_Image_Draw(lvl11, firstColumn, thirdRowHeight, levelButtonWidth, levelButtonHeight, 255);
+		CP_Image_Draw(lvl12, secondColumn, thirdRowHeight, levelButtonWidth, levelButtonHeight, 255);
+		CP_Image_Draw(lvl13, thirdColumn, thirdRowHeight, levelButtonWidth, levelButtonHeight, 255);
+		CP_Image_Draw(lvl14, fourthColumn, thirdRowHeight, levelButtonWidth, levelButtonHeight, 255);
+		CP_Image_Draw(lvl15, fifthColumn, thirdRowHeight, levelButtonWidth, levelButtonHeight, 255);
 
 	}
-
-	// -----Level 5-----
-	//CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-	//CP_Graphics_DrawRect((windowWidth / 2.0f + 250), (windowHeight / 2.0f), levelButtonWidth, levelButtonHeight);
-	//CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-	//CP_Font_DrawText("5", (windowWidth / 2.0f + 250), (windowHeight / 2.0f));
 
 
 
@@ -139,6 +165,25 @@ void play_Update()
 // ---------------------------------------------------------------Main Menu Exit---------------------------------------------------------------
 void play_Exit()
 {
+	CP_Image_Free(&lvl1);
+	CP_Image_Free(&lvl2);
+	CP_Image_Free(&lvl3);
+	CP_Image_Free(&lvl4);
+	CP_Image_Free(&lvl5);
+
+	CP_Image_Free(&lvl6);
+	CP_Image_Free(&lvl7);
+	CP_Image_Free(&lvl8);
+	CP_Image_Free(&lvl9);
+	CP_Image_Free(&lvl10);
+
+	CP_Image_Free(&lvl11);
+	CP_Image_Free(&lvl12);
+	CP_Image_Free(&lvl13);
+	CP_Image_Free(&lvl14);
+	CP_Image_Free(&lvl15);
+
+
 	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 	CP_Settings_RectMode(CP_POSITION_CORNER);
 	CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_LEFT, CP_TEXT_ALIGN_V_BASELINE);
