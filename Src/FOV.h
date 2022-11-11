@@ -16,6 +16,7 @@ void setTileUnlit(
 	int yPos					// Y position of the tile, in grid terms, to be covered by fog
 );
 
+//set a tile at a given X and Y position to be covered by a fog that is half opacity
 void setTileHalfLit(
 	int xPos,					// X position of the tile, in grid terms, to be covered by fog
 	int yPos					// Y position of the tile, in grid terms, to be covered by fog
@@ -31,6 +32,8 @@ void setIllumination
 	int const fovRadius			//radius of the illumination around the player
 );
 
+//sets the wall logic for setIllumination() and setIlluminationAdvance() functions, all walls are rendered and walls cast shadows onto tiles
+//based on their relative position to player. Assumes clearFogBackground() is called before calling this function
 void setIlluminationWallLogic
 (
 	int const playerXPos,		//player's current X position on the grid
@@ -40,6 +43,7 @@ void setIlluminationWallLogic
 	int const fovRadius			//the radius of the global illumination in terms of number of tiles
 );
 
+//sets wall logic onto 
 void setIlluminationWallLogicOnce
 (
 	int const playerXPos,		//player's current X position on the grid
@@ -49,7 +53,8 @@ void setIlluminationWallLogicOnce
 	int const fovRadius			//the radius of the global illumination in terms of number of tiles
 );
 
-//update basic logic for drawing a layer of black tiles in the level, except in a circle around the player
+//update basic logic for drawing a layer of black tiles in the level, except in a circle around the player. Last param is radius of half 
+//opacity tiles in the fog. fully clear tiles always has higher preccedence vs half opacity tiles
 void setIlluminationAdvance
 (
 	int const playerXPos,		//player's current X position on the grid

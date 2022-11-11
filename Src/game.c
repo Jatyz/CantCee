@@ -7,6 +7,7 @@
 #include "level1.h"
 #include "panels.h"
 #include "levelselect.h"
+#include "levelTransition.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -32,6 +33,10 @@ SET PLAYER START POINT AFTER ASSIGNING TILES
 int Tile_Size;
 Game_State gameState;
 int Score[30];//number in array base on number of lvls 30 as placeholder for now to test writing in and out
+
+//static variable for animation use
+static int levelExited = 0,
+		   levelStarted = 1;
 
 void game_init(void)
 {
@@ -103,11 +108,15 @@ void game_init(void)
 
 	setStartGame(Tile_Size);
 
-	player.setFOV = 1;
+	player.setFOV = 0;
 	gameState = PLAY;
 
 	readScore();
 	writeScore();
+
+	//MOAR NEW CODE HERE!! FOR ANIMATIONS
+	setSpriteExtended();	//sets the first frame to be fully black in preperation for animation transistion in,
+							//reccomendation is to not allow player control till animation is done. P.S. does rendering
 }
 
 void game_update(void)
@@ -129,15 +138,15 @@ void game_update(void)
 			clearFogBackground();
 			//setPlayerFOVFunnel(player.x, player.y, player.direction, returnBounds(Tile_Size), returnBounds(Tile_Size), 2, 10);
 			//setFOVFunnelWallLogic(player.x, player.y, player.direction, returnBounds(Tile_Size), returnBounds(Tile_Size), 2, 10);
-			setIlluminationAdvance(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), 5, 5);
+			//setIlluminationAdvance(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), 5, 5);
 
 			//Test code for *AHEM* dynamic *AHEM* style FOV independent of actual grid resolution
 			//setIllumination(player.x * 6 + 3, (player.y * 6) + 3, returnBounds(Tile_Size) * 6 + 2, returnBounds(Tile_Size) * 6 + 2, 4 * 6);
 			// 
-			setIlluminationWallLogic(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), 5);
+			setIlluminationWallLogicOnce(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), 5);
 			//End FOV logic handled area	
 		}
-		drawSideBar("Debug level",player.counter);
+		drawSideBar("Debug level", player.counter);
 		break;
 	case PAUSED:
 		drawFullPanel();
@@ -148,9 +157,26 @@ void game_update(void)
 		checkClick(startLevel1, startGame, startLevelSelect);
 		break;
 	case LOSE:
+
 		drawFullPanel();
-		checkClick(startGame, startLevelSelect,0);
+		checkClick(startGame, startLevelSelect, 0);
 		break;
+	}
+	
+	
+	// NEW CODE HERE!! UP FOR A DISCOUNT OF WHERE'S MY WEEKENDS???!!!!
+	if (levelStarted)	//when level starts, 
+	{	//render enter level transition animation
+		levelStarted = initLevelTransition();	//returns 0 when animation is done
+		if(!levelStarted)
+		{
+		levelExited = 1;
+		setSpriteReseted();
+		}
+	}
+	if (levelExited)	//when level exit, 
+	{	//render exit level transition animation
+		exitLevelTransition(levelExited, game_exit);	//second parameter runs when the animation is complete, returns 0 when animation is done
 	}
 }
 
