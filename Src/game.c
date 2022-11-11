@@ -117,6 +117,8 @@ void game_init(void)
 	writeScore();
 
 	//MOAR NEW CODE HERE!! FOR ANIMATIONS
+	levelExited = 0,
+	levelStarted = 1;
 	setSpriteExtended();	//sets the first frame to be fully black in preperation for animation transistion in,
 							//reccomendation is to not allow player control till animation is done. P.S. does rendering
 }
@@ -178,7 +180,9 @@ void game_update(void)
 	}
 	if (levelExited)	//when level exit, 
 	{	//render exit level transition animation
-		exitLevelTransition(levelExited, game_exit);	//second parameter runs when the animation is complete, returns 0 when animation is done
+		levelExited = exitLevelTransition(levelExited, game_exit);	//second parameter runs when the animation is complete, returns 0 when animation is done
+		if(!levelExited)
+			CP_Engine_SetNextGameStateForced(game_init, game_update, game_exit);
 	}
 }
 

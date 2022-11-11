@@ -1,3 +1,10 @@
+/*!
+Author: Tan Poh Heng (t.pohheng@digipen.edu)
+Section:CSD1401-b
+File:	FOV.c
+@brief: Contains functions pertaining to FOV functions such as setting gobal illumination, setting player's FOV in either a radius around the 
+player, in a cone or in a rectangle
+*/
 #include "cprocessing.h"
 #include "grid.h"
 #include "game.h"
@@ -10,64 +17,71 @@
 //fog grid of same size as base game to draw over the render layers as FOV, is 1 when FOV is blocked, 0 when FOV not blocked
 int fog[FOG_MAX_X][FOG_MAX_Y];		
 
+//anonymus enums for easy settingand tracking of fog levels
 enum FogDensity {
 	FOG_MAX = 2,
 	FOG_HALF = 1,
 	FOG_MIN = 0,
 };
 
+//a static structure to hold information related to Allownace angles used to calulate wall logics
 static struct AllowanceAngle
 {
 	double angle;
 	double allowance;
 	int fovLayer;
-}allowanceAngles[48];
+}allowanceAngles[48];	//a 48 angle array to store up to the maximum angles blocked in a FOV with radius of 6
 
 /*!
 /	Allowance angle functions, so as not to clutter other functions
 /
 /
 */
+
+//resets the allowance angles array
 static void resetAllowanceAngles(void) 
 {
 	for (int i = 0; i < (sizeof(allowanceAngles) / sizeof(allowanceAngles[0]));i++)
-	{
+	{	//set all elements in allowance angles to a value that will be expected to not affect any angle calculations in other functions
 		allowanceAngles[i].angle = -1;
 		allowanceAngles[i].allowance = 0;
 		allowanceAngles[i].fovLayer = 99;
 	}
 }
 
+//checks if an angle has been added to the array of allowance angles
 static int isAngleAlreadyAdded(double angleToCheck)
-{
+{	//checks all allowance angles
 	for (int i = 0; i < (sizeof(allowanceAngles) / sizeof(allowanceAngles[0])); i++)
-	{
+	{	//if matches, within a certian buffer range for floating point inaccuracy
 		if (allowanceAngles[i].angle <= angleToCheck+0.000001
 			&& allowanceAngles[i].angle >= angleToCheck - 0.000001)
 		{
-			return 1;
+			return 1;	//return true
 		}
 	}
-	return 0;
+	return 0;	//return false
 }
 
+//check if non-wall tiles are blocked by walls
 static int isTileBlockedByWall(double tileAngle) 
 {
 	double differenceInAngle = 359.0f;				//create variable to store difference in player-to-tile and allowance angles
 	
 	for (int iterator = 0; iterator < (sizeof(allowanceAngles) / sizeof(allowanceAngles[0])); iterator++)	//for all the angles that was added due to a wall
-	{
+	{	//find the difference in tile angle to the allowance angle
 		differenceInAngle = tileAngle - allowanceAngles[iterator].angle;
 		differenceInAngle = (fabs(differenceInAngle) >= 180) ? fabs(fabs(differenceInAngle) - 360) : fabs(differenceInAngle);
 		//if the difference in player-to-tile and allowance angles is less than equals to the angle of allowance
 		if (differenceInAngle <= allowanceAngles[iterator].allowance)
 		{
-			return 1;
+			return 1;	//return true
 		}
 	}
-	return 0;
+	return 0;			//return false
 }
 
+//special check for if wall tiles are blocked by other walls. essentially the same as isTileBlockedByWall() but with reduced allowance for shaded areas
 static int isWallBlockedByWall(double tileAngle)
 {
 	double differenceInAngle = 359.0f;				//create variable to store difference in player-to-tile and allowance angles
@@ -86,7 +100,8 @@ static int isWallBlockedByWall(double tileAngle)
 	return 0;
 }
 
-static int wallBlockingTile(double tileAngle)
+//finds the angle blocking(casting a shadow) on the current tile given it's angle from player
+static int angleBlockingTile(double tileAngle)
 {
 	double differenceInAngle = 359.0f;				//create variable to store difference in player-to-tile and allowance angles
 
@@ -109,18 +124,21 @@ static int wallBlockingTile(double tileAngle)
 /	
 */
 
+//forcibly sets a tile to be clear of any shadows given a (x,y) position
 void setTileLit(int xPos, int yPos) 
 {
 	fog[xPos][yPos] = FOG_MIN;
 	return;
 }
 
+//forcibly sets a tile to have half opacity shadows given a (x,y) position
 void setTileHalfLit(int xPos, int yPos)
 {
 	fog[xPos][yPos] = FOG_HALF;
 	return;
 }
 
+//forcibly sets a tile to have full opacity shadows given a (x,y) position
 void setTileUnlit(int xPos, int yPos)
 {
 	fog[xPos][yPos] = FOG_MAX;
@@ -214,11 +232,13 @@ void setIlluminationWallLogic
 						// compare to angle of one grid unit forward in x axis, taking the absoulute of their difference as angle of allowance
 						double allowance =
 							fabs( angleOfPointR2(fabs(xAxis - playerXPos), fabs(yAxis - playerYPos))
-								- angleOfPointR2(fabs(xAxis - playerXPos) + 1, fabs(yAxis - playerYPos)));	
+								- angleOfPointR2(fabs(xAxis - playerXPos) + 1, fabs(yAxis - playerYPos)));
+						//if allowance is 0(impossible irl, but is edge case due to how the angle is calulated), use another axis increment to 
+						//determine the allowance angle instead
 						allowance = (allowance == 0) ? fabs(angleOfPointR2(fabs(xAxis - playerXPos), fabs(yAxis - playerYPos))
 							- angleOfPointR2(fabs(xAxis - playerXPos), fabs(yAxis - playerYPos)+1)) : allowance;
-						allowance = fmod(allowance, 46);
-						allowance += 0.000001;
+						allowance = fmod(allowance, 46);		//make allowance angle 45 or less
+						allowance += 0.000001;					//add floating point padding
 
 						angleOfAllowance[anglesToBeShadedSize] = allowance;			//set the angle of allowance to the current angle of allowance
 						anglesToBeShadedSize++;					//increase the counter of the number of angles to check
@@ -244,10 +264,12 @@ void setIlluminationWallLogic
 						double allowance =
 							fabs(angleOfPointR2(fabs(xAxis - playerXPos), fabs(yAxis - playerYPos))
 								- angleOfPointR2(fabs(xAxis - playerXPos) + 1, fabs(yAxis - playerYPos)));	
+						//if allowance is 0(impossible irl, but is edge case due to how the angle is calulated), use another axis increment to 
+						//determine the allowance angle instead
 						allowance = (allowance == 0) ? fabs(angleOfPointR2(fabs(xAxis - playerXPos), fabs(yAxis - playerYPos))
 							- angleOfPointR2(fabs(xAxis - playerXPos), fabs(yAxis - playerYPos) + 1)) : allowance;
-						allowance = fmod(allowance,46);
-						allowance += 0.000001;
+						allowance = fmod(allowance,46);			//make allowance angle 45 or less
+						allowance += 0.000001;					//add floating point padding
 
 						angleOfAllowance[anglesToBeShadedSize] = allowance;			//set the angle of allowance to the current angle of allowance
 						anglesToBeShadedSize++;					//increase the counter of the number of angles to check
@@ -319,7 +341,7 @@ void setIlluminationWallLogic
 						&& sqrt((xAxis - playerXPos) * (xAxis - playerXPos) + (yAxis - playerYPos) * (yAxis - playerYPos)) < fovRadius
 						)		
 					{
-						fog[xAxis][yAxis] = (int)FOG_MIN;
+						fog[xAxis][yAxis] = (int)FOG_MIN;			//set the tile to be clear of fog
 					}
 				}
 			}
@@ -379,10 +401,12 @@ void setIlluminationWallLogicOnce
 						double allowance =
 							fabs(angleOfPointR2(fabs(xAxis - playerXPos), fabs(yAxis - playerYPos))
 								- angleOfPointR2(fabs(xAxis - playerXPos) + 1, fabs(yAxis - playerYPos)));
+						//if allowance is 0(impossible irl, but is edge case due to how the angle is calulated), use another axis increment to 
+						//determine the allowance angle instead
 						allowance = (allowance == 0) ? fabs(angleOfPointR2(fabs(xAxis - playerXPos), fabs(yAxis - playerYPos))
 							- angleOfPointR2(fabs(xAxis - playerXPos), fabs(yAxis - playerYPos) + 1)) : allowance;
 						allowance = fmod(allowance, 46);
-						allowance += 0.000001;
+						allowance += 0.000001;					//add floating point padding for arithemetic
 
 						allowanceAngles[anglesToBeShadedSize].fovLayer = currentRadius;
 						allowanceAngles[anglesToBeShadedSize].allowance = allowance;			//set the angle of allowance to the current angle of allowance
@@ -414,10 +438,12 @@ void setIlluminationWallLogicOnce
 						double allowance =
 							fabs(angleOfPointR2(fabs(xAxis - playerXPos), fabs(yAxis - playerYPos))
 								- angleOfPointR2(fabs(xAxis - playerXPos) + 1, fabs(yAxis - playerYPos)));
+						//if allowance is 0(impossible irl, but is edge case due to how the angle is calulated), use another axis increment to 
+						//determine the allowance angle instead
 						allowance = (allowance == 0) ? fabs(angleOfPointR2(fabs(xAxis - playerXPos), fabs(yAxis - playerYPos))
 							- angleOfPointR2(fabs(xAxis - playerXPos), fabs(yAxis - playerYPos) + 1)) : allowance;
 						allowance = fmod(allowance, 46);
-						allowance += 0.000001;
+						allowance += 0.000001;			//add floating point padding for arithemetic
 
 						allowanceAngles[anglesToBeShadedSize].fovLayer = currentRadius;
 						allowanceAngles[anglesToBeShadedSize].allowance = allowance;			//set the angle of allowance to the current angle of allowance
@@ -428,7 +454,7 @@ void setIlluminationWallLogicOnce
 		}
 		//END OF WALL LOGIC SECTION
 
-		//WALL LOGIC SECTION
+		//HANDLING RENDER LOGIC SECTION
 		//do wall logic first, then handle render. requires double to loops, but achieves a double buffering effect. Look for ways to refactor(WIP)
 		for (int xAxis = playerXPos - currentRadius; xAxis < (playerXPos + currentRadius + 1); xAxis += (currentRadius != 0) ? 2 * currentRadius : 1)	//check outer layer of X axis within current radius 
 		{
@@ -443,26 +469,18 @@ void setIlluminationWallLogicOnce
 					if (tiles[xAxis][yAxis].type != WALL
 						&& sqrt((xAxis - playerXPos) * (xAxis - playerXPos) + (yAxis - playerYPos) * (yAxis - playerYPos)) < fovRadius)
 					{
-						if (isTileBlockedByWall(currentTileAngle))
+						if (isTileBlockedByWall(currentTileAngle))//when blocked by a wall
 						{
-							fog[xAxis][yAxis] = FOG_MAX;
-							continue;
+							fog[xAxis][yAxis] = FOG_MAX;		//set to be covered by fog
+							continue;							//move to next tile
 						}
-						fog[xAxis][yAxis] = FOG_MIN;
-						continue;
+						fog[xAxis][yAxis] = FOG_MIN;			//else set to not be covered by fog
+						continue;								//move to next tile
 					}
 					if (tiles[xAxis][yAxis].type == WALL
 						&& sqrt((xAxis - playerXPos) * (xAxis - playerXPos) + (yAxis - playerYPos) * (yAxis - playerYPos)) < fovRadius
-						//&& (!isTileBlockedByWall(currentTileAngle) /* || !hasAngleWallBeenRendered(currentTileAngle)*/
-						&& currentRadius < allowanceAngles[wallBlockingTile(currentTileAngle)].fovLayer) {
+						&& currentRadius < allowanceAngles[angleBlockingTile(currentTileAngle)].fovLayer) {	//walls of same radius dont affect each other
 						fog[xAxis][yAxis] = FOG_MIN;
-
-						////if next tile in angle is wall, dont do this
-						//int x, y;
-						//x = (xAxis - playerXPos == 0)? 0 : (xAxis - playerXPos< 0) ? xAxis - playerXPos - 1 : xAxis - playerXPos + 1;
-						//y = (yAxis - playerYPos == 0) ? 0 : (yAxis - playerYPos < 0) ? yAxis - playerYPos - 1 : yAxis - playerYPos + 1;
-						//if(tiles[x][y].type != WALL)
-						//	setWallRenderedOnce(currentTileAngle);
 						continue;
 					}
 				}
@@ -481,38 +499,30 @@ void setIlluminationWallLogicOnce
 					if (tiles[xAxis][yAxis].type != WALL
 						&& sqrt((xAxis - playerXPos) * (xAxis - playerXPos) + (yAxis - playerYPos) * (yAxis - playerYPos)) < fovRadius)
 					{
-						if (isTileBlockedByWall(currentTileAngle))
+						if (isTileBlockedByWall(currentTileAngle))//when blocked by a wall
 						{
-							fog[xAxis][yAxis] = FOG_MAX;
-							continue;
+							fog[xAxis][yAxis] = FOG_MAX;		//set to be covered by fog
+							continue;							//move to next tile
 						}
-						fog[xAxis][yAxis] = FOG_MIN;
+						fog[xAxis][yAxis] = FOG_MIN;			//else set to not be covered by fog
 						continue;
 					}
 					if (tiles[xAxis][yAxis].type == WALL
 						&& sqrt((xAxis - playerXPos) * (xAxis - playerXPos) + (yAxis - playerYPos) * (yAxis - playerYPos)) < fovRadius
-						//&& (!isTileBlockedByWall(currentTileAngle)/* || !hasAngleWallBeenRendered(currentTileAngle)*/
-							&& currentRadius < allowanceAngles[wallBlockingTile(currentTileAngle)].fovLayer) {//<<<<<<<,
+							&& currentRadius < allowanceAngles[angleBlockingTile(currentTileAngle)].fovLayer) {	//walls of same radius dont affect each other
 						fog[xAxis][yAxis] = FOG_MIN;
-						
-						////if next tile in angle is wall, dont do this
-						//int x, y;
-						//x = (xAxis - playerXPos == 0) ? 0 : (xAxis - playerXPos < 0) ? xAxis - playerXPos - 1 : xAxis - playerXPos + 1;
-						//y = (yAxis - playerYPos == 0) ? 0 : (yAxis - playerYPos < 0) ? yAxis - playerYPos - 1 : yAxis - playerYPos + 1;
-						//if (tiles[x][y].type != WALL)
-						//	setWallRenderedOnce(currentTileAngle);
 						continue;
 					}
 				}
 			}
 		}
-		//END OF WALL LOGIC SECTION
+		//END OF RENDER LOGIC SECTION
 	}
 
 
 }
 
-//is setIlluminationWallLogic with attempts to get half allowance angles to work, is experimental i.e. WIP(not important)
+//is setIlluminationWallLogic with attempts to get half opacity FOV to work, is experimental i.e. WIP(not important)
 void setIlluminationAdvance
 (
 	int const playerXPos,		//player's current X position on the grid
