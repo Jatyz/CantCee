@@ -5,7 +5,7 @@
 #include "play.h"
 #include "howToPlay.h"
 #include "settings.h"
-
+#include "game.h"
 CP_Image mainMenuBackground1 = NULL;
 
 CP_Image cLogo = NULL;
@@ -52,6 +52,9 @@ void mainMenu_Init()
 
     // All Text allignment
     CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
+
+    createScore();
+    readScore();
 }
 
 

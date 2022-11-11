@@ -8,16 +8,19 @@
 
 // First Column
 #define firstColumn (windowWidth / 2) - 330
-// lvl2
+// Second Column
 #define secondColumn (windowWidth / 2) - 210 // difference of 120
-// lvl3
+// Third Column
 #define thirdColumn (windowWidth / 2) - 90
-// lvl4
+// Fourth Column
 #define fourthColumn (windowWidth / 2) + 30
-// lvl5
+// Fifth Column
 #define fifthColumn (windowWidth / 2) + 150
 
-
+// backToMainMenu Button
+#define exitHeight thirdRowHeight + 150
+// playButton Height
+#define playHeight thirdRowHeight + 150
 
 
 
