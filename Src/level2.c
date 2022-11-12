@@ -50,19 +50,21 @@ void level2_update(void)
 {
 	switch (gameState) {
 	case PLAY:
-		//clears the screen so things can be redrawn
-		CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
-		handlePlayerInput(Tile_Size);
-		//all the game update methods that needs to be updated every frame
-		renderGame();
-		//End FOV logic handled area
-		drawSideBar("Level 2", player.counter);
-		if (player.counter < 10)
-		{
-			drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 7 * Tile_Size, 6 * Tile_Size, "Using the vent tiles, you can crawl through vents to end on the other side.");
+		if (tileMoveCounter != 0) {}
+		else {
+			//clears the screen so things can be redrawn
+			CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
+			handlePlayerInput(Tile_Size);
+			//all the game update methods that needs to be updated every frame
+			renderGame();
+			//End FOV logic handled area
+			drawSideBarLevel("Level 2", player.counter);
+			if (player.counter < 10)
+			{
+				drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 7 * Tile_Size, 6 * Tile_Size, "Using the vent tiles, you can crawl through vents to end on the other side.");
 
+			}
 		}
-
 		break;
 	case PAUSED:
 		drawFullPanel();

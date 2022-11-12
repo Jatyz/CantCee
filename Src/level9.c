@@ -90,33 +90,41 @@ void level9_init(void)
 void level9_update(void)
 {
 	//need this for light shine on door
-	if (doorLightCounter > 0) {
-		doorLightCounter -= CP_System_GetDt();
+	if (lightCounter > 0) {
+		lightCounter -= CP_System_GetDt();
 		return;
 	}
 	else {
 		switch (gameState) {
 		case PLAY:
 			//clears the screen so things can be redrawn
-			CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
-			enemyFOV(Tile_Size);
-			//all the game update methods that needs to be updated every frame
-			if (player.setFOV) {
-				clearFogBackground();
-				setIlluminationWallLogicOnce(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), 4);
-
+			if (lightCounter > 0 || illumMode) {
+				lightCounter -= CP_System_GetDt();
+				handlePlayerIllumInput();
+				renderGame();
+				return;
 			}
-			handlePlayerInput(Tile_Size);
-			renderGame();
+			else if (tileMoveCounter != 0) {}
+			else {
+				CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
+				enemyFOV(Tile_Size);
+				//all the game update methods that needs to be updated every frame
+				if (player.setFOV) {
+					clearFogBackground();
+					setIlluminationWallLogicOnce(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), 4);
 
-			if (player.counter < 10)
-			{
-				drawSmallPanel(4 * Tile_Size, 2 * Tile_Size, 3 * Tile_Size, 4 * Tile_Size, "The enemy base is really dark.");
+				}
+				handlePlayerInput(Tile_Size);
+				renderGame();
 
+				if (player.counter < 10)
+				{
+					drawSmallPanel(4 * Tile_Size, 2 * Tile_Size, 3 * Tile_Size, 4 * Tile_Size, "The enemy base is really dark.");
+
+				}
+				//End FOV logic handled area
+				drawSideBarLevel("Level 9", player.counter);
 			}
-			//End FOV logic handled area
-			drawSideBar("Level 9", player.counter);
-
 			break;
 		case PAUSED:
 			drawFullPanel();

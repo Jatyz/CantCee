@@ -80,19 +80,21 @@ void level3_update(void)
 {
 	switch (gameState) {
 	case PLAY:
-		//clears the screen so things can be redrawn
-		CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
-		handlePlayerInput(Tile_Size);
-		//all the game update methods that needs to be updated every frame
-		renderGame();
-		//End FOV logic handled area
-		drawSideBar("Level 3", player.counter);
-		if (player.counter < 6)
-		{
-			drawSmallPanel(4 * Tile_Size, 2 * Tile_Size, 3 * Tile_Size, 4 * Tile_Size, "Vents are interconnected in unknown ways., you will need to remember which vents leads to which.");
+		if (tileMoveCounter != 0) {}
+		else {
+			//clears the screen so things can be redrawn
+			CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
+			handlePlayerInput(Tile_Size);
+			//all the game update methods that needs to be updated every frame
+			renderGame();
+			//End FOV logic handled area
+			drawSideBarLevel("Level 3", player.counter);
+			if (player.counter < 6)
+			{
+				drawSmallPanel(4 * Tile_Size, 2 * Tile_Size, 3 * Tile_Size, 4 * Tile_Size, "Vents are interconnected in unknown ways., you will need to remember which vents leads to which.");
 
+			}
 		}
-
 		break;
 	case PAUSED:
 		drawFullPanel();

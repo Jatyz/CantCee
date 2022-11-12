@@ -38,8 +38,10 @@ int Score[30];//number in array base on number of lvls 30 as placeholder for now
 static int levelExited = 0,
 		   levelStarted = 1;
 
-double doorLightCounter;
-int doorLightRange;
+double lightCounter, tileMoveCounter;
+int doorLightRange,gameFogRange,illumMode;
+
+
 void game_init(void)
 {
 	//setting game window size
@@ -72,6 +74,9 @@ void game_init(void)
 	tiles[8][7].type = WALL;
 	tiles[9][7].type = WALL;
 	tiles[7][8].type = START;
+
+
+
 	tiles[9][6].type = DISGUISE;
 	tiles[9][6].Tile_Color = RED;
 	tiles[9][4].type = DISGUISE;
@@ -79,7 +84,7 @@ void game_init(void)
 	tiles[0][9].type = DISGUISE;
 	tiles[0][9].Tile_Color = GREEN;
 
-	vents[0].tile1 = &tiles[9][0];
+	vents[0].tile1 = &tiles[9][8];
 	vents[0].tile2 = &tiles[0][8];
 
 	tiles[4][5].type = WALL;
@@ -150,7 +155,7 @@ void game_update(void)
 			setIlluminationWallLogicOnce(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), 5);
 			//End FOV logic handled area	
 		}
-		drawSideBar("Debug level", player.counter);
+		drawSideBarLevel("Debug level", player.counter);
 		break;
 	case PAUSED:
 		drawFullPanel();
@@ -221,6 +226,10 @@ void resetGame(Tile_Size) {
 	resetGates();
 	assignTile(Tile_Size);//assign all tiles
 	enemyReset(Tile_Size);
+
+	tileMoveCounter = 0;
+	gameFogRange = 4;
+	player.shineCount = 1;
 }
 
 void resumeGame(void)
@@ -285,4 +294,96 @@ void lightTiles(int x, int y, int range) {
 		}
 	}
 	
+}
+
+void clickCheck() {
+	float x, y;
+	int Width, Height;
+	//find the mouse clicked position
+	x = (CP_Input_GetMouseX() / 800) * returnBounds(Tile_Size);
+	y = (CP_Input_GetMouseY() / 800) * returnBounds(Tile_Size);
+
+	//change the state of the cell the mouse clicked on
+	//cannot put float in array, need to explicit convert to int
+	Width = x;
+	Height = y;
+
+	
+	int direction = 0;
+	int tiledif;
+
+	if (Width == player.x) {
+		tiledif = abs(player.y - Height);
+		if (tiledif > gameFogRange) {
+			tiledif = gameFogRange - 1;
+		}
+
+		direction = (player.y - Height) < 0 ? 1:-1;
+
+		for (int i = 0; i < tiledif; i++) {
+			tileMoveCounter = 3;
+			player.y += direction *checkMove(0, direction);
+			giveLight();
+			enemyFOV(Tile_Size);
+			if (player.isTP) {
+				tileMoveCounter = 0;
+				player.isTP = 0;
+				return;
+			}
+		}
+
+		tileMoveCounter = 0;
+	}
+	else if (Height == player.y) {
+		tiledif = abs(player.x - Width);
+		if (tiledif > gameFogRange) {
+			tiledif = gameFogRange - 1;
+		}
+		tiledif = abs(player.x - Width);
+
+		direction = (player.x - Width) < 0 ? 1 : -1;
+
+		for (int i = 0; i < tiledif; i++) {
+			tileMoveCounter = 3;
+			player.x += direction * checkMove(direction, 0);
+			giveLight();
+			enemyFOV(Tile_Size);
+			if (player.isTP) {
+				tileMoveCounter = 0;
+				player.isTP = 0;
+				return;
+			}
+		}
+
+		tileMoveCounter = 0;
+
+	}
+	
+}
+
+void tileClick() {
+	if (illumMode && player.shineCount > 0) {
+		float x, y;
+		int Width, Height;
+		//find the mouse clicked position
+		x = (CP_Input_GetMouseX() / 800) * returnBounds(Tile_Size);
+		y = (CP_Input_GetMouseY() / 800) * returnBounds(Tile_Size);
+
+		//change the state of the cell the mouse clicked on
+		//cannot put float in array, need to explicit convert to int
+		Width = x;
+		Height = y;
+
+		lightTiles(Width, Height, doorLightRange);
+		lightCounter = 2;
+		illumMode = 0;
+		player.shineCount--;
+	}
+}
+
+void giveLight() {
+	if (player.counter % 50 == 0) {
+		player.shineCount++;
+	}
+
 }

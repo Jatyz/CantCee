@@ -179,6 +179,7 @@ void checkVents(Tile *address) {
 
 			player.x = col;
 			player.y = row;
+
 			return;
 		}
 
@@ -253,7 +254,7 @@ void checkGates(Tile* address) {
 			int row = difference % MAX_TILES;
 			
 			lightTiles(col, row, doorLightRange);
-			doorLightCounter++;
+			lightCounter++;
 			return;
 		}
 		if (gates[i].Switch == address && gates[i].Switch->type == SWITCH_ON) {
@@ -272,7 +273,7 @@ void checkGates(Tile* address) {
 			int row = difference % MAX_TILES;
 
 			lightTiles(col, row, doorLightRange);
-			doorLightCounter++;
+			lightCounter++;
 			return;
 		}
 	}

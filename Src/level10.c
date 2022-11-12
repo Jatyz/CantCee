@@ -61,9 +61,9 @@ void level10_init(void)
 	tiles[0][0].type = END;
 
 	tiles[4][9].type = DISGUISE;
-	tiles[4][9].Tile_Color = GREEN;
+	tiles[4][9].Tile_Color = RED;
 	tiles[6][7].type = DISGUISE;
-	tiles[6][7].Tile_Color = RED;
+	tiles[6][7].Tile_Color = GREEN;
 
 	vents[0].tile1 = &tiles[6][9];
 	vents[0].tile2 = &tiles[9][0];
@@ -73,49 +73,63 @@ void level10_init(void)
 	gates[1].Door = &tiles[2][6];
 	gates[1].Switch = &tiles[5][2];
 
-	enemySet(2, 1, 1, 0, AOE_VIEW, GREEN);
-	enemySet(7, 1, 1, 0, AOE_VIEW, GREEN);
-	enemySet(2, 9, 0, 5, VERTICAL_HORIZONTAL_LOOK, RED);
+	enemySet(2, 1, 1, 0, AOE_VIEW, RED);
+	enemySet(7, 1, 1, 0, AOE_VIEW, RED);
+	enemySet(2, 9, 0, 5, VERTICAL_HORIZONTAL_LOOK, GREEN);
 
 	setStartGame(Tile_Size);
 	player.setFOV = 1;
 	doorLightRange = 2;
 	gameState = PLAY;
 	player.currentStage = 10;
+	gameFogRange = 4;
+	player.shineCount = 1;
 }
 
 void level10_update(void)
 {
 	//need this for light shine on door
-	if (doorLightCounter > 0) {
-		doorLightCounter -= CP_System_GetDt();
-		return;
-	}
-	else {
 		switch (gameState) {
 		case PLAY:
-			//clears the screen so things can be redrawn
-			CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
-			//renderGame();
+			if (lightCounter > 0 || illumMode) {
 
-			//all the game update methods that needs to be updated every frame
-			enemyFOV(Tile_Size);
-			if (player.setFOV) {
-				clearFogBackground();
-				setIlluminationWallLogicOnce(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), 4);
-
+				lightCounter -= CP_System_GetDt();
+				handlePlayerIllumInput();
+				renderGame();
+				drawSmallPanel(4 * Tile_Size, 2 * Tile_Size, 3 * Tile_Size, 4 * Tile_Size, "click anywhere to shine a light when you have a shine");
+				return;
 			}
-			handlePlayerInput(Tile_Size);
-			renderGame();
+			else if (tileMoveCounter != 0) {}
+			else {
+				//clears the screen so things can be redrawn
+				CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
+				//all the game update methods that needs to be updated every frame
+				enemyFOV(Tile_Size);
+				if (player.setFOV) {
+					clearFogBackground();
+					setIlluminationWallLogicOnce(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), gameFogRange);
 
-			if (player.counter < 10)
-			{
-				drawSmallPanel(4 * Tile_Size, 2 * Tile_Size, 3 * Tile_Size, 4 * Tile_Size, "Try to remember the way.");
+				}
 
+				handlePlayerInput(Tile_Size);
+
+				renderGame();
+
+				//panel
+				if (player.counter < 10 && player.shineCount > 0)
+				{
+					drawSmallPanel(4 * Tile_Size, 2 * Tile_Size, 3 * Tile_Size, 4 * Tile_Size, "Press space to activate Illum Mode");
+
+				}
+				if (player.counter > 30 && player.counter < 35)
+				{
+					drawSmallPanel(4 * Tile_Size, 2 * Tile_Size, 3 * Tile_Size, 4 * Tile_Size, "you get a light every 50 steps");
+
+				}
+				//End FOV logic handled area
+				drawSideBarLevel("Level 10", player.counter);
+				drawSideBarStats();
 			}
-			//End FOV logic handled area
-			drawSideBar("Level 10", player.counter);
-
 			break;
 		case PAUSED:
 			drawFullPanel();
@@ -132,7 +146,7 @@ void level10_update(void)
 		}
 
 	}
-}
+
 
 void level10_exit(void)
 {

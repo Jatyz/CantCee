@@ -51,17 +51,20 @@ void level7_update(void)
 {
 	switch (gameState) {
 	case PLAY:
-		//clears the screen so things can be redrawn
-		CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
-		handlePlayerInput(Tile_Size);
-		//all the game update methods that needs to be updated every frame
-		renderGame();
-		enemyFOV(Tile_Size);
-		//End FOV logic handled area
-		drawSideBar("Level 7", player.counter);
-		if (player.counter < 2)
-		{
-			drawSmallPanel(6 * Tile_Size, 2 * Tile_Size, 1 * Tile_Size, 8 * Tile_Size, "\nDisguise tiles makes it so the enemy detection system cannot see you if you are the same color as their detection!! -->");
+		if (tileMoveCounter != 0) {}
+		else {
+			//clears the screen so things can be redrawn
+			CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
+			handlePlayerInput(Tile_Size);
+			//all the game update methods that needs to be updated every frame
+			renderGame();
+			enemyFOV(Tile_Size);
+			//End FOV logic handled area
+			drawSideBarLevel("Level 7", player.counter);
+			if (player.counter < 2)
+			{
+				drawSmallPanel(6 * Tile_Size, 2 * Tile_Size, 1 * Tile_Size, 8 * Tile_Size, "\nDisguise tiles makes it so the enemy detection system cannot see you if you are the same color as their detection!! -->");
+			}
 		}
 		break;
 	case PAUSED:

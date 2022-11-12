@@ -76,43 +76,57 @@ void handlePlayerInput(int tilesize) {
 		gameState = PAUSED;
 	}
 	//up
-	if (CP_Input_KeyTriggered(KEY_W)) {
+	if (CP_Input_KeyTriggered(KEY_W) || CP_Input_KeyTriggered(KEY_UP)) {
 		//check if out of bounds
 		if (player.y > 0) {
 			//player.y -= 1;
 			player.y -= checkMove(0, UP);
+			giveLight();
 			player.direction = 0;		//set direction player is facing to up
 		}
 	}
 	//right
-	if (CP_Input_KeyTriggered(KEY_D)) {
+	if (CP_Input_KeyTriggered(KEY_D)|| CP_Input_KeyTriggered(KEY_RIGHT)) {
 		//check out of bounds
 		if (player.x < Horizontal_Tile - 1) {
 			player.x += checkMove(RIGHT, 0);
 		//player.x += 1;
+			giveLight();
 			player.direction = 1;		//set direction player is facing to right
 		}
 	}
 
 	//down
-	if (CP_Input_KeyTriggered(KEY_S)) {
+	if (CP_Input_KeyTriggered(KEY_S) || CP_Input_KeyTriggered(KEY_DOWN)) {
 		//check out of bounds
 		if (player.y < Vertical_Tile - 1) {
 			player.y += checkMove(0, DOWN);
+			giveLight();
 			player.direction = 2;		//set direction player is facing to down
 			//player.y += 1;
 		}
 	}
 	//left
-	if (CP_Input_KeyTriggered(KEY_A)) {
+	if (CP_Input_KeyTriggered(KEY_A) || CP_Input_KeyTriggered(KEY_LEFT)) {
 		//check out of bounds
 		if (player.x > 0) {
 			//player.x -= 1;
 			if (checkMove(LEFT, 0)) {
 				player.x -= 1;
+				giveLight();
 				player.direction = 3;	//set direction player is facing to left
 			}
 		}
+	}
+
+	//for tile movement
+	if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT)) {
+			clickCheck();
+	}
+
+	//toggle light bomb
+	if (CP_Input_KeyTriggered(KEY_SPACE)) {
+		illumMode = 1;
 	}
 
 
@@ -146,6 +160,7 @@ _Bool checkMove(int DirectionX, int DirectionY) {
 		break;
 	case VENTS:
 		//check where the player shld end up
+		player.isTP = TRUE;
 		checkVents(&tiles[player.x + DirectionX][player.y + DirectionY]);
 		//player does not move so return false
 		return FALSE;
@@ -172,4 +187,15 @@ _Bool checkMove(int DirectionX, int DirectionY) {
 	player.Prev_X = player.x;
 	player.Prev_Y = player.y;
 	return TRUE;
+}
+
+void handlePlayerIllumInput() {
+	if (CP_Input_KeyTriggered(KEY_SPACE)) {
+		illumMode = 0;
+	}
+
+	if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT)) {
+		tileClick();
+	}
+
 }

@@ -59,25 +59,28 @@ void level1_update(void)
 {
 	switch (gameState) {
 	case PLAY:
-		//clears the screen so things can be redrawn
-		CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
-		handlePlayerInput(Tile_Size);
-		//all the game update methods that needs to be updated every frame
-		renderGame();
-		//End FOV logic handled area
-		drawSideBar("Level 1",player.counter);
-		if (player.counter < 6)
-		{
-			drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 0 * Tile_Size, 1 * Tile_Size, "Welcome to basic stealth training. You will be trained to infiltrate the enemy base.");
-			drawSmallPanel((3 - (player.counter / 2)) * Tile_Size, 2 * Tile_Size, 7 * Tile_Size, 6 * Tile_Size, "Press WASD to move.");
+		if (tileMoveCounter != 0) {}
+		else {
+			//clears the screen so things can be redrawn
+			CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
+			handlePlayerInput(Tile_Size);
+			//all the game update methods that needs to be updated every frame
+			renderGame();
+			//End FOV logic handled area
+			drawSideBarLevel("Level 1", player.counter);
+			if (player.counter < 6)
+			{
+				drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 0 * Tile_Size, 1 * Tile_Size, "Welcome to basic stealth training. You will be trained to infiltrate the enemy base.");
+				drawSmallPanel((3 - (player.counter / 2)) * Tile_Size, 2 * Tile_Size, 7 * Tile_Size, 6 * Tile_Size, "Press WASD to move.");
 
-		}
+			}
 
 
-		if (player.counter > 6)
-		{
-			drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 0 * Tile_Size, 1 * Tile_Size, "Get to the red tile proceed to next stage");
+			if (player.counter > 6)
+			{
+				drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 0 * Tile_Size, 1 * Tile_Size, "Get to the red tile proceed to next stage");
 
+			}
 		}
 		break;
 	case PAUSED:

@@ -134,7 +134,7 @@ void checkClick(void* (button1)(void), void* (button2)(void), void* (button3)(vo
 	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 }
 
-void drawSideBar(char levelNumber[], int noOfStep) {
+void drawSideBarLevel(char levelNumber[], int noOfStep) {
 
 	CP_Settings_RectMode(CP_POSITION_CORNER);
 	CP_Settings_Fill(CP_Color_Create(0,0,0,255));
@@ -148,6 +148,23 @@ void drawSideBar(char levelNumber[], int noOfStep) {
 	}
 	CP_Settings_TextSize(25.f);
 	CP_Font_DrawTextBox(number, 810, 70, 200);
+
+	free(number);
+}
+
+void drawSideBarStats() {
+	CP_Settings_RectMode(CP_POSITION_CORNER);
+	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
+	CP_Settings_TextSize(30.f);
+	CP_Font_DrawTextBox("Number of Shine", 810, 200, 200);
+
+	char* number;
+	number = malloc(6);
+	if (number != NULL) {
+		sprintf_s(number, 6, "%d", player.shineCount);
+	}
+	CP_Settings_TextSize(40.f);
+	CP_Font_DrawTextBox(number, 875, 250, 200);
 
 	free(number);
 }
