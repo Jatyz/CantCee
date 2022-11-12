@@ -210,7 +210,7 @@ void renderGame(void) {
 	//End FOV render code
 }
 
-//Call this function after setting Tile_Size
+//Call this function after setting Tile_Size to reset things to default
 void resetGame(Tile_Size) {
 
 	//player color may need to move out of this method to set from the start of the stage itself
@@ -228,56 +228,70 @@ void resetGame(Tile_Size) {
 	enemyReset(Tile_Size);
 
 	tileMoveCounter = 0;
-	gameFogRange = 4;
+	gameFogRange = 3;
 	player.shineCount = 1;
 }
 
+//resume game
 void resumeGame(void)
 {
 	gameState = PLAY;
 }
 
+//things to set before giving controls to the player
 void setStartGame(Tile_Size) {	
 	setVents();
 	setGates();
 	setPlayerStartPoint(Tile_Size);
 }
 
+//called after finishing each floor
 void writeScore() {
 	FILE* output;
+	//open file to write if fail to open exit game
 	if (fopen_s(&output, "Assets/Score.txt", "w") != 0) {
 		exit(EXIT_FAILURE);
 	}
-	//fprintf(output, "Hello");
+	//write every score into the text file
 	for (int i = 0; i < sizeof(Score)/sizeof(Score[0]); i++) {
 
 		fprintf(output, "%d\n", Score[i]);
 	}
+	//close file
 	fclose(output);
 }
+
 //called after create score in main menu
 void readScore() {
 	FILE* output;
+	//open file to read, if fail exit game
 	if (fopen_s(&output, "Assets/Score.txt", "r") != 0) {
 		exit(EXIT_FAILURE);
 	}
+	//set pointer to start of file just incase
 	fseek(output,0,SEEK_SET);
+	//set a fixed amount of memory to hold the score
 	char buf[6];
 	int i = 0;
 	while (fgets(buf,6,output) && i < 30) {
+		//write score into array
 		sscanf_s(buf, "%d", &Score[i]);
 		i++;
 	}
+	//close file
 	fclose(output);
 }
 
 //needs to be called in main menu
 void createScore() {
 	FILE* output;
+	//if file exist, open else
 	if (fopen_s(&output, "Assets/Score.txt", "rb+") != 0) {
+		//if file does not exist create
 		fopen_s(&output, "Assets/Score.txt", "wb");
 	}
 	if (output) {
+		//close opened file
 		fclose(output);
 	}
 }
@@ -286,17 +300,16 @@ void lightTiles(int x, int y, int range) {
 	int startx = x - range;
 	int starty = y - range;
 
+	//set a square area of range around the player to light up
 	for (int i = 0; i <= (2 * range); i++) {
 		for (int j = 0; j <= (2 * range); j++) {
 			setTileHalfLit(startx + i, starty+j);
-
-
 		}
 	}
 	
 }
 
-void clickCheck() {
+void moveTileCheck() {
 	float x, y;
 	int Width, Height;
 	//find the mouse clicked position
@@ -312,19 +325,28 @@ void clickCheck() {
 	int direction = 0;
 	int tiledif;
 
+	//check if its horizontal or vertical movements only
 	if (Width == player.x) {
+		//check tile difference from player
 		tiledif = abs(player.y - Height);
 		if (tiledif > gameFogRange) {
-			tiledif = gameFogRange - 1;
+			//if out of range set to range
+			tiledif = gameFogRange ;
 		}
 
+		//check direction
 		direction = (player.y - Height) < 0 ? 1:-1;
 
+		//move the specific number of tiles 1 tile at a time
 		for (int i = 0; i < tiledif; i++) {
+			//dont let player update anything
 			tileMoveCounter = 3;
 			player.y += direction *checkMove(0, direction);
+			//check if counter hit a factor of 50
 			giveLight();
+			//check if player walked into enemy fov
 			enemyFOV(Tile_Size);
+			//if player vented stop moving
 			if (player.isTP) {
 				tileMoveCounter = 0;
 				player.isTP = 0;
@@ -333,21 +355,28 @@ void clickCheck() {
 		}
 
 		tileMoveCounter = 0;
-	}
+	}	//check if its horizontal or vertical movements only
 	else if (Height == player.y) {
+		//check tile difference from player
 		tiledif = abs(player.x - Width);
 		if (tiledif > gameFogRange) {
-			tiledif = gameFogRange - 1;
+			//if out of range set to range
+			tiledif = gameFogRange;
 		}
-		tiledif = abs(player.x - Width);
 
+		//check distance from player
 		direction = (player.x - Width) < 0 ? 1 : -1;
 
+		//move specific clicked number of tiles and move 1 tile at a time
 		for (int i = 0; i < tiledif; i++) {
+			//dont update anything else
 			tileMoveCounter = 3;
 			player.x += direction * checkMove(direction, 0);
+			//check if moved by factor of 50
 			giveLight();
+			//check if walked into enemy fov
 			enemyFOV(Tile_Size);
+			//check if player walked into a vent, if so stop moving
 			if (player.isTP) {
 				tileMoveCounter = 0;
 				player.isTP = 0;
@@ -355,13 +384,14 @@ void clickCheck() {
 			}
 		}
 
+		//give the player controls back
 		tileMoveCounter = 0;
 
 	}
 	
 }
 
-void tileClick() {
+void lightTileCheck() {
 	if (illumMode && player.shineCount > 0) {
 		float x, y;
 		int Width, Height;
@@ -374,14 +404,17 @@ void tileClick() {
 		Width = x;
 		Height = y;
 
+		//set tiles lit for 2 seconds
 		lightTiles(Width, Height, doorLightRange);
 		lightCounter = 2;
 		illumMode = 0;
+		//use shine
 		player.shineCount--;
 	}
 }
 
 void giveLight() {
+	//every 50 steps give player a shine
 	if (player.counter % 50 == 0) {
 		player.shineCount++;
 	}

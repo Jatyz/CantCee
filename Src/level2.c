@@ -61,7 +61,7 @@ void level2_update(void)
 			drawSideBarLevel("Level 2", player.counter);
 			if (player.counter < 10)
 			{
-				drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 7 * Tile_Size, 6 * Tile_Size, "Using the vent tiles, you can crawl through vents to end on the other side.");
+				drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 7 * Tile_Size, 6 * Tile_Size, "Using the vent tiles,get to the other side.");
 
 			}
 		}

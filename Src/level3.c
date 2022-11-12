@@ -91,7 +91,7 @@ void level3_update(void)
 			drawSideBarLevel("Level 3", player.counter);
 			if (player.counter < 6)
 			{
-				drawSmallPanel(4 * Tile_Size, 2 * Tile_Size, 3 * Tile_Size, 4 * Tile_Size, "Vents are interconnected in unknown ways., you will need to remember which vents leads to which.");
+				drawSmallPanel(4 * Tile_Size, 2 * Tile_Size, 3 * Tile_Size, 4 * Tile_Size, "Vents are interconnected in unknown ways, you will need to remember which vents leads to which.");
 
 			}
 		}

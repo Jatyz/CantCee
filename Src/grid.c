@@ -235,14 +235,14 @@ void resetGates() {
 
 void checkGates(Tile* address) {
 
+	//get the address of tile at 0 0
+	Tile* base = tiles;
+
+	//open or close all associated doors
 	for (int i = 0; i < sizeof(gates) / sizeof(gates[0]); i++) {
 		//if the address of the tile the player set on matches the specific tile in the vents
 		if (gates[i].Switch == address && gates[i].Switch->type == SWITCH_OFF) {
-			gates[i].Switch->type = SWITCH_ON;
 			gates[i].Door->type = OPENED_DOOR;
-
-			//get the address of tile at 0 0
-			Tile* base = tiles;
 
 			//find the number of tiles between 0 0 and the tile at your current address
 			int difference = gates[i].Door - base;
@@ -255,13 +255,9 @@ void checkGates(Tile* address) {
 			
 			lightTiles(col, row, doorLightRange);
 			lightCounter++;
-			return;
 		}
-		if (gates[i].Switch == address && gates[i].Switch->type == SWITCH_ON) {
-			gates[i].Switch->type = SWITCH_OFF;
+		else if (gates[i].Switch == address && gates[i].Switch->type == SWITCH_ON) {
 			gates[i].Door->type = CLOSED_DOOR;
-				//get the address of tile at 0 0
-				Tile * base = tiles;
 
 			//find the number of tiles between 0 0 and the tile at your current address
 			int difference = gates[i].Door - base;
@@ -274,7 +270,22 @@ void checkGates(Tile* address) {
 
 			lightTiles(col, row, doorLightRange);
 			lightCounter++;
-			return;
 		}
+	}
+
+	//to change the switch
+	int difference = address - base;
+
+	//get column of 2d array
+	int col = difference / MAX_TILES;
+
+	//get row of 2d array
+	int row = difference % MAX_TILES;
+
+	if (tiles[col][row].type == SWITCH_ON) {
+		tiles[col][row].type = SWITCH_OFF;
+	}
+	else {
+		tiles[col][row].type = SWITCH_ON;
 	}
 }

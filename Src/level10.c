@@ -12,13 +12,6 @@ void level10_init(void)
 {
 	CP_System_SetWindowSize(WINDOW_WIDTH, WINIDOW_HEIGHT);
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
-	//change this variable to change the number of tiles on the map X by X
-	//Factors of 800
-	// use these below
-	// 20,25,32,40,50,80,100,160
-	//e.g. big room = 20
-	// medium room = 50
-	// small room = 80
 	Tile_Size = SMALL;
 
 	//reset all arrays and variables
@@ -69,9 +62,9 @@ void level10_init(void)
 	vents[0].tile2 = &tiles[9][0];
 
 	gates[0].Door = &tiles[1][3];
-	gates[0].Switch = &tiles[0][7];
+	gates[0].Switch = &tiles[5][2];
 	gates[1].Door = &tiles[2][6];
-	gates[1].Switch = &tiles[5][2];
+	gates[1].Switch = &tiles[0][7];
 
 	enemySet(2, 1, 1, 0, AOE_VIEW, RED);
 	enemySet(7, 1, 1, 0, AOE_VIEW, RED);
@@ -82,7 +75,7 @@ void level10_init(void)
 	doorLightRange = 2;
 	gameState = PLAY;
 	player.currentStage = 10;
-	gameFogRange = 4;
+	gameFogRange = 2;
 	player.shineCount = 1;
 }
 
@@ -96,6 +89,7 @@ void level10_update(void)
 				lightCounter -= CP_System_GetDt();
 				handlePlayerIllumInput();
 				renderGame();
+				if(player.shineCount > 0)
 				drawSmallPanel(4 * Tile_Size, 2 * Tile_Size, 3 * Tile_Size, 4 * Tile_Size, "click anywhere to shine a light when you have a shine");
 				return;
 			}
@@ -107,7 +101,7 @@ void level10_update(void)
 				enemyFOV(Tile_Size);
 				if (player.setFOV) {
 					clearFogBackground();
-					setIlluminationWallLogicOnce(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), gameFogRange);
+					setIlluminationWallLogicOnce(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), gameFogRange+1);
 
 				}
 
@@ -128,6 +122,8 @@ void level10_update(void)
 				}
 				//End FOV logic handled area
 				drawSideBarLevel("Level 10", player.counter);
+
+				//write down number of lights and other stats if we are adding more
 				drawSideBarStats();
 			}
 			break;

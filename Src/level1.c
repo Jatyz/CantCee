@@ -70,12 +70,9 @@ void level1_update(void)
 			drawSideBarLevel("Level 1", player.counter);
 			if (player.counter < 6)
 			{
-				drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 0 * Tile_Size, 1 * Tile_Size, "Welcome to basic stealth training. You will be trained to infiltrate the enemy base.");
-				drawSmallPanel((3 - (player.counter / 2)) * Tile_Size, 2 * Tile_Size, 7 * Tile_Size, 6 * Tile_Size, "Press WASD to move.");
+				drawSmallPanel((3 - (player.counter / 2)) * Tile_Size, 2 * Tile_Size, 7 * Tile_Size, 6 * Tile_Size, "Press WASD to move. Or use mouse to click on a tile");
 
 			}
-
-
 			if (player.counter > 6)
 			{
 				drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 0 * Tile_Size, 1 * Tile_Size, "Get to the red tile proceed to next stage");
