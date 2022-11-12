@@ -26,13 +26,10 @@ void level6_init(void)
 	//assign all the floors and walls
 	assignTile(Tile_Size);
 
-	int height, width;
-
-
 	//for loop to go through all the tiles
-	for (height = 0; height < returnBounds(Tile_Size); height++) {
+	for (int height = 0; height < returnBounds(Tile_Size); height++) {
 
-		for (width = 0; width < returnBounds(Tile_Size); width++) {
+		for (int width = 0; width < returnBounds(Tile_Size); width++) {
 
 			if (width < 3 || width > 6) {
 				tiles[width][height].type = WALL;
@@ -62,26 +59,29 @@ void level6_update(void)
 {
 	switch (gameState) {
 	case PLAY:
-		//clears the screen so things can be redrawn
-		CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
-		handlePlayerInput(Tile_Size);
-		//all the game update methods that needs to be updated every frame
-		renderGame();
-		enemyFOV(Tile_Size);
-		//End FOV logic handled area
-		drawSideBar("Level 6", player.counter);
-		if (player.counter < 6)
-		{
-			drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 0 * Tile_Size, 1 * Tile_Size, "Enemy has their own detection system avoid walking into their vision");
-			drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 7 * Tile_Size, 6 * Tile_Size, "You will lose when you walk into their vision");
+		if (tileMoveCounter != 0) {}
+		else {
+			//clears the screen so things can be redrawn
+			CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
+			handlePlayerInput(Tile_Size);
+			//all the game update methods that needs to be updated every frame
+			renderGame();
+			enemyFOV(Tile_Size);
+			//End FOV logic handled area
+			drawSideBarLevel("Level 6", player.counter);
+			if (player.counter < 6)
+			{
+				drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 0 * Tile_Size, 1 * Tile_Size, "Enemy has their own detection system avoid walking into their vision");
+				drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 7 * Tile_Size, 6 * Tile_Size, "You will lose when you walk into their vision");
 
-		}
+			}
 
 
-		if (player.counter > 6)
-		{
-			drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 0 * Tile_Size, 1 * Tile_Size, "Get to the red tile to proceed");
+			if (player.counter > 6)
+			{
+				drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 0 * Tile_Size, 1 * Tile_Size, "Get to the red tile to proceed");
 
+			}
 		}
 		break;
 	case PAUSED:

@@ -13,6 +13,7 @@ void drawPlayer(int tilesize) {
 	CP_Settings_StrokeWeight(0.75f);
 	CP_Settings_Stroke(CP_Color_Create(0, 0, 0, 255));
 
+	//check player color
 	switch (player.Player_Color) {
 	case RED: CP_Settings_Fill(Red);
 		break;
@@ -69,50 +70,72 @@ void setPlayerDirection(int directionFacing)
 //handle all player keyboard inputs
 void handlePlayerInput(int tilesize) {
 
+	//getting bounds
 	int Horizontal_Tile = returnBounds(tilesize);
 	int Vertical_Tile = Horizontal_Tile;
 
 	if (CP_Input_KeyDown(KEY_ESCAPE)) {
+		//brings up pause menu
 		gameState = PAUSED;
 	}
 	//up
-	if (CP_Input_KeyTriggered(KEY_W)) {
+	if (CP_Input_KeyTriggered(KEY_W) || CP_Input_KeyTriggered(KEY_UP)) {
 		//check if out of bounds
 		if (player.y > 0) {
-			//player.y -= 1;
+			//check if the tile can be moved
 			player.y -= checkMove(0, UP);
+			//check if player getting light
+			giveLight();
 			player.direction = 0;		//set direction player is facing to up
 		}
 	}
 	//right
-	if (CP_Input_KeyTriggered(KEY_D)) {
+	if (CP_Input_KeyTriggered(KEY_D)|| CP_Input_KeyTriggered(KEY_RIGHT)) {
 		//check out of bounds
 		if (player.x < Horizontal_Tile - 1) {
+			//check if tile can be moved
 			player.x += checkMove(RIGHT, 0);
-		//player.x += 1;
+			//check if player getting light
+			giveLight();
 			player.direction = 1;		//set direction player is facing to right
 		}
 	}
 
 	//down
-	if (CP_Input_KeyTriggered(KEY_S)) {
+	if (CP_Input_KeyTriggered(KEY_S) || CP_Input_KeyTriggered(KEY_DOWN)) {
 		//check out of bounds
 		if (player.y < Vertical_Tile - 1) {
+			//check if the tile can be moved
 			player.y += checkMove(0, DOWN);
+			//check if player has moved 50 steps
+			giveLight();
 			player.direction = 2;		//set direction player is facing to down
-			//player.y += 1;
 		}
 	}
 	//left
-	if (CP_Input_KeyTriggered(KEY_A)) {
+	if (CP_Input_KeyTriggered(KEY_A) || CP_Input_KeyTriggered(KEY_LEFT)) {
 		//check out of bounds
 		if (player.x > 0) {
-			//player.x -= 1;
+			//check if the tile can be moved
 			if (checkMove(LEFT, 0)) {
 				player.x -= 1;
+				//check if player getting light
+				giveLight();
 				player.direction = 3;	//set direction player is facing to left
 			}
 		}
+	}
+
+	//for tile movement
+	if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT)) {
+		//check if player clicked any tile, and if they have a use of light
+			moveTileCheck();
+	}
+
+	//toggle light bomb
+	if (CP_Input_KeyTriggered(KEY_SPACE)) {
+		//activate illumination mode, where player cannot move
+		illumMode = 1;
 	}
 
 
@@ -145,24 +168,32 @@ _Bool checkMove(int DirectionX, int DirectionY) {
 		player.Player_Color = tiles[player.x + DirectionX][player.y + DirectionY].Tile_Color;
 		break;
 	case VENTS:
-		//check where the player shld end up
+		//check if player just tped
+		player.isTP = TRUE;
+		//check where the player shld tp to.
 		checkVents(&tiles[player.x + DirectionX][player.y + DirectionY]);
 		//player does not move so return false
 		return FALSE;
+		//if its a closed door no movements
 	case CLOSED_DOOR:
 		return FALSE;
 		break;
+		//check if player walked into a switch
 	case SWITCH_ON:
 	case SWITCH_OFF:
 		checkGates(&tiles[player.x + DirectionX][player.y + DirectionY]);
 		break;
 	case END:
+		//update player info for final tile moved
 		player.counter++;
 		player.Prev_X = player.x;
 		player.Prev_Y = player.y;
+		//check if player beat previous score
 		if(Score[player.currentStage] == 0 || player.counter < Score[player.currentStage])
 		Score[player.currentStage] = player.counter;
+		//write into file player new score
 		writeScore();
+		//bring up win panel
 		gameState = WIN;
 		return TRUE;
 		break;
@@ -172,4 +203,17 @@ _Bool checkMove(int DirectionX, int DirectionY) {
 	player.Prev_X = player.x;
 	player.Prev_Y = player.y;
 	return TRUE;
+}
+
+void handlePlayerIllumInput() {
+	if (CP_Input_KeyTriggered(KEY_SPACE)) {
+		//disable illumination mode
+		illumMode = 0;
+	}
+
+	if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT)) {
+		//check if player clicked and whether it shld light up the map
+		lightTileCheck();
+	}
+
 }

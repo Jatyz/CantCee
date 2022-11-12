@@ -7,6 +7,7 @@
 #include "level1.h"
 #include "panels.h"
 #include "levelselect.h"
+#include "levelTransition.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -32,6 +33,14 @@ SET PLAYER START POINT AFTER ASSIGNING TILES
 int Tile_Size;
 Game_State gameState;
 int Score[30];//number in array base on number of lvls 30 as placeholder for now to test writing in and out
+
+//static variable for animation use
+static int levelExited = 0,
+		   levelStarted = 1;
+
+double lightCounter, tileMoveCounter;
+int doorLightRange,gameFogRange,illumMode;
+
 
 void game_init(void)
 {
@@ -65,6 +74,9 @@ void game_init(void)
 	tiles[8][7].type = WALL;
 	tiles[9][7].type = WALL;
 	tiles[7][8].type = START;
+
+
+
 	tiles[9][6].type = DISGUISE;
 	tiles[9][6].Tile_Color = RED;
 	tiles[9][4].type = DISGUISE;
@@ -72,7 +84,7 @@ void game_init(void)
 	tiles[0][9].type = DISGUISE;
 	tiles[0][9].Tile_Color = GREEN;
 
-	vents[0].tile1 = &tiles[9][0];
+	vents[0].tile1 = &tiles[9][8];
 	vents[0].tile2 = &tiles[0][8];
 
 	tiles[4][5].type = WALL;
@@ -103,11 +115,17 @@ void game_init(void)
 
 	setStartGame(Tile_Size);
 
-	player.setFOV = 1;
+	player.setFOV = 0;
 	gameState = PLAY;
 
 	readScore();
 	writeScore();
+
+	//MOAR NEW CODE HERE!! FOR ANIMATIONS
+	levelExited = 0,
+	levelStarted = 1;
+	setSpriteExtended();	//sets the first frame to be fully black in preperation for animation transistion in,
+							//reccomendation is to not allow player control till animation is done. P.S. does rendering
 }
 
 void game_update(void)
@@ -129,15 +147,15 @@ void game_update(void)
 			clearFogBackground();
 			//setPlayerFOVFunnel(player.x, player.y, player.direction, returnBounds(Tile_Size), returnBounds(Tile_Size), 2, 10);
 			//setFOVFunnelWallLogic(player.x, player.y, player.direction, returnBounds(Tile_Size), returnBounds(Tile_Size), 2, 10);
-			setIlluminationAdvance(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), 5, 5);
+			//setIlluminationAdvance(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), 5, 5);
 
 			//Test code for *AHEM* dynamic *AHEM* style FOV independent of actual grid resolution
 			//setIllumination(player.x * 6 + 3, (player.y * 6) + 3, returnBounds(Tile_Size) * 6 + 2, returnBounds(Tile_Size) * 6 + 2, 4 * 6);
 			// 
-			setIlluminationWallLogic(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), 5);
+			setIlluminationWallLogicOnce(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), 5);
 			//End FOV logic handled area	
 		}
-		drawSideBar("Debug level",player.counter);
+		drawSideBarLevel("Debug level", player.counter);
 		break;
 	case PAUSED:
 		drawFullPanel();
@@ -148,9 +166,28 @@ void game_update(void)
 		checkClick(startLevel1, startGame, startLevelSelect);
 		break;
 	case LOSE:
+
 		drawFullPanel();
-		checkClick(startGame, startLevelSelect,0);
+		checkClick(startGame, startLevelSelect, 0);
 		break;
+	}
+	
+	
+	// NEW CODE HERE!! UP FOR A DISCOUNT OF WHERE'S MY WEEKENDS???!!!!
+	if (levelStarted)	//when level starts, 
+	{	//render enter level transition animation
+		levelStarted = initLevelTransition();	//returns 0 when animation is done
+		if(!levelStarted)
+		{
+		levelExited = 1;
+		setSpriteReseted();
+		}
+	}
+	if (levelExited)	//when level exit, 
+	{	//render exit level transition animation
+		levelExited = exitLevelTransition(levelExited, game_exit);	//second parameter runs when the animation is complete, returns 0 when animation is done
+		if(!levelExited)
+			CP_Engine_SetNextGameStateForced(game_init, game_update, game_exit);
 	}
 }
 
@@ -173,7 +210,7 @@ void renderGame(void) {
 	//End FOV render code
 }
 
-//Call this function after setting Tile_Size
+//Call this function after setting Tile_Size to reset things to default
 void resetGame(Tile_Size) {
 
 	//player color may need to move out of this method to set from the start of the stage itself
@@ -189,54 +226,198 @@ void resetGame(Tile_Size) {
 	resetGates();
 	assignTile(Tile_Size);//assign all tiles
 	enemyReset(Tile_Size);
+
+	tileMoveCounter = 0;
+	gameFogRange = 3;
+	player.shineCount = 0;
+	lightCounter = 0;
 }
 
+//resume game
 void resumeGame(void)
 {
 	gameState = PLAY;
 }
 
+//things to set before giving controls to the player
 void setStartGame(Tile_Size) {	
 	setVents();
 	setGates();
 	setPlayerStartPoint(Tile_Size);
 }
 
+//called after finishing each floor
 void writeScore() {
 	FILE* output;
+	//open file to write if fail to open exit game
 	if (fopen_s(&output, "Assets/Score.txt", "w") != 0) {
 		exit(EXIT_FAILURE);
 	}
-	//fprintf(output, "Hello");
+	//write every score into the text file
 	for (int i = 0; i < sizeof(Score)/sizeof(Score[0]); i++) {
 
 		fprintf(output, "%d\n", Score[i]);
 	}
+	//close file
 	fclose(output);
 }
+
 //called after create score in main menu
 void readScore() {
 	FILE* output;
+	//open file to read, if fail exit game
 	if (fopen_s(&output, "Assets/Score.txt", "r") != 0) {
 		exit(EXIT_FAILURE);
 	}
+	//set pointer to start of file just incase
 	fseek(output,0,SEEK_SET);
+	//set a fixed amount of memory to hold the score
 	char buf[6];
 	int i = 0;
 	while (fgets(buf,6,output) && i < 30) {
+		//write score into array
 		sscanf_s(buf, "%d", &Score[i]);
 		i++;
 	}
+	//close file
 	fclose(output);
 }
 
 //needs to be called in main menu
 void createScore() {
 	FILE* output;
+	//if file exist, open else
 	if (fopen_s(&output, "Assets/Score.txt", "rb+") != 0) {
+		//if file does not exist create
 		fopen_s(&output, "Assets/Score.txt", "wb");
 	}
 	if (output) {
+		//close opened file
 		fclose(output);
 	}
+}
+
+void lightTiles(int x, int y, int range) {
+	int startx = x - range;
+	int starty = y - range;
+
+	//set a square area of range around the player to light up
+	for (int i = 0; i <= (2 * range); i++) {
+		for (int j = 0; j <= (2 * range); j++) {
+			setTileHalfLit(startx + i, starty+j);
+		}
+	}
+	
+}
+
+void moveTileCheck() {
+	float x, y;
+	int Width, Height;
+	//find the mouse clicked position
+	x = (CP_Input_GetMouseX() / 800) * returnBounds(Tile_Size);
+	y = (CP_Input_GetMouseY() / 800) * returnBounds(Tile_Size);
+
+	//change the state of the cell the mouse clicked on
+	//cannot put float in array, need to explicit convert to int
+	Width = x;
+	Height = y;
+
+	
+	int direction = 0;
+	int tiledif;
+
+	//check if its horizontal or vertical movements only
+	if (Width == player.x) {
+		//check tile difference from player
+		tiledif = abs(player.y - Height);
+		if (tiledif > gameFogRange) {
+			//if out of range set to range
+			tiledif = gameFogRange ;
+		}
+
+		//check direction
+		direction = (player.y - Height) < 0 ? 1:-1;
+
+		//move the specific number of tiles 1 tile at a time
+		for (int i = 0; i < tiledif; i++) {
+			//dont let player update anything
+			tileMoveCounter = 3;
+			player.y += direction *checkMove(0, direction);
+			//check if counter hit a factor of 50
+			giveLight();
+			//check if player walked into enemy fov
+			enemyFOV(Tile_Size);
+			//if player vented stop moving
+			if (player.isTP) {
+				tileMoveCounter = 0;
+				player.isTP = 0;
+				return;
+			}
+		}
+
+		tileMoveCounter = 0;
+	}	//check if its horizontal or vertical movements only
+	else if (Height == player.y) {
+		//check tile difference from player
+		tiledif = abs(player.x - Width);
+		if (tiledif > gameFogRange) {
+			//if out of range set to range
+			tiledif = gameFogRange;
+		}
+
+		//check distance from player
+		direction = (player.x - Width) < 0 ? 1 : -1;
+
+		//move specific clicked number of tiles and move 1 tile at a time
+		for (int i = 0; i < tiledif; i++) {
+			//dont update anything else
+			tileMoveCounter = 3;
+			player.x += direction * checkMove(direction, 0);
+			//check if moved by factor of 50
+			giveLight();
+			//check if walked into enemy fov
+			enemyFOV(Tile_Size);
+			//check if player walked into a vent, if so stop moving
+			if (player.isTP) {
+				tileMoveCounter = 0;
+				player.isTP = 0;
+				return;
+			}
+		}
+
+		//give the player controls back
+		tileMoveCounter = 0;
+
+	}
+	
+}
+
+void lightTileCheck() {
+	if (illumMode && player.shineCount > 0) {
+		float x, y;
+		int Width, Height;
+		//find the mouse clicked position
+		x = (CP_Input_GetMouseX() / 800) * returnBounds(Tile_Size);
+		y = (CP_Input_GetMouseY() / 800) * returnBounds(Tile_Size);
+
+		//change the state of the cell the mouse clicked on
+		//cannot put float in array, need to explicit convert to int
+		Width = x;
+		Height = y;
+
+		//set tiles lit for 2 seconds
+		lightTiles(Width, Height, doorLightRange);
+		lightCounter = 2;
+		illumMode = 0;
+		//use shine
+		player.shineCount--;
+	}
+}
+
+void giveLight() {
+	//every 50 steps give player a shine
+	if (player.counter % 50 == 0) {
+		player.shineCount++;
+	}
+
 }

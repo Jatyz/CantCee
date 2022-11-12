@@ -26,11 +26,8 @@ void level4_init(void)
 	//assign all the floors and walls
 	assignTile(Tile_Size);
 
-	int width;
-
-
 	//for loop to go through all the tiles
-	for (width = 0; width < returnBounds(Tile_Size); width++) {
+	for (int width = 0; width < returnBounds(Tile_Size); width++) {
 
 		tiles[width][5].type = WALL;
 	}
@@ -57,23 +54,26 @@ void level4_update(void)
 {
 	switch (gameState) {
 	case PLAY:
-		//clears the screen so things can be redrawn
-		CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
-		handlePlayerInput(Tile_Size);
-		//all the game update methods that needs to be updated every frame
-		renderGame();
-		//End FOV logic handled area
-		drawSideBar("Level 3", player.counter);
-		if (player.counter < 10)
-		{
-			drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 6 * Tile_Size, 1 * Tile_Size, "The switch to the door is in this room.");
-			drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 7 * Tile_Size, 6 * Tile_Size, "using the vents you can get over and open the door.");
+		if (tileMoveCounter != 0) {}
+		else {
+			//clears the screen so things can be redrawn
+			CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
+			handlePlayerInput(Tile_Size);
+			//all the game update methods that needs to be updated every frame
+			renderGame();
+			//End FOV logic handled area
+			drawSideBarLevel("Level 3", player.counter);
+			if (player.counter < 10)
+			{
+				drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 6 * Tile_Size, 1 * Tile_Size, "The switch to the door is in this room.");
+				drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 7 * Tile_Size, 6 * Tile_Size, "using the vents you can get over and open the door.");
 
-		}
-		if (player.counter > 15)
-		{
-			drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 7 * Tile_Size, 6 * Tile_Size, "After touching the switch, the door is opened");
+			}
+			if (player.counter > 15)
+			{
+				drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 7 * Tile_Size, 6 * Tile_Size, "After touching the switch, the door is opened");
 
+			}
 		}
 		break;
 	case PAUSED:

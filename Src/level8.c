@@ -26,8 +26,6 @@ void level8_init(void)
 	//assign all the floors and walls
 	assignTile(Tile_Size);
 
-	int height, width;
-
 	tiles[4][0].type = WALL;
 	tiles[4][1].type = WALL;
 	tiles[4][2].type = WALL;
@@ -86,14 +84,22 @@ void level8_update(void)
 {
 	switch (gameState) {
 	case PLAY:
-		//clears the screen so things can be redrawn
-		CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
-		handlePlayerInput(Tile_Size);
-		//all the game update methods that needs to be updated every frame
-		renderGame();
-		enemyFOV(Tile_Size);
-		//End FOV logic handled area
-		drawSideBar("Level 8", player.counter);
+		 if (tileMoveCounter != 0) {}
+		 else {
+			 //clears the screen so things can be redrawn
+			 CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
+			 handlePlayerInput(Tile_Size);
+			 //all the game update methods that needs to be updated every frame
+			 renderGame();
+			 enemyFOV(Tile_Size);
+			 //End FOV logic handled area
+			 if (player.counter < 10)
+			 {
+				 drawSmallPanel(4 * Tile_Size, 2 * Tile_Size, 3 * Tile_Size, 4 * Tile_Size, "Enemies cannot see through closed doors, but they can see through opened ones.");
+
+			 }
+		 }
+		drawSideBarLevel("Level 8", player.counter);
 		break;
 	case PAUSED:
 		drawFullPanel();
@@ -101,7 +107,7 @@ void level8_update(void)
 		break;
 	case WIN:
 		drawFullPanel();
-		checkClick(0, startLevel8, startLevelSelect);
+		checkClick(startLevel9, startLevel8, startLevelSelect);
 		break;
 	case LOSE:
 		drawFullPanel();

@@ -37,12 +37,28 @@ void setStartGame(Tile_Size);
 //unpause the game
 void resumeGame(void);
 
+//reading score from file
 void readScore();
+//writing score into file
 void writeScore();
+
+//creating score txt if it does not exist
 void createScore();
 
+//light up tiles in a square area
+void lightTiles(int x, int y,int range);
+//check to move player to a specific tile
+void moveTileCheck();
+
+//check to light up a specific tile area
+void lightTileCheck();
+//give player a light every 50 tiles player moved
+
+void giveLight();
 //global tile size variable
 extern int Tile_Size;
 extern Game_State gameState;
 extern int Score[];
+extern double lightCounter, tileMoveCounter;
+extern int doorLightRange, gameFogRange,illumMode;
 //extern int parScore[]; see game.c

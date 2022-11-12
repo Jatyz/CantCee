@@ -26,8 +26,6 @@ void level5_init(void)
 	//assign all the floors and walls
 	assignTile(Tile_Size);
 
-	int width;
-
 	tiles[0][0].type = END;
 	tiles[9][9].type = START;
 
@@ -109,16 +107,19 @@ void level5_update(void)
 {
 	switch (gameState) {
 	case PLAY:
-		//clears the screen so things can be redrawn
-		CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
-		handlePlayerInput(Tile_Size);
-		//all the game update methods that needs to be updated every frame
-		renderGame();
-		//End FOV logic handled area
-		drawSideBar("Level 5", player.counter);
-		if (player.counter < 10)
-		{
-			drawSmallPanel(4 * Tile_Size, 2 * Tile_Size, 3 * Tile_Size, 4 * Tile_Size, "Just like vents, we do not know which switch goes to which door.");
+		if (tileMoveCounter != 0) {}
+		else {
+			//clears the screen so things can be redrawn
+			CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
+			handlePlayerInput(Tile_Size);
+			//all the game update methods that needs to be updated every frame
+			renderGame();
+			//End FOV logic handled area
+			drawSideBarLevel("Level 5", player.counter);
+			if (player.counter < 10)
+			{
+				drawSmallPanel(4 * Tile_Size, 2 * Tile_Size, 3 * Tile_Size, 4 * Tile_Size, "Just like vents, we do not know which switch goes to which door.");
+			}
 		}
 		break;
 	case PAUSED:
