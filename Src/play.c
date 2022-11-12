@@ -217,21 +217,21 @@ void play_Update()
 			levelSelected = 1;
 			sprintf_s(&test, 100, "Level 2");
 		}
-		if (IsAreaClicked(level[2].xAxis, level[2].yAxis, CP_Image_GetWidth(lvl1), CP_Image_GetHeight(lvl1), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		if (IsAreaClicked(level[2].xAxis, level[2].yAxis, CP_Image_GetWidth(lvl2), CP_Image_GetHeight(lvl2), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
 			level[2].selected = 1;
 			once = 1;
 			levelSelected = 1;
 			sprintf_s(&test, 100, "Level 3");
 		}
-		if (IsAreaClicked(level[3].xAxis, level[3].yAxis, CP_Image_GetWidth(lvl1), CP_Image_GetHeight(lvl1), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		if (IsAreaClicked(level[3].xAxis, level[3].yAxis, CP_Image_GetWidth(lvl3), CP_Image_GetHeight(lvl3), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
 			level[3].selected = 1;
 			once = 1;
 			levelSelected = 1;
 			sprintf_s(&test, 100, "Level 4");
 		}
-		if (IsAreaClicked(level[4].xAxis, level[4].yAxis, CP_Image_GetWidth(lvl1), CP_Image_GetHeight(lvl1), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		if (IsAreaClicked(level[4].xAxis, level[4].yAxis, CP_Image_GetWidth(lvl4), CP_Image_GetHeight(lvl4), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
 			level[4].selected = 1;
 			once = 1;
@@ -240,35 +240,35 @@ void play_Update()
 		}
 
 		// ---------- 6 TO 10----------
-		if (IsAreaClicked(level[5].xAxis, level[5].yAxis, CP_Image_GetWidth(lvl1), CP_Image_GetHeight(lvl1), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		if (IsAreaClicked(level[5].xAxis, level[5].yAxis, CP_Image_GetWidth(lvl5), CP_Image_GetHeight(lvl5), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
 			level[5].selected = 1;
 			once = 1;
 			levelSelected = 1;
 			sprintf_s(&test, 100, "Level 6");
 		}
-		if (IsAreaClicked(level[6].xAxis, level[6].yAxis, CP_Image_GetWidth(lvl1), CP_Image_GetHeight(lvl1), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		if (IsAreaClicked(level[6].xAxis, level[6].yAxis, CP_Image_GetWidth(lvl6), CP_Image_GetHeight(lvl6), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
 			level[6].selected = 1;
 			once = 1;
 			levelSelected = 1;
 			sprintf_s(&test, 100, "Level 7");
 		}
-		if (IsAreaClicked(level[7].xAxis, level[7].yAxis, CP_Image_GetWidth(lvl1), CP_Image_GetHeight(lvl1), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		if (IsAreaClicked(level[7].xAxis, level[7].yAxis, CP_Image_GetWidth(lvl7), CP_Image_GetHeight(lvl7), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
 			level[7].selected = 1;
 			once = 1;
 			levelSelected = 1;
 			sprintf_s(&test, 100, "Level 8");
 		}
-		if (IsAreaClicked(level[8].xAxis, level[8].yAxis, CP_Image_GetWidth(lvl1), CP_Image_GetHeight(lvl1), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		if (IsAreaClicked(level[8].xAxis, level[8].yAxis, CP_Image_GetWidth(lvl8), CP_Image_GetHeight(lvl8), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
 			level[8].selected = 1;
 			once = 1;
 			levelSelected = 1;
 			sprintf_s(&test, 100, "Level 9");
 		}
-		if (IsAreaClicked(level[9].xAxis, level[9].yAxis, CP_Image_GetWidth(lvl1), CP_Image_GetHeight(lvl1), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		if (IsAreaClicked(level[9].xAxis, level[9].yAxis, CP_Image_GetWidth(lvl9), CP_Image_GetHeight(lvl9), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
 			level[9].selected = 1;
 			once = 1;
@@ -277,35 +277,35 @@ void play_Update()
 		}
 
 		// ----------Level 11 TO 15----------
-		if (IsAreaClicked(level[10].xAxis, level[10].yAxis, CP_Image_GetWidth(lvl1), CP_Image_GetHeight(lvl1), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		if (IsAreaClicked(level[10].xAxis, level[10].yAxis, CP_Image_GetWidth(lvl10), CP_Image_GetHeight(lvl10), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
 			level[10].selected = 1;
 			once = 1;
 			levelSelected = 1;
 			sprintf_s(&test, 100, "Level 11");
 		}
-		if (IsAreaClicked(level[11].xAxis, level[11].yAxis, CP_Image_GetWidth(lvl1), CP_Image_GetHeight(lvl1), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		if (IsAreaClicked(level[11].xAxis, level[11].yAxis, CP_Image_GetWidth(lvl11), CP_Image_GetHeight(lvl11), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
 			level[11].selected = 1;
 			once = 1;
 			levelSelected = 1;
 			sprintf_s(&test, 100, "Level 12");
 		}
-		if (IsAreaClicked(level[12].xAxis, level[12].yAxis, CP_Image_GetWidth(lvl1), CP_Image_GetHeight(lvl1), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		if (IsAreaClicked(level[12].xAxis, level[12].yAxis, CP_Image_GetWidth(lvl12), CP_Image_GetHeight(lvl12), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
 			level[12].selected = 1;
 			once = 1;
 			levelSelected = 1;
 			sprintf_s(&test, 100, "Level 13");
 		}
-		if (IsAreaClicked(level[13].xAxis, level[13].yAxis, CP_Image_GetWidth(lvl1), CP_Image_GetHeight(lvl1), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		if (IsAreaClicked(level[13].xAxis, level[13].yAxis, CP_Image_GetWidth(lvl13), CP_Image_GetHeight(lvl13), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
 			level[13].selected = 1;
 			once = 1;
 			levelSelected = 1;
 			sprintf_s(&test, 100, "Level 14");
 		}
-		if (IsAreaClicked(level[14].xAxis, level[14].yAxis, CP_Image_GetWidth(lvl1), CP_Image_GetHeight(lvl1), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		if (IsAreaClicked(level[14].xAxis, level[14].yAxis, CP_Image_GetWidth(lvl14), CP_Image_GetHeight(lvl14), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
 			level[14].selected = 1;
 			once = 1;
