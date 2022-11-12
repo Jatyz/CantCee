@@ -3,10 +3,8 @@
 
 #include "mainmenu.h"
 #include "play.h"
-#include "credits1.h"
 #include "howToPlay.h"
 #include "settings.h"
-#include "game.h"
 
 CP_Image mainMenuBackground1 = NULL;
 
@@ -23,10 +21,12 @@ CP_Image creditsWord = NULL;
 CP_Image settingsWord = NULL;
 CP_Image exitWord = NULL;
 
+CP_Image hoverStart = NULL;
+CP_Image hoverStartWord = NULL;
 
 
 // ---------------------------------------------------------------Main Menu Initialisation---------------------------------------------------------------
-void mainMenu_Init()    
+void mainMenu_Init()
 {
     mainMenuBackground1 = CP_Image_Load("./Assets/mainMenuBackground1.png");
 
@@ -43,6 +43,10 @@ void mainMenu_Init()
     settingsWord = CP_Image_Load("./Assets/settingsWord.png");
     exitWord = CP_Image_Load("./Assets/exitWord.png");
 
+    hoverStart = CP_Image_Load("./Assets/hoverStart.png");
+    hoverStartWord = CP_Image_Load("./Assets/hoverStartWord.png");
+
+
     // Set the window size to a sqaure 1000 x 800
     CP_System_SetWindowSize(windowWidth, windowHeight);
 
@@ -54,16 +58,13 @@ void mainMenu_Init()
 
     // All Text allignment
     CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
-
-    createScore();
-    readScore();
 }
 
 
 // ---------------------------------------------------------------Main Menu Update---------------------------------------------------------------
 void mainMenu_Update()
 {
-    // Background: Black Colour
+    // Background: Grey Colour
     CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 
     CP_Image_Draw(mainMenuBackground1, windowWidth / 2, windowHeight / 2, windowWidth, windowHeight, 255);
@@ -83,36 +84,45 @@ void mainMenu_Update()
 
 
 
-// ---------------------------------------------------------------Mouse Inputs/Checking---------------------------------------------------------------
-    // -----Checking for MouseInput-----
-    
+    // ---------------------------------------------------------------Mouse Inputs/Checking---------------------------------------------------------------
+        // ----------Hover Feature----------
+    if (IsAreaClicked(startWordWidth, startWordHeight, CP_Image_GetWidth(startWord), CP_Image_GetHeight(startWord), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+    {
+        CP_Image_Draw(hoverStart, startWordWidth - 5, startWordHeight - 5, CP_Image_GetWidth(startWord), CP_Image_GetHeight(startWord), 255);
+        CP_Image_Draw(hoverStartWord, startWordWidth, startWordHeight, CP_Image_GetWidth(startWord), CP_Image_GetHeight(startWord), 255);
+        //CP_Settings_Fill(CP_Color_Create(0, 255, 0, 50));
+        //CP_Graphics_DrawRect(startWordWidth, startWordHeight, CP_Image_GetWidth(startWord), CP_Image_GetHeight(startWord));
+    }
+
     if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
-    {   
-        // -----Play Button Input-----
+    {
+        // ----------Play Button Input----------
         if (IsAreaClicked(startWordWidth, startWordHeight, CP_Image_GetWidth(startWord), CP_Image_GetHeight(startWord), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
         {
+            //CP_Settings_Fill(CP_Color_Create(0, 255, 0, 50));
+            //CP_Graphics_DrawRect(startWordWidth, startWordHeight, CP_Image_GetWidth(startWord), CP_Image_GetHeight(startWord));
             CP_Engine_SetNextGameStateForced(play_Init, play_Update, play_Exit); // play.c > goes to level select > click level to play
         }
 
-        // -----How to Play Input-----
+        // ----------How to Play Input----------
         if (IsAreaClicked(howToPlayWordWidth, howToPlayWordHeight, CP_Image_GetWidth(howToPlayWord), CP_Image_GetHeight(howToPlayWord), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
         {
             CP_Engine_SetNextGameStateForced(howToPlay_Init, howToPlay_Update, howToPlay_Exit);
         }
 
-        // -----Credit Input-----
+        // ----------Credit Input----------
         if (IsAreaClicked(creditsWordWidth, creditsWordHeight, CP_Image_GetWidth(creditsWord), CP_Image_GetHeight(creditsWord), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
         {
-            CP_Engine_SetNextGameStateForced(credits1_Init, credits1_Update, credits1_Exit);
+            CP_Engine_SetNextGameStateForced(settings_Init, settings_Update, settings_Exit);
         }
 
-        // -----Settings Input-----
+        // ----------Settings Input----------
         if (IsAreaClicked(settingsWordWidth, settingsWordHeight, CP_Image_GetWidth(settingsWord), CP_Image_GetHeight(settingsWord), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
         {
             CP_Engine_SetNextGameStateForced(settings_Init, settings_Update, settings_Exit);
         }
 
-        // -----Exit Button Input-----
+        // ----------Exit Button Input----------
         if (IsAreaClicked(exitWordWidth, exitWordHeight, CP_Image_GetWidth(exitWord), CP_Image_GetHeight(exitWord), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
         {
             CP_Engine_Terminate();
@@ -122,7 +132,7 @@ void mainMenu_Update()
 
 
 // ---------------------------------------------------------------Main Menu Exit---------------------------------------------------------------
-void mainMenu_Exit() 
+void mainMenu_Exit()
 {
     CP_Image_Free(&mainMenuBackground1);
 
