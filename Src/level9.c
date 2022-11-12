@@ -27,8 +27,6 @@ void level9_init(void)
 	//assign all the floors and walls
 	assignTile(Tile_Size);
 
-	int height, width;
-
 	tiles[1][1].type = WALL;
 	tiles[2][1].type = WALL;
 	tiles[3][1].type = WALL;
@@ -84,7 +82,7 @@ void level9_init(void)
 	player.setFOV = 1;
 	doorLightRange = 2;
 	gameState = PLAY;
-	player.currentStage = 10;
+	player.currentStage = 9;
 }
 
 void level9_update(void)

@@ -229,7 +229,8 @@ void resetGame(Tile_Size) {
 
 	tileMoveCounter = 0;
 	gameFogRange = 3;
-	player.shineCount = 1;
+	player.shineCount = 0;
+	lightCounter = 0;
 }
 
 //resume game

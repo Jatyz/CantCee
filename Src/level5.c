@@ -26,8 +26,6 @@ void level5_init(void)
 	//assign all the floors and walls
 	assignTile(Tile_Size);
 
-	int width;
-
 	tiles[0][0].type = END;
 	tiles[9][9].type = START;
 

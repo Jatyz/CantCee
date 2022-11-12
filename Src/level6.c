@@ -26,13 +26,10 @@ void level6_init(void)
 	//assign all the floors and walls
 	assignTile(Tile_Size);
 
-	int height, width;
-
-
 	//for loop to go through all the tiles
-	for (height = 0; height < returnBounds(Tile_Size); height++) {
+	for (int height = 0; height < returnBounds(Tile_Size); height++) {
 
-		for (width = 0; width < returnBounds(Tile_Size); width++) {
+		for (int width = 0; width < returnBounds(Tile_Size); width++) {
 
 			if (width < 3 || width > 6) {
 				tiles[width][height].type = WALL;

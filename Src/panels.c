@@ -159,12 +159,20 @@ void drawSideBarStats() {
 	CP_Font_DrawTextBox("Number of Shine", 810, 200, 200);
 
 	char* number;
-	number = malloc(6);
+	number = malloc(12);
 	if (number != NULL) {
-		sprintf_s(number, 6, "%d", player.shineCount);
+		sprintf_s(number, 12, "%d", player.shineCount);
 	}
 	CP_Settings_TextSize(40.f);
 	CP_Font_DrawTextBox(number, 875, 250, 200);
+
+	if (illumMode) {
+		if (number != NULL) {
+			sprintf_s(number, 12, "Illum Mode");
+		}
+		CP_Settings_TextSize(60.f);
+		CP_Font_DrawTextBox(number, 825, 350, 200);
+	}
 
 	free(number);
 }

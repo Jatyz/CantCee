@@ -26,8 +26,6 @@ void level7_init(void)
 	//assign all the floors and walls
 	assignTile(Tile_Size);
 
-	int height, width;
-
 	tiles[9][9].type = START;
 	tiles[9][8].type = WALL;
 	tiles[8][8].type = WALL;

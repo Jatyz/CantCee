@@ -11,7 +11,7 @@ Tile tiles[MAX_TILES][MAX_TILES];
 
 //hardcode max 10 sets of vents
 Vent vents[10];
-Gate gates[10];
+Gate gates[15];
 //axulilary functions are defined first so it wont bloody crash when in a C lang compiler!!(without header)
 //returns the horizontal and vertical bounds(no. of elements) in the grid to be used for the level. Assumes grid space used is square
 int returnBounds(int tilesize) {
@@ -246,7 +246,7 @@ void checkGates(Tile* address) {
 			if (gates[i].Door->type == OPENED_DOOR) {
 				gates[i].Door->type = CLOSED_DOOR;
 			}
-			else {
+			else if (gates[i].Door->type == CLOSED_DOOR) {
 				gates[i].Door->type = OPENED_DOOR;
 			}
 
@@ -262,21 +262,6 @@ void checkGates(Tile* address) {
 			lightTiles(col, row, doorLightRange);
 			lightCounter++;
 		}
-		//else if (gates[i].Switch == address && gates[i].Switch->type == SWITCH_ON) {
-		//	gates[i].Door->type = CLOSED_DOOR;
-
-		//	//find the number of tiles between 0 0 and the tile at your current address
-		//	int difference = gates[i].Door - base;
-
-		//	//get column of 2d array
-		//	int col = difference / MAX_TILES;
-
-		//	//get row of 2d array
-		//	int row = difference % MAX_TILES;
-
-		//	lightTiles(col, row, doorLightRange);
-		//	lightCounter++;
-		//}
 	}
 
 	//to change the switch
@@ -291,7 +276,7 @@ void checkGates(Tile* address) {
 	if (tiles[col][row].type == SWITCH_ON) {
 		tiles[col][row].type = SWITCH_OFF;
 	}
-	else {
+	else if (tiles[col][row].type == SWITCH_OFF) {
 		tiles[col][row].type = SWITCH_ON;
 	}
 }

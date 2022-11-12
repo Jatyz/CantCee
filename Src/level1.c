@@ -25,13 +25,11 @@ void level1_init(void)
 	//assign all the floors and walls
 	assignTile(Tile_Size);
 
-	int height, width;
-
 
 	//for loop to go through all the tiles
-	for (height = 0; height < returnBounds(Tile_Size); height++) {
+	for (int height = 0; height < returnBounds(Tile_Size); height++) {
 
-		for (width = 0; width < returnBounds(Tile_Size); width++) {
+		for (int width = 0; width < returnBounds(Tile_Size); width++) {
 
 			if (width < 3 || width > 6) {
 				tiles[width][height].type = WALL;
@@ -68,14 +66,14 @@ void level1_update(void)
 			renderGame();
 			//End FOV logic handled area
 			drawSideBarLevel("Level 1", player.counter);
-			if (player.counter < 6)
+			if (player.y > 5)
 			{
-				drawSmallPanel((3 - (player.counter / 2)) * Tile_Size, 2 * Tile_Size, 7 * Tile_Size, 6 * Tile_Size, "Press WASD to move. Or use mouse to click on a tile");
+				drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 7 * Tile_Size, 6 * Tile_Size, "Press WASD to move. Or use mouse to click on a tile to move horizontallly or vertically");
 
 			}
 			if (player.counter > 6)
 			{
-				drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 0 * Tile_Size, 1 * Tile_Size, "Get to the red tile proceed to next stage");
+				drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 0 * Tile_Size, 1 * Tile_Size, "Get to the red tile to proceed to next stage");
 
 			}
 		}

@@ -26,11 +26,8 @@ void level2_init(void)
 	//assign all the floors and walls
 	assignTile(Tile_Size);
 
-	int width;
-
-
 	//for loop to go through all the tiles
-		for (width = 0; width < returnBounds(Tile_Size); width++) {
+		for (int width = 0; width < returnBounds(Tile_Size); width++) {
 
 				tiles[width][5].type = WALL;
 		}

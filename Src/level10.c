@@ -20,8 +20,6 @@ void level10_init(void)
 	//assign all the floors and walls
 	assignTile(Tile_Size);
 
-	int height, width;
-
 	tiles[4][0].type = WALL;
 	tiles[4][1].type = WALL;
 	tiles[4][2].type = WALL;
