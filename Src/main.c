@@ -24,6 +24,7 @@
 #include "level1.h"
 #include "level5.h"
 #include "level8.h"
+#include "level10.h"
 
 int main(void)
 {
@@ -34,7 +35,7 @@ int main(void)
 	//CP_Engine_SetNextGameState(level8_init, level8_update, level8_exit);
 	//CP_Engine_SetNextGameState(level1_init, level1_update, level1_exit);
 	//CP_Engine_SetNextGameState(level8_init, level8_update, level8_exit);
-	//CP_Engine_SetNextGameState(level8_init, level8_update, level8_exit);
+	//CP_Engine_SetNextGameState(level10_init, level10_update, level10_exit);
 	//CP_Engine_SetNextGameState(game_init, game_update, game_exit);
 	//CP_Engine_SetNextGameState(howToPlay_Init, howToPlay_Update, howToPlay_Exit);
   

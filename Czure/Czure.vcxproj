@@ -133,6 +133,10 @@ xcopy "$(SolutionDir)Assets\*" "$(OutDir)Assets\" /s /r /y /q
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Inc\level1.h" />
+    <ClInclude Include="..\Inc\level10.h" />
+    <ClInclude Include="..\Inc\level11.h" />
+    <ClInclude Include="..\Inc\level12.h" />
+    <ClInclude Include="..\Inc\level13.h" />
     <ClInclude Include="..\Inc\level2.h" />
     <ClInclude Include="..\Inc\level3.h" />
     <ClInclude Include="..\Inc\level4.h" />
@@ -140,6 +144,7 @@ xcopy "$(SolutionDir)Assets\*" "$(OutDir)Assets\" /s /r /y /q
     <ClInclude Include="..\Inc\level6.h" />
     <ClInclude Include="..\Inc\level7.h" />
     <ClInclude Include="..\Inc\level8.h" />
+    <ClInclude Include="..\Inc\level9.h" />
     <ClInclude Include="..\Src\credits1.h" />
     <ClInclude Include="..\Src\credits2.h" />
     <ClInclude Include="..\Src\enemy.h" />

@@ -6,6 +6,8 @@
 #include "howToPlay.h"
 #include "settings.h"
 
+#include "credits1.h"
+
 CP_Image mainMenuBackground1 = NULL;
 
 CP_Image cLogo = NULL;
@@ -113,7 +115,7 @@ void mainMenu_Update()
         // ----------Credit Input----------
         if (IsAreaClicked(creditsWordWidth, creditsWordHeight, CP_Image_GetWidth(creditsWord), CP_Image_GetHeight(creditsWord), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
         {
-            CP_Engine_SetNextGameStateForced(settings_Init, settings_Update, settings_Exit);
+            CP_Engine_SetNextGameStateForced(credits1_Init, credits1_Update, credits1_Exit);
         }
 
         // ----------Settings Input----------
@@ -148,4 +150,7 @@ void mainMenu_Exit()
     CP_Image_Free(&creditsWord);
     CP_Image_Free(&settingsWord);
     CP_Image_Free(&exitWord);
+
+    CP_Image_Free(&hoverStart);
+    CP_Image_Free(&hoverStartWord);
 }

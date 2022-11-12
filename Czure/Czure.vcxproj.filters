@@ -179,5 +179,20 @@
     <ClInclude Include="..\Src\credits2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\Inc\level9.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\level10.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\level11.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\level12.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\level13.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
