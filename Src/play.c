@@ -190,7 +190,7 @@ void play_Update()
 	CP_Settings_RectMode(CP_POSITION_CENTER);
 	CP_Image_Draw(home, firstColumn, exitHeight, CP_Image_GetWidth(home), CP_Image_GetHeight(home), 255);
 
-	//-----Exit Button-----
+	//-----Start Button-----
 	CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
 	CP_Graphics_DrawRect(fifthColumn, playHeight, levelButtonWidth, levelButtonHeight);
 	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
