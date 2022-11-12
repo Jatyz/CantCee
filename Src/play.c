@@ -312,7 +312,15 @@ void play_Update()
 			levelSelected = 1;
 			sprintf_s(&test, 100, "Level 15");
 		}
+
+		// Back to main menu
+		if (IsAreaClicked(firstColumn, exitHeight, CP_Image_GetWidth(home), CP_Image_GetHeight(home), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		{
+			CP_Engine_SetNextGameStateForced(mainMenu_Init, mainMenu_Update, mainMenu_Exit);
+		}
 	}
+
+
 
 	// if Level [X] is selected, & Start is clicked > enter game
 	// ----------Level 1 TO 5----------
@@ -390,11 +398,7 @@ void play_Update()
 	//}
 
 
-		// Back to main menu
-		if (IsAreaClicked(firstColumn, exitHeight, CP_Image_GetWidth(home), CP_Image_GetHeight(home), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
-		{
-			CP_Engine_SetNextGameStateForced(mainMenu_Init, mainMenu_Update, mainMenu_Exit);
-		}
+
 
 	}
 
