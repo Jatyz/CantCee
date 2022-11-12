@@ -40,8 +40,8 @@ void level13_init(void)
 	tiles[14][12].type = FLOOR;
 	tiles[4][10].type = FLOOR;
 
-	tiles[15][15].type = START;
-	tiles[1][1].type = END;
+	tiles[14][14].type = START;
+	tiles[2][2].type = END;
 
 	tiles[6][14].type = DISGUISE;
 	tiles[6][14].Tile_Color = RED;
@@ -100,7 +100,7 @@ void level13_init(void)
 	player.setFOV = 1;
 	doorLightRange = 2;
 	gameState = PLAY;
-	player.currentStage = 10;
+	player.currentStage = 13;
 	gameFogRange = 2;
 	player.shineCount = 1;
 }
@@ -129,10 +129,14 @@ void level13_update(void)
 
 				}
 
+
 				handlePlayerInput(Tile_Size);
 
 				renderGame();
 
+				if (player.counter < 5) {
+					drawSmallPanel(4 * Tile_Size, 2 * Tile_Size, 3 * Tile_Size, 4 * Tile_Size, "One switch can open multiple doors.");
+				}
 				//End FOV logic handled area
 				drawSideBarLevel("Level 13", player.counter);
 

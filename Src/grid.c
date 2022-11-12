@@ -10,7 +10,7 @@ CP_Image wall_Vertical = NULL;
 Tile tiles[MAX_TILES][MAX_TILES];
 
 //hardcode max 10 sets of vents
-Vent vents[10];
+Vent vents[15];
 Gate gates[15];
 //axulilary functions are defined first so it wont bloody crash when in a C lang compiler!!(without header)
 //returns the horizontal and vertical bounds(no. of elements) in the grid to be used for the level. Assumes grid space used is square

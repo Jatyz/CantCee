@@ -16,6 +16,8 @@ void startLevel7(void);
 void startLevel8(void);
 void startLevel9(void);
 void startLevel10(void);
+void startLevel11(void);
+void startLevel12(void);
 void startLevel13(void);
 void startGame(void);
 
