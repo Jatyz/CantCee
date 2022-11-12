@@ -2,11 +2,11 @@
 #include "utils.h"
 
 #include "mainmenu.h"
+
 #include "play.h"
 #include "howToPlay.h"
-#include "settings.h"
-
 #include "credits1.h"
+#include "settings.h"
 
 CP_Image mainMenuBackground1 = NULL;
 
@@ -24,7 +24,13 @@ CP_Image settingsWord = NULL;
 CP_Image exitWord = NULL;
 
 CP_Image hoverStart = NULL;
+CP_Image hoverHowToPLay = NULL;
 CP_Image hoverStartWord = NULL;
+CP_Image hoverSettings = NULL;
+CP_Image hoverExit = NULL;
+
+
+CP_Image hoverCredits = NULL;
 
 
 // ---------------------------------------------------------------Main Menu Initialisation---------------------------------------------------------------
@@ -46,8 +52,12 @@ void mainMenu_Init()
     exitWord = CP_Image_Load("./Assets/exitWord.png");
 
     hoverStart = CP_Image_Load("./Assets/hoverStart.png");
-    hoverStartWord = CP_Image_Load("./Assets/hoverStartWord.png");
+    hoverHowToPLay = CP_Image_Load("./Assets/hoverHowToPlay.png");
+    hoverCredits = CP_Image_Load("./Assets/hoverCredits.png");
+    hoverSettings = CP_Image_Load("./Assets/hoverSettings.png");
+    hoverExit = CP_Image_Load("./Assets/hoverExit.png");
 
+    hoverStartWord = CP_Image_Load("./Assets/hoverStartWord.png");
 
     // Set the window size to a sqaure 1000 x 800
     CP_System_SetWindowSize(windowWidth, windowHeight);
@@ -92,9 +102,28 @@ void mainMenu_Update()
     {
         CP_Image_Draw(hoverStart, startWordWidth - 5, startWordHeight - 5, CP_Image_GetWidth(startWord), CP_Image_GetHeight(startWord), 255);
         CP_Image_Draw(hoverStartWord, startWordWidth, startWordHeight, CP_Image_GetWidth(startWord), CP_Image_GetHeight(startWord), 255);
-        //CP_Settings_Fill(CP_Color_Create(0, 255, 0, 50));
-        //CP_Graphics_DrawRect(startWordWidth, startWordHeight, CP_Image_GetWidth(startWord), CP_Image_GetHeight(startWord));
     }
+
+    if (IsAreaClicked(howToPlayWordWidth, howToPlayWordHeight, CP_Image_GetWidth(hoverHowToPLay), CP_Image_GetHeight(hoverHowToPLay), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+    {
+        CP_Image_Draw(hoverHowToPLay, howToPlayWordWidth - 5, howToPlayWordHeight - 5, CP_Image_GetWidth(hoverHowToPLay), CP_Image_GetHeight(hoverHowToPLay), 255);
+    }
+
+    if (IsAreaClicked(creditsWordWidth, creditsWordHeight, CP_Image_GetWidth(creditsWord), CP_Image_GetHeight(creditsWord), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+    {
+        CP_Image_Draw(hoverCredits, creditsWordWidth - 5, creditsWordHeight - 5, CP_Image_GetWidth(hoverCredits), CP_Image_GetHeight(hoverCredits), 255);
+    }
+
+    if (IsAreaClicked(settingsWordWidth, settingsWordHeight, CP_Image_GetWidth(creditsWord), CP_Image_GetHeight(creditsWord), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+    {
+        CP_Image_Draw(hoverSettings, settingsWordWidth - 5, settingsWordHeight - 5, CP_Image_GetWidth(hoverSettings), CP_Image_GetHeight(hoverSettings), 255);
+    }
+
+    if (IsAreaClicked(exitWordWidth, exitWordHeight, CP_Image_GetWidth(creditsWord), CP_Image_GetHeight(creditsWord), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+    {
+        CP_Image_Draw(hoverExit, exitWordWidth - 5, exitWordHeight - 5, CP_Image_GetWidth(hoverExit), CP_Image_GetHeight(hoverExit), 255);
+    }
+
 
     if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
     {
