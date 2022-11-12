@@ -54,9 +54,6 @@
     <ClCompile Include="..\Src\vectorMathBasic.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Src\levelselect.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\Src\enemy.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -85,6 +82,27 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\Src\credits2.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\levelselect.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\level9.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\level10.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\level11.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\level12.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\level13.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\levelTransition.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

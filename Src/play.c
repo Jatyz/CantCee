@@ -151,7 +151,7 @@ void play_Update()
 {
 	if (once)
 	{
-		drawSideBar(test, Score[1]);
+		drawSideBarLevel(test, Score[1]);
 	}
 
 	// Background: Grey Colour
