@@ -25,12 +25,11 @@ CP_Image exitWord = NULL;
 
 CP_Image hoverStart = NULL;
 CP_Image hoverHowToPLay = NULL;
-CP_Image hoverStartWord = NULL;
+CP_Image hoverCredits = NULL;
 CP_Image hoverSettings = NULL;
 CP_Image hoverExit = NULL;
 
-
-CP_Image hoverCredits = NULL;
+CP_Image hoverStartWord = NULL;
 
 
 // ---------------------------------------------------------------Main Menu Initialisation---------------------------------------------------------------
@@ -130,8 +129,6 @@ void mainMenu_Update()
         // ----------Play Button Input----------
         if (IsAreaClicked(startWordWidth, startWordHeight, CP_Image_GetWidth(startWord), CP_Image_GetHeight(startWord), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
         {
-            //CP_Settings_Fill(CP_Color_Create(0, 255, 0, 50));
-            //CP_Graphics_DrawRect(startWordWidth, startWordHeight, CP_Image_GetWidth(startWord), CP_Image_GetHeight(startWord));
             CP_Engine_SetNextGameStateForced(play_Init, play_Update, play_Exit); // play.c > goes to level select > click level to play
         }
 
@@ -181,5 +178,10 @@ void mainMenu_Exit()
     CP_Image_Free(&exitWord);
 
     CP_Image_Free(&hoverStart);
+    CP_Image_Free(&hoverHowToPLay);
+    CP_Image_Free(&hoverCredits);
+    CP_Image_Free(&hoverSettings);
+    CP_Image_Free(&hoverExit);
+
     CP_Image_Free(&hoverStartWord);
 }
