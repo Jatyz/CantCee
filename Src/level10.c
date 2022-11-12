@@ -62,9 +62,9 @@ void level10_init(void)
 	vents[0].tile2 = &tiles[9][0];
 
 	gates[0].Door = &tiles[1][3];
-	gates[0].Switch = &tiles[5][2];
+	gates[0].Switch = &tiles[0][7];
 	gates[1].Door = &tiles[2][6];
-	gates[1].Switch = &tiles[0][7];
+	gates[1].Switch = &tiles[5][2];
 
 	enemySet(2, 1, 1, 0, AOE_VIEW, RED);
 	enemySet(7, 1, 1, 0, AOE_VIEW, RED);
