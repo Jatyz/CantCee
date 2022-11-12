@@ -166,7 +166,6 @@ void play_Update()
 
 	CP_Image_Draw(gradientAccentBackground2, windowWidth / 2, windowHeight / 2, windowWidth, windowHeight, 255);
 
-
 	//if (clicked == 0) {
 		// -----Level 1 TO 5-----
 	CP_Image_Draw(lvl0, level[0].xAxis, level[0].yAxis, CP_Image_GetWidth(lvl0), CP_Image_GetHeight(lvl0), 255);
@@ -199,10 +198,10 @@ void play_Update()
 	CP_Settings_RectMode(CP_POSITION_CORNER);
 	//}
 
-	// Selection of Level
+	// ---------------------------------------------------------------------- LEVEL SELECTION ----------------------------------------------------------------------
 	if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
 	{
-		// ----------Level 1 TO 5----------
+		// ---------------------------------------------------------------------- Level 1 TO 5 ----------------------------------------------------------------------
 		if (IsAreaClicked(level[0].xAxis, level[0].yAxis, CP_Image_GetWidth(lvl0), CP_Image_GetHeight(lvl0), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
 			level[0].selected = 1;
@@ -239,7 +238,7 @@ void play_Update()
 			sprintf_s(&test, 100, "Level 5");
 		}
 
-		// ---------- 6 TO 10----------
+		// ---------------------------------------------------------------------- LEVEL 6 TO 10 ----------------------------------------------------------------------
 		if (IsAreaClicked(level[5].xAxis, level[5].yAxis, CP_Image_GetWidth(lvl5), CP_Image_GetHeight(lvl5), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
 			level[5].selected = 1;
@@ -276,7 +275,7 @@ void play_Update()
 			sprintf_s(&test, 100, "Level 10");
 		}
 
-		// ----------Level 11 TO 15----------
+		// ----------------------------------------------------------------------LEVEL 11 TO 15 ----------------------------------------------------------------------
 		if (IsAreaClicked(level[10].xAxis, level[10].yAxis, CP_Image_GetWidth(lvl10), CP_Image_GetHeight(lvl10), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
 			level[10].selected = 1;
@@ -321,9 +320,9 @@ void play_Update()
 	}
 
 
-
+	// ---------------------------------------------------------------------- Start Level[X] ----------------------------------------------------------------------
 	// if Level [X] is selected, & Start is clicked > enter game
-	// ----------Level 1 TO 5----------
+	// ----------------------------------------------------------------------Level 1 TO 5----------------------------------------------------------------------
 	if (level[0].selected == 1 && CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
 	{
 		if (IsAreaClicked(fifthColumn, playHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
@@ -360,7 +359,7 @@ void play_Update()
 		}
 	}
 
-	// ----------Level 6 TO 10----------
+	// ----------------------------------------------------------------------Level 6 TO 10----------------------------------------------------------------------
 	if (level[5].selected == 1 && CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
 	{
 		if (IsAreaClicked(fifthColumn, playHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
@@ -402,11 +401,6 @@ void play_Update()
 
 	}
 
-
-
-
-
-// ---------------------------------------------------------------Main Menu Exit---------------------------------------------------------------
 void play_Exit()
 {
 	CP_Image_Free(&gradientAccentBackground2);
