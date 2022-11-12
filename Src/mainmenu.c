@@ -21,6 +21,8 @@ CP_Image creditsWord = NULL;
 CP_Image settingsWord = NULL;
 CP_Image exitWord = NULL;
 
+CP_Image hoverStart = NULL;
+CP_Image hoverStartWord = NULL;
 
 
 // ---------------------------------------------------------------Main Menu Initialisation---------------------------------------------------------------
@@ -40,6 +42,10 @@ void mainMenu_Init()
     creditsWord = CP_Image_Load("./Assets/creditsWord.png");
     settingsWord = CP_Image_Load("./Assets/settingsWord.png");
     exitWord = CP_Image_Load("./Assets/exitWord.png");
+
+    hoverStart = CP_Image_Load("./Assets/hoverStart.png");
+    hoverStartWord = CP_Image_Load("./Assets/hoverStartWord.png");
+
 
     // Set the window size to a sqaure 1000 x 800
     CP_System_SetWindowSize(windowWidth, windowHeight);
@@ -80,11 +86,27 @@ void mainMenu_Update()
 
 // ---------------------------------------------------------------Mouse Inputs/Checking---------------------------------------------------------------
     // -----Checking for MouseInput-----
+<<<<<<< Updated upstream
    // if (CP_Input_MouseTrigger(MOUSE_BUTTON_LEFT) == 1)
   //  {   
+=======
+    
+    if (IsAreaClicked(startWordWidth, startWordHeight, CP_Image_GetWidth(startWord), CP_Image_GetHeight(startWord), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+    {
+        CP_Image_Draw(hoverStart, startWordWidth - 5, startWordHeight -5, CP_Image_GetWidth(startWord), CP_Image_GetHeight(startWord), 255);
+        CP_Image_Draw(hoverStartWord, startWordWidth, startWordHeight, CP_Image_GetWidth(startWord), CP_Image_GetHeight(startWord), 255);
+        //CP_Settings_Fill(CP_Color_Create(0, 255, 0, 50));
+        //CP_Graphics_DrawRect(startWordWidth, startWordHeight, CP_Image_GetWidth(startWord), CP_Image_GetHeight(startWord));
+    }
+
+    if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
+    {   
+>>>>>>> Stashed changes
         // -----Play Button Input-----
         if (IsAreaClicked(startWordWidth, startWordHeight, CP_Image_GetWidth(startWord), CP_Image_GetHeight(startWord), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
         {
+            //CP_Settings_Fill(CP_Color_Create(0, 255, 0, 50));
+            //CP_Graphics_DrawRect(startWordWidth, startWordHeight, CP_Image_GetWidth(startWord), CP_Image_GetHeight(startWord));
             CP_Engine_SetNextGameStateForced(play_Init, play_Update, play_Exit); // play.c > goes to level select > click level to play
         }
 
