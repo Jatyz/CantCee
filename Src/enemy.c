@@ -1,21 +1,22 @@
+//---------------------------------------------------------
+// file:	enemy.c
+// author:	Tengku Danish Ashraf Bin Tengku Azlan
+// email:	t.bintengkuazlan@digipen.edu
+//
+// brief:	handles all enemy functions and 
+//
+// documentation link:
+// https://github.com/DigiPen-Faculty/CProcessing/wiki
+//
+// Copyright © 2020 DigiPen, All rights reserved.
+//---------------------------------------------------------
+
 #include "cprocessing.h"
 #include "grid.h"
 #include "game.h"
 #include "enemy.h"
 #include "player.h"
 #include <math.h>
-
-
-//Enemy array reset function
-//> set all the enemy array structure to 0
-//
-//Enemy setter function
-//So a function that i js pass in all the element of the structure in an enemy to set instead of writing
-//Enemy[][].isactive = 1
-//Enemy[][].type = whatever
-//Enemy.range = whatever
-//
-//Can js be enemyset(x, y, active, ...)
 
 Enemy enemies[MAX_TILES][MAX_TILES];
 
