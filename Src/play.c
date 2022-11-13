@@ -193,14 +193,14 @@ void play_Init()
 	hoverLvl14Word = CP_Image_Load("./Assets/hoverLvl15Word.png");
 }
 
-int once = 0; int levelSelected = 0;
+int once = 0; int levelSelected = 0; int levelScore = 0;
 char test[100];
 // ---------------------------------------------------------------Main Menu Update---------------------------------------------------------------
 void play_Update()
 {
 	if (once)
 	{
-		drawSideBarLevel(test, Score[1]);
+		drawSideBarLevel(test, levelScore);
 	}
 
 	// Background: Grey Colour
@@ -255,6 +255,7 @@ void play_Update()
 		if (IsAreaClicked(level[0].xAxis, level[0].yAxis, CP_Image_GetWidth(lvl0), CP_Image_GetHeight(lvl0), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
 			level[0].selected = 1;
+			levelScore = Score[1];
 			once = 1;
 			levelSelected = 1;
 			sprintf_s(&test, 100, "Level 1");
@@ -262,6 +263,7 @@ void play_Update()
 		if (IsAreaClicked(level[1].xAxis, level[1].yAxis, CP_Image_GetWidth(lvl1), CP_Image_GetHeight(lvl1), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
 			level[1].selected = 1;
+			levelScore = Score[2];
 			once = 1;
 			levelSelected = 1;
 			sprintf_s(&test, 100, "Level 2");
