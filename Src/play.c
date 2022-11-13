@@ -218,23 +218,7 @@ void play_Update()
 
 	//if (clicked == 0) {
 		// -----Level 1 TO 5-----
-	CP_Image_Draw(lvl0, level[0].xAxis, level[0].yAxis, CP_Image_GetWidth(lvl0), CP_Image_GetHeight(lvl0), 255);
-	CP_Image_Draw(lvl1, level[1].xAxis, level[1].yAxis, CP_Image_GetWidth(lvl1), CP_Image_GetHeight(lvl1), 255);
-	CP_Image_Draw(lvl2, level[2].xAxis, level[2].yAxis, CP_Image_GetWidth(lvl2), CP_Image_GetHeight(lvl2), 255);
-	CP_Image_Draw(lvl3, level[3].xAxis, level[3].yAxis, CP_Image_GetWidth(lvl3), CP_Image_GetHeight(lvl3), 255);
-	CP_Image_Draw(lvl4, level[4].xAxis, level[4].yAxis, CP_Image_GetWidth(lvl4), CP_Image_GetHeight(lvl4), 255);
 
-	CP_Image_Draw(lvl5, level[5].xAxis, level[5].yAxis, CP_Image_GetWidth(lvl5), CP_Image_GetHeight(lvl5), 255);
-	CP_Image_Draw(lvl6, level[6].xAxis, level[6].yAxis, CP_Image_GetWidth(lvl6), CP_Image_GetHeight(lvl6), 255);
-	CP_Image_Draw(lvl7, level[7].xAxis, level[7].yAxis, CP_Image_GetWidth(lvl7), CP_Image_GetHeight(lvl7), 255);
-	CP_Image_Draw(lvl8, level[8].xAxis, level[8].yAxis, CP_Image_GetWidth(lvl8), CP_Image_GetHeight(lvl8), 255);
-	CP_Image_Draw(lvl9, level[9].xAxis, level[9].yAxis, CP_Image_GetWidth(lvl9), CP_Image_GetHeight(lvl9), 255);
-
-	CP_Image_Draw(lvl10, level[10].xAxis, level[10].yAxis, CP_Image_GetWidth(lvl10), CP_Image_GetHeight(lvl10), 255);
-	CP_Image_Draw(lvl11, level[11].xAxis, level[11].yAxis, CP_Image_GetWidth(lvl11), CP_Image_GetHeight(lvl11), 255);
-	CP_Image_Draw(lvl12, level[12].xAxis, level[12].yAxis, CP_Image_GetWidth(lvl12), CP_Image_GetHeight(lvl12), 255);
-	CP_Image_Draw(lvl13, level[13].xAxis, level[13].yAxis, CP_Image_GetWidth(lvl13), CP_Image_GetHeight(lvl13), 255);
-	CP_Image_Draw(lvl14, level[14].xAxis, level[14].yAxis, CP_Image_GetWidth(lvl14), CP_Image_GetHeight(lvl14), 255);
 
 	////-----Return To Main Menu Button-----
 	CP_Settings_RectMode(CP_POSITION_CENTER);
@@ -247,6 +231,149 @@ void play_Update()
 	CP_Font_DrawText("Play!", fifthColumn, playHeight);
 	CP_Settings_RectMode(CP_POSITION_CORNER);
 	//}
+		// ------------------------------------------------------------------------------------------ Hover Feature ------------------------------------------------------------------------------------------
+	// ------------------------------------------------------------ Level 1 TO 5 Hover ------------------------------------------------------------
+	if (IsAreaClicked(level[0].xAxis, level[0].yAxis, CP_Image_GetWidth(lvl0), CP_Image_GetHeight(lvl0), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+	{
+		CP_Image_Draw(hoverLvl, level[0].xAxis, level[0].yAxis, CP_Image_GetWidth(hoverLvl), CP_Image_GetHeight(hoverLvl), 255);
+		CP_Image_Draw(hoverLvl0Word, level[0].xAxis, level[0].yAxis, CP_Image_GetWidth(hoverLvl0Word), CP_Image_GetHeight(hoverLvl0Word), 255);
+	}
+	else
+	{
+		CP_Image_Draw(lvl0, level[0].xAxis, level[0].yAxis, CP_Image_GetWidth(lvl0), CP_Image_GetHeight(lvl0), 255);
+	}
+	if (IsAreaClicked(level[1].xAxis, level[1].yAxis, CP_Image_GetWidth(lvl1), CP_Image_GetHeight(lvl1), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+	{
+		CP_Image_Draw(hoverLvl, level[1].xAxis, level[1].yAxis, CP_Image_GetWidth(hoverLvl), CP_Image_GetHeight(hoverLvl), 255);
+		CP_Image_Draw(hoverLvl1Word, level[1].xAxis, level[1].yAxis, CP_Image_GetWidth(hoverLvl1Word), CP_Image_GetHeight(hoverLvl1Word), 255);
+	}
+	else
+	{
+		CP_Image_Draw(lvl1, level[1].xAxis, level[1].yAxis, CP_Image_GetWidth(lvl1), CP_Image_GetHeight(lvl1), 255);
+	}
+	if (IsAreaClicked(level[2].xAxis, level[2].yAxis, CP_Image_GetWidth(lvl2), CP_Image_GetHeight(lvl2), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+	{
+		CP_Image_Draw(hoverLvl, level[2].xAxis, level[2].yAxis, CP_Image_GetWidth(hoverLvl), CP_Image_GetHeight(hoverLvl), 255);
+		CP_Image_Draw(hoverLvl2Word, level[2].xAxis, level[2].yAxis, CP_Image_GetWidth(hoverLvl2Word), CP_Image_GetHeight(hoverLvl2Word), 255);
+	}
+	else
+	{
+		CP_Image_Draw(lvl2, level[2].xAxis, level[2].yAxis, CP_Image_GetWidth(lvl2), CP_Image_GetHeight(lvl2), 255);
+	}
+	if (IsAreaClicked(level[3].xAxis, level[3].yAxis, CP_Image_GetWidth(lvl3), CP_Image_GetHeight(lvl3), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+	{
+		CP_Image_Draw(hoverLvl, level[3].xAxis, level[3].yAxis, CP_Image_GetWidth(hoverLvl), CP_Image_GetHeight(hoverLvl), 255);
+		CP_Image_Draw(hoverLvl3Word, level[3].xAxis, level[3].yAxis, CP_Image_GetWidth(hoverLvl3Word), CP_Image_GetHeight(hoverLvl3Word), 255);
+	}
+	else
+	{
+		CP_Image_Draw(lvl3, level[3].xAxis, level[3].yAxis, CP_Image_GetWidth(lvl3), CP_Image_GetHeight(lvl3), 255);
+	}
+	if (IsAreaClicked(level[4].xAxis, level[4].yAxis, CP_Image_GetWidth(lvl4), CP_Image_GetHeight(lvl4), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+	{
+		CP_Image_Draw(hoverLvl, level[4].xAxis, level[4].yAxis, CP_Image_GetWidth(hoverLvl), CP_Image_GetHeight(hoverLvl), 255);
+		CP_Image_Draw(hoverLvl4Word, level[4].xAxis, level[4].yAxis, CP_Image_GetWidth(hoverLvl4Word), CP_Image_GetHeight(hoverLvl4Word), 255);
+	}
+	else
+	{
+		CP_Image_Draw(lvl4, level[4].xAxis, level[4].yAxis, CP_Image_GetWidth(lvl4), CP_Image_GetHeight(lvl4), 255);
+	}
+
+	// ------------------------------------------------------------ Level 6 TO 10 Hover ------------------------------------------------------------
+	if (IsAreaClicked(level[5].xAxis, level[5].yAxis, CP_Image_GetWidth(lvl5), CP_Image_GetHeight(lvl5), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+	{
+		CP_Image_Draw(hoverLvl, level[5].xAxis, level[5].yAxis, CP_Image_GetWidth(hoverLvl), CP_Image_GetHeight(hoverLvl), 255);
+		CP_Image_Draw(hoverLvl5Word, level[5].xAxis, level[5].yAxis, CP_Image_GetWidth(hoverLvl5Word), CP_Image_GetHeight(hoverLvl5Word), 255);
+	}
+	else
+	{
+		CP_Image_Draw(lvl5, level[5].xAxis, level[5].yAxis, CP_Image_GetWidth(lvl5), CP_Image_GetHeight(lvl5), 255);
+	}
+	if (IsAreaClicked(level[6].xAxis, level[6].yAxis, CP_Image_GetWidth(lvl6), CP_Image_GetHeight(lvl6), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+	{
+		CP_Image_Draw(hoverLvl, level[6].xAxis, level[6].yAxis, CP_Image_GetWidth(hoverLvl), CP_Image_GetHeight(hoverLvl), 255);
+		CP_Image_Draw(hoverLvl6Word, level[6].xAxis, level[6].yAxis, CP_Image_GetWidth(hoverLvl6Word), CP_Image_GetHeight(hoverLvl6Word), 255);
+	}
+	else
+	{
+		CP_Image_Draw(lvl6, level[6].xAxis, level[6].yAxis, CP_Image_GetWidth(lvl6), CP_Image_GetHeight(lvl6), 255);
+	}
+	if (IsAreaClicked(level[7].xAxis, level[7].yAxis, CP_Image_GetWidth(lvl7), CP_Image_GetHeight(lvl7), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+	{
+		CP_Image_Draw(hoverLvl, level[7].xAxis, level[7].yAxis, CP_Image_GetWidth(hoverLvl), CP_Image_GetHeight(hoverLvl), 255);
+		CP_Image_Draw(hoverLvl7Word, level[7].xAxis, level[7].yAxis, CP_Image_GetWidth(hoverLvl7Word), CP_Image_GetHeight(hoverLvl7Word), 255);
+	}
+	else
+	{
+		CP_Image_Draw(lvl7, level[7].xAxis, level[7].yAxis, CP_Image_GetWidth(lvl7), CP_Image_GetHeight(lvl7), 255);
+	}
+	if (IsAreaClicked(level[8].xAxis, level[8].yAxis, CP_Image_GetWidth(lvl8), CP_Image_GetHeight(lvl8), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+	{
+		CP_Image_Draw(hoverLvl, level[8].xAxis, level[8].yAxis, CP_Image_GetWidth(hoverLvl), CP_Image_GetHeight(hoverLvl), 255);
+		CP_Image_Draw(hoverLvl8Word, level[8].xAxis, level[8].yAxis, CP_Image_GetWidth(hoverLvl8Word), CP_Image_GetHeight(hoverLvl8Word), 255);
+	}
+	else
+	{
+		CP_Image_Draw(lvl8, level[8].xAxis, level[8].yAxis, CP_Image_GetWidth(lvl8), CP_Image_GetHeight(lvl8), 255);
+	}
+	if (IsAreaClicked(level[9].xAxis, level[9].yAxis, CP_Image_GetWidth(lvl9), CP_Image_GetHeight(lvl9), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+	{
+		CP_Image_Draw(hoverLvl, level[9].xAxis, level[9].yAxis, CP_Image_GetWidth(hoverLvl), CP_Image_GetHeight(hoverLvl), 255);
+		CP_Image_Draw(hoverLvl9Word, level[9].xAxis, level[9].yAxis, CP_Image_GetWidth(hoverLvl9Word), CP_Image_GetHeight(hoverLvl9Word), 255);
+	}
+	else
+	{
+		CP_Image_Draw(lvl9, level[9].xAxis, level[9].yAxis, CP_Image_GetWidth(lvl9), CP_Image_GetHeight(lvl9), 255);
+	}
+
+	// ------------------------------------------------------------ Level 11 TO 15 Hover ------------------------------------------------------------
+	if (IsAreaClicked(level[10].xAxis, level[10].yAxis, CP_Image_GetWidth(lvl10), CP_Image_GetHeight(lvl10), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+	{
+		CP_Image_Draw(hoverLvl, level[10].xAxis, level[10].yAxis, CP_Image_GetWidth(hoverLvl), CP_Image_GetHeight(hoverLvl), 255);
+		CP_Image_Draw(hoverLvl10Word, level[10].xAxis, level[10].yAxis, CP_Image_GetWidth(hoverLvl10Word), CP_Image_GetHeight(hoverLvl10Word), 255);
+	}
+	else
+	{
+		CP_Image_Draw(lvl10, level[10].xAxis, level[10].yAxis, CP_Image_GetWidth(lvl10), CP_Image_GetHeight(lvl10), 255);
+	}
+	if (IsAreaClicked(level[11].xAxis, level[11].yAxis, CP_Image_GetWidth(lvl11), CP_Image_GetHeight(lvl11), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+	{
+		CP_Image_Draw(hoverLvl, level[11].xAxis, level[11].yAxis, CP_Image_GetWidth(hoverLvl), CP_Image_GetHeight(hoverLvl), 255);
+		CP_Image_Draw(hoverLvl11Word, level[11].xAxis, level[11].yAxis, CP_Image_GetWidth(hoverLvl11Word), CP_Image_GetHeight(hoverLvl11Word), 255);
+	}
+	else
+	{
+		CP_Image_Draw(lvl11, level[11].xAxis, level[11].yAxis, CP_Image_GetWidth(lvl11), CP_Image_GetHeight(lvl11), 255);
+	}
+	if (IsAreaClicked(level[12].xAxis, level[12].yAxis, CP_Image_GetWidth(lvl12), CP_Image_GetHeight(lvl12), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+	{
+		CP_Image_Draw(hoverLvl, level[12].xAxis, level[12].yAxis, CP_Image_GetWidth(hoverLvl), CP_Image_GetHeight(hoverLvl), 255);
+		CP_Image_Draw(hoverLvl12Word, level[12].xAxis, level[12].yAxis, CP_Image_GetWidth(hoverLvl12Word), CP_Image_GetHeight(hoverLvl12Word), 255);
+	}
+	else
+	{
+		CP_Image_Draw(lvl12, level[12].xAxis, level[12].yAxis, CP_Image_GetWidth(lvl12), CP_Image_GetHeight(lvl12), 255);
+	}
+	if (IsAreaClicked(level[13].xAxis, level[13].yAxis, CP_Image_GetWidth(lvl13), CP_Image_GetHeight(lvl13), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+	{
+		CP_Image_Draw(hoverLvl, level[13].xAxis, level[13].yAxis, CP_Image_GetWidth(hoverLvl), CP_Image_GetHeight(hoverLvl), 255);
+		CP_Image_Draw(hoverLvl13Word, level[13].xAxis, level[13].yAxis, CP_Image_GetWidth(hoverLvl13Word), CP_Image_GetHeight(hoverLvl13Word), 255);
+	}
+	else
+	{
+		CP_Image_Draw(lvl13, level[13].xAxis, level[13].yAxis, CP_Image_GetWidth(lvl13), CP_Image_GetHeight(lvl13), 255);
+	}
+	if (IsAreaClicked(level[14].xAxis, level[14].yAxis, CP_Image_GetWidth(lvl14), CP_Image_GetHeight(lvl14), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+	{
+		CP_Image_Draw(hoverLvl, level[14].xAxis, level[14].yAxis, CP_Image_GetWidth(hoverLvl), CP_Image_GetHeight(hoverLvl), 255);
+		CP_Image_Draw(hoverLvl14Word, level[14].xAxis, level[14].yAxis, CP_Image_GetWidth(hoverLvl14Word), CP_Image_GetHeight(hoverLvl14Word), 255);
+	}
+	else
+	{
+		CP_Image_Draw(lvl14, level[14].xAxis, level[14].yAxis, CP_Image_GetWidth(lvl14), CP_Image_GetHeight(lvl14), 255);
+	}
+
+
 
 	// ---------------------------------------------------------------------- LEVEL SELECTION ----------------------------------------------------------------------
 	if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
@@ -254,7 +381,12 @@ void play_Update()
 		// ---------------------------------------------------------------------- Level 1 TO 5 ----------------------------------------------------------------------
 		if (IsAreaClicked(level[0].xAxis, level[0].yAxis, CP_Image_GetWidth(lvl0), CP_Image_GetHeight(lvl0), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
+			for (int setLevelSelectionState = 0; setLevelSelectionState < 15; setLevelSelectionState++)
+			{
+				level[setLevelSelectionState].selected = 0;
+			}
 			level[0].selected = 1;
+
 			levelScore = Score[1];
 			once = 1;
 			levelSelected = 1;
@@ -262,7 +394,12 @@ void play_Update()
 		}
 		if (IsAreaClicked(level[1].xAxis, level[1].yAxis, CP_Image_GetWidth(lvl1), CP_Image_GetHeight(lvl1), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
+			for (int setLevelSelectionState = 0; setLevelSelectionState < 15; setLevelSelectionState++)
+			{
+				level[setLevelSelectionState].selected = 0;
+			}
 			level[1].selected = 1;
+
 			levelScore = Score[2];
 			once = 1;
 			levelSelected = 1;
@@ -270,21 +407,39 @@ void play_Update()
 		}
 		if (IsAreaClicked(level[2].xAxis, level[2].yAxis, CP_Image_GetWidth(lvl2), CP_Image_GetHeight(lvl2), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
+			for (int setLevelSelectionState = 0; setLevelSelectionState < 15; setLevelSelectionState++)
+			{
+				level[setLevelSelectionState].selected = 0;
+			}
 			level[2].selected = 1;
+
+			levelScore = Score[3];
 			once = 1;
 			levelSelected = 1;
 			sprintf_s(&test, 100, "Level 3");
 		}
 		if (IsAreaClicked(level[3].xAxis, level[3].yAxis, CP_Image_GetWidth(lvl3), CP_Image_GetHeight(lvl3), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
+			for (int setLevelSelectionState = 0; setLevelSelectionState < 15; setLevelSelectionState++)
+			{
+				level[setLevelSelectionState].selected = 0;
+			}
 			level[3].selected = 1;
+
+			levelScore = Score[4];
 			once = 1;
 			levelSelected = 1;
 			sprintf_s(&test, 100, "Level 4");
 		}
 		if (IsAreaClicked(level[4].xAxis, level[4].yAxis, CP_Image_GetWidth(lvl4), CP_Image_GetHeight(lvl4), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
+			for (int setLevelSelectionState = 0; setLevelSelectionState < 15; setLevelSelectionState++)
+			{
+				level[setLevelSelectionState].selected = 0;
+			}
 			level[4].selected = 1;
+
+			levelScore = Score[5];
 			once = 1;
 			levelSelected = 1;
 			sprintf_s(&test, 100, "Level 5");
@@ -293,35 +448,65 @@ void play_Update()
 		// ---------------------------------------------------------------------- LEVEL 6 TO 10 ----------------------------------------------------------------------
 		if (IsAreaClicked(level[5].xAxis, level[5].yAxis, CP_Image_GetWidth(lvl5), CP_Image_GetHeight(lvl5), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
+			for (int setLevelSelectionState = 0; setLevelSelectionState < 15; setLevelSelectionState++)
+			{
+				level[setLevelSelectionState].selected = 0;
+			}
 			level[5].selected = 1;
+
+			levelScore = Score[6];
 			once = 1;
 			levelSelected = 1;
 			sprintf_s(&test, 100, "Level 6");
 		}
 		if (IsAreaClicked(level[6].xAxis, level[6].yAxis, CP_Image_GetWidth(lvl6), CP_Image_GetHeight(lvl6), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
+			for (int setLevelSelectionState = 0; setLevelSelectionState < 15; setLevelSelectionState++)
+			{
+				level[setLevelSelectionState].selected = 0;
+			}
 			level[6].selected = 1;
+
+			levelScore = Score[7];
 			once = 1;
 			levelSelected = 1;
 			sprintf_s(&test, 100, "Level 7");
 		}
 		if (IsAreaClicked(level[7].xAxis, level[7].yAxis, CP_Image_GetWidth(lvl7), CP_Image_GetHeight(lvl7), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
+			for (int setLevelSelectionState = 0; setLevelSelectionState < 15; setLevelSelectionState++)
+			{
+				level[setLevelSelectionState].selected = 0;
+			}
 			level[7].selected = 1;
+
+			levelScore = Score[8];
 			once = 1;
 			levelSelected = 1;
 			sprintf_s(&test, 100, "Level 8");
 		}
 		if (IsAreaClicked(level[8].xAxis, level[8].yAxis, CP_Image_GetWidth(lvl8), CP_Image_GetHeight(lvl8), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
+			for (int setLevelSelectionState = 0; setLevelSelectionState < 15; setLevelSelectionState++)
+			{
+				level[setLevelSelectionState].selected = 0;
+			}
 			level[8].selected = 1;
+
+			levelScore = Score[9];
 			once = 1;
 			levelSelected = 1;
 			sprintf_s(&test, 100, "Level 9");
 		}
 		if (IsAreaClicked(level[9].xAxis, level[9].yAxis, CP_Image_GetWidth(lvl9), CP_Image_GetHeight(lvl9), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
+			for (int setLevelSelectionState = 0; setLevelSelectionState < 15; setLevelSelectionState++)
+			{
+				level[setLevelSelectionState].selected = 0;
+			}
 			level[9].selected = 1;
+
+			levelScore = Score[10];
 			once = 1;
 			levelSelected = 1;
 			sprintf_s(&test, 100, "Level 10");
@@ -330,35 +515,65 @@ void play_Update()
 		// ----------------------------------------------------------------------LEVEL 11 TO 15 ----------------------------------------------------------------------
 		if (IsAreaClicked(level[10].xAxis, level[10].yAxis, CP_Image_GetWidth(lvl10), CP_Image_GetHeight(lvl10), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
+			for (int setLevelSelectionState = 0; setLevelSelectionState < 15; setLevelSelectionState++)
+			{
+				level[setLevelSelectionState].selected = 0;
+			}
 			level[10].selected = 1;
+
+			levelScore = Score[11];
 			once = 1;
 			levelSelected = 1;
 			sprintf_s(&test, 100, "Level 11");
 		}
 		if (IsAreaClicked(level[11].xAxis, level[11].yAxis, CP_Image_GetWidth(lvl11), CP_Image_GetHeight(lvl11), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
+			for (int setLevelSelectionState = 0; setLevelSelectionState < 15; setLevelSelectionState++)
+			{
+				level[setLevelSelectionState].selected = 0;
+			}
 			level[11].selected = 1;
+
+			levelScore = Score[12];
 			once = 1;
 			levelSelected = 1;
 			sprintf_s(&test, 100, "Level 12");
 		}
 		if (IsAreaClicked(level[12].xAxis, level[12].yAxis, CP_Image_GetWidth(lvl12), CP_Image_GetHeight(lvl12), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
+			for (int setLevelSelectionState = 0; setLevelSelectionState < 15; setLevelSelectionState++)
+			{
+				level[setLevelSelectionState].selected = 0;
+			}
 			level[12].selected = 1;
+
+			levelScore = Score[13];
 			once = 1;
 			levelSelected = 1;
 			sprintf_s(&test, 100, "Level 13");
 		}
 		if (IsAreaClicked(level[13].xAxis, level[13].yAxis, CP_Image_GetWidth(lvl13), CP_Image_GetHeight(lvl13), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
+			for (int setLevelSelectionState = 0; setLevelSelectionState < 15; setLevelSelectionState++)
+			{
+				level[setLevelSelectionState].selected = 0;
+			}
 			level[13].selected = 1;
+
+			levelScore = Score[14];
 			once = 1;
 			levelSelected = 1;
 			sprintf_s(&test, 100, "Level 14");
 		}
 		if (IsAreaClicked(level[14].xAxis, level[14].yAxis, CP_Image_GetWidth(lvl14), CP_Image_GetHeight(lvl14), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
+			for (int setLevelSelectionState = 0; setLevelSelectionState < 15; setLevelSelectionState++)
+			{
+				level[setLevelSelectionState].selected = 0;
+			}
 			level[14].selected = 1;
+
+			levelScore = Score[15];
 			once = 1;
 			levelSelected = 1;
 			sprintf_s(&test, 100, "Level 15");
@@ -371,88 +586,6 @@ void play_Update()
 		}
 	}
 
-	// ------------------------------------------------------------------------------------------ Hover Feature ------------------------------------------------------------------------------------------
-	// ------------------------------------------------------------ Level 1 TO 5 Hover ------------------------------------------------------------
-	if (IsAreaClicked(level[0].xAxis, level[0].yAxis, CP_Image_GetWidth(lvl0), CP_Image_GetHeight(lvl0), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
-	{
-		CP_Image_Draw(hoverLvl, level[0].xAxis, level[0].yAxis, CP_Image_GetWidth(hoverLvl), CP_Image_GetHeight(hoverLvl), 255);
-		CP_Image_Draw(hoverLvl0Word, level[0].xAxis, level[0].yAxis, CP_Image_GetWidth(hoverLvl0Word), CP_Image_GetHeight(hoverLvl0Word), 255);
-	}
-	if (IsAreaClicked(level[1].xAxis, level[1].yAxis, CP_Image_GetWidth(lvl1), CP_Image_GetHeight(lvl1), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
-	{
-		CP_Image_Draw(hoverLvl, level[1].xAxis, level[1].yAxis, CP_Image_GetWidth(hoverLvl), CP_Image_GetHeight(hoverLvl), 255);
-		CP_Image_Draw(hoverLvl1Word, level[1].xAxis, level[1].yAxis, CP_Image_GetWidth(hoverLvl1Word), CP_Image_GetHeight(hoverLvl1Word), 255);
-	}
-	if (IsAreaClicked(level[2].xAxis, level[2].yAxis, CP_Image_GetWidth(lvl2), CP_Image_GetHeight(lvl2), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
-	{
-		CP_Image_Draw(hoverLvl, level[2].xAxis, level[2].yAxis, CP_Image_GetWidth(hoverLvl), CP_Image_GetHeight(hoverLvl), 255);
-		CP_Image_Draw(hoverLvl2Word, level[2].xAxis, level[2].yAxis, CP_Image_GetWidth(hoverLvl2Word), CP_Image_GetHeight(hoverLvl2Word), 255);
-	}
-	if (IsAreaClicked(level[3].xAxis, level[3].yAxis, CP_Image_GetWidth(lvl3), CP_Image_GetHeight(lvl3), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
-	{
-		CP_Image_Draw(hoverLvl, level[3].xAxis, level[3].yAxis, CP_Image_GetWidth(hoverLvl), CP_Image_GetHeight(hoverLvl), 255);
-		CP_Image_Draw(hoverLvl3Word, level[3].xAxis, level[3].yAxis, CP_Image_GetWidth(hoverLvl3Word), CP_Image_GetHeight(hoverLvl3Word), 255);
-	}
-	if (IsAreaClicked(level[4].xAxis, level[4].yAxis, CP_Image_GetWidth(lvl4), CP_Image_GetHeight(lvl4), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
-	{
-		CP_Image_Draw(hoverLvl, level[4].xAxis, level[4].yAxis, CP_Image_GetWidth(hoverLvl), CP_Image_GetHeight(hoverLvl), 255);
-		CP_Image_Draw(hoverLvl4Word, level[4].xAxis, level[4].yAxis, CP_Image_GetWidth(hoverLvl4Word), CP_Image_GetHeight(hoverLvl4Word), 255);
-	}
-
-	// ------------------------------------------------------------ Level 1 TO 5 Hover ------------------------------------------------------------
-	if (IsAreaClicked(level[5].xAxis, level[5].yAxis, CP_Image_GetWidth(lvl5), CP_Image_GetHeight(lvl5), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
-	{
-		CP_Image_Draw(hoverLvl, level[5].xAxis, level[5].yAxis, CP_Image_GetWidth(hoverLvl), CP_Image_GetHeight(hoverLvl), 255);
-		CP_Image_Draw(hoverLvl5Word, level[5].xAxis, level[5].yAxis, CP_Image_GetWidth(hoverLvl5Word), CP_Image_GetHeight(hoverLvl5Word), 255);
-	}
-	if (IsAreaClicked(level[6].xAxis, level[6].yAxis, CP_Image_GetWidth(lvl6), CP_Image_GetHeight(lvl6), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
-	{
-		CP_Image_Draw(hoverLvl, level[6].xAxis, level[6].yAxis, CP_Image_GetWidth(hoverLvl), CP_Image_GetHeight(hoverLvl), 255);
-		CP_Image_Draw(hoverLvl6Word, level[6].xAxis, level[6].yAxis, CP_Image_GetWidth(hoverLvl6Word), CP_Image_GetHeight(hoverLvl6Word), 255);
-	}
-	if (IsAreaClicked(level[7].xAxis, level[7].yAxis, CP_Image_GetWidth(lvl7), CP_Image_GetHeight(lvl7), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
-	{
-		CP_Image_Draw(hoverLvl, level[7].xAxis, level[7].yAxis, CP_Image_GetWidth(hoverLvl), CP_Image_GetHeight(hoverLvl), 255);
-		CP_Image_Draw(hoverLvl7Word, level[7].xAxis, level[7].yAxis, CP_Image_GetWidth(hoverLvl7Word), CP_Image_GetHeight(hoverLvl7Word), 255);
-	}
-	if (IsAreaClicked(level[8].xAxis, level[8].yAxis, CP_Image_GetWidth(lvl8), CP_Image_GetHeight(lvl8), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
-	{
-		CP_Image_Draw(hoverLvl, level[8].xAxis, level[8].yAxis, CP_Image_GetWidth(hoverLvl), CP_Image_GetHeight(hoverLvl), 255);
-		CP_Image_Draw(hoverLvl8Word, level[8].xAxis, level[8].yAxis, CP_Image_GetWidth(hoverLvl8Word), CP_Image_GetHeight(hoverLvl8Word), 255);
-	}
-	if (IsAreaClicked(level[9].xAxis, level[9].yAxis, CP_Image_GetWidth(lvl9), CP_Image_GetHeight(lvl9), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
-	{
-		CP_Image_Draw(hoverLvl, level[9].xAxis, level[9].yAxis, CP_Image_GetWidth(hoverLvl), CP_Image_GetHeight(hoverLvl), 255);
-		CP_Image_Draw(hoverLvl9Word, level[9].xAxis, level[9].yAxis, CP_Image_GetWidth(hoverLvl9Word), CP_Image_GetHeight(hoverLvl9Word), 255);
-	}
-
-	// ------------------------------------------------------------ Level 11 TO 15 Hover ------------------------------------------------------------
-	if (IsAreaClicked(level[10].xAxis, level[10].yAxis, CP_Image_GetWidth(lvl10), CP_Image_GetHeight(lvl10), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
-	{
-		CP_Image_Draw(hoverLvl, level[10].xAxis, level[10].yAxis, CP_Image_GetWidth(hoverLvl), CP_Image_GetHeight(hoverLvl), 255);
-		CP_Image_Draw(hoverLvl10Word, level[10].xAxis, level[10].yAxis, CP_Image_GetWidth(hoverLvl10Word), CP_Image_GetHeight(hoverLvl10Word), 255);
-	}
-	if (IsAreaClicked(level[11].xAxis, level[11].yAxis, CP_Image_GetWidth(lvl11), CP_Image_GetHeight(lvl11), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
-	{
-		CP_Image_Draw(hoverLvl, level[11].xAxis, level[11].yAxis, CP_Image_GetWidth(hoverLvl), CP_Image_GetHeight(hoverLvl), 255);
-		CP_Image_Draw(hoverLvl11Word, level[11].xAxis, level[11].yAxis, CP_Image_GetWidth(hoverLvl11Word), CP_Image_GetHeight(hoverLvl11Word), 255);
-	}
-	if (IsAreaClicked(level[12].xAxis, level[12].yAxis, CP_Image_GetWidth(lvl12), CP_Image_GetHeight(lvl12), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
-	{
-		CP_Image_Draw(hoverLvl, level[12].xAxis, level[12].yAxis, CP_Image_GetWidth(hoverLvl), CP_Image_GetHeight(hoverLvl), 255);
-		CP_Image_Draw(hoverLvl12Word, level[12].xAxis, level[12].yAxis, CP_Image_GetWidth(hoverLvl12Word), CP_Image_GetHeight(hoverLvl12Word), 255);
-	}
-	if (IsAreaClicked(level[13].xAxis, level[13].yAxis, CP_Image_GetWidth(lvl13), CP_Image_GetHeight(lvl13), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
-	{
-		CP_Image_Draw(hoverLvl, level[13].xAxis, level[13].yAxis, CP_Image_GetWidth(hoverLvl), CP_Image_GetHeight(hoverLvl), 255);
-		CP_Image_Draw(hoverLvl13Word, level[13].xAxis, level[13].yAxis, CP_Image_GetWidth(hoverLvl13Word), CP_Image_GetHeight(hoverLvl13Word), 255);
-	}
-	if (IsAreaClicked(level[14].xAxis, level[14].yAxis, CP_Image_GetWidth(lvl14), CP_Image_GetHeight(lvl14), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
-	{
-		CP_Image_Draw(hoverLvl, level[14].xAxis, level[14].yAxis, CP_Image_GetWidth(hoverLvl), CP_Image_GetHeight(hoverLvl), 255);
-		CP_Image_Draw(hoverLvl14Word, level[14].xAxis, level[14].yAxis, CP_Image_GetWidth(hoverLvl14Word), CP_Image_GetHeight(hoverLvl14Word), 255);
-	}
-		
 
 	// ---------------------------------------------------------------------- Start Level[X] ----------------------------------------------------------------------
 	// if Level [X] is selected, & Start is clicked > enter game
