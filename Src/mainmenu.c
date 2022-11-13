@@ -93,8 +93,6 @@ void mainMenu_Update()
     CP_Image_Draw(settingsWord, settingsWordWidth, settingsWordHeight, CP_Image_GetWidth(settingsWord), CP_Image_GetHeight(settingsWord), 255);
     CP_Image_Draw(exitWord, exitWordWidth, exitWordHeight, CP_Image_GetWidth(exitWord), CP_Image_GetHeight(exitWord), 255);
 
-
-
     // ---------------------------------------------------------------Mouse Inputs/Checking---------------------------------------------------------------
         // ----------Hover Feature----------
     if (IsAreaClicked(startWordWidth, startWordHeight, CP_Image_GetWidth(startWord), CP_Image_GetHeight(startWord), CP_Input_GetMouseX(), CP_Input_GetMouseY()))

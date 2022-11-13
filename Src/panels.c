@@ -1,4 +1,5 @@
 #include "cprocessing.h"
+#include "mainmenu.h"
 #include "grid.h"
 #include "game.h"
 #include "utils.h"
@@ -9,8 +10,8 @@
 void drawFullPanel(void) {
 
 	CP_Settings_NoStroke();
-	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 122));
-	CP_Graphics_DrawRect(0, 0, 800, 800);
+	//CP_Settings_Fill(CP_Color_Create(0, 0, 0, 122));
+	//CP_Graphics_DrawRect(0, 0, 800, 800);
 
 	float smallpanelx = 500, smallpanely = 400;
 
@@ -26,6 +27,8 @@ void drawFullPanel(void) {
 	CP_Settings_RectMode(CP_POSITION_CENTER);
 	switch (gameState) {
 	case PAUSED:
+		CP_Settings_Fill(CP_Color_Create(50, 50, 50, 10));
+		CP_Graphics_DrawRect(windowWidth / 2, windowHeight / 2, windowWidth, windowHeight);
 		CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
 		CP_Settings_TextSize(70.f);
 		CP_Font_DrawText("PAUSE MENU", panelStartx + 85.f, panelStarty + 60.f);
