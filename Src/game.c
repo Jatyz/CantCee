@@ -108,10 +108,15 @@ void game_init(void)
 	//enemies[5][5].difficulty = 2;
 	//enemies[5][5].Color = BLUE;
 
-	enemies[5][12].type = AOE_VIEW;
-	enemies[5][12].isActive = 1;
-	enemies[5][12].difficulty = 1;
-	enemies[5][12].Color = RED;
+	enemies[5][6].type = AOE_VIEW;
+	enemies[5][6].isActive = 1;
+	enemies[5][6].difficulty = 2;
+	enemies[5][6].Color = RED;
+
+	enemies[4][9].type = AOE_VIEW;
+	enemies[4][9].isActive = 1;
+	enemies[4][9].difficulty = 1;
+	enemies[4][9].Color = RED;
 
 	setStartGame(Tile_Size);
 
