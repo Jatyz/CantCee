@@ -1,10 +1,12 @@
 #include "cprocessing.h"
-#include "utils.h"
 #include <stdio.h>
+#include "utils.h"
+
 #include "mainmenu.h"
 #include "play.h"
 #include "howToPlay.h"
 #include "settings.h"
+
 #include "levelselect.h"
 #include "level1.h"
 #include "level2.h"
@@ -14,10 +16,16 @@
 #include "level6.h"
 #include "level7.h"
 #include "level8.h"
+#include "level9.h"
+#include "level10.h"
+#include "level11.h"
+#include "level12.h"
+#include "level13.h"
 #include "panels.h"
 #include "game.h"
 
 CP_Image gradientAccentBackground2 = NULL;
+CP_Image selectLevelTitle = NULL;
 
 CP_Image lvl0 = NULL;
 CP_Image lvl1 = NULL;
@@ -122,6 +130,7 @@ void play_Init()
 	level[14].selected = 0;
 
 	gradientAccentBackground2 = CP_Image_Load("./Assets/gradientAccentBackground2.png");
+	selectLevelTitle = CP_Image_Load("./Assets/selectLevelTitle.png");
 
 	lvl0 = CP_Image_Load("./Assets/lvl1.png");
 	lvl1 = CP_Image_Load("./Assets/lvl2.png");
@@ -165,6 +174,7 @@ void play_Update()
 	CP_Graphics_DrawRect(0, 0, 800, 800);
 
 	CP_Image_Draw(gradientAccentBackground2, windowWidth / 2, windowHeight / 2, windowWidth, windowHeight, 255);
+	CP_Image_Draw(selectLevelTitle, titleX, titleY, CP_Image_GetWidth(selectLevelTitle), CP_Image_GetHeight(selectLevelTitle), 255);
 
 	//if (clicked == 0) {
 		// -----Level 1 TO 5-----
@@ -381,18 +391,55 @@ void play_Update()
 			CP_Engine_SetNextGameStateForced(level8_init, level8_update, level8_exit);
 		}
 	}
-	//if (level[8].selected == 1 && CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
+	if (level[8].selected == 1 && CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
+	{
+		if (IsAreaClicked(fifthColumn, playHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		{
+			CP_Engine_SetNextGameStateForced(level9_init, level9_update, level9_exit);
+		}
+	}
+	if (level[9].selected == 1 && CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
+	{
+		if (IsAreaClicked(fifthColumn, playHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		{
+			CP_Engine_SetNextGameStateForced(level10_init, level10_update, level10_exit);
+		}
+	}
+
+	// ----------------------------------------------------------------------Level 11 TO 15----------------------------------------------------------------------
+	if (level[10].selected == 1 && CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
+	{
+		if (IsAreaClicked(fifthColumn, playHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		{
+			CP_Engine_SetNextGameStateForced(level11_init, level11_update, level11_exit);
+		}
+	}
+	if (level[11].selected == 1 && CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
+	{
+		if (IsAreaClicked(fifthColumn, playHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		{
+			CP_Engine_SetNextGameStateForced(level12_init, level12_update, level12_exit);
+		}
+	}
+	if (level[12].selected == 1 && CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
+	{
+		if (IsAreaClicked(fifthColumn, playHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		{
+			CP_Engine_SetNextGameStateForced(level13_init, level13_update, level13_exit);
+		}
+	}
+	//if (level[13].selected == 1 && CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
 	//{
 	//	if (IsAreaClicked(fifthColumn, playHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 	//	{
-	//		CP_Engine_SetNextGameStateForced(level9_init, level9_update, level9_exit);
+	//		CP_Engine_SetNextGameStateForced(level14_init, level14_update, level14_exit);
 	//	}
 	//}
-	//if (level[9].selected == 1 && CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
+	//if (level[14].selected == 1 && CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
 	//{
 	//	if (IsAreaClicked(fifthColumn, playHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 	//	{
-	//		CP_Engine_SetNextGameStateForced(level10_init, level10_update, level10_exit);
+	//		CP_Engine_SetNextGameStateForced(level15_init, level15_update, level15_exit);
 	//	}
 	//}
 
@@ -404,6 +451,7 @@ void play_Update()
 void play_Exit()
 {
 	CP_Image_Free(&gradientAccentBackground2);
+	CP_Image_Free(&selectLevelTitle);
 
 	CP_Image_Free(&lvl0);
 	CP_Image_Free(&lvl1);

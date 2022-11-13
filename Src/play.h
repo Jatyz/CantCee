@@ -22,6 +22,9 @@
 // playButton Height
 #define playHeight thirdRowHeight + 150
 
+#define titleX (windowWidth / 2) - 90
+#define titleY (windowHeight / 2) - 320
+
 
 
 
