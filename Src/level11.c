@@ -20,110 +20,113 @@ void level11_init(void)
 	//assign all the floors and walls
 	assignTile(Tile_Size);
 
-	tiles[4][0].type = WALL;
-	tiles[4][2].type = WALL;
-	tiles[4][3].type = WALL;
-	tiles[4][4].type = WALL;
-	tiles[4][5].type = WALL;
-	tiles[4][6].type = WALL;
-	tiles[4][8].type = WALL;
-	tiles[4][9].type = WALL;
-	tiles[4][10].type = WALL;
-	tiles[4][11].type = WALL;
-	tiles[4][12].type = WALL;
-	tiles[4][13].type = WALL;
-	tiles[4][14].type = WALL;
-	tiles[10][0].type = WALL;
-	tiles[10][2].type = WALL;
-	tiles[10][3].type = WALL;
-	tiles[10][4].type = WALL;
-	tiles[10][5].type = WALL;
-	tiles[10][6].type = WALL;
-	tiles[10][8].type = WALL;
-	tiles[10][9].type = WALL;
-	tiles[10][10].type = WALL;
-	tiles[10][11].type = WALL;
-	tiles[10][12].type = WALL;
-	tiles[10][13].type = WALL;
-	tiles[10][14].type = WALL;
-	tiles[0][12].type = WALL;
-	tiles[1][12].type = WALL;
-	tiles[3][12].type = WALL;
-	tiles[4][12].type = WALL;
-	tiles[10][12].type = WALL;
-	tiles[11][12].type = WALL;
-	tiles[12][12].type = WALL;
-	tiles[13][12].type = WALL;
-	tiles[14][12].type = WALL;
-
-	tiles[11][9].type = WALL;
-	tiles[12][9].type = WALL;
-	tiles[14][9].type = WALL;
-	tiles[15][9].type = WALL;
-	tiles[11][3].type = WALL;
-	tiles[12][3].type = WALL;
-	tiles[14][3].type = WALL;
-	tiles[15][3].type = WALL;
+	
+	tiles[3][0].type = WALL;
+	tiles[3][1].type = WALL;
+	tiles[3][2].type = WALL;
+	tiles[3][3].type = WALL;
+	tiles[3][4].type = WALL;
+	tiles[3][5].type = WALL;
+	tiles[3][6].type = WALL;
 	tiles[0][3].type = WALL;
 	tiles[1][3].type = WALL;
 	tiles[2][3].type = WALL;
-	tiles[3][3].type = WALL;
-	tiles[0][6].type = WALL;
-	tiles[3][6].type = WALL;
-	tiles[4][6].type = WALL;
+
+
+	tiles[0][12].type = WALL;
+	tiles[2][12].type = WALL;
+	tiles[3][12].type = WALL;
+	tiles[3][13].type = WALL;
+	tiles[3][14].type = WALL;
+	tiles[3][15].type = WALL;
+
+	tiles[8][1].type = WALL;
+	tiles[8][2].type = WALL;
+	tiles[8][3].type = WALL;
+	tiles[8][4].type = WALL;
+	tiles[7][4].type = WALL;
+	tiles[9][4].type = WALL;
+	tiles[10][4].type = WALL;
+	tiles[11][4].type = WALL;
+	tiles[12][4].type = WALL;
+	tiles[12][3].type = WALL;
+	tiles[13][3].type = WALL;
+	tiles[14][3].type = WALL;
+	tiles[15][3].type = WALL;
 	tiles[12][5].type = WALL;
 	tiles[12][6].type = WALL;
 	tiles[12][7].type = WALL;
-	tiles[14][5].type = WALL;
-	tiles[14][6].type = WALL;
+	tiles[12][8].type = WALL;
+	tiles[13][7].type = WALL;
 	tiles[14][7].type = WALL;
+	tiles[15][7].type = WALL;
+	tiles[12][8].type = WALL;
+	tiles[12][9].type = WALL;
+	tiles[12][10].type = WALL;
+	tiles[12][11].type = WALL;
+	tiles[12][12].type = WALL;
+	tiles[14][12].type = WALL;
+	tiles[15][12].type = WALL;
+	tiles[11][12].type = WALL;
+	tiles[10][12].type = WALL;
+	tiles[9][12].type = WALL;
+	tiles[8][12].type = WALL;
+	tiles[7][12].type = WALL;
+	tiles[6][12].type = WALL;
+	tiles[7][11].type = WALL;
+	tiles[7][9].type = WALL;
+	tiles[7][8].type = WALL;
+	tiles[8][8].type = WALL;
+	tiles[9][8].type = WALL;
+	tiles[6][8].type = WALL;
+	tiles[5][8].type = WALL;
+	tiles[4][8].type = WALL;
+	tiles[3][8].type = WALL;
+	tiles[2][8].type = WALL;
+	tiles[0][8].type = WALL;
 
 
 
-	tiles[11][13].type = START;
-	tiles[1][1].type = END;
-
-	tiles[15][0].type = DISGUISE;
-	tiles[15][0].Tile_Color = BLUE;
-	tiles[3][5].type = DISGUISE;
-	tiles[3][5].Tile_Color = RED;
-	tiles[0][7].type = DISGUISE;
-	tiles[0][7].Tile_Color = GREEN;
-
-	gates[0].Switch = &tiles[0][13];
-	gates[0].Door = &tiles[13][9];
-
-	gates[1].Switch = &tiles[11][10];
-	gates[1].Door = &tiles[1][6];
-
-	gates[2].Switch = &tiles[11][4];
-	gates[2].Door = &tiles[13][5];
-
-	gates[3].Switch = &tiles[11][4];
-	gates[3].Door = &tiles[13][3];
-
-	gates[4].Switch = &tiles[11][4];
-	gates[4].Door = &tiles[13][7];
-
-	gates[5].Switch = &tiles[0][5];
-	gates[5].Door = &tiles[2][5];
-
-	gates[6].Switch = &tiles[0][5];
-	gates[6].Door = &tiles[2][6];
 
 
-	enemySet(7, 2, 2, 0, AOE_VIEW, RED);
-	enemySet(7, 7, 2, 0, AOE_VIEW, GREEN);
-	enemySet(7, 12, 2, 0, AOE_VIEW, BLUE);
-	enemySet(1, 4, 0, 7, VERTICAL_HORIZONTAL_LOOK, BLUE);
-	enemySet(13, 6, 0, 7, VERTICAL_HORIZONTAL_LOOK, RED);
+
+
+	tiles[15][13].type = START;
+	tiles[0][1].type = END;
+
+	tiles[15][8].type = DISGUISE;
+	tiles[15][8].Tile_Color = GREEN;
+
+	tiles[5][14].type = DISGUISE;
+	tiles[5][14].Tile_Color = RED;
+
+	vents[0].tile1 = &tiles[2][2];
+	vents[0].tile2 = &tiles[15][0];
+
+	vents[1].tile1 = &tiles[15][4];
+	vents[1].tile2 = &tiles[0][15];
+
+	gates[0].Switch = &tiles[13][6];
+	gates[0].Door = &tiles[7][10];
+
+	gates[1].Switch = &tiles[13][6];
+	gates[1].Door = &tiles[13][12];
+
+	gates[2].Switch = &tiles[0][4];
+	gates[2].Door = &tiles[1][8];
+	
+	gates[3].Switch = &tiles[0][4];
+	gates[3].Door = &tiles[8][0];
+
+
+	enemySet(9, 7, 2, 0, AOE_VIEW, GREEN);
+
+	enemySet(11, 1, 1, 0, AOE_VIEW, RED);
 
 	setStartGame(Tile_Size);
 
-	tiles[1][6].type = OPENED_DOOR;
-	tiles[13][5].type = OPENED_DOOR;
-	tiles[13][7].type = OPENED_DOOR;
-	tiles[13][9].type = OPENED_DOOR;
+	tiles[13][12].type = OPENED_DOOR;	
+	tiles[8][0].type = OPENED_DOOR;
 
 	player.setFOV = 1;
 	doorLightRange = 2;

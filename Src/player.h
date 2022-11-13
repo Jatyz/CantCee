@@ -36,6 +36,14 @@ _Bool checkMove(int x, int y);
 //handle player movements based on keyboard.
 void handlePlayerInput(int Tile_Size);
 void handlePlayerIllumInput();
+//check to move player to a specific tile
+void moveTileCheck();
+
+//check to light up a specific tile area
+void lightTileCheck();
+//give player a light every 50 tiles player moved
+
+void giveLight();
 //sets the player's facing direction: 0 is up, 1 is right, 2 is down, 3 is left. 
 //Has in-built error warping. Numbers 4 and above are warpped via modulo of 4
 void setPlayerDirection(int directionFacing);

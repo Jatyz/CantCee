@@ -12,6 +12,7 @@
 #include "level11.h"
 #include "level12.h"
 #include "level13.h"
+#include "level14.h"
 #include "game.h"
 #include "play.h"
 #include "mainmenu.h"
@@ -129,6 +130,10 @@ void startLevel13(void)
 	CP_Engine_SetNextGameStateForced(level13_init, level13_update, level13_exit);
 }
 
+void startLevel14(void)
+{
+	CP_Engine_SetNextGameStateForced(level13_init, level13_update, level13_exit);
+}
 
 void startGame(void)
 {
