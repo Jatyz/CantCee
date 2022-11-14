@@ -1,6 +1,6 @@
 #include "cprocessing.h"
 #include "levelTransition.h"
-#define ANIMATION_LENGTH 1	//length of the animation, in seconds
+#define ANIMATION_LENGTH .75	//length of the animation, in seconds
 
 
 //remeber to free!!
