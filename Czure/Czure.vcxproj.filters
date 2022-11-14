@@ -54,9 +54,6 @@
     <ClCompile Include="..\Src\vectorMathBasic.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Src\levelselect.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\Src\enemy.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -81,16 +78,19 @@
     <ClCompile Include="..\Src\level8.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Src\levelTransition.c">
+    <ClCompile Include="..\Src\credits1.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Src\level10.c">
+    <ClCompile Include="..\Src\credits2.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\levelselect.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\Src\level9.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Src\level13.c">
+    <ClCompile Include="..\Src\level10.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\Src\level11.c">
@@ -99,6 +99,12 @@
     <ClCompile Include="..\Src\level12.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\Src\level13.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\levelTransition.c">
+      <Filter>Source Files</Filter>
+     </ClCompile>
     <ClCompile Include="..\Src\level14.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -173,22 +179,25 @@
     <ClInclude Include="..\Inc\level8.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Src\levelTransition.h">
+    <ClInclude Include="..\Src\credits1.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Inc\level10.h">
+    <ClInclude Include="..\Src\credits2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Inc\level9.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Inc\level13.h">
+    <ClInclude Include="..\Inc\level10.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\level11.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Inc\level12.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Inc\level11.h">
+    <ClInclude Include="..\Inc\level13.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Inc\level14.h">

@@ -100,6 +100,8 @@ xcopy "$(SolutionDir)Assets\*" "$(OutDir)Assets\" /s /r /y /q
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\Src\credits1.c" />
+    <ClCompile Include="..\Src\credits2.c" />
     <ClCompile Include="..\Src\enemy.c" />
     <ClCompile Include="..\Src\FOV.c" />
     <ClCompile Include="..\Src\game.c" />
@@ -132,8 +134,8 @@ xcopy "$(SolutionDir)Assets\*" "$(OutDir)Assets\" /s /r /y /q
     <ClCompile Include="..\Src\vectorMathBasic.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Inc\level10.h" />
     <ClInclude Include="..\Inc\level1.h" />
+    <ClInclude Include="..\Inc\level10.h" />
     <ClInclude Include="..\Inc\level11.h" />
     <ClInclude Include="..\Inc\level12.h" />
     <ClInclude Include="..\Inc\level13.h" />
@@ -147,13 +149,14 @@ xcopy "$(SolutionDir)Assets\*" "$(OutDir)Assets\" /s /r /y /q
     <ClInclude Include="..\Inc\level7.h" />
     <ClInclude Include="..\Inc\level8.h" />
     <ClInclude Include="..\Inc\level9.h" />
+    <ClInclude Include="..\Src\credits1.h" />
+    <ClInclude Include="..\Src\credits2.h" />
     <ClInclude Include="..\Src\enemy.h" />
     <ClInclude Include="..\Src\FOV.h" />
     <ClInclude Include="..\Src\game.h" />
     <ClInclude Include="..\Src\grid.h" />
     <ClInclude Include="..\Src\howToPlay.h" />
     <ClInclude Include="..\Src\levelselect.h" />
-    <ClInclude Include="..\Src\levelTransition.h" />
     <ClInclude Include="..\Src\main.h" />
     <ClInclude Include="..\Src\mainmenu.h" />
     <ClInclude Include="..\Src\settings.h" />

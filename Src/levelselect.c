@@ -16,6 +16,7 @@
 #include "level15.h"
 #include "game.h"
 #include "play.h"
+#include "levelselect.h"
 #include "mainmenu.h"
 #include "levelTransition.h"
 #include "levelselect.h"

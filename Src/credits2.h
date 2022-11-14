@@ -19,8 +19,15 @@
 #define returnToMainMenuX (windowWidth / 2) - 320
 #define returnToMainMenuY (windowHeight / 2) + 370
 
-void howToPlay_Init(void);
+// BackButton
+#define credits2BackButtonX (windowWidth / 2) - 400
+#define credits2ButtonY (windowHeight / 2)
 
-void howToPlay_Update(void);
+// NextPageButton
+#define credits2NextPageButtonX (windowWidth / 2) + 400
 
-void howToPlay_Exit(void);
+void credits2_Init(void);
+
+void credits2_Update(void);
+
+void credits2_Exit(void);
