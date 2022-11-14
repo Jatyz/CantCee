@@ -121,7 +121,6 @@ void level12_init(void)
 
 	player.setFOV = 1;
 	doorLightRange = 2;
-	gameState = PLAY;
 	player.currentStage = 12;
 	gameFogRange = 2;
 	player.shineCount = 0;
@@ -137,6 +136,7 @@ void level12_update(void)
 				lightCounter -= CP_System_GetDt();
 				handlePlayerIllumInput();
 				renderGame();
+				renderFOVAdvance(returnBounds(Tile_Size), returnBounds(Tile_Size), Tile_Size);
 				return;
 			}
 			else if (tileMoveCounter != 0) {}
@@ -144,17 +144,12 @@ void level12_update(void)
 				//clears the screen so things can be redrawn
 				CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
 				//all the game update methods that needs to be updated every frame
-				enemyFOV(Tile_Size);
-				if (player.setFOV) {
-					clearFogBackground();
-					setIlluminationWallLogicOnce(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), gameFogRange+1);
-
-				}
-
-				handlePlayerInput(Tile_Size);
 
 				renderGame();
 
+				drawFog();
+
+				handlePlayerInput(Tile_Size);
 				//End FOV logic handled area
 				drawSideBarLevel("Level 12", player.counter);
 
@@ -173,6 +168,20 @@ void level12_update(void)
 		case LOSE:
 			drawFullPanel();
 			checkClick(startLevel12, startLevelSelect, 0);
+			break;
+		case START_TRANSITION:
+			CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
+			if (levelStarted)	//when level starts, 
+			{	//render enter level transition animation
+				renderGame();
+				drawFog();
+				levelStarted = initLevelTransition();	//returns 0 when animation is done
+
+				if (!levelStarted)
+				{
+					gameState = PLAY;
+				}
+			}
 			break;
 		}
 

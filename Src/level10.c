@@ -71,7 +71,6 @@ void level10_init(void)
 	setStartGame(Tile_Size);
 	player.setFOV = 1;
 	doorLightRange = 2;
-	gameState = PLAY;
 	player.currentStage = 10;
 	gameFogRange = 2;
 	player.shineCount = 1;
@@ -87,7 +86,8 @@ void level10_update(void)
 				lightCounter -= CP_System_GetDt();
 				handlePlayerIllumInput();
 				renderGame();
-				if(player.shineCount > 0)
+				renderFOVAdvance(returnBounds(Tile_Size), returnBounds(Tile_Size), Tile_Size);
+				if(player.shineCount > 0 && player.counter < 100)
 				drawSmallPanel(4 * Tile_Size, 2 * Tile_Size, 3 * Tile_Size, 4 * Tile_Size, "click anywhere to shine a light when you have a shine");
 				return;
 			}
@@ -96,16 +96,12 @@ void level10_update(void)
 				//clears the screen so things can be redrawn
 				CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
 				//all the game update methods that needs to be updated every frame
-				enemyFOV(Tile_Size);
-				if (player.setFOV) {
-					clearFogBackground();
-					setIlluminationWallLogicOnce(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), gameFogRange+1);
-
-				}
-
-				handlePlayerInput(Tile_Size);
 
 				renderGame();
+				drawFog();
+				handlePlayerInput(Tile_Size);
+
+
 
 				//panel
 				if (player.counter < 10 && player.shineCount > 0)
@@ -113,11 +109,12 @@ void level10_update(void)
 					drawSmallPanel(4 * Tile_Size, 2 * Tile_Size, 3 * Tile_Size, 4 * Tile_Size, "Press space to activate Illum Mode");
 
 				}
-				if (player.counter > 30 && player.counter < 35)
+				if (player.counter > 30 && player.counter < 40)
 				{
-					drawSmallPanel(4 * Tile_Size, 2 * Tile_Size, 3 * Tile_Size, 4 * Tile_Size, "you get a light every 50 steps");
+					drawSmallPanel(4 * Tile_Size, 2 * Tile_Size, 1 * Tile_Size, 1 * Tile_Size, "you get a light every 50 steps");
 
 				}
+
 				//End FOV logic handled area
 				drawSideBarLevel("Level 10", player.counter);
 
@@ -136,6 +133,20 @@ void level10_update(void)
 		case LOSE:
 			drawFullPanel();
 			checkClick(startLevel10, startLevelSelect, 0);
+			break;
+		case START_TRANSITION:
+			CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
+			if (levelStarted)	//when level starts, 
+			{	//render enter level transition animation
+				renderGame();
+				drawFog();
+				levelStarted = initLevelTransition();	//returns 0 when animation is done
+
+				if (!levelStarted)
+				{
+					gameState = PLAY;
+				}
+			}
 			break;
 		}
 

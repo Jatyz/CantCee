@@ -35,8 +35,8 @@ Game_State gameState;
 int Score[30];//number in array base on number of lvls 30 as placeholder for now to test writing in and out
 
 //static variable for animation use
-static int levelExited = 0,
-		   levelStarted = 1;
+int levelExited = 0,
+	 levelStarted = 1;
 
 double lightCounter, tileMoveCounter;
 int doorLightRange,gameFogRange,illumMode;
@@ -108,10 +108,15 @@ void game_init(void)
 	//enemies[5][5].difficulty = 2;
 	//enemies[5][5].Color = BLUE;
 
-	enemies[5][12].type = AOE_VIEW;
-	enemies[5][12].isActive = 1;
-	enemies[5][12].difficulty = 1;
-	enemies[5][12].Color = RED;
+	enemies[5][6].type = AOE_VIEW;
+	enemies[5][6].isActive = 1;
+	enemies[5][6].difficulty = 2;
+	enemies[5][6].Color = RED;
+
+	enemies[4][9].type = AOE_VIEW;
+	enemies[4][9].isActive = 1;
+	enemies[4][9].difficulty = 1;
+	enemies[4][9].Color = RED;
 
 	setStartGame(Tile_Size);
 
@@ -121,11 +126,6 @@ void game_init(void)
 	readScore();
 	writeScore();
 
-	//MOAR NEW CODE HERE!! FOR ANIMATIONS
-	levelExited = 0,
-	levelStarted = 1;
-	setSpriteExtended();	//sets the first frame to be fully black in preperation for animation transistion in,
-							//reccomendation is to not allow player control till animation is done. P.S. does rendering
 }
 
 void game_update(void)
@@ -166,7 +166,6 @@ void game_update(void)
 		checkClick(startLevel1, startGame, startLevelSelect);
 		break;
 	case LOSE:
-
 		drawFullPanel();
 		checkClick(startGame, startLevelSelect, 0);
 		break;
@@ -183,9 +182,10 @@ void game_update(void)
 		setSpriteReseted();
 		}
 	}
+
 	if (levelExited)	//when level exit, 
 	{	//render exit level transition animation
-		levelExited = exitLevelTransition(levelExited, game_exit);	//second parameter runs when the animation is complete, returns 0 when animation is done
+		//levelExited = exitLevelTransition(levelExited, game_exit);	//second parameter runs when the animation is complete, returns 0 when animation is done
 		if(!levelExited)
 			CP_Engine_SetNextGameStateForced(game_init, game_update, game_exit);
 	}
@@ -202,12 +202,6 @@ void renderGame(void) {
 	drawPlayer(Tile_Size);
 	drawEnemy(Tile_Size);
 	enemyFOV(Tile_Size);
-	if(player.setFOV)
-	renderFOVAdvance(returnBounds(Tile_Size) , returnBounds(Tile_Size) , Tile_Size);
-
-	//Test code for *AHEM* dynamic *AHEM* style FOV independent of actual grid resolution
-	//renderFOVBasic(returnBounds(Tile_Size)*6+2, returnBounds(Tile_Size)*6+2,Tile_Size/6);
-	//End FOV render code
 }
 
 //Call this function after setting Tile_Size to reset things to default
@@ -244,6 +238,12 @@ void setStartGame(Tile_Size) {
 	setVents();
 	setGates();
 	setPlayerStartPoint(Tile_Size);
+
+	//MOAR NEW CODE HERE!! FOR ANIMATIONS
+	levelExited = 0, levelStarted = 1;
+	setSpriteExtended();
+	gameState = START_TRANSITION;	//sets the first frame to be fully black in preperation for animation transistion in,
+	//reccomendation is to not allow player control till animation is done. P.S. does rendering
 }
 
 //called after finishing each floor
@@ -310,114 +310,10 @@ void lightTiles(int x, int y, int range) {
 	
 }
 
-void moveTileCheck() {
-	float x, y;
-	int Width, Height;
-	//find the mouse clicked position
-	x = (CP_Input_GetMouseX() / 800) * returnBounds(Tile_Size);
-	y = (CP_Input_GetMouseY() / 800) * returnBounds(Tile_Size);
-
-	//change the state of the cell the mouse clicked on
-	//cannot put float in array, need to explicit convert to int
-	Width = x;
-	Height = y;
-
-	
-	int direction = 0;
-	int tiledif;
-
-	//check if its horizontal or vertical movements only
-	if (Width == player.x) {
-		//check tile difference from player
-		tiledif = abs(player.y - Height);
-		if (tiledif > gameFogRange) {
-			//if out of range set to range
-			tiledif = gameFogRange ;
-		}
-
-		//check direction
-		direction = (player.y - Height) < 0 ? 1:-1;
-
-		//move the specific number of tiles 1 tile at a time
-		for (int i = 0; i < tiledif; i++) {
-			//dont let player update anything
-			tileMoveCounter = 3;
-			player.y += direction *checkMove(0, direction);
-			//check if counter hit a factor of 50
-			giveLight();
-			//check if player walked into enemy fov
-			enemyFOV(Tile_Size);
-			//if player vented stop moving
-			if (player.isTP) {
-				tileMoveCounter = 0;
-				player.isTP = 0;
-				return;
-			}
-		}
-
-		tileMoveCounter = 0;
-	}	//check if its horizontal or vertical movements only
-	else if (Height == player.y) {
-		//check tile difference from player
-		tiledif = abs(player.x - Width);
-		if (tiledif > gameFogRange) {
-			//if out of range set to range
-			tiledif = gameFogRange;
-		}
-
-		//check distance from player
-		direction = (player.x - Width) < 0 ? 1 : -1;
-
-		//move specific clicked number of tiles and move 1 tile at a time
-		for (int i = 0; i < tiledif; i++) {
-			//dont update anything else
-			tileMoveCounter = 3;
-			player.x += direction * checkMove(direction, 0);
-			//check if moved by factor of 50
-			giveLight();
-			//check if walked into enemy fov
-			enemyFOV(Tile_Size);
-			//check if player walked into a vent, if so stop moving
-			if (player.isTP) {
-				tileMoveCounter = 0;
-				player.isTP = 0;
-				return;
-			}
-		}
-
-		//give the player controls back
-		tileMoveCounter = 0;
-
+void drawFog(void) {
+	if (player.setFOV) {
+		clearFogBackground();
+		setIlluminationWallLogicOnce(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), gameFogRange+1);
+		renderFOVAdvance(returnBounds(Tile_Size), returnBounds(Tile_Size), Tile_Size);
 	}
-	
-}
-
-void lightTileCheck() {
-	if (illumMode && player.shineCount > 0) {
-		float x, y;
-		int Width, Height;
-		//find the mouse clicked position
-		x = (CP_Input_GetMouseX() / 800) * returnBounds(Tile_Size);
-		y = (CP_Input_GetMouseY() / 800) * returnBounds(Tile_Size);
-
-		//change the state of the cell the mouse clicked on
-		//cannot put float in array, need to explicit convert to int
-		Width = x;
-		Height = y;
-
-		//set tiles lit for 2 seconds
-		lightTiles(Width, Height, doorLightRange);
-		lightCounter = 2;
-		illumMode = 0;
-		//use shine
-		player.shineCount--;
-	}
-}
-
-void giveLight() {
-	//every 50 steps give player a shine
-	if (player.counter % 50 == 0) {
-		player.shineCount++;
-	}
-
 }

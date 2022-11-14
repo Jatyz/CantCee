@@ -1,6 +1,6 @@
 #include "cprocessing.h"
 #include "levelTransition.h"
-#define ANIMATION_LENGTH 1	//length of the animation, in seconds
+#define ANIMATION_LENGTH .75	//length of the animation, in seconds
 
 
 //remeber to free!!
@@ -25,6 +25,9 @@ void freeImage(void)
 void setSpriteExtended(void) 
 {
 	imageXpos = 0 - TRANSITION_IMAGE_WIDTH;
+
+	CP_Settings_Fill(CP_Color_Create(50, 50, 50, 255));
+
 	CP_Graphics_DrawRect
 	(imageXpos + TRANSITION_IMAGE_WIDTH - 10, 0,
 		CP_System_GetWindowWidth() - (imageXpos - TRANSITION_IMAGE_WIDTH), CP_System_GetWindowHeight());
@@ -34,6 +37,7 @@ void setSpriteExtended(void)
 void setSpriteReseted(void)
 {
 	imageXpos = 0 - TRANSITION_IMAGE_WIDTH;
+
 }
 
 //animates the sprite from outside the screen on the left to the right, ends with screen covered WIP: make this a pointer style to pass into exitLevelTransition()?
@@ -68,6 +72,8 @@ int initLevelTransition()
 	//set draw position for the image
 	CP_Settings_ImageMode(CP_POSITION_CORNER);
 
+	CP_Settings_Fill(CP_Color_Create(50, 50, 50, 255));
+
 	//renders a rect to follow the sprite out of the screen
 	CP_Graphics_DrawRect
 	(imageXpos + TRANSITION_IMAGE_WIDTH-10, 0,
@@ -91,7 +97,7 @@ typedef void transitScript(void);
 
 //handles the animation logic for level exit, runs transit script on animation complete, as denoted by param isAnimationComplete. 
 //return value is 0 when animation is complete, meant to be feed into isAnimation complete parameter
-int exitLevelTransition(int isAnimationComplete, void transitScript(void))
+int exitLevelTransition(int isAnimationComplete)
 {
 	// if there is no image, initialize image
 	if (lvlTransitImage == NULL)
@@ -100,6 +106,9 @@ int exitLevelTransition(int isAnimationComplete, void transitScript(void))
 	}
 	//set draw position for the image
 	CP_Settings_ImageMode(CP_POSITION_CORNER);
+
+
+	CP_Settings_Fill(CP_Color_Create(50, 50, 50, 255));
 
 	//renders a rect to follow the sprite to cover the screen
 	CP_Graphics_DrawRect
@@ -115,7 +124,6 @@ int exitLevelTransition(int isAnimationComplete, void transitScript(void))
 		255);
 
 	if (!isAnimationComplete) {
-		transitScript();	//transit to next scene
 		freeImage();		//free the image, re init when in new scene
 		return ANIMATION_DONE;
 	}

@@ -41,7 +41,6 @@ void level7_init(void)
 	enemySet(3, 4, 0, 6, VERTICAL_HORIZONTAL_LOOK, 0);
 	setStartGame(Tile_Size);
 	player.setFOV = 0;
-	gameState = PLAY;
 	player.currentStage = 7;
 }
 
@@ -56,7 +55,6 @@ void level7_update(void)
 			handlePlayerInput(Tile_Size);
 			//all the game update methods that needs to be updated every frame
 			renderGame();
-			enemyFOV(Tile_Size);
 			//End FOV logic handled area
 			drawSideBarLevel("Level 7", player.counter);
 			if (player.counter < 2)
@@ -76,6 +74,19 @@ void level7_update(void)
 	case LOSE:
 		drawFullPanel();
 		checkClick(startLevel7, startLevelSelect, 0);
+		break;
+	case START_TRANSITION:
+		CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
+		if (levelStarted)	//when level starts, 
+		{	//render enter level transition animation
+			renderGame();
+			levelStarted = initLevelTransition();	//returns 0 when animation is done
+
+			if (!levelStarted)
+			{
+				gameState = PLAY;
+			}
+		}
 		break;
 	}
 

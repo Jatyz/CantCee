@@ -5,7 +5,7 @@
 #include "level1.h"
 #include "panels.h"
 #include "levelSelect.h"
-
+#include "levelTransition.h"
 void level1_init(void)
 {
 	CP_System_SetWindowSize(WINDOW_WIDTH, WINIDOW_HEIGHT);
@@ -47,10 +47,8 @@ void level1_init(void)
 	tiles[4][0].type = END;
 	setStartGame(Tile_Size);
 	player.setFOV = 0;
-	gameState = PLAY;
-	createScore();
-	readScore();
 	player.currentStage = 1;
+
 }
 
 void level1_update(void)
@@ -89,6 +87,19 @@ void level1_update(void)
 	case LOSE:
 		drawFullPanel();
 		checkClick(startLevel1, startLevelSelect, 0);
+		break;
+	case START_TRANSITION:
+		CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
+		if (levelStarted)	//when level starts, 
+		{	//render enter level transition animation
+			renderGame();
+			levelStarted = initLevelTransition();	//returns 0 when animation is done
+
+			if (!levelStarted)
+			{
+				gameState = PLAY;
+			}
+		}
 		break;
 	}
 

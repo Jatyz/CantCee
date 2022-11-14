@@ -99,7 +99,6 @@ void level5_init(void)
 
 	setStartGame(Tile_Size);
 	player.setFOV = 0;
-	gameState = PLAY;
 	player.currentStage = 5;
 }
 
@@ -133,6 +132,19 @@ void level5_update(void)
 	case LOSE:
 		drawFullPanel();
 		checkClick(startLevel5, startLevelSelect, 0);
+		break;
+	case START_TRANSITION:
+		CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
+		if (levelStarted)	//when level starts, 
+		{	//render enter level transition animation
+			renderGame();
+			levelStarted = initLevelTransition();	//returns 0 when animation is done
+
+			if (!levelStarted)
+			{
+				gameState = PLAY;
+			}
+		}
 		break;
 	}
 

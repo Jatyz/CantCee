@@ -19,7 +19,10 @@ void startLevel10(void);
 void startLevel11(void);
 void startLevel12(void);
 void startLevel13(void);
+void startLevel14(void);
+void startLevel15(void);
 void startGame(void);
+void transitLevel(void);
 
 //@youyang when u finish the levle select screen update this function to load it pls
 void startLevelSelect(void);

@@ -46,12 +46,9 @@ void level6_init(void)
 	tiles[5][9].type = START;
 	tiles[4][0].type = END;
 
-	/*enemies[5][5].type = AOE_VIEW;
-	enemies[5][5].isActive = 1;*/
 	enemySet(5, 6, 1, 0, AOE_VIEW, 0);
 	setStartGame(Tile_Size);
 	player.setFOV = 0;
-	gameState = PLAY;
 	player.currentStage = 6;
 }
 
@@ -66,7 +63,6 @@ void level6_update(void)
 			handlePlayerInput(Tile_Size);
 			//all the game update methods that needs to be updated every frame
 			renderGame();
-			enemyFOV(Tile_Size);
 			//End FOV logic handled area
 			drawSideBarLevel("Level 6", player.counter);
 			if (player.counter < 6)
@@ -75,8 +71,6 @@ void level6_update(void)
 				drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 7 * Tile_Size, 6 * Tile_Size, "You will lose when you walk into their vision");
 
 			}
-
-
 			if (player.counter > 6)
 			{
 				drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 0 * Tile_Size, 1 * Tile_Size, "Get to the red tile to proceed");
@@ -95,6 +89,19 @@ void level6_update(void)
 	case LOSE:
 		drawFullPanel();
 		checkClick(startLevel6, startLevelSelect, 0);
+		break;
+	case START_TRANSITION:
+		CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
+		if (levelStarted)	//when level starts, 
+		{	//render enter level transition animation
+			renderGame();
+			levelStarted = initLevelTransition();	//returns 0 when animation is done
+
+			if (!levelStarted)
+			{
+				gameState = PLAY;
+			}
+		}
 		break;
 	}
 
