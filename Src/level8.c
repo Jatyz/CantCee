@@ -76,7 +76,6 @@ void level8_init(void)
 
 	setStartGame(Tile_Size);
 	player.setFOV = 0;
-	gameState = PLAY;
 	player.currentStage = 8;
 }
 
@@ -91,7 +90,6 @@ void level8_update(void)
 			 handlePlayerInput(Tile_Size);
 			 //all the game update methods that needs to be updated every frame
 			 renderGame();
-			 enemyFOV(Tile_Size);
 			 //End FOV logic handled area
 			 if (player.counter < 10)
 			 {
@@ -112,6 +110,19 @@ void level8_update(void)
 	case LOSE:
 		drawFullPanel();
 		checkClick(startLevel8, startLevelSelect, 0);
+		break;
+	case START_TRANSITION:
+		CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
+		if (levelStarted)	//when level starts, 
+		{	//render enter level transition animation
+			renderGame();
+			levelStarted = initLevelTransition();	//returns 0 when animation is done
+
+			if (!levelStarted)
+			{
+				gameState = PLAY;
+			}
+		}
 		break;
 	}
 

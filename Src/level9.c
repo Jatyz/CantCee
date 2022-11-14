@@ -81,18 +81,12 @@ void level9_init(void)
 	setStartGame(Tile_Size);
 	player.setFOV = 1;
 	doorLightRange = 2;
-	gameState = PLAY;
 	player.currentStage = 9;
+	gameFogRange = 1;
 }
 
 void level9_update(void)
 {
-	//need this for light shine on door
-	if (lightCounter > 0) {
-		lightCounter -= CP_System_GetDt();
-		return;
-	}
-	else {
 		switch (gameState) {
 		case PLAY:
 			//clears the screen so things can be redrawn
@@ -100,20 +94,16 @@ void level9_update(void)
 				lightCounter -= CP_System_GetDt();
 				handlePlayerIllumInput();
 				renderGame();
+				renderFOVAdvance(returnBounds(Tile_Size), returnBounds(Tile_Size), Tile_Size);
 				return;
 			}
 			else if (tileMoveCounter != 0) {}
 			else {
 				CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
-				enemyFOV(Tile_Size);
 				//all the game update methods that needs to be updated every frame
-				if (player.setFOV) {
-					clearFogBackground();
-					setIlluminationWallLogicOnce(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), 4);
-
-				}
-				handlePlayerInput(Tile_Size);
 				renderGame();
+				drawFog();
+				handlePlayerInput(Tile_Size);
 
 				if (player.counter < 10)
 				{
@@ -136,9 +126,22 @@ void level9_update(void)
 			drawFullPanel();
 			checkClick(startLevel9, startLevelSelect, 0);
 			break;
+		case START_TRANSITION:
+			CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
+			if (levelStarted)	//when level starts, 
+			{	//render enter level transition animation
+				renderGame();
+				drawFog();
+				levelStarted = initLevelTransition();	//returns 0 when animation is done
+
+				if (!levelStarted)
+				{
+					gameState = PLAY;
+				}
+			}
+			break;
 		}
 
-	}
 }
 
 void level9_exit(void)

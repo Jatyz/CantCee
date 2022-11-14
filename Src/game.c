@@ -35,8 +35,8 @@ Game_State gameState;
 int Score[30];//number in array base on number of lvls 30 as placeholder for now to test writing in and out
 
 //static variable for animation use
-static int levelExited = 0,
-		   levelStarted = 1;
+int levelExited = 0,
+	 levelStarted = 1;
 
 double lightCounter, tileMoveCounter;
 int doorLightRange,gameFogRange,illumMode;
@@ -126,11 +126,6 @@ void game_init(void)
 	readScore();
 	writeScore();
 
-	//MOAR NEW CODE HERE!! FOR ANIMATIONS
-	levelExited = 0,
-	levelStarted = 1;
-	setSpriteExtended();	//sets the first frame to be fully black in preperation for animation transistion in,
-							//reccomendation is to not allow player control till animation is done. P.S. does rendering
 }
 
 void game_update(void)
@@ -171,7 +166,6 @@ void game_update(void)
 		checkClick(startLevel1, startGame, startLevelSelect);
 		break;
 	case LOSE:
-
 		drawFullPanel();
 		checkClick(startGame, startLevelSelect, 0);
 		break;
@@ -188,9 +182,10 @@ void game_update(void)
 		setSpriteReseted();
 		}
 	}
+
 	if (levelExited)	//when level exit, 
 	{	//render exit level transition animation
-		levelExited = exitLevelTransition(levelExited, game_exit);	//second parameter runs when the animation is complete, returns 0 when animation is done
+		//levelExited = exitLevelTransition(levelExited, game_exit);	//second parameter runs when the animation is complete, returns 0 when animation is done
 		if(!levelExited)
 			CP_Engine_SetNextGameStateForced(game_init, game_update, game_exit);
 	}
@@ -207,12 +202,6 @@ void renderGame(void) {
 	drawPlayer(Tile_Size);
 	drawEnemy(Tile_Size);
 	enemyFOV(Tile_Size);
-	if(player.setFOV)
-	renderFOVAdvance(returnBounds(Tile_Size) , returnBounds(Tile_Size) , Tile_Size);
-
-	//Test code for *AHEM* dynamic *AHEM* style FOV independent of actual grid resolution
-	//renderFOVBasic(returnBounds(Tile_Size)*6+2, returnBounds(Tile_Size)*6+2,Tile_Size/6);
-	//End FOV render code
 }
 
 //Call this function after setting Tile_Size to reset things to default
@@ -249,6 +238,12 @@ void setStartGame(Tile_Size) {
 	setVents();
 	setGates();
 	setPlayerStartPoint(Tile_Size);
+
+	//MOAR NEW CODE HERE!! FOR ANIMATIONS
+	levelExited = 0, levelStarted = 1;
+	setSpriteExtended();
+	gameState = START_TRANSITION;	//sets the first frame to be fully black in preperation for animation transistion in,
+	//reccomendation is to not allow player control till animation is done. P.S. does rendering
 }
 
 //called after finishing each floor
@@ -315,3 +310,10 @@ void lightTiles(int x, int y, int range) {
 	
 }
 
+void drawFog(void) {
+	if (player.setFOV) {
+		clearFogBackground();
+		setIlluminationWallLogicOnce(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), gameFogRange+1);
+		renderFOVAdvance(returnBounds(Tile_Size), returnBounds(Tile_Size), Tile_Size);
+	}
+}

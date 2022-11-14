@@ -39,7 +39,6 @@ void level2_init(void)
 	vents[0].tile2 = &tiles[0][9];
 	setStartGame(Tile_Size);
 	player.setFOV = 0;
-	gameState = PLAY;
 	player.currentStage = 2;
 }
 
@@ -74,6 +73,19 @@ void level2_update(void)
 	case LOSE:
 		drawFullPanel();
 		checkClick(startLevel2, startLevelSelect, 0);
+		break;
+	case START_TRANSITION:
+		CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
+		if (levelStarted)	//when level starts, 
+		{	//render enter level transition animation
+			renderGame();
+			levelStarted = initLevelTransition();	//returns 0 when animation is done
+
+			if (!levelStarted)
+			{
+				gameState = PLAY;
+			}
+		}
 		break;
 	}
 

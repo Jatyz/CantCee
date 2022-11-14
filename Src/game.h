@@ -14,7 +14,7 @@
 #define Red CP_Color_Create(255, 0, 0, 255)
 
 typedef enum { // enum for the different type of tiles
-	PLAY, PAUSED, WIN, LOSE
+	PLAY, PAUSED, WIN, LOSE, START_TRANSITION, EXIT_TRANSITION
 }Game_State;
 
 //GLOBAL Color variables
@@ -47,6 +47,7 @@ void createScore();
 
 //light up tiles in a square area
 void lightTiles(int x, int y,int range);
+void drawFog(void);
 
 //global tile size variable
 extern int Tile_Size;
@@ -54,4 +55,5 @@ extern Game_State gameState;
 extern int Score[];
 extern double lightCounter, tileMoveCounter;
 extern int doorLightRange, gameFogRange,illumMode;
+extern levelExited, levelStarted;
 //extern int parScore[]; see game.c

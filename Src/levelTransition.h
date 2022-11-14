@@ -35,4 +35,4 @@ typedef void transitScript(void);
 
 //implement level animation, returns 0 when the animation is complete, returns 1 when animation is still running
 //Also runs void function transitScript to run on exit level items
-int exitLevelTransition(int isAnimationComplete, void transitScript(void));
+int exitLevelTransition(int isAnimationComplete);
