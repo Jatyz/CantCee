@@ -21,6 +21,8 @@
 #include "level11.h"
 #include "level12.h"
 #include "level13.h"
+#include "level14.h"
+#include "level15.h"
 #include "panels.h"
 #include "game.h"
 
@@ -685,20 +687,20 @@ void play_Update()
 			CP_Engine_SetNextGameStateForced(level13_init, level13_update, level13_exit);
 		}
 	}
-	//if (level[13].selected == 1 && CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
-	//{
-	//	if (IsAreaClicked(fifthColumn, playHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
-	//	{
-	//		CP_Engine_SetNextGameStateForced(level14_init, level14_update, level14_exit);
-	//	}
-	//}
-	//if (level[14].selected == 1 && CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
-	//{
-	//	if (IsAreaClicked(fifthColumn, playHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
-	//	{
-	//		CP_Engine_SetNextGameStateForced(level15_init, level15_update, level15_exit);
-	//	}
-	//}
+	if (level[13].selected == 1 && CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
+	{
+		if (IsAreaClicked(fifthColumn, playHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		{
+			CP_Engine_SetNextGameStateForced(level14_init, level14_update, level14_exit);
+		}
+	}
+	if (level[14].selected == 1 && CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
+	{
+		if (IsAreaClicked(fifthColumn, playHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		{
+			CP_Engine_SetNextGameStateForced(level15_init, level15_update, level15_exit);
+		}
+	}
 
 
 

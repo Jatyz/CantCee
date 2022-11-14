@@ -175,8 +175,11 @@ void transitLevel(void)
 	if (levelExited)	//when level exit, 
 	{	//render exit level transition animation
 		levelExited = exitLevelTransition(levelExited);	//second parameter runs when the animation is complete, returns 0 when animation is done
-		if (!levelExited)
+		if (!levelExited) {
+			freeImage();
 			levelExited = 0;
+		}
+
 
 	}
 }
