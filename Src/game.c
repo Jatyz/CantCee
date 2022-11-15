@@ -308,6 +308,7 @@ void lightTiles(int x, int y, int range) {
 		}
 	}
 	
+	setTileLit(x, y);
 }
 
 void drawFog(void) {
@@ -316,4 +317,10 @@ void drawFog(void) {
 		setIlluminationWallLogicOnce(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), gameFogRange+1);
 		renderFOVAdvance(returnBounds(Tile_Size), returnBounds(Tile_Size), Tile_Size);
 	}
+}
+
+void freeImage() {
+	freeMenuImages();
+	freeTransitionImage();
+	freeGridImages();
 }

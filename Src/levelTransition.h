@@ -15,7 +15,7 @@ extern enum
 static CP_Image lvlTransitImage;
 static double imageXpos = -230;;
 
-void freeImage(void);
+void freeTransitionImage(void);
 
 //sets situation where screen starts fully covered 
 void setSpriteExtended(void);

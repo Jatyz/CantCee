@@ -280,3 +280,7 @@ void checkGates(Tile* address) {
 		tiles[col][row].type = SWITCH_ON;
 	}
 }
+
+void freeGridImages() {
+	CP_Image_Free(wall_Vertical);
+}

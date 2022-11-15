@@ -169,5 +169,5 @@ void level13_update(void)
 
 void level13_exit(void)
 {
-
+	freeImage();
 }

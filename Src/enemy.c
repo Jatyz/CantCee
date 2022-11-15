@@ -39,7 +39,7 @@ CP_Color enemyFOVColorSet(int enemyXPos, int enemyYPos)
 	{
 
 		CP_Settings_Stroke(CP_Color_Create(255, 0, 0, 60));
-		CP_Settings_Fill(CP_Color_Create(255, 0, 0, 60));
+		CP_Settings_Fill(CP_Color_Create(200, 0, 50, 60));
 	}
 
 	if (enemies[enemyXPos][enemyYPos].Color == GREEN)

@@ -177,8 +177,6 @@ void transitLevel(void)
 	{	//render exit level transition animation
 		levelExited = exitLevelTransition(levelExited);	//second parameter runs when the animation is complete, returns 0 when animation is done
 		if (!levelExited) {
-			freeMenuImages();
-			freeImage();
 			levelExited = 0;
 		}
 		
@@ -188,7 +186,6 @@ void transitLevel(void)
 
 
 void startLevelSelect(void) {
-	transitLevel();
 	CP_Engine_SetNextGameStateForced(play_Init, play_Update, play_Exit);
 }
 

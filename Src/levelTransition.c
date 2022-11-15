@@ -13,7 +13,7 @@ static void initImage(void)
 //(IMPORTANT!!) 
 //free image to prevent memory shenanigans, use on game_exit if not using the exit animation	(IMPORTANT!!) 
 //(IMPORTANT!!) 
-void freeImage(void)
+void freeTransitionImage(void)
 {
 	if (lvlTransitImage != NULL)
 	{
@@ -124,7 +124,7 @@ int exitLevelTransition(int isAnimationComplete)
 		255);
 
 	if (!isAnimationComplete) {
-		freeImage();		//free the image, re init when in new scene
+		freeTransitionImage();		//free the image, re init when in new scene
 		return ANIMATION_DONE;
 	}
 	//update logic for next frame and return if the animation is done

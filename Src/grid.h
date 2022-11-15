@@ -44,6 +44,8 @@ extern Tile tiles[MAX_TILES][MAX_TILES];
 extern Vent vents[15];
 extern Gate gates[15];
 
+extern CP_Image wall_Vertical;
+
 //returns the horizontal and vertical bounds(no. of elements) in the grid to be used for the level. Assumes grid space used is square
 int returnBounds(int tilesize);
 
@@ -64,3 +66,5 @@ void resetGates();
 
 //check if a switch was walked on
 void checkGates(Tile* address);
+
+void freeGridImages(void);
