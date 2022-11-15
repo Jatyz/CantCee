@@ -176,7 +176,7 @@ void level11_update(void)
 			break;
 		case LOSE:
 			drawFullPanel();
-			checkClick(startLevel11, startLevelSelect, 0);
+			checkClick(0, startLevel11, startLevelSelect);
 			break;
 		case START_TRANSITION:
 			CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));

@@ -28,10 +28,10 @@ CP_Image pMenuReturnToGameHover = NULL;
 CP_Image loseMenuTitle = NULL;
 
 CP_Image lMenuRestartWord = NULL;
-CP_Image lMenuReturnToGame = NULL;
+CP_Image lMenuSelectLevel = NULL;
 
 CP_Image lMenuRestartWordHover = NULL;
-CP_Image lMenuReturnToGameHover = NULL;
+CP_Image lMenuSelectLevelHover = NULL;
 
 // Victory Menu
 CP_Image victoryMenuTitle = NULL;
@@ -82,10 +82,10 @@ void drawFullPanel(void) {
 	loseMenuTitle = CP_Image_Load("./Assets/loseMenuTitle.png");
 
 	lMenuRestartWord = CP_Image_Load("./Assets/lMenuRestartWord.png");
-	lMenuReturnToGame = CP_Image_Load("./Assets/lMenuReturnToGame.png");
+	lMenuSelectLevel = CP_Image_Load("./Assets/lMenuSelectLevel.png");
 
 	lMenuRestartWordHover = CP_Image_Load("./Assets/lMenuRestartWordHover.png");
-	lMenuReturnToGameHover = CP_Image_Load("./Assets/lMenuReturnToGameHover.png");
+	lMenuSelectLevelHover = CP_Image_Load("./Assets/lMenuSelectLevelHover.png");
 
 	// Victory Menu
 	victoryMenuTitle = CP_Image_Load("./Assets/victoryMenuTitle.png");
@@ -162,14 +162,14 @@ void drawFullPanel(void) {
 		}
 
 		// Lose Menu Select Level
-		if (IsAreaClicked(gameCenterX, pMenuRtoGameY, CP_Image_GetWidth(lMenuReturnToGame), CP_Image_GetHeight(lMenuReturnToGame), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		if (IsAreaClicked(gameCenterX, pMenuRtoGameY, CP_Image_GetWidth(lMenuSelectLevel), CP_Image_GetHeight(lMenuSelectLevel), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
 			CP_Image_Draw(pMenuHover, gameCenterX, pMenuRtoGameY, CP_Image_GetWidth(pMenuHover), CP_Image_GetHeight(pMenuHover), 255);
-			CP_Image_Draw(lMenuReturnToGameHover, gameCenterX, pMenuRtoGameY + 5, CP_Image_GetWidth(lMenuReturnToGameHover), CP_Image_GetHeight(lMenuReturnToGameHover), 255);
+			CP_Image_Draw(lMenuSelectLevelHover, gameCenterX, pMenuRtoGameY + 5, CP_Image_GetWidth(lMenuSelectLevelHover), CP_Image_GetHeight(lMenuSelectLevelHover), 255);
 		}
 		else
 		{
-			CP_Image_Draw(lMenuReturnToGame, gameCenterX, pMenuRtoGameY, CP_Image_GetWidth(lMenuReturnToGame), CP_Image_GetHeight(lMenuReturnToGame), 255);
+			CP_Image_Draw(lMenuSelectLevel, gameCenterX, pMenuRtoGameY, CP_Image_GetWidth(lMenuSelectLevel), CP_Image_GetHeight(lMenuSelectLevel), 255);
 		}
 
 		
@@ -265,7 +265,7 @@ void checkClick(void* (button1)(void), void* (button2)(void), void* (button3)(vo
 			button1();
 		}
 		// ----------Select Level Input----------
-		if (IsAreaClicked(gameCenterX, pMenuRestartY, CP_Image_GetWidth(lMenuReturnToGame), CP_Image_GetHeight(lMenuReturnToGame), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		if (IsAreaClicked(gameCenterX, pMenuRestartY, CP_Image_GetWidth(lMenuSelectLevel), CP_Image_GetHeight(lMenuSelectLevel), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
 			button2();
 		}
@@ -376,10 +376,10 @@ void freeMenuImages()
 	CP_Image_Free(&loseMenuTitle);
 
 	CP_Image_Free(&lMenuRestartWord);
-	CP_Image_Free(&lMenuReturnToGame);
+	CP_Image_Free(&lMenuSelectLevel);
 
 	CP_Image_Free(&lMenuRestartWordHover);
-	CP_Image_Free(&lMenuReturnToGameHover);
+	CP_Image_Free(&lMenuSelectLevelHover);
 
 	CP_Image_Free(&victoryMenuTitle);
 
