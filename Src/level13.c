@@ -140,7 +140,7 @@ void level13_update(void)
 			break;
 		case WIN:
 			drawFullPanel();
-			checkClick(0, startLevel13, startLevelSelect);
+			checkClick(startLevel14, startLevel13, startLevelSelect);
 			break;
 		case LOSE:
 			drawFullPanel();

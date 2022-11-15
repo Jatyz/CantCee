@@ -178,9 +178,7 @@ void transitLevel(void)
 		levelExited = exitLevelTransition(levelExited);	//second parameter runs when the animation is complete, returns 0 when animation is done
 		if (!levelExited) {
 			levelExited = 0;
-		}
-		
-		
+		}		
 	}
 }
 
