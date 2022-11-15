@@ -165,7 +165,7 @@ void level11_update(void)
 			break;
 		case PAUSED:
 			drawFullPanel();
-			checkClick(resumeGame, startLevel11, startLevelSelect);
+			checkClick(startLevelSelect, startLevel11, resumeGame);
 			break;
 		case WIN:
 			drawFullPanel();

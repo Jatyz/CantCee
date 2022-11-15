@@ -20,6 +20,7 @@
 #include "mainmenu.h"
 #include "levelTransition.h"
 #include "levelselect.h"
+#include "panels.h"
 
 //need a method to run level select as well
 void levelSelection_Init()
@@ -176,17 +177,18 @@ void transitLevel(void)
 	{	//render exit level transition animation
 		levelExited = exitLevelTransition(levelExited);	//second parameter runs when the animation is complete, returns 0 when animation is done
 		if (!levelExited) {
+			freeMenuImages();
 			freeImage();
 			levelExited = 0;
 		}
-
-
+		
+		
 	}
 }
 
 
 void startLevelSelect(void) {
-
+	transitLevel();
 	CP_Engine_SetNextGameStateForced(play_Init, play_Update, play_Exit);
 }
 

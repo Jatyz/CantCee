@@ -80,7 +80,7 @@ void level6_update(void)
 		break;
 	case PAUSED:
 		drawFullPanel();
-		checkClick(resumeGame, startLevel6, startLevelSelect);
+		checkClick(startLevelSelect, startLevel6, resumeGame);
 		break;
 	case WIN:
 		drawFullPanel();

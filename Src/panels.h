@@ -1,6 +1,26 @@
 #pragma once
 #include "cprocessing.h"
 
+extern CP_Image pauseScreen;
+
+#define gameWindowWidth 800.f
+#define gameWindowHeight 800.f
+
+#define gameCenterX 400.f
+#define gameCenterY 400.f
+
+// Pause Menu Title
+#define pauseMenuY 400.f - 100
+
+// Pause Menu "Select Level"
+#define pMenuSelectlvlY 400.f - 50
+
+// Pause Menu "Restart"
+#define pMenuRestartY 400.f
+
+// Pause Menu "Return To Game"
+#define pMenuRtoGameY 400.f + 100
+
 //draw the pause/win/lose menu
 void drawFullPanel(void);
 
@@ -17,3 +37,5 @@ void checkClick(void* (button1)(void), void* (button2)(void), void* (button3)(vo
 void drawSideBarLevel(char levelNumber[], int noOfStep);
 
 void drawSideBarStats();
+
+void freeMenuImages();
