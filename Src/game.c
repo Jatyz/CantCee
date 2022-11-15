@@ -305,6 +305,7 @@ void lightTiles(int x, int y, int range) {
 	//set a square area of range around the player to light up
 	for (int i = 0; i <= (2 * range); i++) {
 		for (int j = 0; j <= (2 * range); j++) {
+
 			setTileHalfLit(startx + i, starty+j);
 		}
 	}

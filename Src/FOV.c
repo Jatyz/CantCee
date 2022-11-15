@@ -127,6 +127,7 @@ static int angleBlockingTile(double tileAngle)
 //forcibly sets a tile to be clear of any shadows given a (x,y) position
 void setTileLit(int xPos, int yPos) 
 {
+	if ((xPos > 0 && xPos < returnBounds(Tile_Size)) || (yPos > 0 && yPos < returnBounds(Tile_Size)))
 	fog[xPos][yPos] = FOG_MIN;
 	return;
 }
@@ -134,6 +135,7 @@ void setTileLit(int xPos, int yPos)
 //forcibly sets a tile to have half opacity shadows given a (x,y) position
 void setTileHalfLit(int xPos, int yPos)
 {
+	if(( xPos > 0 && xPos < returnBounds(Tile_Size) ) || (yPos > 0 && yPos < returnBounds(Tile_Size)))
 	fog[xPos][yPos] = FOG_HALF;
 	return;
 }
@@ -141,6 +143,7 @@ void setTileHalfLit(int xPos, int yPos)
 //forcibly sets a tile to have full opacity shadows given a (x,y) position
 void setTileUnlit(int xPos, int yPos)
 {
+	if ((xPos > 0 && xPos < returnBounds(Tile_Size)) || (yPos > 0 && yPos < returnBounds(Tile_Size)))
 	fog[xPos][yPos] = FOG_MAX;
 	return;
 }
