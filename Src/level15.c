@@ -189,10 +189,8 @@ void level15_update(void)
 				drawFog();
 				handlePlayerInput(Tile_Size);
 				//End FOV logic handled area
-				drawSideBarLevel("Level 15", player.counter);
+				drawSideBarStats("Level 15", player.counter);
 
-				//write down number of lights and other stats if we are adding more
-				drawSideBarStats();
 			}
 			break;
 		case PAUSED:

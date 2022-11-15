@@ -111,7 +111,7 @@ void level9_update(void)
 
 				}
 				//End FOV logic handled area
-				drawSideBarLevel("Level 9", player.counter);
+				drawSideBarStats("Level 9", player.counter);
 			}
 			break;
 		case PAUSED:

@@ -101,8 +101,6 @@ void level10_update(void)
 				drawFog();
 				handlePlayerInput(Tile_Size);
 
-
-
 				//panel
 				if (player.counter < 10 && player.shineCount > 0)
 				{
@@ -116,10 +114,8 @@ void level10_update(void)
 				}
 
 				//End FOV logic handled area
-				drawSideBarLevel("Level 10", player.counter);
+				drawSideBarStats("Level 10", player.counter);
 
-				//write down number of lights and other stats if we are adding more
-				drawSideBarStats();
 			}
 			break;
 		case PAUSED:

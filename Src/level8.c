@@ -97,7 +97,7 @@ void level8_update(void)
 
 			 }
 		 }
-		drawSideBarLevel("Level 8", player.counter);
+		 drawSideBarStats("Level 8", player.counter);
 		break;
 	case PAUSED:
 		drawFullPanel();

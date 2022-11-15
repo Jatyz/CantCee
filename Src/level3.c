@@ -85,7 +85,7 @@ void level3_update(void)
 			//all the game update methods that needs to be updated every frame
 			renderGame();
 			//End FOV logic handled area
-			drawSideBarLevel("Level 3", player.counter);
+			drawSideBarStats("Level 3", player.counter);
 			if (player.counter < 6)
 			{
 				drawSmallPanel(4 * Tile_Size, 2 * Tile_Size, 3 * Tile_Size, 4 * Tile_Size, "Vents are interconnected in unknown ways, you will need to remember which vents leads to which.");

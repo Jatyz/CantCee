@@ -63,7 +63,7 @@ void level1_update(void)
 			//all the game update methods that needs to be updated every frame
 			renderGame();
 			//End FOV logic handled area
-			drawSideBarLevel("Level 1", player.counter);
+			drawSideBarStats("Level 1", player.counter);
 			if (player.y > 5)
 			{
 				drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 7 * Tile_Size, 6 * Tile_Size, "Press WASD to move. Or use mouse to click on a tile to move horizontallly or vertically");

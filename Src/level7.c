@@ -56,7 +56,7 @@ void level7_update(void)
 			//all the game update methods that needs to be updated every frame
 			renderGame();
 			//End FOV logic handled area
-			drawSideBarLevel("Level 7", player.counter);
+			drawSideBarStats("Level 7", player.counter);
 			if (player.counter < 2)
 			{
 				drawSmallPanel(6 * Tile_Size, 2 * Tile_Size, 1 * Tile_Size, 8 * Tile_Size, "\nDisguise tiles makes it so the enemy detection system cannot see you if you are the same color as their detection!! -->");

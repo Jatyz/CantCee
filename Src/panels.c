@@ -1,6 +1,7 @@
 #include "cprocessing.h"
 #include "grid.h"
 #include "game.h"
+#include "player.h"
 #include "utils.h"
 #include "mainmenu.h"
 #include <stdio.h>
@@ -307,12 +308,6 @@ void checkClick(void* (button1)(void), void* (button2)(void), void* (button3)(vo
 
 void drawSideBarLevel(char levelNumber[], int noOfStep) {
 
-	//switch(currentStage){
-	//case 1: cp_Image_draw();
-
-
-	//}
-
 	CP_Settings_RectMode(CP_POSITION_CORNER);
 	CP_Settings_Fill(CP_Color_Create(0,0,0,255));
 	CP_Settings_TextSize(40.f);
@@ -321,7 +316,7 @@ void drawSideBarLevel(char levelNumber[], int noOfStep) {
 	char* number;
 	number = malloc(28 + 6);
 	if (number != NULL) {
-		sprintf_s(number, 34, "Number of Steps: %d", noOfStep);
+		sprintf_s(number, 34, "Current Number of Steps: %d", noOfStep);
 	}
 	CP_Settings_TextSize(25.f);
 	CP_Font_DrawTextBox(number, 805, 70, 200);
@@ -329,26 +324,43 @@ void drawSideBarLevel(char levelNumber[], int noOfStep) {
 	free(number);
 }
 
-void drawSideBarStats() {
+void drawSideBarStats(char levelNumber[], int noOfStep) {
 	CP_Settings_RectMode(CP_POSITION_CORNER);
-	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-	CP_Settings_TextSize(30.f);
-	CP_Font_DrawTextBox("Number of Shine", 810, 200, 200);
+	CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
 
-	char* number;
-	number = malloc(12);
-	if (number != NULL) {
-		sprintf_s(number, 12, "%d", player.shineCount);
-	}
+	//drawing title
 	CP_Settings_TextSize(40.f);
-	CP_Font_DrawTextBox(number, 875, 250, 200);
+	CP_Font_DrawTextBox(levelNumber, 810, 30, 200);
 
-	if (illumMode) {
+	//allocating space
+	char* number;
+	number = malloc(34);
+	//current number of steps
+	if (number != NULL) {
+		sprintf_s(number, 34, "Current Number of Steps: %d", noOfStep);
+	}
+	CP_Settings_TextSize(25.f);
+	CP_Font_DrawTextBox(number, 805, 70, 200);
+
+	if (player.currentStage > 9) {
+		//number of shine
+		CP_Settings_TextSize(30.f);
+		CP_Font_DrawTextBox("Number of Shine", 810, 200, 200);
+		//the exact number
 		if (number != NULL) {
-			sprintf_s(number, 12, "Illum Mode");
+			sprintf_s(number, 12, "%d", player.shineCount);
 		}
-		CP_Settings_TextSize(60.f);
-		CP_Font_DrawTextBox(number, 825, 350, 200);
+		CP_Settings_TextSize(40.f);
+		CP_Font_DrawTextBox(number, 875, 250, 200);
+
+		if (illumMode) {
+			if (number != NULL) {
+				sprintf_s(number, 12, "Illum Mode");
+			}
+			CP_Settings_TextSize(60.f);
+			CP_Font_DrawTextBox(number, 825, 350, 200);
+		}
+
 	}
 
 	free(number);
@@ -356,6 +368,7 @@ void drawSideBarStats() {
 
 void freeMenuImages()
 {
+	//please check again
 	CP_Settings_ImageMode(CP_POSITION_CENTER);
 
 	CP_Image_Free(&pauseBackground);
@@ -393,4 +406,20 @@ void freeMenuImages()
 
 	CP_Image_Free(&pauseGradient);
 
+}
+
+void drawSideBarPar(int noOfStep) {
+
+	CP_Settings_RectMode(CP_POSITION_CORNER);
+	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
+
+	char* number;
+	number = malloc(28 + 6);
+	if (number != NULL) {
+		sprintf_s(number, 34, "Par Number of Steps: %d", noOfStep);
+	}
+	CP_Settings_TextSize(25.f);
+	CP_Font_DrawTextBox(number, 805, 120, 200);
+
+	free(number);
 }

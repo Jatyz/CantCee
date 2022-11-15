@@ -64,7 +64,7 @@ void level6_update(void)
 			//all the game update methods that needs to be updated every frame
 			renderGame();
 			//End FOV logic handled area
-			drawSideBarLevel("Level 6", player.counter);
+			drawSideBarStats("Level 6", player.counter);
 			if (player.counter < 6)
 			{
 				drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 0 * Tile_Size, 1 * Tile_Size, "Enemy has their own detection system avoid walking into their vision");

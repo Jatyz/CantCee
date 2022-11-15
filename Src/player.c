@@ -84,6 +84,7 @@ void handlePlayerInput(int tilesize) {
 		if (player.y > 0) {
 			//check if the tile can be moved
 			player.y -= checkMove(0, UP);
+			drawPlayer(Tile_Size);
 			//check if player getting light
 			giveLight();
 			player.direction = 0;		//set direction player is facing to up
@@ -95,6 +96,7 @@ void handlePlayerInput(int tilesize) {
 		if (player.x < Horizontal_Tile - 1) {
 			//check if tile can be moved
 			player.x += checkMove(RIGHT, 0);
+			drawPlayer(Tile_Size);
 			//check if player getting light
 			giveLight();
 			player.direction = 1;		//set direction player is facing to right
@@ -107,6 +109,7 @@ void handlePlayerInput(int tilesize) {
 		if (player.y < Vertical_Tile - 1) {
 			//check if the tile can be moved
 			player.y += checkMove(0, DOWN);
+			drawPlayer(Tile_Size);
 			//check if player has moved 50 steps
 			giveLight();
 			player.direction = 2;		//set direction player is facing to down
@@ -119,6 +122,7 @@ void handlePlayerInput(int tilesize) {
 			//check if the tile can be moved
 			if (checkMove(LEFT, 0)) {
 				player.x -= 1;
+				drawPlayer(Tile_Size);
 				//check if player getting light
 				giveLight();
 				player.direction = 3;	//set direction player is facing to left
@@ -128,12 +132,12 @@ void handlePlayerInput(int tilesize) {
 
 	//for tile movement
 	if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT)) {
-		//check if player clicked any tile, and if they have a use of light
+		//check if player clicked any tile
 			moveTileCheck();
 	}
 
 	//toggle light bomb
-	if (CP_Input_KeyTriggered(KEY_SPACE)) {
+	if (CP_Input_KeyTriggered(KEY_SPACE) && player.currentStage > 9) {
 		//activate illumination mode, where player cannot move
 		illumMode = 1;
 	}

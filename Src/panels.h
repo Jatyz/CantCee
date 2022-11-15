@@ -36,6 +36,8 @@ void checkClick(void* (button1)(void), void* (button2)(void), void* (button3)(vo
 
 void drawSideBarLevel(char levelNumber[], int noOfStep);
 
+void drawSideBarPar(int noOfStep);
+
 void drawSideBarStats();
 
 void freeMenuImages();

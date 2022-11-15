@@ -159,10 +159,8 @@ void level14_update(void)
 					drawSmallPanel(4 * Tile_Size, 4 * Tile_Size, 3 * Tile_Size, 4 * Tile_Size, "If you cannot find a way to progress you may need to restart.");
 				}
 
-				drawSideBarLevel("Level 14", player.counter);
+				drawSideBarStats("Level 14", player.counter);
 
-				//write down number of lights and other stats if we are adding more
-				drawSideBarStats();
 			}
 			break;
 		case PAUSED:

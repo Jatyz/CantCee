@@ -114,7 +114,7 @@ void level5_update(void)
 			//all the game update methods that needs to be updated every frame
 			renderGame();
 			//End FOV logic handled area
-			drawSideBarLevel("Level 5", player.counter);
+			drawSideBarStats("Level 5", player.counter);
 			if (player.counter < 10)
 			{
 				drawSmallPanel(4 * Tile_Size, 2 * Tile_Size, 3 * Tile_Size, 4 * Tile_Size, "Just like vents, we do not know which switch goes to which door.");
