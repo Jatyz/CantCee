@@ -732,6 +732,7 @@ void play_Exit()
 	CP_Image_Free(&lvl13);
 	CP_Image_Free(&lvl14);
 
+	CP_Image_Free(&home);
 	CP_Image_Free(&hoverLvl);
 
 	CP_Image_Free(&hoverLvl0Word);
