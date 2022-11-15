@@ -124,6 +124,19 @@ static int angleBlockingTile(double tileAngle)
 /	
 */
 
+//function checks if x1 and y1 are within grid with grid size gridSizeX and gridSizeY in X and Y axis respectively
+static int isInGrid(int x1, int y1, int gridSizeX, int gridSizeY)
+{
+	if (!(x1 >= gridSizeX)
+		&& !(x1 < 0)
+		&& !(y1 >= gridSizeY)
+		&& !(y1 < 0)) 
+	{
+		return 1;
+	}
+	return 0;
+}
+
 //forcibly sets a tile to be clear of any shadows given a (x,y) position
 void setTileLit(int xPos, int yPos) 
 {
@@ -188,7 +201,22 @@ void setIllumination
 	}
 }
 
-//Assumes setIlluminationBasic()/setIllumintationAdvance() was called before hand, Works up to FOV radius of 4(WIP), Also, do prospecting on whether function needs refactoring
+void setIlluminationTrails
+(
+	int const playerXPos,		//player's current X position on the grid
+	int const playerYPos,		//player's current Y position on the grid
+	int const gridSizeX,		//size of the grid in the X axis for the level, used to find the bounds required of the fog grid
+	int const gridSizeY,		//size of the grid in the Y axis for the level, used to find the bounds required of the fog grid
+	int const fovRadius			//the radius of the global illumination in terms of number of tiles
+)
+{
+	if (gridSizeX > FOG_MAX_X || gridSizeY > FOG_MAX_Y || fovRadius > 6)
+	{
+		return;
+	}
+}
+
+//Assumes setIlluminationBasic()/setIllumintationAdvance() was called before hand, Works up to FOV radius of 5, Also, do prospecting on whether function needs refactoring
 void setIlluminationWallLogic
 (
 	int const playerXPos,		//player's current X position on the grid
@@ -219,10 +247,7 @@ void setIlluminationWallLogic
 		{
 			for (int yAxis = playerYPos - currentRadius; yAxis < (playerYPos + currentRadius + 1); yAxis++)		//check of Y axis under outer layer of X axis within current radius 
 			{
-				if (!(xAxis >= gridSizeX)
-					&& !(xAxis < 0)
-					&& !(yAxis >= gridSizeY)
-					&& !(yAxis < 0))							//dont set value if out of array
+				if (isInGrid(xAxis,yAxis,gridSizeX,gridSizeY))							//dont set value if out of array
 				{
 					currentTileAngle = angleOfPointR2(xAxis - playerXPos, yAxis - playerYPos);	//find current angle of tile from player position and store in currentTileAngle
 					if (tiles[xAxis][yAxis].type == WALL)		//if tile found is wall
@@ -250,10 +275,7 @@ void setIlluminationWallLogic
 		{
 			for (int xAxis = playerXPos - currentRadius; xAxis < (playerXPos + currentRadius); xAxis++)	//check X axis under outer layer of Y axis within current radius 
 			{
-				if (!(xAxis >= gridSizeX)
-					&& !(xAxis < 0)
-					&& !(yAxis >= gridSizeY)
-					&& !(yAxis < 0))								//dont set value if out of array
+				if (isInGrid(xAxis,yAxis,gridSizeX,gridSizeY))								//dont set value if out of array
 				{
 					currentTileAngle = angleOfPointR2(xAxis - playerXPos, yAxis - playerYPos);	//find current angle of tile from player position and store in currentTileAngle
 					if (tiles[xAxis][yAxis].type == WALL)		//if tile found is wall
@@ -284,10 +306,7 @@ void setIlluminationWallLogic
 		{
 			for (int yAxis = playerYPos - currentRadius; yAxis < (playerYPos + currentRadius + 1); yAxis++)		//check of Y axis under outer layer of X axis within current radius 
 			{
-				if (!(xAxis >= gridSizeX)
-					&& !(xAxis < 0)
-					&& !(yAxis >= gridSizeY)
-					&& !(yAxis < 0))								//dont set value if out of array
+				if (isInGrid(xAxis, yAxis, gridSizeX, gridSizeY))								//dont set value if out of array
 				{	
 					double differenceInAngle = 359.0f;				//create variable to store difference in player-to-tile and allowance angles
 					currentTileAngle = angleOfPointR2(xAxis - playerXPos, yAxis - playerYPos);	//find current angle of tile from player position and store in currentTileAngle
@@ -317,10 +336,7 @@ void setIlluminationWallLogic
 		{
 			for (int xAxis = playerXPos - currentRadius; xAxis < (playerXPos + currentRadius); xAxis++)	//check X axis under outer layer of Y axis within current radius 
 			{
-				if (!(xAxis >= gridSizeX)
-					&& !(xAxis < 0)
-					&& !(yAxis >= gridSizeY)
-					&& !(yAxis < 0))								//dont set value if out of array
+				if (isInGrid(xAxis, yAxis, gridSizeX, gridSizeY))								//dont set value if out of array
 				{
 					double differenceInAngle = 359.0f;				//create variable to store difference in player-to-tile and allowance angles
 					currentTileAngle = angleOfPointR2(xAxis - playerXPos, yAxis - playerYPos);	//find current angle of tile from player position and store in currentTileAngle
@@ -381,10 +397,7 @@ void setIlluminationWallLogicOnce
 		{
 			for (int yAxis = playerYPos - currentRadius; yAxis < (playerYPos + currentRadius + 1); yAxis++)		//check of Y axis under outer layer of X axis within current radius 
 			{
-				if (!(xAxis >= gridSizeX)
-					&& !(xAxis < 0)
-					&& !(yAxis >= gridSizeY)
-					&& !(yAxis < 0))							//dont set value if out of array
+				if (isInGrid(xAxis, yAxis, gridSizeX, gridSizeY))							//dont set value if out of array
 				{
 					currentTileAngle = angleOfPointR2(xAxis - playerXPos, yAxis - playerYPos);	//find current angle of tile from player position and store in currentTileAngle
 
@@ -419,10 +432,7 @@ void setIlluminationWallLogicOnce
 		{
 			for (int xAxis = playerXPos - currentRadius; xAxis < (playerXPos + currentRadius); xAxis++)	//check X axis under outer layer of Y axis within current radius 
 			{
-				if (!(xAxis >= gridSizeX)
-					&& !(xAxis < 0)
-					&& !(yAxis >= gridSizeY)
-					&& !(yAxis < 0))							//dont set value if out of array
+				if (isInGrid(xAxis, yAxis, gridSizeX, gridSizeY))							//dont set value if out of array
 				{
 					currentTileAngle = angleOfPointR2(xAxis - playerXPos, yAxis - playerYPos);	//find current angle of tile from player position and store in currentTileAngle
 
@@ -460,10 +470,7 @@ void setIlluminationWallLogicOnce
 		{
 			for (int yAxis = playerYPos - currentRadius; yAxis < (playerYPos + currentRadius + 1); yAxis++)		//check of Y axis under outer layer of X axis within current radius 
 			{
-				if (!(xAxis >= gridSizeX)
-					&& !(xAxis < 0)
-					&& !(yAxis >= gridSizeY)
-					&& !(yAxis < 0))							//dont set value if out of array
+				if (isInGrid(xAxis, yAxis, gridSizeX, gridSizeY))							//dont set value if out of array
 				{
 					currentTileAngle = angleOfPointR2(xAxis - playerXPos, yAxis - playerYPos);	//find current angle of tile from player position and store in currentTileAngle
 					if (tiles[xAxis][yAxis].type != WALL
@@ -490,10 +497,7 @@ void setIlluminationWallLogicOnce
 		{
 			for (int xAxis = playerXPos - currentRadius; xAxis < (playerXPos + currentRadius); xAxis++)	//check X axis under outer layer of Y axis within current radius 
 			{
-				if (!(xAxis >= gridSizeX)
-					&& !(xAxis < 0)
-					&& !(yAxis >= gridSizeY)
-					&& !(yAxis < 0))							//dont set value if out of array
+				if (isInGrid(xAxis, yAxis, gridSizeX, gridSizeY))							//dont set value if out of array
 				{
 					currentTileAngle = angleOfPointR2(xAxis - playerXPos, yAxis - playerYPos);	//find current angle of tile from player position and store in currentTileAngle
 					if (tiles[xAxis][yAxis].type != WALL
@@ -591,10 +595,7 @@ void setPlayerFOV(
 				(i < playerXPos + 1);
 				i++)
 			{
-				if (!(i >= gridSizeX)
-					&& !(i < 0)
-					&& !(j >= gridSizeY)
-					&& !(j < 0))				//dont set value if out of array(horizontal check)
+				if (isInGrid(i, j, gridSizeX, gridSizeY))				//dont set value if out of array(horizontal check)
 				{
 					fog[i][j] = FOG_MIN;								//set fog in this tile to none
 				}
@@ -612,10 +613,7 @@ void setPlayerFOV(
 				(j < playerYPos + 1);
 				j++)
 			{
-				if (!(j >= gridSizeY)
-					&& !(j < 0)
-					&& !(i >= gridSizeX)
-					&& !(i < 0))								//dont set value if out of array(vertical check)
+				if (isInGrid(i, j, gridSizeX, gridSizeY))								//dont set value if out of array(vertical check)
 				{
 					fog[i][j] = FOG_MIN;								//set fog in this tile to none
 				}
@@ -633,11 +631,7 @@ void setPlayerFOV(
 				i++)
 			{
 				//dont set value if out of array!
-				if (
-					!(i >= gridSizeX)
-					&& !(i < 0)
-					&& !(j >= gridSizeY)
-					&& !(j < 0))
+				if (isInGrid(i, j, gridSizeX, gridSizeY))
 				{
 					fog[i][j] = FOG_MIN;								//set fog in this tile to none
 				}
@@ -654,9 +648,7 @@ void setPlayerFOV(
 				(j < playerYPos + 1);
 				j++)
 			{
-				if (!(j >= gridSizeY) && !(j < 0)
-					&& !(i >= gridSizeX)
-					&& !(i < 0))								//dont set value if out of array(vertical check)
+				if (isInGrid(i, j, gridSizeX, gridSizeY))								//dont set value if out of array(vertical check)
 				{
 					fog[i][j] = FOG_MIN;								//set fog in this tile to none
 				}
@@ -704,10 +696,7 @@ void setPlayerFOVFunnel(
 					(i < playerXPos + (currentFactor / expansionFactor) + 1);
 					i++)
 				{
-					if (!(i >= gridSizeX) 
-						&& !(i < 0)
-						&& !(j >= gridSizeY)
-						&& !(j < 0))				//dont set value if out of array(horizontal check)
+					if (isInGrid(i, j, gridSizeX, gridSizeY))				//dont set value if out of array(horizontal check)
 					{
 						fog[i][j] = FOG_MIN;								//set fog in this tile to none
 					}
@@ -726,10 +715,7 @@ void setPlayerFOVFunnel(
 					(j < playerYPos + (currentFactor / expansionFactor) + 1);
 					j++)
 				{
-					if (!(j >= gridSizeY)
-						&& !(j < 0)
-						&& !(i >= gridSizeX)
-						&& !(i < 0))								//dont set value if out of array(vertical check)
+					if (isInGrid(i, j, gridSizeX, gridSizeY))								//dont set value if out of array(vertical check)
 					{
 						fog[i][j] = FOG_MIN;								//set fog in this tile to none
 					}
@@ -749,11 +735,7 @@ void setPlayerFOVFunnel(
 					i++)
 				{
 					//dont set value if out of array!
-					if (
-						!(i >= gridSizeX)
-						&& !(i < 0)
-						&& !(j >= gridSizeY)
-						&& !(j < 0))
+					if (isInGrid(i, j, gridSizeX, gridSizeY))
 					{
 						fog[i][j] = FOG_MIN;								//set fog in this tile to none
 					}
@@ -771,9 +753,7 @@ void setPlayerFOVFunnel(
 					(j < playerYPos + (currentFactor / expansionFactor) + 1);
 					j++)
 				{
-					if (!(j >= gridSizeY) && !(j < 0)
-						&& !(i >= gridSizeX)
-						&& !(i < 0))								//dont set value if out of array(vertical check)
+					if (isInGrid(i, j, gridSizeX, gridSizeY))								//dont set value if out of array(vertical check)
 					{
 						fog[i][j] = FOG_MIN;								//set fog in this tile to none
 					}
@@ -830,10 +810,7 @@ void setFOVFunnelWallLogic(
 				(i < playerXPos + (currentFactor / expansionFactor) + 1);
 				i++)
 			{
-				if (!(i >= gridSizeX)
-					&& !(i < 0)
-					&& !(j >= gridSizeY)
-					&& !(j < 0))								//dont set value if out of array(horizontal check)
+				if (isInGrid(i, j, gridSizeX, gridSizeY))								//dont set value if out of array(horizontal check)
 				{
 					if (i < drawLowerBounds)						//if x axis is further lower than the last known left side wall position touching the edge of the player's FOV
 					{
@@ -895,10 +872,7 @@ void setFOVFunnelWallLogic(
 				(j < playerYPos + (currentFactor / expansionFactor) + 1);
 				j++)
 			{
-				if (!(j >= gridSizeY)
-					&& !(j < 0)
-					&& !(i >= gridSizeX)
-					&& !(i < 0))								//dont set valuae if out of array(vertical check)
+				if (isInGrid(i, j, gridSizeX, gridSizeY))								//dont set valuae if out of array(vertical check)
 				{
 					if (j < drawLowerBounds)					//if y axis is further lower than the last known left side wall position touching the edge of the player's FOV
 					{
@@ -962,11 +936,7 @@ void setFOVFunnelWallLogic(
 				i++)
 			{
 				//dont set value if out of array!
-				if (
-					!(i >= gridSizeX)
-					&& !(i < 0)
-					&& !(j >= gridSizeY)
-					&& !(j < 0))
+				if (isInGrid(i, j, gridSizeX, gridSizeY))
 				{
 					if (i < drawLowerBounds)						//if x axis is further lower than the last known left side wall position touching the edge of the player's FOV
 					{
@@ -1030,9 +1000,7 @@ void setFOVFunnelWallLogic(
 				(j < playerYPos + (currentFactor / expansionFactor) + 1);
 				j++)
 			{
-				if (!(j >= gridSizeY) && !(j < 0)
-					&& !(i >= gridSizeX)
-					&& !(i < 0))								//dont set value if out of array(vertical check)
+				if (isInGrid(i, j, gridSizeX, gridSizeY))								//dont set value if out of array(vertical check)
 				{
 					if (j < drawLowerBounds)					//if y axis is further lower than the last known left side wall position touching the edge of the player's FOV
 					{
