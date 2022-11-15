@@ -21,7 +21,7 @@
 
 // BackButton
 #define credits1BackButtonX (windowWidth / 2) - 400
-#define credits1ButtonY (windowHeight / 2)
+#define credits1ButtonY (windowHeight / 5*4)
 
 // NextPageButton
 #define credits1NextPageButtonX (windowWidth / 2) + 400

@@ -3,6 +3,7 @@
 
 #include "mainMenu.h"
 #include "play.h"
+#include "credits1.h"
 #include "credits2.h"
 #include "settings.h"
 #include "howToPlay.h"
@@ -40,11 +41,11 @@ void credits2_Update()
         // Back To Main Menu Button
         if (IsAreaClicked(credits2BackButtonX, credits2ButtonY, CP_Image_GetWidth(credits2BackToMainMenu), CP_Image_GetHeight(credits2BackToMainMenu), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
         {
-            CP_Engine_SetNextGameStateForced(mainMenu_Init, mainMenu_Update, mainMenu_Exit);
+            CP_Engine_SetNextGameStateForced(credits1_Init, credits1_Update, credits1_Exit);
         }
         if (IsAreaClicked(credits2NextPageButtonX, credits2ButtonY, CP_Image_GetWidth(credits2NextPage), CP_Image_GetHeight(credits2NextPage), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
         {
-            CP_Engine_SetNextGameStateForced(play_Init, play_Update, play_Exit);
+            CP_Engine_SetNextGameStateForced(mainMenu_Init, mainMenu_Update, mainMenu_Exit);
         }
     }
 }
