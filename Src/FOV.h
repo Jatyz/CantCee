@@ -4,6 +4,9 @@
 //sets all value in fog to be fully obscured
 void clearFogBackground(void);
 
+//sets all trails to values that should not affect renders
+void resetTrails(void);
+
 //set a tile at a given X and Y position to not be covered by a fog 
 void setTileLit(
 	int xPos,					// X position of the tile, in grid terms, to be illuminated
@@ -30,6 +33,13 @@ void setIllumination
 	int const gridSizeX,		//horizontal size of grid
 	int const gridSizeY,		//vertical size of grid
 	int const fovRadius			//radius of the illumination around the player
+);
+
+//add player's location to a trails array and set render logic for all trails position in a radius around the previous trails
+void setIlluminationTrails
+(
+	int const gridSizeX,		//size of the grid in the X axis for the level, used to find the bounds required of the fog grid
+	int const gridSizeY		//size of the grid in the Y axis for the level, used to find the bounds required of the fog grid
 );
 
 //sets the wall logic for setIllumination() and setIlluminationAdvance() functions, all walls are rendered and walls cast shadows onto tiles
