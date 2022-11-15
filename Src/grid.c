@@ -282,5 +282,5 @@ void checkGates(Tile* address) {
 }
 
 void freeGridImages() {
-	CP_Image_Free(wall_Vertical);
+	CP_Image_Free(&wall_Vertical);
 }
