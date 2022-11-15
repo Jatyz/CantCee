@@ -27,7 +27,6 @@ void drawTile(int tilesize) {
 	int height, width;
 
 
-	wall_Vertical = CP_Image_Load("./Assets/wall_Vertical.png");
 
 	CP_Settings_NoStroke();
 	CP_Settings_ImageMode(CP_POSITION_CORNER);
@@ -282,5 +281,5 @@ void checkGates(Tile* address) {
 }
 
 void freeGridImages() {
-	CP_Image_Free(wall_Vertical);
+	CP_Image_Free(&wall_Vertical);
 }

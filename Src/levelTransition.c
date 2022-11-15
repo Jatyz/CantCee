@@ -17,7 +17,7 @@ void freeTransitionImage(void)
 {
 	if (lvlTransitImage != NULL)
 	{
-		CP_Image_Free(lvlTransitImage);
+		CP_Image_Free(&lvlTransitImage);
 	}
 }
 

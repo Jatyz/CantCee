@@ -709,6 +709,7 @@ void play_Update()
 
 	}
 
+
 void play_Exit()
 {
 	CP_Image_Free(&gradientAccentBackground2);

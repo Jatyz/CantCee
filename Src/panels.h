@@ -1,8 +1,6 @@
 #pragma once
 #include "cprocessing.h"
 
-extern CP_Image pauseScreen;
-
 #define gameWindowWidth 800.f
 #define gameWindowHeight 800.f
 

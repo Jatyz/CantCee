@@ -206,6 +206,7 @@ void renderGame(void) {
 
 //Call this function after setting Tile_Size to reset things to default
 void resetGame(Tile_Size) {
+	wall_Vertical = CP_Image_Load("./Assets/wall_Vertical.png");
 
 	//player color may need to move out of this method to set from the start of the stage itself
 	player.Player_Color = DEFAULT;
