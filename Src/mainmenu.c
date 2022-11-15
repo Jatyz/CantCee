@@ -8,6 +8,8 @@
 #include "credits1.h"
 #include "settings.h"
 
+#include "game.h"
+
 CP_Image mainMenuBackground1 = NULL;
 
 CP_Image cLogo = NULL;
@@ -69,6 +71,10 @@ void mainMenu_Init()
 
     // All Text allignment
     CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
+
+    createScore();
+
+    readScore();
 }
 
 
@@ -147,7 +153,7 @@ void mainMenu_Update()
         // ----------Settings Input----------
         if (IsAreaClicked(settingsWordWidth, settingsWordHeight, CP_Image_GetWidth(settingsWord), CP_Image_GetHeight(settingsWord), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
         {
-            CP_Engine_SetNextGameStateForced(settings_Init, settings_Update, settings_Exit);
+            //CP_Engine_SetNextGameStateForced(settings_Init, settings_Update, settings_Exit);
         }
 
         // ----------Exit Button Input----------

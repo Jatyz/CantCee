@@ -128,9 +128,7 @@ void level13_update(void)
 				drawFog();
 
 				handlePlayerInput(Tile_Size);
-				if (player.counter < 5) {
-					drawSmallPanel(4 * Tile_Size, 2 * Tile_Size, 3 * Tile_Size, 4 * Tile_Size, "One switch can open multiple doors.");
-				}
+
 				//End FOV logic handled area
 				drawSideBarLevel("Level 13", player.counter);
 
