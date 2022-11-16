@@ -50,6 +50,8 @@ extern CP_Image openedDoor;
 extern CP_Image closedDoor;
 
 extern CP_Image closedVent;
+extern CP_Image switchOff;
+extern CP_Image switchOn;
 
 //returns the horizontal and vertical bounds(no. of elements) in the grid to be used for the level. Assumes grid space used is square
 int returnBounds(int tilesize);

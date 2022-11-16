@@ -10,6 +10,10 @@ CP_Image openedDoor = NULL;
 CP_Image closedDoor = NULL;
 
 CP_Image closedVent = NULL;
+CP_Image switchOff = NULL;
+CP_Image switchOn = NULL;
+
+
 
 //declaration of tiles
 Tile tiles[MAX_TILES][MAX_TILES];
@@ -92,12 +96,16 @@ void drawTile(int tilesize) {
 				CP_Image_Draw(openedDoor, width * tilesize, height * tilesize, tilesize, tilesize, 255);
 				break;
 			case SWITCH_OFF:
-				CP_Settings_Fill(CP_Color_Create(255, 255, 0, 255)); //set tile color
-				CP_Graphics_DrawRect(width * tilesize, height * tilesize, tilesize - .5f, tilesize - .5f); //draw tile
+				//CP_Settings_Fill(CP_Color_Create(255, 255, 0, 255)); //set tile color
+				//CP_Graphics_DrawRect(width * tilesize, height * tilesize, tilesize - .5f, tilesize - .5f); //draw tile
+				CP_Image_Draw(switchOff, width * tilesize, height * tilesize, tilesize, tilesize, 255);
+
 				break;
 			case SWITCH_ON:
-				CP_Settings_Fill(CP_Color_Create(122, 122, 0, 255)); //set tile color
-				CP_Graphics_DrawRect(width * tilesize, height * tilesize, tilesize - .5f, tilesize - .5f); //draw tile
+				//CP_Settings_Fill(CP_Color_Create(122, 122, 0, 255)); //set tile color
+				//CP_Graphics_DrawRect(width * tilesize, height * tilesize, tilesize - .5f, tilesize - .5f); //draw tile
+				CP_Image_Draw(switchOn, width * tilesize, height * tilesize, tilesize, tilesize, 255);
+
 				break;
 			}
 			//draw the tile
@@ -296,4 +304,7 @@ void freeGridImages() {
 	CP_Image_Free(&closedDoor);
 	CP_Image_Free(&closedVent);
 
+	CP_Image_Free(&switchOff);
+	CP_Image_Free(&switchOn);
+	
 }
