@@ -3,7 +3,7 @@
 #include "grid.h"
 #include "game.h"
 #include "utils.h"
-
+#include "enemy.h"
 Player player;
 double holdTimer = .1;
 //draw the player
@@ -77,14 +77,13 @@ void playerCheck(void)
 	}
 
 	if (player.onSwitch) {
-		Tile* base = tiles;
 
 		for (int i = 0; i < sizeof(gates) / sizeof(gates[0]); i++) {
 			//if the address of the tile the player set on matches the specific tile in the vents
 			if (gates[i].Switch == &tiles[player.x][player.y]) {
 
 				//find the number of tiles between 0 0 and the tile at your current address
-				int difference = gates[i].Door - base;
+				int difference = gates[i].Door - tiles;
 
 				//get column of 2d array
 				int col = difference / MAX_TILES;

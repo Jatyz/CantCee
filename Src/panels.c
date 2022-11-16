@@ -234,7 +234,7 @@ void drawSmallPanel(int panelWidth, int panelHeight, int x, int y, char text[]) 
 }
 
 //check which button the player clicked, the buttons are hard coded spots, so the input check is also hard coded area
-void checkClick(void* (button1)(void), void* (button2)(void), void* (button3)(void)) {
+void checkClick(void (button1)(void), void(button2)(void), void (button3)(void)) {
 	float smallpanelx = 500, smallpanely = 400;
 
 	float panelStartx = 400 - smallpanelx / 2;

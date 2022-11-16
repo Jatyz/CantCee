@@ -5,7 +5,7 @@
 #include "level4.h"
 #include "panels.h"
 #include "levelSelect.h"
-
+#include "levelTransition.h"
 
 void level4_init(void)
 {

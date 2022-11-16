@@ -6,7 +6,7 @@
 #define TRANSITION_IMAGE_HEIGHT 800
 #endif // !IMAGE_PROPERTIES
 
-extern enum
+enum
 {
 	ANIMATION_DONE = 0,
 	ANIMATION_NOT_DONE = 1

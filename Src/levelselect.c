@@ -21,6 +21,7 @@
 #include "levelTransition.h"
 #include "levelselect.h"
 #include "panels.h"
+#include "utils.h"
 
 //need a method to run level select as well
 void levelSelection_Init()

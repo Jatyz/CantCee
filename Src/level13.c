@@ -7,6 +7,7 @@
 #include "levelSelect.h"
 #include "enemy.h"
 #include "FOV.h"
+#include "levelTransition.h"
 
 void level13_init(void)
 {

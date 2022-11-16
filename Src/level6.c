@@ -6,6 +6,7 @@
 #include "panels.h"
 #include "levelSelect.h"
 #include "enemy.h"
+#include "levelTransition.h"
 
 void level6_init(void)
 {
