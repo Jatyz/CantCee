@@ -6,6 +6,8 @@
 
 CP_Image wall_Vertical = NULL;
 CP_Image floorMarbleTexture = NULL;
+CP_Image openedDoor = NULL;
+CP_Image closedDoor = NULL;
 
 //declaration of tiles
 Tile tiles[MAX_TILES][MAX_TILES];
@@ -48,7 +50,6 @@ void drawTile(int tilesize) {
 				//CP_Settings_Fill(CP_Color_Create(75, 75, 75, 255)); // set tile color
 				//CP_Graphics_DrawRect(width * tilesize, height * tilesize, tilesize - .5f, tilesize - .5f); //draw tile
 				CP_Image_Draw(floorMarbleTexture, width * tilesize, height * tilesize, tilesize, tilesize, 255);
-
 				break;
 			case START:
 				CP_Settings_Fill(CP_Color_Create(0, 150, 75, 255)); // set tile color
@@ -78,12 +79,14 @@ void drawTile(int tilesize) {
 				CP_Graphics_DrawRect(width * tilesize, height * tilesize, tilesize - .5f, tilesize - .5f); //draw tile
 				break;
 			case CLOSED_DOOR:
-				CP_Settings_Fill(CP_Color_Create(100, 0, 100, 255)); //set tile color
-				CP_Graphics_DrawRect(width * tilesize, height * tilesize, tilesize - .5f, tilesize - .5f); //draw tile
+				//CP_Settings_Fill(CP_Color_Create(100, 0, 100, 255)); //set tile color
+				//CP_Graphics_DrawRect(width * tilesize, height * tilesize, tilesize - .5f, tilesize - .5f); //draw tile
+				CP_Image_Draw(closedDoor, width * tilesize, height * tilesize, tilesize, tilesize, 255);
 				break;
 			case OPENED_DOOR:
-				CP_Settings_Fill(CP_Color_Create(200, 0, 200, 255)); //set tile color
-				CP_Graphics_DrawRect(width * tilesize, height * tilesize, tilesize - .5f, tilesize - .5f); //draw tile
+				//CP_Settings_Fill(CP_Color_Create(200, 0, 200, 255)); //set tile color
+				//CP_Graphics_DrawRect(width * tilesize, height * tilesize, tilesize - .5f, tilesize - .5f); //draw tile
+				CP_Image_Draw(openedDoor, width * tilesize, height * tilesize, tilesize, tilesize, 255);
 				break;
 			case SWITCH_OFF:
 				CP_Settings_Fill(CP_Color_Create(255, 255, 0, 255)); //set tile color
@@ -285,4 +288,8 @@ void checkGates(Tile* address) {
 
 void freeGridImages() {
 	CP_Image_Free(&wall_Vertical);
+	CP_Image_Free(&floorMarbleTexture);
+	CP_Image_Free(&openedDoor);
+	CP_Image_Free(&closedDoor);
+
 }
