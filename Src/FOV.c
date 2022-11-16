@@ -344,8 +344,8 @@ void setIlluminationWallTrailsLogic
 
 	resetAllowanceAngles();
 
+	setIlluminationTrails(gridSizeX, gridSizeY);
 
-	//int walls[FOG_MAX_X][FOG_MAX_Y];
 	int anglesToBeShadedSize = 0;			//the number of angles to be shaded currently stored in the above array, increment if new angles are added
 
 	double currentTileAngle;				//store the angle of the current tile to player with 0 starting on player's right
@@ -657,8 +657,6 @@ void setIlluminationWallLogicOnce
 
 	resetAllowanceAngles();
 
-
-	//int walls[FOG_MAX_X][FOG_MAX_Y];
 	int anglesToBeShadedSize = 0;			//the number of angles to be shaded currently stored in the above array, increment if new angles are added
 
 	double currentTileAngle;				//store the angle of the current tile to player with 0 starting on player's right

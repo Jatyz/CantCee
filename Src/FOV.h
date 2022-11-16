@@ -53,8 +53,18 @@ void setIlluminationWallLogic
 	int const fovRadius			//the radius of the global illumination in terms of number of tiles
 );
 
-//sets wall logic onto 
+//sets illumination similiar to calling setIllumination() and setIlluminationWallLogic(), but walls that are blocked by other walls in the field of views are shaded
 void setIlluminationWallLogicOnce
+(
+	int const playerXPos,		//player's current X position on the grid
+	int const playerYPos,		//player's current Y position on the grid
+	int const gridSizeX,		//size of the grid in the X axis for the level, used to find the bounds required of the fog grid
+	int const gridSizeY,		//size of the grid in the Y axis for the level, used to find the bounds required of the fog grid
+	int const fovRadius			//the radius of the global illumination in terms of number of tiles
+);
+
+//similar to setIlluminationWallLogicOnce(), but also renders areas previously rendered in FOV outside current FOV to half shaded instead of fully shaded 
+void setIlluminationWallTrailsLogic
 (
 	int const playerXPos,		//player's current X position on the grid
 	int const playerYPos,		//player's current Y position on the grid
