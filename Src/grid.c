@@ -9,6 +9,8 @@ CP_Image floorMarbleTexture = NULL;
 CP_Image openedDoor = NULL;
 CP_Image closedDoor = NULL;
 
+CP_Image closedVent = NULL;
+
 //declaration of tiles
 Tile tiles[MAX_TILES][MAX_TILES];
 
@@ -75,8 +77,9 @@ void drawTile(int tilesize) {
 				CP_Graphics_DrawRect(width * tilesize, height * tilesize, tilesize - .5f, tilesize - .5f); // draw tile
 				break;
 			case VENTS:
-				CP_Settings_Fill(CP_Color_Create(100, 100, 100, 255)); //set tile color
-				CP_Graphics_DrawRect(width * tilesize, height * tilesize, tilesize - .5f, tilesize - .5f); //draw tile
+				//CP_Settings_Fill(CP_Color_Create(100, 100, 100, 255)); //set tile color
+				//CP_Graphics_DrawRect(width * tilesize, height * tilesize, tilesize - .5f, tilesize - .5f); //draw tile
+				CP_Image_Draw(closedVent, width * tilesize, height * tilesize, tilesize, tilesize, 255);
 				break;
 			case CLOSED_DOOR:
 				//CP_Settings_Fill(CP_Color_Create(100, 0, 100, 255)); //set tile color
@@ -291,5 +294,6 @@ void freeGridImages() {
 	CP_Image_Free(&floorMarbleTexture);
 	CP_Image_Free(&openedDoor);
 	CP_Image_Free(&closedDoor);
+	CP_Image_Free(&closedVent);
 
 }
