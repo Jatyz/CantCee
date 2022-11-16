@@ -18,6 +18,7 @@ typedef struct { // structure to contain player variables
 	int currentStage;
 	int isTP;
 	int	shineCount;
+	int onSwitch;
 	Color Player_Color;
 }Player;
 
@@ -47,3 +48,5 @@ void giveLight();
 //sets the player's facing direction: 0 is up, 1 is right, 2 is down, 3 is left. 
 //Has in-built error warping. Numbers 4 and above are warpped via modulo of 4
 void setPlayerDirection(int directionFacing);
+
+void playerCheck(void);

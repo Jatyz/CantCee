@@ -204,6 +204,12 @@ void renderGame(void) {
 	drawPlayer(Tile_Size);
 	drawEnemy(Tile_Size);
 	enemyFOV(Tile_Size);
+	if (!player.onSwitch && !(illumMode || lightCounter > 0)) {
+		drawFog();
+	}
+	playerCheck();
+	if (player.setFOV)
+	renderFOVAdvance(returnBounds(Tile_Size), returnBounds(Tile_Size), Tile_Size);
 }
 
 //Call this function after setting Tile_Size to reset things to default
@@ -233,6 +239,8 @@ void resetGame(Tile_Size) {
 	gameFogRange = 3;
 	player.shineCount = 0;
 	lightCounter = 0;
+	player.onSwitch = 0;
+	player.isTP = 0;
 }
 
 //resume game
@@ -324,8 +332,7 @@ void drawFog(void) {
 	if (player.setFOV) {
 		clearFogBackground();
 		setIlluminationWallLogicOnce(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), gameFogRange+1);
-		setIlluminationTrails(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), gameFogRange + 1);
-		renderFOVAdvance(returnBounds(Tile_Size), returnBounds(Tile_Size), Tile_Size);
+		//setIlluminationTrails(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), gameFogRange + 1);
 	}
 }
 

@@ -125,8 +125,6 @@ void level13_update(void)
 
 				renderGame();
 
-				drawFog();
-
 				handlePlayerInput(Tile_Size);
 
 				//End FOV logic handled area
@@ -151,7 +149,6 @@ void level13_update(void)
 			if (levelStarted)	//when level starts, 
 			{	//render enter level transition animation
 				renderGame();
-				drawFog();
 				levelStarted = initLevelTransition();	//returns 0 when animation is done
 
 				if (!levelStarted)

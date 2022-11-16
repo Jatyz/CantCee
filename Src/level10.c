@@ -86,7 +86,6 @@ void level10_update(void)
 				lightCounter -= CP_System_GetDt();
 				handlePlayerIllumInput();
 				renderGame();
-				renderFOVAdvance(returnBounds(Tile_Size), returnBounds(Tile_Size), Tile_Size);
 				if(player.shineCount > 0 && player.counter < 100)
 				drawSmallPanel(4 * Tile_Size, 2 * Tile_Size, 3 * Tile_Size, 4 * Tile_Size, "click anywhere to shine a light when you have a shine");
 				return;
@@ -96,9 +95,7 @@ void level10_update(void)
 				//clears the screen so things can be redrawn
 				CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
 				//all the game update methods that needs to be updated every frame
-
 				renderGame();
-				drawFog();
 				handlePlayerInput(Tile_Size);
 
 				//panel
@@ -135,7 +132,6 @@ void level10_update(void)
 			if (levelStarted)	//when level starts, 
 			{	//render enter level transition animation
 				renderGame();
-				drawFog();
 				levelStarted = initLevelTransition();	//returns 0 when animation is done
 
 				if (!levelStarted)

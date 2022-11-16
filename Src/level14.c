@@ -151,7 +151,6 @@ void level14_update(void)
 				CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
 				//all the game update methods that needs to be updated every frame
 				renderGame();
-				drawFog();
 				handlePlayerInput(Tile_Size);
 				//End FOV logic handled area
 
@@ -180,7 +179,6 @@ void level14_update(void)
 			if (levelStarted)	//when level starts, 
 			{	//render enter level transition animation
 				renderGame();
-				drawFog();
 				levelStarted = initLevelTransition();	//returns 0 when animation is done
 
 				if (!levelStarted)

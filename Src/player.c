@@ -67,6 +67,39 @@ void setPlayerDirection(int directionFacing)
 	player.direction = (directionFacing % 4); 
 }
 
+void playerCheck(void)
+{
+	if (tiles[player.x][player.y].type == SWITCH_ON || tiles[player.x][player.y].type == SWITCH_OFF) {
+		player.onSwitch = 1;
+	}
+	else {
+		player.onSwitch = 0;
+	}
+
+	if (player.onSwitch) {
+		Tile* base = tiles;
+
+		for (int i = 0; i < sizeof(gates) / sizeof(gates[0]); i++) {
+			//if the address of the tile the player set on matches the specific tile in the vents
+			if (gates[i].Switch == &tiles[player.x][player.y]) {
+
+				//find the number of tiles between 0 0 and the tile at your current address
+				int difference = gates[i].Door - base;
+
+				//get column of 2d array
+				int col = difference / MAX_TILES;
+
+				//get row of 2d array
+				int row = difference % MAX_TILES;
+
+				lightTiles(col, row, doorLightRange);
+				//lightCounter++;
+			}
+		}
+	}
+
+}
+
 //handle all player keyboard inputs
 void handlePlayerInput(int tilesize) {
 
@@ -137,7 +170,7 @@ void handlePlayerInput(int tilesize) {
 	}
 
 	//toggle light bomb
-	if (CP_Input_KeyTriggered(KEY_SPACE) && player.currentStage > 9) {
+	if (CP_Input_KeyTriggered(KEY_SPACE) && player.currentStage > 9 && !player.onSwitch) {
 		//activate illumination mode, where player cannot move
 		illumMode = 1;
 	}
@@ -219,6 +252,8 @@ void handlePlayerIllumInput() {
 		//check if player clicked and whether it shld light up the map
 		lightTileCheck();
 	}
+
+	
 
 }
 
