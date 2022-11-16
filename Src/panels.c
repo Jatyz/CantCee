@@ -242,51 +242,51 @@ void checkClick(void* (button1)(void), void* (button2)(void), void* (button3)(vo
 
 	if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
 	{
-		// --------------------Pause Menu --------------------
-		// ----------Select Level Input----------
-		if (IsAreaClicked(gameCenterX, pMenuSelectlvlY, CP_Image_GetWidth(pMenuSelectLevelWord), CP_Image_GetHeight(pMenuSelectLevelWord), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		// --------------------All menu --------------------
+		// ----------Button 1---------------------------------------------any button with same size-------------------------------------------------------------------------------
+		if ((IsAreaClicked(gameCenterX, pMenuSelectlvlY, CP_Image_GetWidth(pMenuSelectLevelWord), CP_Image_GetHeight(pMenuSelectLevelWord), CP_Input_GetMouseX(), CP_Input_GetMouseY())&&gameState!=LOSE))
 		{
 			button1();
 		}
-		// ----------Restart Input----------
+		// ----------Button 2---------------------------------------------any button with same size-------------------------------------------------------------------------------
 		if (IsAreaClicked(gameCenterX, pMenuRestartY, CP_Image_GetWidth(pMenuRestartWord), CP_Image_GetHeight(pMenuRestartWord), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
 			button2();
 		}
-		// ----------Return To Game Input----------
+		// ----------Button 3---------------------------------------------any button with same size-------------------------------------------------------------------------------
 		if (IsAreaClicked(gameCenterX, pMenuRtoGameY, CP_Image_GetWidth(pMenuReturnToGame), CP_Image_GetHeight(pMenuReturnToGame), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
 			button3();
 		}
 
-		// -------------------- Lose Menu --------------------
-		// ----------Restart Input----------
-		if (IsAreaClicked(gameCenterX, pMenuSelectlvlY, CP_Image_GetWidth(lMenuRestartWord), CP_Image_GetHeight(lMenuRestartWord), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
-		{
-			button1();
-		}
-		// ----------Select Level Input----------
-		if (IsAreaClicked(gameCenterX, pMenuRestartY, CP_Image_GetWidth(lMenuSelectLevel), CP_Image_GetHeight(lMenuSelectLevel), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
-		{
-			button2();
-		}
-		
-		// -------------------- Victory Menu --------------------
-		// ----------Next Level Input----------
-		if (IsAreaClicked(gameCenterX, pMenuSelectlvlY, CP_Image_GetWidth(pMenuSelectLevelWord), CP_Image_GetHeight(pMenuSelectLevelWord), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
-		{
-			button1();
-		}
-		// ----------Restart Input----------
-		if (IsAreaClicked(gameCenterX, pMenuRestartY, CP_Image_GetWidth(pMenuRestartWord), CP_Image_GetHeight(pMenuRestartWord), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
-		{
-			button2();
-		}
-		// ----------Return To Game Input----------
-		if (IsAreaClicked(gameCenterX, pMenuRtoGameY, CP_Image_GetWidth(pMenuReturnToGame), CP_Image_GetHeight(pMenuReturnToGame), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
-		{
-			button3();
-		}
+		//// -------------------- Lose Menu --------------------
+		//// ----------Restart Input----------
+		//if (IsAreaClicked(gameCenterX, pMenuSelectlvlY, CP_Image_GetWidth(lMenuRestartWord), CP_Image_GetHeight(lMenuRestartWord), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		//{
+		//	button1();
+		//}
+		//// ----------Select Level Input----------
+		//if (IsAreaClicked(gameCenterX, pMenuRestartY, CP_Image_GetWidth(lMenuSelectLevel), CP_Image_GetHeight(lMenuSelectLevel), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		//{
+		//	button2();
+		//}
+		//
+		//// -------------------- Victory Menu --------------------
+		//// ----------Next Level Input----------
+		//if (IsAreaClicked(gameCenterX, pMenuSelectlvlY, CP_Image_GetWidth(pMenuSelectLevelWord), CP_Image_GetHeight(pMenuSelectLevelWord), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		//{
+		//	button1();
+		//}
+		//// ----------Restart Input----------
+		//if (IsAreaClicked(gameCenterX, pMenuRestartY, CP_Image_GetWidth(pMenuRestartWord), CP_Image_GetHeight(pMenuRestartWord), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		//{
+		//	button2();
+		//}
+		//// ----------Return To Game Input----------
+		//if (IsAreaClicked(gameCenterX, pMenuRtoGameY, CP_Image_GetWidth(pMenuReturnToGame), CP_Image_GetHeight(pMenuReturnToGame), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		//{
+		//	button3();
+		//}
 
 	
 	//if (CP_Input_MouseTriggered(MOUSE_BUTTON_1)) {
