@@ -5,6 +5,7 @@
 #include <stdio.h>
 
 CP_Image wall_Vertical = NULL;
+CP_Image floorMarbleTexture = NULL;
 
 //declaration of tiles
 Tile tiles[MAX_TILES][MAX_TILES];
@@ -24,9 +25,8 @@ void drawTile(int tilesize) {
 	//getting array bounds
 	int Horizontal_Tile = returnBounds(tilesize);
 	int Vertical_Tile = Horizontal_Tile;
+
 	int height, width;
-
-
 
 	CP_Settings_NoStroke();
 	CP_Settings_ImageMode(CP_POSITION_CORNER);
@@ -38,14 +38,17 @@ void drawTile(int tilesize) {
 			switch (tiles[width][height].type) {
 			case WALL:
 				CP_Settings_Stroke(CP_Color_Create(125, 125, 125, 255)); //setting stroke color
-				CP_Settings_Fill(CP_Color_Create(125, 125, 125, 255));   //setting tile color
+				//CP_Settings_Fill(CP_Color_Create(125, 125, 125, 255));   //setting tile color
 				CP_Image_Draw(wall_Vertical, width * tilesize, height * tilesize, tilesize, tilesize, 255);
 				//CP_Graphics_DrawRect(width * tilesize, height * tilesize, tilesize, tilesize); //draw tile
 				break;
 			case FLOOR:
+				
 				CP_Settings_NoStroke(); //turn off outline, to make grid
-				CP_Settings_Fill(CP_Color_Create(75, 75, 75, 255)); // set tile color
-				CP_Graphics_DrawRect(width * tilesize, height * tilesize, tilesize - .5f, tilesize - .5f); //draw tile
+				//CP_Settings_Fill(CP_Color_Create(75, 75, 75, 255)); // set tile color
+				//CP_Graphics_DrawRect(width * tilesize, height * tilesize, tilesize - .5f, tilesize - .5f); //draw tile
+				CP_Image_Draw(floorMarbleTexture, width * tilesize, height * tilesize, tilesize, tilesize, 255);
+
 				break;
 			case START:
 				CP_Settings_Fill(CP_Color_Create(0, 150, 75, 255)); // set tile color
