@@ -258,51 +258,6 @@ void checkClick(void* (button1)(void), void* (button2)(void), void* (button3)(vo
 		{
 			button3();
 		}
-
-		//// -------------------- Lose Menu --------------------
-		//// ----------Restart Input----------
-		//if (IsAreaClicked(gameCenterX, pMenuSelectlvlY, CP_Image_GetWidth(lMenuRestartWord), CP_Image_GetHeight(lMenuRestartWord), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
-		//{
-		//	button1();
-		//}
-		//// ----------Select Level Input----------
-		//if (IsAreaClicked(gameCenterX, pMenuRestartY, CP_Image_GetWidth(lMenuSelectLevel), CP_Image_GetHeight(lMenuSelectLevel), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
-		//{
-		//	button2();
-		//}
-		//
-		//// -------------------- Victory Menu --------------------
-		//// ----------Next Level Input----------
-		//if (IsAreaClicked(gameCenterX, pMenuSelectlvlY, CP_Image_GetWidth(pMenuSelectLevelWord), CP_Image_GetHeight(pMenuSelectLevelWord), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
-		//{
-		//	button1();
-		//}
-		//// ----------Restart Input----------
-		//if (IsAreaClicked(gameCenterX, pMenuRestartY, CP_Image_GetWidth(pMenuRestartWord), CP_Image_GetHeight(pMenuRestartWord), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
-		//{
-		//	button2();
-		//}
-		//// ----------Return To Game Input----------
-		//if (IsAreaClicked(gameCenterX, pMenuRtoGameY, CP_Image_GetWidth(pMenuReturnToGame), CP_Image_GetHeight(pMenuReturnToGame), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
-		//{
-		//	button3();
-		//}
-
-	
-	//if (CP_Input_MouseTriggered(MOUSE_BUTTON_1)) {
-	//	//button 1
-	//	if ((IsAreaClicked(panelStartx + smallpanelx / 2, panelStarty + smallpanely / 2 - 80, 150, 60, CP_Input_GetMouseX(), CP_Input_GetMouseY())) && button1 != 0) {
-	//		button1();
-	//	}
-	//	//button 2
-	//	if ((IsAreaClicked(panelStartx + smallpanelx / 2, panelStarty + smallpanely / 2 + 10, 150, 60, CP_Input_GetMouseX(), CP_Input_GetMouseY())) && button2 != 0)
-	//		button2();
-	//	//button 3
-	//	if ((IsAreaClicked(panelStartx + smallpanelx / 2, panelStarty + smallpanely / 2 + 100, 150, 60, CP_Input_GetMouseX(), CP_Input_GetMouseY())) && button3 != 0)
-	//		button3();
-		//}
-	//CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-
 	}
 }
 

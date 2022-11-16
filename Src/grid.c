@@ -265,18 +265,6 @@ void checkGates(Tile* address) {
 			else if (gates[i].Door->type == CLOSED_DOOR) {
 				gates[i].Door->type = OPENED_DOOR;
 			}
-
-			////find the number of tiles between 0 0 and the tile at your current address
-			//int difference = gates[i].Door - base;
-
-			////get column of 2d array
-			//int col = difference / MAX_TILES;
-
-			////get row of 2d array
-			//int row = difference % MAX_TILES;
-			//
-			//lightTiles(col, row, doorLightRange);
-			//lightCounter++;
 		}
 	}
 
