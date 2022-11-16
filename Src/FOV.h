@@ -4,6 +4,9 @@
 //sets all value in fog to be fully obscured
 void clearFogBackground(void);
 
+//sets all trails to values that should not affect renders
+void resetTrails(void);
+
 //set a tile at a given X and Y position to not be covered by a fog 
 void setTileLit(
 	int xPos,					// X position of the tile, in grid terms, to be illuminated
@@ -32,6 +35,13 @@ void setIllumination
 	int const fovRadius			//radius of the illumination around the player
 );
 
+//add player's location to a trails array and set render logic for all trails position in a radius around the previous trails
+void setIlluminationTrails
+(
+	int const gridSizeX,		//size of the grid in the X axis for the level, used to find the bounds required of the fog grid
+	int const gridSizeY		//size of the grid in the Y axis for the level, used to find the bounds required of the fog grid
+);
+
 //sets the wall logic for setIllumination() and setIlluminationAdvance() functions, all walls are rendered and walls cast shadows onto tiles
 //based on their relative position to player. Assumes clearFogBackground() is called before calling this function
 void setIlluminationWallLogic
@@ -43,8 +53,18 @@ void setIlluminationWallLogic
 	int const fovRadius			//the radius of the global illumination in terms of number of tiles
 );
 
-//sets wall logic onto 
+//sets illumination similiar to calling setIllumination() and setIlluminationWallLogic(), but walls that are blocked by other walls in the field of views are shaded
 void setIlluminationWallLogicOnce
+(
+	int const playerXPos,		//player's current X position on the grid
+	int const playerYPos,		//player's current Y position on the grid
+	int const gridSizeX,		//size of the grid in the X axis for the level, used to find the bounds required of the fog grid
+	int const gridSizeY,		//size of the grid in the Y axis for the level, used to find the bounds required of the fog grid
+	int const fovRadius			//the radius of the global illumination in terms of number of tiles
+);
+
+//similar to setIlluminationWallLogicOnce(), but also renders areas previously rendered in FOV outside current FOV to half shaded instead of fully shaded 
+void setIlluminationWallTrailsLogic
 (
 	int const playerXPos,		//player's current X position on the grid
 	int const playerYPos,		//player's current Y position on the grid

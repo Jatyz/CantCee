@@ -120,7 +120,7 @@ void game_init(void)
 
 	setStartGame(Tile_Size);
 
-	player.setFOV = 0;
+	player.setFOV = 1;
 	gameState = PLAY;
 
 	readScore();
@@ -141,7 +141,6 @@ void game_update(void)
 		CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
 		handlePlayerInput(Tile_Size);
 		//all the game update methods that needs to be updated every frame
-		renderGame();
 		//FOV logic handled here
 		if (player.setFOV) {
 			clearFogBackground();
@@ -152,9 +151,12 @@ void game_update(void)
 			//Test code for *AHEM* dynamic *AHEM* style FOV independent of actual grid resolution
 			//setIllumination(player.x * 6 + 3, (player.y * 6) + 3, returnBounds(Tile_Size) * 6 + 2, returnBounds(Tile_Size) * 6 + 2, 4 * 6);
 			// 
+			setIlluminationTrails(returnBounds(Tile_Size), returnBounds(Tile_Size));
 			setIlluminationWallLogicOnce(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), 5);
+
 			//End FOV logic handled area	
-		}
+		}renderGame();
+		renderFOVAdvance(returnBounds(Tile_Size), returnBounds(Tile_Size), Tile_Size);
 		drawSideBarLevel("Debug level", player.counter);
 		break;
 	case PAUSED:
@@ -317,6 +319,7 @@ void drawFog(void) {
 	if (player.setFOV) {
 		clearFogBackground();
 		setIlluminationWallLogicOnce(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), gameFogRange+1);
+		setIlluminationTrails(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), gameFogRange + 1);
 		renderFOVAdvance(returnBounds(Tile_Size), returnBounds(Tile_Size), Tile_Size);
 	}
 }
