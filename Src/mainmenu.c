@@ -153,7 +153,7 @@ void mainMenu_Update()
         // ----------Settings Input----------
         if (IsAreaClicked(settingsWordWidth, settingsWordHeight, CP_Image_GetWidth(settingsWord), CP_Image_GetHeight(settingsWord), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
         {
-            //CP_Engine_SetNextGameStateForced(settings_Init, settings_Update, settings_Exit);
+            CP_Engine_SetNextGameStateForced(settings_Init, settings_Update, settings_Exit);
         }
 
         // ----------Exit Button Input----------

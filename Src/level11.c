@@ -154,7 +154,6 @@ void level11_update(void)
 				CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
 				//all the game update methods that needs to be updated every frame
 				renderGame();
-				drawFog();
 				handlePlayerInput(Tile_Size);
 				if (player.counter < 30) {
 					drawSmallPanel(4 * Tile_Size, 3 * Tile_Size, 3 * Tile_Size, 4 * Tile_Size, "One switch can open/close multiple doors at the same time.");
@@ -181,7 +180,6 @@ void level11_update(void)
 			if (levelStarted)	//when level starts, 
 			{	//render enter level transition animation
 				renderGame();
-				drawFog();
 				levelStarted = initLevelTransition();	//returns 0 when animation is done
 
 				if (!levelStarted)

@@ -101,10 +101,9 @@ void level9_update(void)
 			else {
 				CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
 				//all the game update methods that needs to be updated every frame
+				//renderGame();
 				renderGame();
-				drawFog();
 				handlePlayerInput(Tile_Size);
-
 				if (player.counter < 10)
 				{
 					drawSmallPanel(4 * Tile_Size, 2 * Tile_Size, 3 * Tile_Size, 4 * Tile_Size, "The enemy base is really dark.");
