@@ -117,7 +117,7 @@ void handlePlayerInput(int tilesize) {
 	}
 
 	//up
-	if ((CP_Input_KeyDown(KEY_W) || CP_Input_KeyDown(KEY_UP))&&holdTimer< 0 ) {
+	if ((CP_Input_KeyTriggered(KEY_W) || (CP_Input_KeyDown(KEY_W) && holdTimer<0)) || (CP_Input_KeyTriggered(KEY_UP) || (CP_Input_KeyDown(KEY_UP) && holdTimer < 0))) {
 		//check if out of bounds
 		if (player.y > 0) {
 			//check if the tile can be moved
@@ -127,10 +127,10 @@ void handlePlayerInput(int tilesize) {
 			giveLight();
 			player.direction = 0;		//set direction player is facing to up
 		}
-		holdTimer = 0.1;
+		holdTimer = 0.22;
 	}
 	//right
-	if ((CP_Input_KeyDown(KEY_D)|| CP_Input_KeyDown(KEY_RIGHT)) && holdTimer < 0) {
+	if ((CP_Input_KeyTriggered(KEY_D) || (CP_Input_KeyDown(KEY_D) && holdTimer < 0)) || (CP_Input_KeyTriggered(KEY_RIGHT) || (CP_Input_KeyDown(KEY_RIGHT) && holdTimer < 0))) {
 		//check out of bounds
 		if (player.x < Horizontal_Tile - 1) {
 			//check if tile can be moved
@@ -140,11 +140,11 @@ void handlePlayerInput(int tilesize) {
 			giveLight();
 			player.direction = 1;		//set direction player is facing to right
 		}
-		holdTimer = 0.1;
+		holdTimer = 0.22;
 	}
 
 	//down
-	if ((CP_Input_KeyDown(KEY_S) || CP_Input_KeyDown(KEY_DOWN)) && holdTimer < 0) {
+	if ((CP_Input_KeyTriggered(KEY_S) || (CP_Input_KeyDown(KEY_S) && holdTimer < 0)) || (CP_Input_KeyTriggered(KEY_DOWN) || (CP_Input_KeyDown(KEY_DOWN) && holdTimer < 0))) {
 		//check out of bounds
 		if (player.y < Vertical_Tile - 1) {
 			//check if the tile can be moved
@@ -154,10 +154,10 @@ void handlePlayerInput(int tilesize) {
 			giveLight();
 			player.direction = 2;		//set direction player is facing to down
 		}
-		holdTimer = 0.1;
+		holdTimer = 0.22;
 	}
 	//left
-	if ((CP_Input_KeyDown(KEY_A) || CP_Input_KeyDown(KEY_LEFT)) && holdTimer < 0) {
+	if ((CP_Input_KeyTriggered(KEY_A) || (CP_Input_KeyDown(KEY_A) && holdTimer < 0)) || (CP_Input_KeyTriggered(KEY_LEFT) || (CP_Input_KeyDown(KEY_LEFT) && holdTimer < 0))) {
 		//check out of bounds
 		if (player.x > 0) {
 			//check if the tile can be moved
@@ -169,7 +169,7 @@ void handlePlayerInput(int tilesize) {
 				player.direction = 3;	//set direction player is facing to left
 			}
 		}
-		holdTimer = 0.1;
+		holdTimer = 0.22;
 	}
 
 	//for tile movement
