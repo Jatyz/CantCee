@@ -104,7 +104,7 @@
     </ClCompile>
     <ClCompile Include="..\Src\levelTransition.c">
       <Filter>Source Files</Filter>
-     </ClCompile>
+    </ClCompile>
     <ClCompile Include="..\Src\level14.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -204,6 +204,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Inc\level15.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\soundEffects.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

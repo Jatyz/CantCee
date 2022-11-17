@@ -8,6 +8,8 @@
 #include <stdlib.h>
 #include "panels.h"
 
+CP_Sound buttonSound = NULL;
+
 CP_Image pauseBackground = NULL;
 
 CP_Image pMenuHover = NULL;
@@ -116,6 +118,8 @@ void drawFullPanel(void) {
 		// Pause Menu Select Level
 		if (IsAreaClicked(gameCenterX, pMenuSelectlvlY, CP_Image_GetWidth(pMenuSelectLevelWord), CP_Image_GetHeight(pMenuSelectLevelWord), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
+			buttonSound = CP_Sound_Load("./Assets/Sounds/Button Sound.mp3");
+			CP_Sound_PlayAdvanced(buttonSound, 1.0f, 2.0f, FALSE, CP_SOUND_GROUP_2);
 			CP_Image_Draw(pMenuHover, gameCenterX, pMenuSelectlvlY, CP_Image_GetWidth(pMenuHover), CP_Image_GetHeight(pMenuHover), 255);
 			CP_Image_Draw(pMenuSelectLevelWordHover, gameCenterX, pMenuSelectlvlY, CP_Image_GetWidth(pMenuSelectLevelWordHover), CP_Image_GetHeight(pMenuSelectLevelWordHover), 255);
 		}
@@ -127,6 +131,8 @@ void drawFullPanel(void) {
 		// Pause Menu Restart
 		if (IsAreaClicked(gameCenterX, pMenuRestartY, CP_Image_GetWidth(pMenuSelectLevelWord), CP_Image_GetHeight(pMenuSelectLevelWord), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
+			buttonSound = CP_Sound_Load("./Assets/Sounds/Button Sound.mp3");
+			CP_Sound_PlayAdvanced(buttonSound, 1.0f, 2.0f, FALSE, CP_SOUND_GROUP_2);
 			CP_Image_Draw(pMenuHover, gameCenterX, pMenuRestartY, CP_Image_GetWidth(pMenuHover), CP_Image_GetHeight(pMenuHover), 255);
 			CP_Image_Draw(pMenuRestartWordHover, gameCenterX, pMenuRestartY, CP_Image_GetWidth(pMenuRestartWordHover), CP_Image_GetHeight(pMenuRestartWordHover), 255);
 		}
@@ -138,6 +144,8 @@ void drawFullPanel(void) {
 		// Pause Menu Return To Game
 		if (IsAreaClicked(gameCenterX, pMenuRtoGameY, CP_Image_GetWidth(pMenuReturnToGame), CP_Image_GetHeight(pMenuReturnToGame), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
+			buttonSound = CP_Sound_Load("./Assets/Sounds/Button Sound.mp3");
+			CP_Sound_PlayAdvanced(buttonSound, 1.0f, 2.0f, FALSE, CP_SOUND_GROUP_2);
 			CP_Image_Draw(pMenuHover, gameCenterX, pMenuRtoGameY, CP_Image_GetWidth(pMenuHover), CP_Image_GetHeight(pMenuHover), 255);
 			CP_Image_Draw(pMenuReturnToGameHover, gameCenterX, pMenuRtoGameY + 5 , CP_Image_GetWidth(pMenuReturnToGameHover), CP_Image_GetHeight(pMenuReturnToGameHover), 255);
 		}
@@ -154,6 +162,8 @@ void drawFullPanel(void) {
 		// Lose Menu Restart
 		if (IsAreaClicked(gameCenterX, pMenuRestartY, CP_Image_GetWidth(lMenuRestartWord), CP_Image_GetHeight(lMenuRestartWord), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
+			buttonSound = CP_Sound_Load("./Assets/Sounds/Button Sound.mp3");
+			CP_Sound_PlayAdvanced(buttonSound, 1.0f, 2.0f, FALSE, CP_SOUND_GROUP_2);
 			CP_Image_Draw(pMenuHover, gameCenterX, pMenuRestartY, CP_Image_GetWidth(pMenuHover), CP_Image_GetHeight(pMenuHover), 255);
 			CP_Image_Draw(lMenuRestartWordHover, gameCenterX, pMenuRestartY, CP_Image_GetWidth(lMenuRestartWordHover), CP_Image_GetHeight(lMenuRestartWordHover), 255);
 		}
@@ -165,6 +175,8 @@ void drawFullPanel(void) {
 		// Lose Menu Select Level
 		if (IsAreaClicked(gameCenterX, pMenuRtoGameY, CP_Image_GetWidth(lMenuSelectLevel), CP_Image_GetHeight(lMenuSelectLevel), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
+			buttonSound = CP_Sound_Load("./Assets/Sounds/Button Sound.mp3");
+			CP_Sound_PlayAdvanced(buttonSound, 1.0f, 2.0f, FALSE, CP_SOUND_GROUP_2);
 			CP_Image_Draw(pMenuHover, gameCenterX, pMenuRtoGameY, CP_Image_GetWidth(pMenuHover), CP_Image_GetHeight(pMenuHover), 255);
 			CP_Image_Draw(lMenuSelectLevelHover, gameCenterX, pMenuRtoGameY + 5, CP_Image_GetWidth(lMenuSelectLevelHover), CP_Image_GetHeight(lMenuSelectLevelHover), 255);
 		}
@@ -183,6 +195,8 @@ void drawFullPanel(void) {
 		// Victory Menu Next Level
 		if (IsAreaClicked(gameCenterX, pMenuSelectlvlY, CP_Image_GetWidth(vNextLvlWord), CP_Image_GetHeight(vNextLvlWord), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
+			buttonSound = CP_Sound_Load("./Assets/Sounds/Button Sound.mp3");
+			CP_Sound_PlayAdvanced(buttonSound, 1.0f, 2.0f, FALSE, CP_SOUND_GROUP_2);
 			CP_Image_Draw(pMenuHover, gameCenterX, pMenuSelectlvlY, CP_Image_GetWidth(pMenuHover), CP_Image_GetHeight(pMenuHover), 255);
 			CP_Image_Draw(vNextLvlWordHover, gameCenterX, pMenuSelectlvlY, CP_Image_GetWidth(vNextLvlWordHover), CP_Image_GetHeight(vNextLvlWordHover), 255);
 		}
@@ -194,6 +208,8 @@ void drawFullPanel(void) {
 		// Victory Menu Restart
 		if (IsAreaClicked(gameCenterX, pMenuRestartY, CP_Image_GetWidth(vMenuRestartWord), CP_Image_GetHeight(vMenuRestartWord), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
+			buttonSound = CP_Sound_Load("./Assets/Sounds/Button Sound.mp3");
+			CP_Sound_PlayAdvanced(buttonSound, 1.0f, 2.0f, FALSE, CP_SOUND_GROUP_2);
 			CP_Image_Draw(pMenuHover, gameCenterX, pMenuRestartY, CP_Image_GetWidth(pMenuHover), CP_Image_GetHeight(pMenuHover), 255);
 			CP_Image_Draw(vMenuRestartWordHover, gameCenterX, pMenuRestartY, CP_Image_GetWidth(vMenuRestartWordHover), CP_Image_GetHeight(vMenuRestartWordHover), 255);
 		}
@@ -205,6 +221,8 @@ void drawFullPanel(void) {
 		// Victory Menu Select Level
 		if (IsAreaClicked(gameCenterX, pMenuRtoGameY, CP_Image_GetWidth(vMenuSelectLevelWord), CP_Image_GetHeight(vMenuSelectLevelWord), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
+			buttonSound = CP_Sound_Load("./Assets/Sounds/Button Sound.mp3");
+			CP_Sound_PlayAdvanced(buttonSound, 1.0f, 2.0f, FALSE, CP_SOUND_GROUP_2);
 			CP_Image_Draw(pMenuHover, gameCenterX, pMenuRtoGameY, CP_Image_GetWidth(pMenuHover), CP_Image_GetHeight(pMenuHover), 255);
 			CP_Image_Draw(vMenuSelectLevelWordHover, gameCenterX, pMenuRtoGameY + 5, CP_Image_GetWidth(vMenuSelectLevelWordHover), CP_Image_GetHeight(vMenuSelectLevelWordHover), 255);
 		}
@@ -246,16 +264,22 @@ void checkClick(void (button1)(void), void(button2)(void), void (button3)(void))
 		// ----------Button 1---------------------------------------------any button with same size-------------------------------------------------------------------------------
 		if ((IsAreaClicked(gameCenterX, pMenuSelectlvlY, CP_Image_GetWidth(pMenuSelectLevelWord), CP_Image_GetHeight(pMenuSelectLevelWord), CP_Input_GetMouseX(), CP_Input_GetMouseY())&&gameState!=LOSE))
 		{
+			buttonSound = CP_Sound_Load("./Assets/Sounds/Button Sound.mp3");
+			CP_Sound_PlayAdvanced(buttonSound, 1.0f, 2.0f, FALSE, CP_SOUND_GROUP_2);
 			button1();
 		}
 		// ----------Button 2---------------------------------------------any button with same size-------------------------------------------------------------------------------
 		if (IsAreaClicked(gameCenterX, pMenuRestartY, CP_Image_GetWidth(pMenuRestartWord), CP_Image_GetHeight(pMenuRestartWord), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
+			buttonSound = CP_Sound_Load("./Assets/Sounds/Button Sound.mp3");
+			CP_Sound_PlayAdvanced(buttonSound, 1.0f, 2.0f, FALSE, CP_SOUND_GROUP_2);
 			button2();
 		}
 		// ----------Button 3---------------------------------------------any button with same size-------------------------------------------------------------------------------
 		if (IsAreaClicked(gameCenterX, pMenuRtoGameY, CP_Image_GetWidth(pMenuReturnToGame), CP_Image_GetHeight(pMenuReturnToGame), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
+			buttonSound = CP_Sound_Load("./Assets/Sounds/Button Sound.mp3");
+			CP_Sound_PlayAdvanced(buttonSound, 1.0f, 2.0f, FALSE, CP_SOUND_GROUP_2);
 			button3();
 		}
 	}
