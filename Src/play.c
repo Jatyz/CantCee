@@ -404,7 +404,7 @@ void play_Update()
 			level[1].selected = 1;
 
 			levelScore = Score[2];
-			parScore = 0;
+			parScore = 22;
 			once = 1;
 			levelSelected = 1;
 			sprintf_s(test, 100, "Level 2");
@@ -416,7 +416,7 @@ void play_Update()
 				level[setLevelSelectionState].selected = 0;
 			}
 			level[2].selected = 1;
-			parScore = 0;
+			parScore = 17;
 			levelScore = Score[3];
 			once = 1;
 			levelSelected = 1;
@@ -429,7 +429,7 @@ void play_Update()
 				level[setLevelSelectionState].selected = 0;
 			}
 			level[3].selected = 1;
-			parScore = 0;
+			parScore = 36;
 			levelScore = Score[4];
 			once = 1;
 			levelSelected = 1;
@@ -442,7 +442,7 @@ void play_Update()
 				level[setLevelSelectionState].selected = 0;
 			}
 			level[4].selected = 1;
-			parScore = 0;
+			parScore = 109;
 			levelScore = Score[5];
 			once = 1;
 			levelSelected = 1;
@@ -457,7 +457,7 @@ void play_Update()
 				level[setLevelSelectionState].selected = 0;
 			}
 			level[5].selected = 1;
-			parScore = 0;
+			parScore = 12;
 			levelScore = Score[6];
 			once = 1;
 			levelSelected = 1;
@@ -470,7 +470,7 @@ void play_Update()
 				level[setLevelSelectionState].selected = 0;
 			}
 			level[6].selected = 1;
-			parScore = 0;
+			parScore = 18;
 			levelScore = Score[7];
 			once = 1;
 			levelSelected = 1;
@@ -483,7 +483,7 @@ void play_Update()
 				level[setLevelSelectionState].selected = 0;
 			}
 			level[7].selected = 1;
-			parScore = 0;
+			parScore = 118;
 			levelScore = Score[8];
 			once = 1;
 			levelSelected = 1;
@@ -496,7 +496,7 @@ void play_Update()
 				level[setLevelSelectionState].selected = 0;
 			}
 			level[8].selected = 1;
-			parScore = 0;
+			parScore = 45;
 			levelScore = Score[9];
 			once = 1;
 			levelSelected = 1;
@@ -509,7 +509,7 @@ void play_Update()
 				level[setLevelSelectionState].selected = 0;
 			}
 			level[9].selected = 1;
-			parScore = 0;
+			parScore = 118;
 			levelScore = Score[10];
 			once = 1;
 			levelSelected = 1;
@@ -524,7 +524,7 @@ void play_Update()
 				level[setLevelSelectionState].selected = 0;
 			}
 			level[10].selected = 1;
-			parScore = 0;
+			parScore = 136;
 			levelScore = Score[11];
 			once = 1;
 			levelSelected = 1;
@@ -537,7 +537,7 @@ void play_Update()
 				level[setLevelSelectionState].selected = 0;
 			}
 			level[11].selected = 1;
-			parScore = 0;
+			parScore = 137;
 			levelScore = Score[12];
 			once = 1;
 			levelSelected = 1;
@@ -550,7 +550,7 @@ void play_Update()
 				level[setLevelSelectionState].selected = 0;
 			}
 			level[12].selected = 1;
-			parScore = 0;
+			parScore = 140;
 			levelScore = Score[13];
 			once = 1;
 			levelSelected = 1;
@@ -563,7 +563,7 @@ void play_Update()
 				level[setLevelSelectionState].selected = 0;
 			}
 			level[13].selected = 1;
-			parScore = 0;
+			parScore = 218;
 			levelScore = Score[14];
 			once = 1;
 			levelSelected = 1;
@@ -576,7 +576,7 @@ void play_Update()
 				level[setLevelSelectionState].selected = 0;
 			}
 			level[14].selected = 1;
-			parScore = 0;
+			parScore = 143;
 			levelScore = Score[15];
 			once = 1;
 			levelSelected = 1;
