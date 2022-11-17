@@ -1,5 +1,6 @@
 #pragma once
 
+extern int isTrailsActive;
 
 //sets all value in fog to be fully obscured
 void clearFogBackground(void);

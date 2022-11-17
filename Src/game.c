@@ -38,6 +38,7 @@ int Score[30];//number in array base on number of lvls 30 as placeholder for now
 int levelExited = 0,
 	 levelStarted = 1;
 
+
 double lightCounter, tileMoveCounter;
 int doorLightRange,gameFogRange,illumMode;
 
@@ -143,20 +144,9 @@ void game_update(void)
 		//all the game update methods that needs to be updated every frame
 		//FOV logic handled here
 		if (player.setFOV) {
-			clearFogBackground();
-			//setPlayerFOVFunnel(player.x, player.y, player.direction, returnBounds(Tile_Size), returnBounds(Tile_Size), 2, 10);
-			//setFOVFunnelWallLogic(player.x, player.y, player.direction, returnBounds(Tile_Size), returnBounds(Tile_Size), 2, 10);
-			//setIlluminationAdvance(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), 5, 5);
-
-			//Test code for *AHEM* dynamic *AHEM* style FOV independent of actual grid resolution
-			//setIllumination(player.x * 6 + 3, (player.y * 6) + 3, returnBounds(Tile_Size) * 6 + 2, returnBounds(Tile_Size) * 6 + 2, 4 * 6);
-			// 
-			setIlluminationTrails(returnBounds(Tile_Size), returnBounds(Tile_Size));
-			setIlluminationWallLogicOnce(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), 5);
-
+			drawFog();
 			//End FOV logic handled area	
 		}renderGame();
-		renderFOVAdvance(returnBounds(Tile_Size), returnBounds(Tile_Size), Tile_Size);
 		drawSideBarLevel("Debug level", player.counter);
 		break;
 	case PAUSED:
@@ -256,6 +246,7 @@ void setStartGame(Tile_Size) {
 	setVents();
 	setGates();
 	setPlayerStartPoint(Tile_Size);
+	
 
 	//MOAR NEW CODE HERE!! FOR ANIMATIONS
 	levelExited = 0, levelStarted = 1;
@@ -333,8 +324,12 @@ void lightTiles(int x, int y, int range) {
 void drawFog(void) {
 	if (player.setFOV) {
 		clearFogBackground();
-		setIlluminationWallLogicOnce(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), gameFogRange+1);
-		//setIlluminationTrails(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), gameFogRange + 1);
+		if (isTrailsActive) {
+			setIlluminationTrails(player.x, player.y);
+			setIlluminationWallTrailsLogic(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), gameFogRange + 1);
+			return;
+		}
+		setIlluminationWallLogicOnce(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), gameFogRange + 1);
 	}
 }
 

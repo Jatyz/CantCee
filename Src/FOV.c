@@ -17,6 +17,8 @@ player, in a cone or in a rectangle
 //fog grid of same size as base game to draw over the render layers as FOV, is 1 when FOV is blocked, 0 when FOV not blocked
 int fog[FOG_MAX_X][FOG_MAX_Y];		
 
+int isTrailsActive = 0;
+
 //anonymus enums for easy settingand tracking of fog levels
 enum FogDensity {
 	FOG_MAX = 2,
@@ -277,6 +279,7 @@ void setIlluminationTrails
 	}
 }
 
+//makes illumination in a radius around previous steps
 void setIlluminationTrails2
 (
 	int const trailXPos,		//player's current X position on the grid
