@@ -62,6 +62,11 @@ void level7_update(void)
 			{
 				drawSmallPanel(6 * Tile_Size, 2 * Tile_Size, 1 * Tile_Size, 8 * Tile_Size, "\nDisguise tiles makes it so the enemy detection system cannot see you if you are the same color as their detection!! -->");
 			}
+
+			if (player.counter > 4 && player.counter < 15)
+			{
+				drawSmallPanel(4 * Tile_Size, 2 * Tile_Size, 4 * Tile_Size, 1 * Tile_Size, "\nHowever, walking into the enemy in the center will still let them detect you.");
+			}
 		}
 		break;
 	case PAUSED:

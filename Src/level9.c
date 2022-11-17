@@ -110,6 +110,8 @@ void level9_update(void)
 					drawSmallPanel(4 * Tile_Size, 2 * Tile_Size, 3 * Tile_Size, 4 * Tile_Size, "The enemy base is really dark.");
 
 				}
+				if (player.x == 9 && player.y == 0)
+					drawSmallPanel(4 * Tile_Size, 2 * Tile_Size, 1 * Tile_Size, 2 * Tile_Size, "Stepping on the switch reveals the door");
 				//End FOV logic handled area
 				drawSideBarStats("Level 9", player.counter);
 			}
