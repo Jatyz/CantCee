@@ -10,10 +10,9 @@
 /// -------------------------------------
 ///	Sound settings Code Section
 /// -------------------------------------
-/// WIP: currently modifies volume on a linear modification scale equivalent to slider pecentage
-///		, however, in real life, volume is exponentially softer the lower the decible(db), thus slider should actually
-///		 really modify the sound scale with a logarithmic curve equivalent to slider pecentage instead.
-///		Why is it not? because log scales are alot of maths :P. it will be low on the piority list
+/// 
+/// Conversion functions convert from position relative to slider x position to volume in decibells range of 60 to 0 in terms of 1.0f to 0.0f
+/// more details in function comments
 /// 
 /// Master volume group sets the maximum limit for both other sound groups
 /// 
@@ -25,6 +24,7 @@ static float sliderBaseRadius = 15.0f;				//the radius of the small rectangular 
 static float sliderButtonRadius = 30.0f;			//the radius of the slider's button
 static float sliderButtonOffsets = 100.0f;			//the distance the sliders should be from each other in pixels
 static float topSliderYPos = windowWidth / 2;		//set the first rendered slider to draw at mid screen in y axis
+static int sliderCurrentlyAdjusted = -1;			//set to -1 for no sliders selected.
 
 //structure to store required values for each soundgroup slider
 struct Slider
@@ -55,30 +55,42 @@ float getWithinSliderValue(float const Xpos)
 	return Xpos;	//return original value if value is acceptable
 }
 
+//converts a x axis position relative to the slider's position into a value in the decibel range of 60 and 0 in the form of a value in range (0.0f,1.0f)
 float convertSliderValueToVolume(float const Xpos)
 {
 	if (Xpos > sliderMaxX)
 	{	//force to max if value is above max
 		return 1.0f;	//return comverted equivalent
 	}
-	if (Xpos < sliderMinX)
+	if (Xpos < sliderMinX)	// catch edge case that returns NaN or -INF
 	{	//force to min if value under min
 		return 0.0f;	//return comverted equivalent
 	}
-	return (Xpos-sliderMinX)/(sliderMaxX-sliderMinX);	//return original value in terms of pecent of slider moved right if value is acceptable
+	float retVal = (Xpos - sliderMinX) / (sliderMaxX - sliderMinX) * 1000;	//value between 1000 and 0 equivalent
+	retVal = 20 * log10f(retVal);//value between -inf() to 60
+	retVal /= 60;	//make value between 1.0f and 0.0f
+	return retVal;	//return original value in terms of pecent of slider moved right if value is acceptable
 }
 
-float convertVolumeToSliderValue(float const Xpos)
+//converts a volume in decibels within a 60 to 0 decibels range converted into a 1.0f to 0.0f range equivalent and returns a slider xposition equivalent of it's magnitude 
+float convertVolumeToSliderValue(float const volume)
 {
-	if (Xpos > 1.0)
+	if (volume > 1.0)
 	{	//force to max if value is above max
 		return sliderMaxX;	//return comverted equivalent
 	}
-	if (Xpos < 0.0)
+	if (volume < 0.0)	//catch potential -inf or NaN cases revesed
 	{	//force to min if value under min
 		return sliderMinX;	//return comverted equivalent
 	}
-	return Xpos * (sliderMaxX - sliderMinX) + sliderMinX ;	//return original value converted if value is acceptable
+	//reverse steps of a conversion to vol from slider value
+	float retVal = volume * 60;	//make into decibel range of 60 and 0.0
+	retVal /= 20;				//get log 10 value of 1 to 1000 range percent equivalent of slider value we want
+	retVal = powf(10, retVal);	//get value of 1 to 1000 range percent equivalent of slider value we want
+	retVal /= 1000;				//get the magnitiude of sound 
+	retVal = retVal * (sliderMaxX - sliderMinX) + sliderMinX;//convert magnitude of sound to x axis position
+
+	return retVal;	//return original value converted if value is acceptable
 }
 
 //draws the slider range (call before calling drawSliderButton())
@@ -131,12 +143,8 @@ void handleVolumeMaster(float const volume)
 	CP_Sound_SetGroupVolume(CP_SOUND_GROUP_SFX, volumeSliders[SFX].currentVolume);		//set volume of group SFX, volume is between 1.0 and 0.0
 	CP_Sound_SetGroupVolume(CP_SOUND_GROUP_MUSIC, volumeSliders[BGM].currentVolume);	//set volume of group BGM, volume is between 1.0 and 0.0
 
-	//get x axis position equivalent to volume percentage
-	newVol *= (sliderMaxX - sliderMinX);
-	newVol += sliderMinX;
-
 	//set master current slider button's x position to the new X axis equivalent of volume percentage 
-	volumeSliders[VOLMASTER].xButtonPosition = newVol;
+	volumeSliders[VOLMASTER].xButtonPosition = convertVolumeToSliderValue(newVol);
 
 	//update slider information
 	volumeSliders[SFX].xButtonPosition = convertVolumeToSliderValue(volumeSliders[SFX].currentVolume);
@@ -195,55 +203,99 @@ void handleSliderInteraction(void)
 	volumeSliders[SFX].xButtonPosition = convertVolumeToSliderValue(volumeSliders[SFX].currentVolume);
 	volumeSliders[BGM].xButtonPosition = convertVolumeToSliderValue(volumeSliders[BGM].currentVolume);
 
-	//go backwards through sliders array, as master volume is last element
-	for (int i = (sizeof(volumeSliders) / sizeof(volumeSliders[0]) - 1);
-		i > -1;
-		i--)	
-	{	//if slider area is hovered
-		if (IsAreaClicked(
-			(sliderMaxX - sliderMinX)/2 + sliderMinX,
-			volumeSliders[i].yPosition,
-			(sliderMaxX - sliderMinX),
-			sliderButtonRadius * 2,
-			CP_Input_GetMouseX(),
-			CP_Input_GetMouseY()))
-		{	
-			//if hovered area is clicked or held
-			if (CP_Input_MouseDown(MOUSE_BUTTON_LEFT))
-			{	//manipulate the slider position to the mouse x position
-				volumeSliders[i].xButtonPosition = getWithinSliderValue(CP_Input_GetMouseX());
-			}
-			//if release left mouse button, update volume levels in array
-			if (CP_Input_MouseReleased(MOUSE_BUTTON_LEFT))
-			{	
-				if (volumeSliders[i].soundGroup == CP_SOUND_GROUP_MAX)	//special case for master volume
-				{
-					handleVolumeMaster(convertSliderValueToVolume(CP_Input_GetMouseX()));	//update master volume
-					break;
-				}
-				//if slider's settings are within the master volume settings
-				if (getWithinSliderValue(CP_Input_GetMouseX()) <= volumeSliders[VOLMASTER].xButtonPosition) 
-				{	//set sound group volume to slider equivalent
-					CP_Sound_SetGroupVolume(
-						volumeSliders[i].soundGroup,
-						convertSliderValueToVolume(CP_Input_GetMouseX()));
-					//update button position
+	//if slider is not adjusted
+	if (sliderCurrentlyAdjusted == -1) 
+	{
+		//go backwards through sliders array, as master volume is last element
+		for (int i = (sizeof(volumeSliders) / sizeof(volumeSliders[0]) - 1);
+			i > -1;
+			i--)
+		{	//if slider area is hovered
+			if (IsAreaClicked(
+				(sliderMaxX - sliderMinX) / 2 + sliderMinX,
+				volumeSliders[i].yPosition,
+				(sliderMaxX - sliderMinX),
+				sliderButtonRadius * 2,
+				CP_Input_GetMouseX(),
+				CP_Input_GetMouseY()))
+			{
+				//if hovered area is clicked or held
+				if (CP_Input_MouseDown(MOUSE_BUTTON_LEFT))
+				{	//manipulate the slider position to the mouse x position
 					volumeSliders[i].xButtonPosition = getWithinSliderValue(CP_Input_GetMouseX());
-					//update volume info
-					volumeSliders[i].currentVolume = convertSliderValueToVolume(CP_Input_GetMouseX());
+					sliderCurrentlyAdjusted = i;
 				}
-				else 
-				{	//set sound group volume to slider equivalent of master volume's volume
-					CP_Sound_SetGroupVolume(
-						volumeSliders[i].soundGroup,
-						volumeSliders[VOLMASTER].currentVolume);
-					//update button position to slider equivalent of master volume's button position
-					volumeSliders[i].xButtonPosition = volumeSliders[VOLMASTER].xButtonPosition;
-					//update volume info to slider equivalent of master volume's current volume
-					volumeSliders[i].currentVolume = volumeSliders[VOLMASTER].currentVolume;
+				//if release left mouse button, update volume levels in array
+				if (CP_Input_MouseReleased(MOUSE_BUTTON_LEFT))
+				{
+					if (volumeSliders[i].soundGroup == CP_SOUND_GROUP_MAX)	//special case for master volume
+					{
+						handleVolumeMaster(convertSliderValueToVolume(CP_Input_GetMouseX()));	//update master volume
+						break;
+					}
+					//if slider's settings are within the master volume settings
+					if (getWithinSliderValue(CP_Input_GetMouseX()) <= volumeSliders[VOLMASTER].xButtonPosition)
+					{	//set sound group volume to slider equivalent
+						CP_Sound_SetGroupVolume(
+							volumeSliders[i].soundGroup,
+							convertSliderValueToVolume(CP_Input_GetMouseX()));
+						//update button position
+						volumeSliders[i].xButtonPosition = getWithinSliderValue(CP_Input_GetMouseX());
+						//update volume info
+						volumeSliders[i].currentVolume = convertSliderValueToVolume(CP_Input_GetMouseX());
+					}
+					else
+					{	//set sound group volume to slider equivalent of master volume's volume
+						CP_Sound_SetGroupVolume(
+							volumeSliders[i].soundGroup,
+							volumeSliders[VOLMASTER].currentVolume);
+						//update button position to slider equivalent of master volume's button position
+						volumeSliders[i].xButtonPosition = volumeSliders[VOLMASTER].xButtonPosition;
+						//update volume info to slider equivalent of master volume's current volume
+						volumeSliders[i].currentVolume = volumeSliders[VOLMASTER].currentVolume;
+					}
 				}
 			}
 		}
+		return;
+	}
+
+
+	//if slider is currently adjusted
+	if (CP_Input_MouseDown(MOUSE_BUTTON_LEFT))
+	{	//manipulate the slider position to the mouse x position
+		volumeSliders[sliderCurrentlyAdjusted].xButtonPosition = getWithinSliderValue(CP_Input_GetMouseX());
+	}
+	if(CP_Input_MouseReleased(MOUSE_BUTTON_LEFT))
+	{
+		if (volumeSliders[sliderCurrentlyAdjusted].soundGroup == CP_SOUND_GROUP_MAX)	//special case for master volume
+		{
+			handleVolumeMaster(convertSliderValueToVolume(CP_Input_GetMouseX()));	//update master volume
+			sliderCurrentlyAdjusted = -1;	//set to not adjusting the slider before returning
+			return;
+		}
+		//if slider's settings are within the master volume settings
+		if (getWithinSliderValue(CP_Input_GetMouseX()) <= volumeSliders[VOLMASTER].xButtonPosition)
+		{	//set sound group volume to slider equivalent
+			CP_Sound_SetGroupVolume(
+				volumeSliders[sliderCurrentlyAdjusted].soundGroup,
+				convertSliderValueToVolume(CP_Input_GetMouseX()));
+			//update button position
+			volumeSliders[sliderCurrentlyAdjusted].xButtonPosition = getWithinSliderValue(CP_Input_GetMouseX());
+			//update volume info
+			volumeSliders[sliderCurrentlyAdjusted].currentVolume = convertSliderValueToVolume(CP_Input_GetMouseX());
+		}
+		else
+		{	//set sound group volume to slider equivalent of master volume's volume
+			CP_Sound_SetGroupVolume(
+				volumeSliders[sliderCurrentlyAdjusted].soundGroup,
+				volumeSliders[VOLMASTER].currentVolume);
+			//update button position to slider equivalent of master volume's button position
+			volumeSliders[sliderCurrentlyAdjusted].xButtonPosition = volumeSliders[VOLMASTER].xButtonPosition;
+			//update volume info to slider equivalent of master volume's current volume
+			volumeSliders[sliderCurrentlyAdjusted].currentVolume = volumeSliders[VOLMASTER].currentVolume;
+		}
+		sliderCurrentlyAdjusted = -1;	//set to not adjusting the slider before returning
 	}
 }
 
