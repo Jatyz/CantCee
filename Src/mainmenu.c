@@ -4,7 +4,7 @@
 #include "mainmenu.h"
 
 #include "play.h"
-#include "howToPlay.h"
+#include "howToPlay1.h"
 #include "credits1.h"
 #include "settings.h"
 
@@ -141,7 +141,7 @@ void mainMenu_Update()
         // ----------How to Play Input----------
         if (IsAreaClicked(howToPlayWordWidth, howToPlayWordHeight, CP_Image_GetWidth(howToPlayWord), CP_Image_GetHeight(howToPlayWord), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
         {
-            CP_Engine_SetNextGameStateForced(howToPlay_Init, howToPlay_Update, howToPlay_Exit);
+            CP_Engine_SetNextGameStateForced(howToPlay1_Init, howToPlay1_Update, howToPlay1_Exit);
         }
 
         // ----------Credit Input----------

@@ -204,14 +204,22 @@ void renderGame(void) {
 
 //Call this function after setting Tile_Size to reset things to default
 void resetGame(Tile_Size) {
-	wall_Vertical = CP_Image_Load("./Assets/wall_Vertical.png");
-	floorMarbleTexture = CP_Image_Load("./Assets/floorMarbleTexture.png");
+	wallTexture = CP_Image_Load("./Assets/wallTexture.png");
+	floorTexture = CP_Image_Load("./Assets/floorTexture.png");
 	openedDoor = CP_Image_Load("./Assets/openedDoor.png");
 	closedDoor = CP_Image_Load("./Assets/closedDoor.png");
 
 	closedVent = CP_Image_Load("./Assets/closedVent.png");
 	switchOff = CP_Image_Load("./Assets/switchOff.png");
 	switchOn = CP_Image_Load("./Assets/switchOn.png");
+
+	startPlatform = CP_Image_Load("./Assets/startPlatform.png");
+	endPlatform = CP_Image_Load("./Assets/endPlatform.png");
+
+	disguiseRed = CP_Image_Load("./Assets/disguiseRed.png");
+	disguiseBlue = CP_Image_Load("./Assets/disguiseBlue.png");
+	disguiseYellow = CP_Image_Load("./Assets/disguiseYellow.png");
+
 
 	//player color may need to move out of this method to set from the start of the stage itself
 	player.Player_Color = DEFAULT;

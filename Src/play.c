@@ -4,7 +4,7 @@
 
 #include "mainmenu.h"
 #include "play.h"
-#include "howToPlay.h"
+#include "howToPlay1.h"
 #include "settings.h"
 
 #include "levelselect.h"

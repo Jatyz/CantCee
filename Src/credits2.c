@@ -6,7 +6,7 @@
 #include "credits1.h"
 #include "credits2.h"
 #include "settings.h"
-#include "howToPlay.h"
+#include "howToPlay1.h"
 
 CP_Image credits2 = NULL;
 CP_Image credits2GradientBackground = NULL;

@@ -4,14 +4,21 @@
 #include "player.h"
 #include <stdio.h>
 
-CP_Image wall_Vertical = NULL;
-CP_Image floorMarbleTexture = NULL;
+CP_Image wallTexture = NULL;
+CP_Image floorTexture= NULL;
 CP_Image openedDoor = NULL;
 CP_Image closedDoor = NULL;
 
 CP_Image closedVent = NULL;
 CP_Image switchOff = NULL;
 CP_Image switchOn = NULL;
+
+CP_Image startPlatform = NULL;
+CP_Image endPlatform = NULL;
+
+CP_Image disguiseRed = NULL;
+CP_Image disguiseBlue = NULL;
+CP_Image disguiseYellow = NULL;
 
 
 
@@ -47,7 +54,7 @@ void drawTile(int tilesize) {
 			case WALL:
 				CP_Settings_Stroke(CP_Color_Create(125, 125, 125, 255)); //setting stroke color
 				//CP_Settings_Fill(CP_Color_Create(125, 125, 125, 255));   //setting tile color
-				CP_Image_Draw(wall_Vertical, width * tilesize, height * tilesize, tilesize, tilesize, 255);
+				CP_Image_Draw(wallTexture, width * tilesize, height * tilesize, tilesize, tilesize, 255);
 				//CP_Graphics_DrawRect(width * tilesize, height * tilesize, tilesize, tilesize); //draw tile
 				break;
 			case FLOOR:
@@ -55,30 +62,40 @@ void drawTile(int tilesize) {
 				CP_Settings_NoStroke(); //turn off outline, to make grid
 				//CP_Settings_Fill(CP_Color_Create(75, 75, 75, 255)); // set tile color
 				//CP_Graphics_DrawRect(width * tilesize, height * tilesize, tilesize - .5f, tilesize - .5f); //draw tile
-				CP_Image_Draw(floorMarbleTexture, width * tilesize, height * tilesize, tilesize, tilesize, 255);
+				CP_Image_Draw(floorTexture, width * tilesize, height * tilesize, tilesize, tilesize, 255);
 				break;
 			case START:
-				CP_Settings_Fill(CP_Color_Create(0, 150, 75, 255)); // set tile color
-				CP_Graphics_DrawRect(width * tilesize, height * tilesize, tilesize - .5f, tilesize - .5f); //draw tile
+				//CP_Settings_Fill(CP_Color_Create(0, 150, 75, 255)); // set tile color
+				//CP_Graphics_DrawRect(width * tilesize, height * tilesize, tilesize - .5f, tilesize - .5f); //draw tile
+				CP_Image_Draw(startPlatform, width * tilesize, height * tilesize, tilesize, tilesize, 255);
 				break;
 			case END:
-				CP_Settings_Fill(CP_Color_Create(200, 0, 0, 255)); //set tile color
-				CP_Graphics_DrawRect(width * tilesize, height * tilesize, tilesize - .5f, tilesize - .5f); //draw tile
+				//CP_Settings_Fill(CP_Color_Create(200, 0, 0, 255)); //set tile color
+				//CP_Graphics_DrawRect(width * tilesize, height * tilesize, tilesize - .5f, tilesize - .5f); //draw tile
+				CP_Image_Draw(endPlatform, width * tilesize, height * tilesize, tilesize, tilesize, 255);
+
 				break;
 			case DISGUISE:
 				switch (tiles[width][height].Tile_Color)
 				{
 				case RED:
-					CP_Settings_Fill(Red);
+					//CP_Settings_Fill(Red);
+					CP_Image_Draw(disguiseRed, width * tilesize, height * tilesize, tilesize, tilesize, 255);
+			
+					
 					break;
 				case GREEN:
-					CP_Settings_Fill(Green);
+					//CP_Settings_Fill(Green);
+					CP_Image_Draw(disguiseYellow, width * tilesize, height * tilesize, tilesize, tilesize, 255);
+
 					break;
 				case BLUE:
-					CP_Settings_Fill(Blue);
+					//CP_Settings_Fill(Blue);
+					CP_Image_Draw(disguiseBlue, width * tilesize, height * tilesize, tilesize, tilesize, 255);
+
 					break;
 				}
-				CP_Graphics_DrawRect(width * tilesize, height * tilesize, tilesize - .5f, tilesize - .5f); // draw tile
+				//CP_Graphics_DrawRect(width * tilesize, height * tilesize, tilesize - .5f, tilesize - .5f); // draw tile
 				break;
 			case VENTS:
 				//CP_Settings_Fill(CP_Color_Create(100, 100, 100, 255)); //set tile color
@@ -286,13 +303,20 @@ void checkGates(Tile* address) {
 }
 
 void freeGridImages() {
-	CP_Image_Free(&wall_Vertical);
-	CP_Image_Free(&floorMarbleTexture);
+	CP_Image_Free(&wallTexture);
+	CP_Image_Free(&floorTexture);
 	CP_Image_Free(&openedDoor);
 	CP_Image_Free(&closedDoor);
 	CP_Image_Free(&closedVent);
 
 	CP_Image_Free(&switchOff);
 	CP_Image_Free(&switchOn);
+
+	CP_Image_Free(&startPlatform);
+	CP_Image_Free(&endPlatform);
+
+	//CP_Image_Free(&disguiseRed);
+	//CP_Image_Free(&disguiseBlue);
+	//CP_Image_Free(&disguiseYellow);
 	
 }

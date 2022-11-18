@@ -107,7 +107,7 @@ xcopy "$(SolutionDir)Assets\*" "$(OutDir)Assets\" /s /r /y /q
     <ClCompile Include="..\Src\FOV.c" />
     <ClCompile Include="..\Src\game.c" />
     <ClCompile Include="..\Src\grid.c" />
-    <ClCompile Include="..\Src\howToPlay.c" />
+    <ClCompile Include="..\Src\howToPlay1.c" />
     <ClCompile Include="..\Src\level1.c" />
     <ClCompile Include="..\Src\level10.c" />
     <ClCompile Include="..\Src\level11.c" />
@@ -156,7 +156,7 @@ xcopy "$(SolutionDir)Assets\*" "$(OutDir)Assets\" /s /r /y /q
     <ClInclude Include="..\Src\FOV.h" />
     <ClInclude Include="..\Src\game.h" />
     <ClInclude Include="..\Src\grid.h" />
-    <ClInclude Include="..\Src\howToPlay.h" />
+    <ClInclude Include="..\Src\howToPlay1.h" />
     <ClInclude Include="..\Src\levelselect.h" />
     <ClInclude Include="..\Src\main.h" />
     <ClInclude Include="..\Src\mainmenu.h" />

@@ -44,14 +44,21 @@ extern Tile tiles[MAX_TILES][MAX_TILES];
 extern Vent vents[15];
 extern Gate gates[15];
 
-extern CP_Image wall_Vertical;
-extern CP_Image floorMarbleTexture;
+extern CP_Image wallTexture;
+extern CP_Image floorTexture;
 extern CP_Image openedDoor;
 extern CP_Image closedDoor;
 
 extern CP_Image closedVent;
 extern CP_Image switchOff;
 extern CP_Image switchOn;
+
+extern CP_Image startPlatform;
+extern CP_Image endPlatform;
+
+extern CP_Image disguiseRed;
+extern CP_Image disguiseBlue;
+extern CP_Image disguiseYellow;
 
 //returns the horizontal and vertical bounds(no. of elements) in the grid to be used for the level. Assumes grid space used is square
 int returnBounds(int tilesize);

@@ -33,9 +33,6 @@
     <ClCompile Include="..\Src\level1.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Src\howToPlay.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\Src\mainmenu.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -111,6 +108,9 @@
     <ClCompile Include="..\Src\level15.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\Src\howToPlay1.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Src\grid.h">
@@ -128,7 +128,7 @@
     <ClInclude Include="..\Src\FOV.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Src\howToPlay.h">
+    <ClInclude Include="..\Src\howToPlay1.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Src\mainmenu.h">

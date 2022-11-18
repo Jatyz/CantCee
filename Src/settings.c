@@ -5,7 +5,7 @@
 #include "mainMenu.h"
 #include "play.h"
 #include "FOV.h"
-#include "howToPlay.h"
+#include "howToPlay1.h"
 #include "settings.h"
 
 /// -------------------------------------
