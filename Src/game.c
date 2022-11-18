@@ -255,6 +255,7 @@ void resetGame(Tile_Size) {
 	lightCounter = 0;
 	player.onSwitch = 0;
 	player.isTP = 0;
+	resetTrails();
 }
 
 //resume game
