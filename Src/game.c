@@ -42,6 +42,13 @@ int levelExited = 0,
 double lightCounter, tileMoveCounter;
 int doorLightRange,gameFogRange,illumMode;
 
+CP_Sound loseSound = NULL;
+CP_Sound disguiseSound = NULL;
+CP_Sound portalSound = NULL;
+CP_Sound winSound = NULL;
+CP_Sound doorOpen = NULL;
+CP_Sound doorClose = NULL;
+CP_Sound buttonSound = NULL;
 
 void game_init(void)
 {
@@ -220,6 +227,13 @@ void resetGame(Tile_Size) {
 	disguiseBlue = CP_Image_Load("./Assets/disguiseBlue.png");
 	disguiseYellow = CP_Image_Load("./Assets/disguiseYellow.png");
 
+	loseSound = CP_Sound_Load("./Assets/Sounds/Lose Sound.mp3");
+	buttonSound = CP_Sound_Load("./Assets/Sounds/Button Sound.mp3");
+	disguiseSound = CP_Sound_Load("./Assets/Sounds/Disguise Sound.mp3");
+	portalSound = CP_Sound_Load("./Assets/Sounds/Portal Sound.mp3");
+	winSound = CP_Sound_Load("./Assets/Sounds/Win Sound.mp3");
+	doorOpen = CP_Sound_Load("./Assets/Sounds/Door Open.mp3");
+	doorClose = CP_Sound_Load("./Assets/Sounds/Door Close.mp3");
 
 	//player color may need to move out of this method to set from the start of the stage itself
 	player.Player_Color = DEFAULT;
@@ -341,7 +355,19 @@ void drawFog(void) {
 	}
 }
 
+void freeSound()
+{
+	if(loseSound == NULL) CP_Sound_Free(&loseSound);
+	if(buttonSound == NULL) CP_Sound_Free(&buttonSound);
+	if(disguiseSound == NULL) CP_Sound_Free(&disguiseSound);
+	if(portalSound == NULL) CP_Sound_Free(&portalSound);
+	if(winSound == NULL) CP_Sound_Free(&winSound);
+	if(doorOpen == NULL) CP_Sound_Free(&doorOpen);
+	if(doorClose == NULL) CP_Sound_Free(&doorClose);
+}
+
 void freeImage() {
+	freeSound();
 	freeMenuImages();
 	freeTransitionImage();
 	freeGridImages();

@@ -9,7 +9,7 @@
 #define MEDIUM 50
 #define SMALL 80
 
-#define Green CP_Color_Create(0, 255, 0, 255)
+#define Green CP_Color_Create(255, 255, 0, 255)
 #define Blue CP_Color_Create(0, 0, 255, 255)
 #define Red CP_Color_Create(200, 0, 50, 255)
 
@@ -57,3 +57,11 @@ extern double lightCounter, tileMoveCounter;
 extern int doorLightRange, gameFogRange,illumMode;
 extern levelExited, levelStarted;
 //extern int parScore[]; see game.c
+
+extern CP_Sound loseSound;
+extern CP_Sound disguiseSound;
+extern CP_Sound portalSound;
+extern CP_Sound winSound;
+extern CP_Sound doorOpen;
+extern CP_Sound doorClose;
+extern CP_Sound buttonSound;

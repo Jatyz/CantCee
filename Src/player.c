@@ -9,11 +9,7 @@
 Player player;
 double holdTimer = .1;
 
-CP_Sound disguiseSound = NULL;
-CP_Sound portalSound = NULL;
-CP_Sound winSound = NULL;
-CP_Sound doorOpen = NULL;
-CP_Sound doorClose = NULL;
+
 
 //draw the player
 void drawPlayer(int tilesize) {
@@ -219,7 +215,6 @@ _Bool checkMove(int DirectionX, int DirectionY) {
 		return FALSE;
 	case DISGUISE:
 		//set the player to the tile color
-		disguiseSound = CP_Sound_Load("./Assets/Sounds/Disguise Sound.mp3");
 		CP_Sound_PlayAdvanced(disguiseSound, 1.0f, 2.0f, FALSE, CP_SOUND_GROUP_2);
 		player.Player_Color = tiles[player.x + DirectionX][player.y + DirectionY].Tile_Color;
 		break;
@@ -228,7 +223,7 @@ _Bool checkMove(int DirectionX, int DirectionY) {
 		player.isTP = TRUE;
 		//check where the player shld tp to.
 		checkVents(&tiles[player.x + DirectionX][player.y + DirectionY]);
-		portalSound = CP_Sound_Load("./Assets/Sounds/Portal Sound.mp3");
+
 		CP_Sound_PlayAdvanced(portalSound, 1.0f, 2.0f, FALSE, CP_SOUND_GROUP_2);
 		//player does not move so return false
 		return FALSE;
@@ -238,10 +233,8 @@ _Bool checkMove(int DirectionX, int DirectionY) {
 		break;
 		//check if player walked into a switch
 	case SWITCH_ON:
-		doorOpen = CP_Sound_Load("./Assets/Sounds/Door Open.mp3");
 		CP_Sound_PlayAdvanced(doorOpen, 1.0f, 2.0f, FALSE, CP_SOUND_GROUP_2);
 	case SWITCH_OFF:
-		doorClose = CP_Sound_Load("./Assets/Sounds/Door Close.mp3");
 		CP_Sound_PlayAdvanced(doorClose, 1.0f, 2.0f, FALSE, CP_SOUND_GROUP_2);
 		checkGates(&tiles[player.x + DirectionX][player.y + DirectionY]);
 		break;
@@ -250,7 +243,7 @@ _Bool checkMove(int DirectionX, int DirectionY) {
 		player.counter++;
 		player.Prev_X = player.x;
 		player.Prev_Y = player.y;
-		winSound = CP_Sound_Load("./Assets/Sounds/Win Sound.mp3");
+
 		CP_Sound_PlayAdvanced(winSound, 1.0f, 2.0f, FALSE, CP_SOUND_GROUP_2);
 		//check if player beat previous score
 		if(Score[player.currentStage] == 0 || player.counter < Score[player.currentStage])

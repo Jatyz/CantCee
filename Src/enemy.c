@@ -16,11 +16,9 @@
 #include "game.h"
 #include "enemy.h"
 #include "player.h"
-#include "soundEffects.h"
 #include <math.h>
 
 Enemy enemies[MAX_TILES][MAX_TILES];
-CP_Sound loseSound = NULL;
 
 //For AOE Enemy
 //(difficulty == 1) Checks 8 grids around AOE Enemy
@@ -46,8 +44,8 @@ void enemyFOVColorSet(int enemyXPos, int enemyYPos)
 
 	if (enemies[enemyXPos][enemyYPos].Color == GREEN)
 	{
-		CP_Settings_Stroke(CP_Color_Create(0, 255, 0, 60));
-		CP_Settings_Fill(CP_Color_Create(0, 255, 0, 60));
+		CP_Settings_Stroke(CP_Color_Create(255, 255, 0, 60));
+		CP_Settings_Fill(CP_Color_Create(255, 255, 0, 60));
 	}
 
 	if (enemies[enemyXPos][enemyYPos].Color == BLUE)
@@ -856,7 +854,6 @@ void enemyFOV(int tileSize)
 						{
 							if (player.Player_Color != enemies[width][height].Color)
 							{
-								loseSound = CP_Sound_Load("./Assets/Sounds/Lose Sound.mp3");
 								CP_Sound_PlayAdvanced(loseSound, 1.0f, 2.0f, FALSE, CP_SOUND_GROUP_2);
 								gameState = LOSE;
 								//CP_Sound_Free(&loseSound);
@@ -871,7 +868,6 @@ void enemyFOV(int tileSize)
 						{
 							if (player.Player_Color != enemies[width][height].Color)
 							{
-								loseSound = CP_Sound_Load("./Assets/Sounds/Lose Sound.mp3");
 								CP_Sound_PlayAdvanced(loseSound, 1.0f, 2.0f, FALSE, CP_SOUND_GROUP_2);
 								gameState = LOSE;
 								//CP_Sound_Free(&loseSound);
@@ -885,7 +881,6 @@ void enemyFOV(int tileSize)
 						{
 							if (player.Player_Color != enemies[width][height].Color)
 							{
-								loseSound = CP_Sound_Load("./Assets/Sounds/Lose Sound.mp3");
 								CP_Sound_PlayAdvanced(loseSound, 1.0f, 2.0f, FALSE, CP_SOUND_GROUP_2);
 								gameState = LOSE;
 								//CP_Sound_Free(&loseSound);
@@ -899,7 +894,6 @@ void enemyFOV(int tileSize)
 						{
 							if (player.Player_Color != enemies[width][height].Color)
 							{
-								loseSound = CP_Sound_Load("./Assets/Sounds/Lose Sound.mp3");
 								CP_Sound_PlayAdvanced(loseSound, 1.0f, 2.0f, FALSE, CP_SOUND_GROUP_2);
 								gameState = LOSE;
 								//CP_Sound_Free(&loseSound);
@@ -909,7 +903,6 @@ void enemyFOV(int tileSize)
 						//checks if player is on top of enemy
 					else if (player.x == width && player.y == height)
 					{
-						loseSound = CP_Sound_Load("./Assets/Sounds/Lose Sound.mp3");
 						CP_Sound_PlayAdvanced(loseSound, 1.0f, 2.0f, FALSE, CP_SOUND_GROUP_2);
 						gameState = LOSE;
 						//CP_Sound_Free(&loseSound);
@@ -921,7 +914,6 @@ void enemyFOV(int tileSize)
 					//checks if player has entered enemy's FOV
 					if (player.x == width && player.y == height)
 					{
-						loseSound = CP_Sound_Load("./Assets/Sounds/Lose Sound.mp3");
 						CP_Sound_PlayAdvanced(loseSound, 1.0f, 2.0f, FALSE, CP_SOUND_GROUP_2);
 						gameState = LOSE;
 						//CP_Sound_Free(&loseSound);
@@ -930,7 +922,6 @@ void enemyFOV(int tileSize)
 					{
 						if (player.Player_Color != enemies[width][height].Color)
 						{
-							loseSound = CP_Sound_Load("./Assets/Sounds/Lose Sound.mp3");
 							CP_Sound_PlayAdvanced(loseSound, 1.0f, 2.0f, FALSE, CP_SOUND_GROUP_2);
 							gameState = LOSE;
 							//CP_Sound_Free(&loseSound);
