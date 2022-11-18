@@ -19,6 +19,18 @@
 #define returnToMainMenuX (windowWidth / 2) - 320
 #define returnToMainMenuY (windowHeight / 2) + 370
 
+// next page
+#define htp1NPX (windowWidth / 2) +400
+#define htp1NPY (windowHeight / 2)
+
+// next page
+#define htp1BTMMx (windowWidth / 2) - 400
+#define htp1BTMMy (windowHeight / 2)
+
+// NextPageButton
+#define credits1NextPageButtonX (windowWidth / 2) + 400
+
+
 void howToPlay1_Init(void);
 
 void howToPlay1_Update(void);
