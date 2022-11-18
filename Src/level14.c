@@ -155,7 +155,7 @@ void level14_update(void)
 				handlePlayerInput(Tile_Size);
 				//End FOV logic handled area
 
-				if (player.Player_Color == BLUE && tiles[13][9].type == CLOSED_DOOR) {
+				if (player.Player_Color == BLUE && tiles[13][9].type == CLOSED_DOOR && player.x > 9 && player.y < 9) {
 					drawSmallPanel(4 * Tile_Size, 4 * Tile_Size, 3 * Tile_Size, 4 * Tile_Size, "If you cannot find a way to progress you may need to restart.");
 				}
 

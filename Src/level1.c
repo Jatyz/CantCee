@@ -72,7 +72,7 @@ void level1_update(void)
 			}
 			if (player.counter > 6)
 			{
-				drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 0 * Tile_Size, 1 * Tile_Size, "Get to the red tile to proceed to next stage");
+				drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 0 * Tile_Size, 1 * Tile_Size, "Get to the Exit tile to proceed to next stage");
 
 			}
 		}

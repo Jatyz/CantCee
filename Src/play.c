@@ -204,6 +204,8 @@ void play_Update()
 	{
 		drawSideBarLevel(test, levelScore);
 		drawSideBarPar(parScore);
+
+
 	}
 
 	// Background: Grey Colour
@@ -704,7 +706,12 @@ void play_Update()
 		}
 	}
 
-
+	for (int setLevelSelectionState = 0; setLevelSelectionState < 15; setLevelSelectionState++)
+	{
+		if (level[setLevelSelectionState].selected) {
+			CP_Image_Draw(hoverLvl, level[setLevelSelectionState].xAxis, level[setLevelSelectionState].yAxis, CP_Image_GetWidth(hoverLvl), CP_Image_GetHeight(hoverLvl), 255);
+		}
+	}
 
 
 	}
