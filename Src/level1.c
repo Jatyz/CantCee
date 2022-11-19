@@ -66,9 +66,8 @@ void level1_update(void)
 			drawSideBarStats("Level 1", player.counter);
 			if (player.y > 5)
 			{
-				drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 7 * Tile_Size, 6 * Tile_Size, "you can press WASD/arrow keys to move.");
-				drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 0 * Tile_Size, 6 * Tile_Size, "You can use your mouse to click horizontal/vertical to the player to move or");
-
+				drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 7 * Tile_Size, 6 * Tile_Size, "you can press/hold WASD/arrow keys to move.");
+				drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 0 * Tile_Size, 6 * Tile_Size, "You can use your mouse to click left/right or up/down of the player to move or");
 			}
 			if (player.counter > 6)
 			{

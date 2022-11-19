@@ -5,7 +5,7 @@
 #include "utils.h"
 #include "enemy.h"
 #include "soundEffects.h"
-
+#include "fov.h"
 Player player;
 double holdTimer = .1;
 
@@ -72,7 +72,7 @@ void setPlayerDirection(int directionFacing)
 	player.direction = (directionFacing % 4); 
 }
 
-void playerCheck(void)
+void playerSwitchCheck(void)
 {
 	if (tiles[player.x][player.y].type == SWITCH_ON || tiles[player.x][player.y].type == SWITCH_OFF) {
 		player.onSwitch = 1;
@@ -188,6 +188,8 @@ void handlePlayerInput(int tilesize) {
 		illumMode = 1;
 	}
 
+	if (CP_Input_KeyTriggered(KEY_P))
+		isTrailsActive = !isTrailsActive;
 
 	//code for FOV turn without movement
 	//use setPlayerDirection function to prevent an overflow of logic for int variable as setPlayerDirection 
@@ -204,6 +206,10 @@ void handlePlayerInput(int tilesize) {
 		else {setPlayerDirection(player.direction - 1);}		//set direction to 90 degrees counter clockwise
 	}
 
+	if (CP_Input_MouseTriggered(MOUSE_BUTTON_RIGHT)) {
+		//check if player clicked and whether it shld light up the map
+		lightTileCheck();
+	}
 }
 
 //check the movements of the player, if the player is about to land on a specific tile, if it is a wall, deny movement.
@@ -360,7 +366,7 @@ void moveTileCheck() {
 }
 
 void lightTileCheck() {
-	if (illumMode && player.shineCount > 0) {
+	if (player.shineCount > 0) {
 		float x, y;
 		int Width, Height;
 		//find the mouse clicked position
@@ -375,7 +381,7 @@ void lightTileCheck() {
 		//set tiles lit for 2 seconds
 		lightTiles(Width, Height, doorLightRange);
 		lightCounter = 2;
-		illumMode = 0;
+		//illumMode = 0;
 		//use shine
 		player.shineCount--;
 	}

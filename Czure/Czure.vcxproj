@@ -168,6 +168,9 @@ xcopy "$(SolutionDir)Assets\*" "$(OutDir)Assets\" /s /r /y /q
     <ClInclude Include="..\Src\utils.h" />
     <ClInclude Include="..\Src\vectorMathBasic.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Assets\IDI_ICON1.ico" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

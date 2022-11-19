@@ -49,4 +49,4 @@ void giveLight();
 //Has in-built error warping. Numbers 4 and above are warpped via modulo of 4
 void setPlayerDirection(int directionFacing);
 
-void playerCheck(void);
+void playerSwitchCheck(void);

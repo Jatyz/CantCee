@@ -338,7 +338,18 @@ void drawSideBarStats(char levelNumber[], int noOfStep) {
 			CP_Font_DrawTextBox(number, 825, 350, 200);
 		}
 
+		if (player.counter > 500) {
+			//number of shine
+			CP_Settings_TextSize(30.f);
+			CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
+			CP_Graphics_DrawRect(800, 380, 200, 220);
+			CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
+			CP_Font_DrawTextBox("If you are having trouble, you can go to settings to turn on easy mode", 810, 400, 200);
+		}
 	}
+
+
+
 
 	free(number);
 }

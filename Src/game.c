@@ -204,7 +204,7 @@ void renderGame(void) {
 	if (!player.onSwitch && !(illumMode || lightCounter > 0)) {
 		drawFog();
 	}
-	playerCheck();
+	playerSwitchCheck();
 	if (player.setFOV)
 	renderFOVAdvance(returnBounds(Tile_Size), returnBounds(Tile_Size), Tile_Size);
 }
