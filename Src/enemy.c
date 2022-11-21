@@ -25,14 +25,15 @@ Enemy enemies[MAX_TILES][MAX_TILES];
 //catch-all function to make it easier to load all enemy stats and parameters
 void enemySet(int width, int height, int difficulty, int range, EnemyType type, Color Color)
 {
-	enemies[width][height].isActive = 1;
-	enemies[width][height].type = type;
-	enemies[width][height].range = range;
-	enemies[width][height].difficulty = difficulty;
-	enemies[width][height].Color = Color;
+	enemies[width][height].isActive = 1;//-----------Set to 1 by default to make it possible to set the position
+	enemies[width][height].type = type;//------------Sets the type of the enemy. There are 2 types: VERTICAL_HORIZONTAL_LOOK, and AOE_VIEW.
+	enemies[width][height].range = range;//----------Used by the VERTICAL_HORIZONTAL_LOOK enemy to set how many grids in the 4 directions it can see
+	enemies[width][height].difficulty = difficulty;//Used by AOE_VIEW enemy. It determines if it is a 3x3 or 5x5 FOV grid around your enemy
+	enemies[width][height].Color = Color;//----------Sets the color of the enemy. This affects the color-changing mechanic as it will dictate what color the player needs to be to get past the enemy
 }
 
-//sets the enemy's color automatically
+//sets the enemy's FOV color. The reason this is a separate set of colors is because the FOV has a transparency,
+//to allow the player to see themselves when they are behind the FOV layer
 void enemyFOVColorSet(int enemyXPos, int enemyYPos)
 {
 	if (enemies[enemyXPos][enemyYPos].Color == RED)
@@ -55,8 +56,7 @@ void enemyFOVColorSet(int enemyXPos, int enemyYPos)
 	}
 }
 
-//sets the enemy's FOV color. The reason this is a separate set of colors is because the FOV has a transparency,
-//to allow the player to see themselves when they are behind the FOV layer
+//sets the enemy's color automatically
 CP_Color enemyColorSet(int enemyXPos, int enemyYPos)
 {
 	if (enemies[enemyXPos][enemyYPos].Color == RED)
