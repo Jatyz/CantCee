@@ -12,9 +12,10 @@ enum
 	ANIMATION_NOT_DONE = 1
 };
 
-static CP_Image lvlTransitImage;
-static double imageXpos = -230;;
+static CP_Image lvlTransitImage;	//the image for the edge of the transition
+static double imageXpos = -230;		//the x position 
 
+//Use this to free the transit image outside leveltransition.c
 void freeTransitionImage(void);
 
 //sets situation where screen starts fully covered 

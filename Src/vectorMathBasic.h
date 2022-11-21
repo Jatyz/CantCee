@@ -6,6 +6,7 @@ double distanceOfVectorR2(
 	double const vectorY
 );
 
+//determines and returns the dot product of 2 2d vectors
 double dotProductR2
 (
 	double const vector1X,
@@ -23,6 +24,7 @@ double angleBetweenVectorsR2
 	double const Y2
 );
 
+//finds and returns the angle between 2 vectors in 2D in degrees
 double angleBetweenVectorsDegreesR2
 (
 	double const X1,
@@ -31,7 +33,7 @@ double angleBetweenVectorsDegreesR2
 	double const Y2
 );
 
-
+//finds the angle of a point from origin and returns the angle in degrees
 double angleOfPointR2
 (
 	double const X1,
