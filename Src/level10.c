@@ -95,8 +95,21 @@ void level10_update(void)
 				handlePlayerIllumInput();
 				//draw game but do not update fog
 				renderGame();
+
 				//draw fog
 				renderFOVAdvance(returnBounds(Tile_Size), returnBounds(Tile_Size), Tile_Size);
+
+				if (player.counter < 10 && player.shineCount > 0)
+				{
+					drawSmallPanel(4 * Tile_Size, 2 * Tile_Size, 3 * Tile_Size, 4 * Tile_Size, "Left click on screen to use a shine");
+
+				}
+
+				if (player.counter >10 || player.shineCount == 0 && lightCounter < 0)
+				{
+					drawSmallPanel(4 * Tile_Size, 2 * Tile_Size, 3 * Tile_Size, 4 * Tile_Size, "Press Space again to deactivate Shine Mode");
+
+				}
 				return;
 			}
 			else {

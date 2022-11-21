@@ -111,7 +111,7 @@ void level13_init(void)
 	doorLightRange = 2;
 	player.currentStage = 13;
 	gameFogRange = 2;
-	player.shineCount = 1;
+	player.shineCount = 0;
 }
 
 void level13_update(void)
@@ -128,6 +128,11 @@ void level13_update(void)
 				renderGame();
 				//draw fog
 				renderFOVAdvance(returnBounds(Tile_Size), returnBounds(Tile_Size), Tile_Size);
+				if (lightCounter < 0)
+				{
+					drawSmallPanel(4 * Tile_Size, 3 * Tile_Size, 6 * Tile_Size, 6 * Tile_Size, "Press Space again to deactivate Shine Mode");
+
+				}
 				return;
 			}
 			else {

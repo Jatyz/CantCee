@@ -150,6 +150,12 @@ void level11_update(void)
 				renderGame();
 				//draw fog
 				renderFOVAdvance(returnBounds(Tile_Size), returnBounds(Tile_Size), Tile_Size);
+
+				if (lightCounter < 0)
+				{
+					drawSmallPanel(4 * Tile_Size, 3 * Tile_Size, 6 * Tile_Size, 6 * Tile_Size, "Press Space again to deactivate Shine Mode");
+
+				}
 				return;
 			}
 			else {

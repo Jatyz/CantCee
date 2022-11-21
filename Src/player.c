@@ -385,7 +385,7 @@ void lightTileCheck() {
 		//set tiles lit for 2 seconds
 		lightTiles(Width, Height, doorLightRange);
 		lightCounter = 2;
-		//illumMode = 0;
+		illumMode = 0;
 		//use shine
 		player.shineCount--;
 	}
