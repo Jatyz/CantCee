@@ -31,12 +31,12 @@ void level7_init(void)
 	tiles[0][0].type = END;
 
 	tiles[7][9].type = DISGUISE;
-	tiles[7][9].Tile_Color = YELLOW;
+	tiles[7][9].Tile_Color = GREEN;
 	tiles[5][5].type = DISGUISE;
 	tiles[5][5].Tile_Color = RED;
 
-	enemySet(5, 8, 1, 0, AOE_VIEW, YELLOW);
-	enemySet(8, 6, 1, 0, AOE_VIEW, YELLOW);
+	enemySet(5, 8, 1, 0, AOE_VIEW, GREEN);
+	enemySet(8, 6, 1, 0, AOE_VIEW, GREEN);
 	//set all enemy on tile
 	enemySet(5, 8, 1, 0, AOE_VIEW, GREEN);
 	enemySet(8, 6, 1, 0, AOE_VIEW, GREEN);

@@ -25,7 +25,7 @@ void drawPlayer(int tilesize) {
 		break;
 	case BLUE: CP_Settings_Fill(Blue);
 		break;
-	case YELLOW: CP_Settings_Fill(Yellow);
+	case GREEN: CP_Settings_Fill(Yellow);
 		break;
 	case DEFAULT: CP_Settings_Fill(CP_Color_Create(0, 255, 255, 255));
 		break;
@@ -252,11 +252,10 @@ _Bool checkMove(int DirectionX, int DirectionY) {
 		//check if player walked into a switch
 	case SWITCH_ON:
 		CP_Sound_PlayAdvanced(doorOpen, 0.5f, 2.0f, FALSE, CP_SOUND_GROUP_2);
-	case SWITCH_OFF:
-		CP_Sound_PlayAdvanced(doorClose, 0.5f, 2.0f, FALSE, CP_SOUND_GROUP_2);
+		break;
 	case SWITCH_OFF:
 		//open and close doors
-		CP_Sound_PlayAdvanced(doorClose, 1.0f, 2.0f, FALSE, CP_SOUND_GROUP_2);
+		CP_Sound_PlayAdvanced(doorClose, 0.5f, 2.0f, FALSE, CP_SOUND_GROUP_2);
 		checkGates(&tiles[player.x + DirectionX][player.y + DirectionY]);
 		break;
 	case END:

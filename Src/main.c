@@ -14,6 +14,7 @@
 
 #include "cprocessing.h"
 #include "splashscreen.h"
+#include "mainmenu.h"
 
 
 int main(void)

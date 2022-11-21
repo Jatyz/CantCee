@@ -68,7 +68,7 @@ void game_init(void)
 	tiles[9][4].type = DISGUISE;
 	tiles[9][4].Tile_Color = BLUE;
 	tiles[0][9].type = DISGUISE;
-	tiles[0][9].Tile_Color = YELLOW;
+	tiles[0][9].Tile_Color = GREEN;
 
 	vents[0].tile1 = &tiles[9][8];
 	vents[0].tile2 = &tiles[0][8];
@@ -116,56 +116,56 @@ void game_init(void)
 
 void game_update(void)
 {
-	//level select code
-	if (CP_Input_KeyDown(KEY_F1)) {
-		player.counter = 10000;
-	}
-
-	switch (gameState) {
-	case PLAY:
-		//clears the screen so things can be redrawn
-		CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
-		handlePlayerInput(Tile_Size);
-		//all the game update methods that needs to be updated every frame
-		//FOV logic handled here
-		if (player.setFOV) {
-			drawFog();
-			//End FOV logic handled area	
-		}renderGame();
-		drawSideBarLevel("Debug level", player.counter);
-		break;
-	case PAUSED:
-		drawFullPanel();
-		checkClick(resumeGame, startGame, startLevelSelect);
-		break;
-	case WIN:
-		drawFullPanel();
-		checkClick(startLevel1, startGame, startLevelSelect);
-		break;
-	case LOSE:
-		drawFullPanel();
-		checkClick(startGame, startLevelSelect, 0);
-		break;
-	}
-	
-	
-	// NEW CODE HERE!! UP FOR A DISCOUNT OF WHERE'S MY WEEKENDS???!!!!
-	if (levelStarted)	//when level starts, 
-	{	//render enter level transition animation
-		levelStarted = initLevelTransition();	//returns 0 when animation is done
-		if(!levelStarted)
-		{
-		levelExited = 1;
-		setSpriteReseted();
-		}
-	}
-
-	if (levelExited)	//when level exit, 
-	{	//render exit level transition animation
-		//levelExited = exitLevelTransition(levelExited, game_exit);	//second parameter runs when the animation is complete, returns 0 when animation is done
-		if(!levelExited)
-			CP_Engine_SetNextGameStateForced(game_init, game_update, game_exit);
-	}
+//	//level select code
+//	if (CP_Input_KeyDown(KEY_F1)) {
+//		player.counter = 10000;
+//	}
+//
+//	switch (gameState) {
+//	case PLAY:
+//		//clears the screen so things can be redrawn
+//		CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
+//		handlePlayerInput(Tile_Size);
+//		//all the game update methods that needs to be updated every frame
+//		//FOV logic handled here
+//		if (player.setFOV) {
+//			drawFog();
+//			//End FOV logic handled area	
+//		}renderGame();
+//		drawSideBarLevel("Debug level", player.counter);
+//		break;
+//	case PAUSED:
+//		drawFullPanel();
+//		checkClick(resumeGame, startGame, startLevelSelect);
+//		break;
+//	case WIN:
+//		drawFullPanel();
+//		checkClick(startLevel1, startGame, startLevelSelect);
+//		break;
+//	case LOSE:
+//		drawFullPanel();
+//		checkClick(startGame, startLevelSelect, 0);
+//		break;
+//	}
+//	
+//	
+//	// NEW CODE HERE!! UP FOR A DISCOUNT OF WHERE'S MY WEEKENDS???!!!!
+//	if (levelStarted)	//when level starts, 
+//	{	//render enter level transition animation
+//		levelStarted = initLevelTransition();	//returns 0 when animation is done
+//		if(!levelStarted)
+//		{
+//		levelExited = 1;
+//		setSpriteReseted();
+//		}
+//	}
+//
+//	if (levelExited)	//when level exit, 
+//	{	//render exit level transition animation
+//		//levelExited = exitLevelTransition(levelExited, game_exit);	//second parameter runs when the animation is complete, returns 0 when animation is done
+//		if(!levelExited)
+//			CP_Engine_SetNextGameStateForced(game_init, game_update, game_exit);
+//	}
 }
 
 void game_exit(void)

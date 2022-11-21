@@ -57,7 +57,7 @@ void level8_init(void)
 	tiles[0][0].type = END;
 
 	tiles[4][9].type = DISGUISE;
-	tiles[4][9].Tile_Color = YELLOW;
+	tiles[4][9].Tile_Color = GREEN;
 	tiles[6][7].type = DISGUISE;
 	tiles[6][7].Tile_Color = RED;
 
@@ -69,8 +69,8 @@ void level8_init(void)
 	gates[1].Door = &tiles[2][6];
 	gates[1].Switch = &tiles[5][2];
 
-	enemySet(2, 1, 1, 0, AOE_VIEW, YELLOW);
-	enemySet(7, 1, 1, 0, AOE_VIEW, YELLOW);
+	enemySet(2, 1, 1, 0, AOE_VIEW, GREEN);
+	enemySet(7, 1, 1, 0, AOE_VIEW, GREEN);
 	//set all enemies
 	enemySet(2, 1, 1, 0, AOE_VIEW, GREEN);
 	enemySet(7, 1, 1, 0, AOE_VIEW, GREEN);
