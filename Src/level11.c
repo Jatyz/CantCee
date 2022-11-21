@@ -95,7 +95,7 @@ void level11_init(void)
 	tiles[0][1].type = END;
 
 	tiles[15][8].type = DISGUISE;
-	tiles[15][8].Tile_Color = GREEN;
+	tiles[15][8].Tile_Color = YELLOW;
 
 	tiles[5][14].type = DISGUISE;
 	tiles[5][14].Tile_Color = RED;
@@ -118,6 +118,8 @@ void level11_init(void)
 	gates[3].Switch = &tiles[0][4];
 	gates[3].Door = &tiles[8][0];
 
+
+	enemySet(9, 7, 2, 0, AOE_VIEW, YELLOW);
 	//set enemies
 	enemySet(9, 7, 2, 0, AOE_VIEW, GREEN);
 

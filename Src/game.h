@@ -9,7 +9,7 @@
 #define MEDIUM 50
 #define SMALL 80
 
-#define Green CP_Color_Create(255, 255, 0, 255)
+#define Yellow CP_Color_Create(255, 255, 0, 255)
 #define Blue CP_Color_Create(0, 0, 255, 255)
 #define Red CP_Color_Create(200, 0, 50, 255)
 

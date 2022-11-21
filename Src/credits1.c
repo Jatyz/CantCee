@@ -1,6 +1,6 @@
 #include "cprocessing.h"
 #include "utils.h"
-
+#include "game.h"
 #include "mainMenu.h"
 #include "play.h"
 #include "credits1.h"
@@ -22,6 +22,7 @@ void credits1_Init()
     credits1GradientBackground = CP_Image_Load("./Assets/credits1GradientBackground.png");
     credits1BackToMainMenu = CP_Image_Load("./Assets/credits1BackToMainMenu.png");
     credits1NextPage = CP_Image_Load("./Assets/credits1NextPage.png");
+    buttonSound = CP_Sound_Load("./Assets/Sounds/Button Sound.mp3");
 }
 
 void credits1_Update()
@@ -40,10 +41,12 @@ void credits1_Update()
         // Back To Main Menu Button
         if (IsAreaClicked(credits1BackButtonX, credits1ButtonY, CP_Image_GetWidth(credits1BackToMainMenu), CP_Image_GetHeight(credits1BackToMainMenu), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
         {
+            CP_Sound_PlayAdvanced(buttonSound, 0.5f, 2.0f, FALSE, CP_SOUND_GROUP_2);
             CP_Engine_SetNextGameStateForced(mainMenu_Init, mainMenu_Update, mainMenu_Exit);
         }
         if (IsAreaClicked(credits1NextPageButtonX, credits1ButtonY, CP_Image_GetWidth(credits1NextPage), CP_Image_GetHeight(credits1NextPage), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
         {
+            CP_Sound_PlayAdvanced(buttonSound, 0.5f, 2.0f, FALSE, CP_SOUND_GROUP_2);
             CP_Engine_SetNextGameStateForced(credits2_Init, credits2_Update, credits2_Exit);
         }
     }
@@ -55,4 +58,5 @@ void credits1_Exit()
     CP_Image_Free(&credits1);
     CP_Image_Free(&credits1BackToMainMenu);
     CP_Image_Free(&credits1NextPage);
+    CP_Sound_Free(buttonSound);
 }

@@ -52,7 +52,7 @@ void level13_init(void)
 	tiles[6][14].type = DISGUISE;
 	tiles[6][14].Tile_Color = RED;
 	tiles[10][1].type = DISGUISE;
-	tiles[10][1].Tile_Color = GREEN;
+	tiles[10][1].Tile_Color = YELLOW;
 
 
 	gates[0].Switch = &tiles[15][9];
@@ -94,6 +94,11 @@ void level13_init(void)
 	gates[12].Switch = &tiles[1][15];
 	gates[12].Door = &tiles[2][8];
 
+	setStartGame(Tile_Size);
+	tiles[14][8].type = OPENED_DOOR;
+	tiles[12][2].type = OPENED_DOOR;
+	tiles[2][8].type = OPENED_DOOR;
+	enemySet(10, 6, 1, 0, AOE_VIEW, YELLOW);
 	//set enemy
 	enemySet(10, 6, 1, 0, AOE_VIEW, GREEN);
 

@@ -2,7 +2,7 @@
 #include "cprocessing.h"
 
 typedef enum {
-	RED,GREEN,BLUE,DEFAULT
+	RED,YELLOW,BLUE,DEFAULT
 }Color;
 
 typedef struct { // structure to contain player variables

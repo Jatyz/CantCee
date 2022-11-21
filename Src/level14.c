@@ -92,7 +92,7 @@ void level14_init(void)
 	tiles[3][5].type = DISGUISE;
 	tiles[3][5].Tile_Color = RED;
 	tiles[0][7].type = DISGUISE;
-	tiles[0][7].Tile_Color = GREEN;
+	tiles[0][7].Tile_Color = YELLOW;
 
 	gates[0].Switch = &tiles[0][13];
 	gates[0].Door = &tiles[13][9];
@@ -117,7 +117,7 @@ void level14_init(void)
 
 	//set current enemies
 	enemySet(7, 2, 2, 0, AOE_VIEW, RED);
-	enemySet(7, 7, 2, 0, AOE_VIEW, GREEN);
+	enemySet(7, 7, 2, 0, AOE_VIEW, YELLOW);
 	enemySet(7, 12, 2, 0, AOE_VIEW, BLUE);
 	enemySet(1, 4, 0, 7, VERTICAL_HORIZONTAL_LOOK, BLUE);
 	enemySet(13, 6, 0, 7, VERTICAL_HORIZONTAL_LOOK, RED);

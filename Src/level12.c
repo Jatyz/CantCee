@@ -70,7 +70,7 @@ void level12_init(void)
 	tiles[0][5].Tile_Color = BLUE;
 
 	tiles[12][4].type = DISGUISE;
-	tiles[12][4].Tile_Color = GREEN;
+	tiles[12][4].Tile_Color = YELLOW;
 
 	vents[0].tile1 = &tiles[0][12];
 	vents[0].tile2 = &tiles[2][10];
@@ -118,6 +118,8 @@ void level12_init(void)
 	gates[3].Switch = &tiles[12][0];
 	gates[3].Door = &tiles[8][8];
 
+	enemySet(9, 13, 1, 0, AOE_VIEW, YELLOW);
+	enemySet(7, 13, 1, 0, AOE_VIEW, YELLOW);
 	//set current enemies
 	enemySet(9, 13, 1, 0, AOE_VIEW, GREEN);
 	enemySet(7, 13, 1, 0, AOE_VIEW, GREEN);
