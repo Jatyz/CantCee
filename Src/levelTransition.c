@@ -107,7 +107,7 @@ int exitLevelTransition(int isAnimationComplete)
 	//set draw position for the image
 	CP_Settings_ImageMode(CP_POSITION_CORNER);
 
-
+	//set the fill color for rect
 	CP_Settings_Fill(CP_Color_Create(50, 50, 50, 255));
 
 	//renders a rect to follow the sprite to cover the screen
