@@ -221,7 +221,7 @@ _Bool checkMove(int DirectionX, int DirectionY) {
 		return FALSE;
 	case DISGUISE:
 		//set the player to the tile color
-		CP_Sound_PlayAdvanced(disguiseSound, 1.0f, 2.0f, FALSE, CP_SOUND_GROUP_2);
+		CP_Sound_PlayAdvanced(disguiseSound,0.5f, 2.0f, FALSE, CP_SOUND_GROUP_2);
 		player.Player_Color = tiles[player.x + DirectionX][player.y + DirectionY].Tile_Color;
 		break;
 	case VENTS:
@@ -230,7 +230,7 @@ _Bool checkMove(int DirectionX, int DirectionY) {
 		//check where the player shld tp to.
 		checkVents(&tiles[player.x + DirectionX][player.y + DirectionY]);
 
-		CP_Sound_PlayAdvanced(portalSound, 1.0f, 2.0f, FALSE, CP_SOUND_GROUP_2);
+		CP_Sound_PlayAdvanced(portalSound, 0.5f, 2.0f, FALSE, CP_SOUND_GROUP_2);
 		//player does not move so return false
 		return FALSE;
 		//if its a closed door no movements
@@ -239,9 +239,9 @@ _Bool checkMove(int DirectionX, int DirectionY) {
 		break;
 		//check if player walked into a switch
 	case SWITCH_ON:
-		CP_Sound_PlayAdvanced(doorOpen, 1.0f, 2.0f, FALSE, CP_SOUND_GROUP_2);
+		CP_Sound_PlayAdvanced(doorOpen, 0.5f, 2.0f, FALSE, CP_SOUND_GROUP_2);
 	case SWITCH_OFF:
-		CP_Sound_PlayAdvanced(doorClose, 1.0f, 2.0f, FALSE, CP_SOUND_GROUP_2);
+		CP_Sound_PlayAdvanced(doorClose, 0.5f, 2.0f, FALSE, CP_SOUND_GROUP_2);
 		checkGates(&tiles[player.x + DirectionX][player.y + DirectionY]);
 		break;
 	case END:
@@ -250,7 +250,7 @@ _Bool checkMove(int DirectionX, int DirectionY) {
 		player.Prev_X = player.x;
 		player.Prev_Y = player.y;
 
-		CP_Sound_PlayAdvanced(winSound, 1.0f, 2.0f, FALSE, CP_SOUND_GROUP_2);
+		CP_Sound_PlayAdvanced(winSound, 0.5f, 2.0f, FALSE, CP_SOUND_GROUP_2);
 		//check if player beat previous score
 		if(Score[player.currentStage] == 0 || player.counter < Score[player.currentStage])
 		Score[player.currentStage] = player.counter;

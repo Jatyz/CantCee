@@ -193,6 +193,8 @@ void play_Init()
 	hoverLvl12Word = CP_Image_Load("./Assets/hoverLvl13Word.png");
 	hoverLvl13Word = CP_Image_Load("./Assets/hoverLvl14Word.png");
 	hoverLvl14Word = CP_Image_Load("./Assets/hoverLvl15Word.png");
+
+	buttonSound = CP_Sound_Load("./Assets/Sounds/Button Sound.mp3");
 }
 
 int once = 0; int levelSelected = 0; int levelScore = 0,parScore = 0;
@@ -588,6 +590,7 @@ void play_Update()
 		// Back to main menu
 		if (IsAreaClicked(firstColumn, exitHeight, CP_Image_GetWidth(home), CP_Image_GetHeight(home), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
+			CP_Sound_PlayAdvanced(buttonSound, 0.5f, 2.0f, FALSE, CP_SOUND_GROUP_2);
 			CP_Engine_SetNextGameStateForced(mainMenu_Init, mainMenu_Update, mainMenu_Exit);
 		}
 	}
@@ -600,6 +603,7 @@ void play_Update()
 	{
 		if (IsAreaClicked(fifthColumn, playHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
+			CP_Sound_PlayAdvanced(buttonSound, 0.5f, 2.0f, FALSE, CP_SOUND_GROUP_2);
 			CP_Engine_SetNextGameStateForced(level1_init, level1_update, level1_exit);
 		}
 	}
@@ -607,6 +611,7 @@ void play_Update()
 	{
 		if (IsAreaClicked(fifthColumn, playHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
+			CP_Sound_PlayAdvanced(buttonSound, 0.5f, 2.0f, FALSE, CP_SOUND_GROUP_2);
 			CP_Engine_SetNextGameStateForced(level2_init, level2_update, level2_exit);
 		}
 	}
@@ -614,6 +619,7 @@ void play_Update()
 	{
 		if (IsAreaClicked(fifthColumn, playHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
+			CP_Sound_PlayAdvanced(buttonSound, 0.5f, 2.0f, FALSE, CP_SOUND_GROUP_2);
 			CP_Engine_SetNextGameStateForced(level3_init, level3_update, level3_exit);
 		}
 	}
@@ -621,6 +627,7 @@ void play_Update()
 	{
 		if (IsAreaClicked(fifthColumn, playHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
+			CP_Sound_PlayAdvanced(buttonSound, 0.5f, 2.0f, FALSE, CP_SOUND_GROUP_2);
 			CP_Engine_SetNextGameStateForced(level4_init, level4_update, level4_exit);
 		}
 	}
@@ -628,6 +635,7 @@ void play_Update()
 	{
 		if (IsAreaClicked(fifthColumn, playHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
+			CP_Sound_PlayAdvanced(buttonSound, 0.5f, 2.0f, FALSE, CP_SOUND_GROUP_2);
 			CP_Engine_SetNextGameStateForced(level5_init, level5_update, level5_exit);
 		}
 	}
@@ -637,6 +645,7 @@ void play_Update()
 	{
 		if (IsAreaClicked(fifthColumn, playHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
+			CP_Sound_PlayAdvanced(buttonSound, 0.5f, 2.0f, FALSE, CP_SOUND_GROUP_2);
 			CP_Engine_SetNextGameStateForced(level6_init, level6_update, level6_exit);
 		}
 	}
@@ -644,6 +653,7 @@ void play_Update()
 	{
 		if (IsAreaClicked(fifthColumn, playHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
+			CP_Sound_PlayAdvanced(buttonSound, 0.5f, 2.0f, FALSE, CP_SOUND_GROUP_2);
 			CP_Engine_SetNextGameStateForced(level7_init, level7_update, level7_exit);
 		}
 	}
@@ -651,6 +661,7 @@ void play_Update()
 	{
 		if (IsAreaClicked(fifthColumn, playHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
+			CP_Sound_PlayAdvanced(buttonSound, 0.5f, 2.0f, FALSE, CP_SOUND_GROUP_2);
 			CP_Engine_SetNextGameStateForced(level8_init, level8_update, level8_exit);
 		}
 	}
@@ -658,6 +669,7 @@ void play_Update()
 	{
 		if (IsAreaClicked(fifthColumn, playHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
+			CP_Sound_PlayAdvanced(buttonSound, 0.5f, 2.0f, FALSE, CP_SOUND_GROUP_2);
 			CP_Engine_SetNextGameStateForced(level9_init, level9_update, level9_exit);
 		}
 	}
@@ -665,6 +677,7 @@ void play_Update()
 	{
 		if (IsAreaClicked(fifthColumn, playHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
+			CP_Sound_PlayAdvanced(buttonSound, 0.5f, 2.0f, FALSE, CP_SOUND_GROUP_2);
 			CP_Engine_SetNextGameStateForced(level10_init, level10_update, level10_exit);
 		}
 	}
@@ -674,6 +687,7 @@ void play_Update()
 	{
 		if (IsAreaClicked(fifthColumn, playHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
+			CP_Sound_PlayAdvanced(buttonSound, 0.5f, 2.0f, FALSE, CP_SOUND_GROUP_2);
 			CP_Engine_SetNextGameStateForced(level11_init, level11_update, level11_exit);
 		}
 	}
@@ -681,6 +695,7 @@ void play_Update()
 	{
 		if (IsAreaClicked(fifthColumn, playHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
+			CP_Sound_PlayAdvanced(buttonSound, 0.5f, 2.0f, FALSE, CP_SOUND_GROUP_2);
 			CP_Engine_SetNextGameStateForced(level12_init, level12_update, level12_exit);
 		}
 	}
@@ -688,6 +703,7 @@ void play_Update()
 	{
 		if (IsAreaClicked(fifthColumn, playHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
+			CP_Sound_PlayAdvanced(buttonSound, 0.5f, 2.0f, FALSE, CP_SOUND_GROUP_2);
 			CP_Engine_SetNextGameStateForced(level13_init, level13_update, level13_exit);
 		}
 	}
@@ -695,6 +711,7 @@ void play_Update()
 	{
 		if (IsAreaClicked(fifthColumn, playHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
+			CP_Sound_PlayAdvanced(buttonSound, 0.5f, 2.0f, FALSE, CP_SOUND_GROUP_2);
 			CP_Engine_SetNextGameStateForced(level14_init, level14_update, level14_exit);
 		}
 	}
@@ -702,6 +719,7 @@ void play_Update()
 	{
 		if (IsAreaClicked(fifthColumn, playHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
+			CP_Sound_PlayAdvanced(buttonSound, 0.5f, 2.0f, FALSE, CP_SOUND_GROUP_2);
 			CP_Engine_SetNextGameStateForced(level15_init, level15_update, level15_exit);
 		}
 	}
@@ -760,6 +778,8 @@ void play_Exit()
 	CP_Image_Free(&hoverLvl12Word);
 	CP_Image_Free(&hoverLvl13Word);
 	CP_Image_Free(&hoverLvl14Word);
+	
+	CP_Sound_Free(buttonSound);
 
 	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 	CP_Settings_RectMode(CP_POSITION_CORNER);
