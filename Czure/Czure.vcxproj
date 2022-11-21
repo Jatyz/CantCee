@@ -131,6 +131,7 @@ xcopy "$(SolutionDir)Assets\*" "$(OutDir)Assets\" /s /r /y /q
     <ClCompile Include="..\Src\panels.c" />
     <ClCompile Include="..\Src\play.c" />
     <ClCompile Include="..\Src\player.c" />
+    <ClCompile Include="..\Src\splashscreen.c" />
     <ClCompile Include="..\Src\utils.c" />
     <ClCompile Include="..\Src\vectorMathBasic.c" />
   </ItemGroup>
@@ -165,6 +166,7 @@ xcopy "$(SolutionDir)Assets\*" "$(OutDir)Assets\" /s /r /y /q
     <ClInclude Include="..\Src\play.h" />
     <ClInclude Include="..\Src\player.h" />
     <ClInclude Include="..\Src\soundEffects.h" />
+    <ClInclude Include="..\Src\splashscreen.h" />
     <ClInclude Include="..\Src\utils.h" />
     <ClInclude Include="..\Src\vectorMathBasic.h" />
   </ItemGroup>

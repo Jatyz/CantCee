@@ -34,6 +34,7 @@ void resumeGame(void);
 
 //reading score from file
 void readScore();
+
 //writing score into file
 void writeScore();
 
@@ -42,8 +43,13 @@ void createScore();
 
 //light up tiles in a square area
 void lightTiles(int x, int y,int range);
+
+//Contains all the function needed to update the stage of the FOG
 void updateFog(void);
+
+//contains all the function needed to free game resources such as images and audio
 void freeGameResources(void);
+
 //global tile size variable
 extern int Tile_Size;
 extern Game_State gameState;
