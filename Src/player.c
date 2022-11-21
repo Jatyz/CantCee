@@ -5,11 +5,12 @@
 #include "utils.h"
 #include "enemy.h"
 #include "soundEffects.h"
-#include "fov.h"
+
+//global player
 Player player;
+
+//static hold timer for player button
 double holdTimer = .1;
-
-
 
 //draw the player
 void drawPlayer(int tilesize) {
@@ -29,16 +30,9 @@ void drawPlayer(int tilesize) {
 	case DEFAULT: CP_Settings_Fill(CP_Color_Create(0, 255, 255, 255));
 		break;
 	}
-	//Drawing player on center of the tile
+
+	//draw player
 	CP_Graphics_DrawRect((player.x * tilesize) + (tilesize / 2) - player.width / 2, (player.y * tilesize) + (tilesize / 2) - player.height / 2, player.width, player.height);
-	//(player.x * tilesize) + (tilesize/2)
-	//player.x * tilesize is the right most of the tile the player is on
-	//player.width/2 moves the player closer to the center of the tile by half of the player size
-
-	// (player.y * tilesize) + (tilesize / 2) - player.height / 2
-	// player.y * tilesize is the btm most of the tile the player is on
-	// player.heght/2 moves the player closer to the center of the tile by half of the player size
-
 
 	//turn off outline
 	CP_Settings_NoStroke();
@@ -54,8 +48,7 @@ void setPlayerStartPoint(int tilesize)
 	//array variables
 	int y, x;
 
-	//do a check to see there is only one start point
-
+	//set player to the latest start point
 	for (y = 0; y < Horizontal_Tile; y++) {
 		for (x = 0; x < Vertical_Tile; x++) {
 			if (tiles[x][y].type == START) {
@@ -74,15 +67,17 @@ void setPlayerDirection(int directionFacing)
 
 void playerSwitchCheck(void)
 {
+	//check if player is on a switch
 	if (tiles[player.x][player.y].type == SWITCH_ON || tiles[player.x][player.y].type == SWITCH_OFF) {
 		player.onSwitch = 1;
 	}
 	else {
 		player.onSwitch = 0;
 	}
-
+	//if player is on switch
 	if (player.onSwitch) {
 
+		//light up the door
 		for (int i = 0; i < sizeof(gates) / sizeof(gates[0]); i++) {
 			//if the address of the tile the player set on matches the specific tile in the vents
 			if (gates[i].Switch == &tiles[player.x][player.y]) {
@@ -115,50 +110,68 @@ void handlePlayerInput(int tilesize) {
 		//brings up pause menu
 		gameState = PAUSED;
 	}
-
+	//while on hold reduce hold timer
 	if (CP_Input_KeyDown(KEY_W) || CP_Input_KeyDown(KEY_D) || CP_Input_KeyDown(KEY_S) || CP_Input_KeyDown(KEY_A) || CP_Input_KeyDown(KEY_UP) || CP_Input_KeyDown(KEY_RIGHT) || CP_Input_KeyDown(KEY_DOWN) || CP_Input_KeyDown(KEY_LEFT)) {
 		holdTimer -= CP_System_GetDt();
 	}
 
+
+	//when hold timer is less than 0, move. 
+	//if player triggered, move
 	//up
 	if ((CP_Input_KeyTriggered(KEY_W) || (CP_Input_KeyDown(KEY_W) && holdTimer<0)) || (CP_Input_KeyTriggered(KEY_UP) || (CP_Input_KeyDown(KEY_UP) && holdTimer < 0))) {
 		//check if out of bounds
 		if (player.y > 0) {
-			//check if the tile can be moved
+			//check if the tile can be moved and move
 			player.y -= checkMove(0, UP);
+			
+			//render player
 			drawPlayer(Tile_Size);
+			
 			//check if player getting light
 			giveLight();
-			player.direction = 0;		//set direction player is facing to up
+			
+			//set direction player is facing to up
+			player.direction = 0; 
 		}
-		holdTimer = 0.22;
+		holdTimer = 0.12;
 	}
 	//right
 	if ((CP_Input_KeyTriggered(KEY_D) || (CP_Input_KeyDown(KEY_D) && holdTimer < 0)) || (CP_Input_KeyTriggered(KEY_RIGHT) || (CP_Input_KeyDown(KEY_RIGHT) && holdTimer < 0))) {
 		//check out of bounds
 		if (player.x < Horizontal_Tile - 1) {
-			//check if tile can be moved
+			//check if tile can be moved and move
 			player.x += checkMove(RIGHT, 0);
+			
+			//render player
 			drawPlayer(Tile_Size);
+			
 			//check if player getting light
 			giveLight();
-			player.direction = 1;		//set direction player is facing to right
+			
+			//set direction player is facing to right
+			player.direction = 1;		
 		}
-		holdTimer = 0.22;
+		holdTimer = 0.12;
 	}
 
 	//down
 	if ((CP_Input_KeyTriggered(KEY_S) || (CP_Input_KeyDown(KEY_S) && holdTimer < 0)) || (CP_Input_KeyTriggered(KEY_DOWN) || (CP_Input_KeyDown(KEY_DOWN) && holdTimer < 0))) {
 		//check out of bounds
 		if (player.y < Vertical_Tile - 1) {
-			//check if the tile can be moved
+			//check if the tile can be moved and move
 			player.y += checkMove(0, DOWN);
+			
+			//draw player
 			drawPlayer(Tile_Size);
+			
 			//check if player has moved 50 steps
 			giveLight();
-			player.direction = 2;		//set direction player is facing to down
+			
+			//set direction player is facing to down
+			player.direction = 2;		
 		}
-		holdTimer = 0.22;
+		holdTimer = 0.12;
 	}
 	//left
 	if ((CP_Input_KeyTriggered(KEY_A) || (CP_Input_KeyDown(KEY_A) && holdTimer < 0)) || (CP_Input_KeyTriggered(KEY_LEFT) || (CP_Input_KeyDown(KEY_LEFT) && holdTimer < 0))) {
@@ -166,30 +179,33 @@ void handlePlayerInput(int tilesize) {
 		if (player.x > 0) {
 			//check if the tile can be moved
 			if (checkMove(LEFT, 0)) {
+				//move player
 				player.x -= 1;
+				
+				//check player
 				drawPlayer(Tile_Size);
+				
 				//check if player getting light
 				giveLight();
-				player.direction = 3;	//set direction player is facing to left
+
+				//set direction player is facing to left
+				player.direction = 3;	
 			}
 		}
-		holdTimer = 0.22;
+		holdTimer = 0.12;
 	}
 
 	//for tile movement
 	if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT)) {
 		//check if player clicked any tile
-			moveTileCheck();
+		moveTileCheck();
 	}
 
-	//toggle light bomb
+	//illum mode
 	if (CP_Input_KeyTriggered(KEY_SPACE) && player.currentStage > 9 && !player.onSwitch) {
 		//activate illumination mode, where player cannot move
 		illumMode = 1;
 	}
-
-	if (CP_Input_KeyTriggered(KEY_P))
-		isTrailsActive = !isTrailsActive;
 
 	//code for FOV turn without movement
 	//use setPlayerDirection function to prevent an overflow of logic for int variable as setPlayerDirection 
@@ -206,10 +222,6 @@ void handlePlayerInput(int tilesize) {
 		else {setPlayerDirection(player.direction - 1);}		//set direction to 90 degrees counter clockwise
 	}
 
-	if (CP_Input_MouseTriggered(MOUSE_BUTTON_RIGHT)) {
-		//check if player clicked and whether it shld light up the map
-		lightTileCheck();
-	}
 }
 
 //check the movements of the player, if the player is about to land on a specific tile, if it is a wall, deny movement.
@@ -239,8 +251,8 @@ _Bool checkMove(int DirectionX, int DirectionY) {
 		break;
 		//check if player walked into a switch
 	case SWITCH_ON:
-		CP_Sound_PlayAdvanced(doorOpen, 1.0f, 2.0f, FALSE, CP_SOUND_GROUP_2);
 	case SWITCH_OFF:
+		//open and close doors
 		CP_Sound_PlayAdvanced(doorClose, 1.0f, 2.0f, FALSE, CP_SOUND_GROUP_2);
 		checkGates(&tiles[player.x + DirectionX][player.y + DirectionY]);
 		break;
@@ -265,10 +277,13 @@ _Bool checkMove(int DirectionX, int DirectionY) {
 	player.counter++;
 	player.Prev_X = player.x;
 	player.Prev_Y = player.y;
+	//player moved
 	return TRUE;
 }
 
+//while in illum mode
 void handlePlayerIllumInput() {
+
 	if (CP_Input_KeyTriggered(KEY_SPACE)) {
 		//disable illumination mode
 		illumMode = 0;
@@ -278,8 +293,6 @@ void handlePlayerIllumInput() {
 		//check if player clicked and whether it shld light up the map
 		lightTileCheck();
 	}
-
-	
 
 }
 
@@ -314,7 +327,6 @@ void moveTileCheck() {
 		//move the specific number of tiles 1 tile at a time
 		for (int i = 0; i < tiledif; i++) {
 			//dont let player update anything
-			tileMoveCounter = 3;
 			player.y += direction * checkMove(0, direction);
 			//check if counter hit a factor of 50
 			giveLight();
@@ -322,13 +334,10 @@ void moveTileCheck() {
 			enemyFOV(Tile_Size);
 			//if player vented stop moving
 			if (player.isTP) {
-				tileMoveCounter = 0;
 				player.isTP = 0;
 				return;
 			}
 		}
-
-		tileMoveCounter = 0;
 	}	//check if its horizontal or vertical movements only
 	else if (Height == player.y) {
 		//check tile difference from player
@@ -344,7 +353,6 @@ void moveTileCheck() {
 		//move specific clicked number of tiles and move 1 tile at a time
 		for (int i = 0; i < tiledif; i++) {
 			//dont update anything else
-			tileMoveCounter = 3;
 			player.x += direction * checkMove(direction, 0);
 			//check if moved by factor of 50
 			giveLight();
@@ -352,14 +360,10 @@ void moveTileCheck() {
 			enemyFOV(Tile_Size);
 			//check if player walked into a vent, if so stop moving
 			if (player.isTP) {
-				tileMoveCounter = 0;
 				player.isTP = 0;
 				return;
 			}
 		}
-
-		//give the player controls back
-		tileMoveCounter = 0;
 
 	}
 

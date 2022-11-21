@@ -14,60 +14,13 @@
 #include "level13.h"
 #include "level14.h"
 #include "level15.h"
-#include "game.h"
 #include "play.h"
 #include "levelselect.h"
 #include "mainmenu.h"
 #include "levelTransition.h"
-#include "levelselect.h"
-#include "panels.h"
-#include "utils.h"
+#include "game.h"
 
-//need a method to run level select as well
-void levelSelection_Init()
-{
-	// Set the window size to a sqaure 400 x 400
-	CP_System_SetWindowSize(popUpWidth, popUpHeight);
-
-	// Set the rectangle drawing mode to CENTER
-	CP_Settings_RectMode(CP_POSITION_CENTER);
-
-	// All Text size
-	CP_Settings_TextSize(20.0f);
-
-	// All Text allignment
-	CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
-}
-
-void levelSelection_Update()
-{
-	// Background: Grey Colour
-	CP_Graphics_ClearBackground(CP_Color_Create(125, 125, 125, 0));
-	
-	// Best Time
-	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-	CP_Font_DrawText("Best Time: %lf(time add in the future)", (popUpWidth / 2.0f), (popUpHeight / 2.0f - 100));
-
-	// Number of moves
-	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-	CP_Font_DrawText("Number of Moves: %lf(no. of moves)", (popUpWidth / 2.0f), (popUpHeight / 2.0f - 50));
-
-	// -----Play Button-----
-	CP_Settings_Fill(CP_Color_Create(255, 255, 0, 255));
-	CP_Graphics_DrawRect((popUpWidth / 2.0f), (popUpHeight / 2.0f + 50), levelButtonWidth, levelButtonHeight);
-	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-	CP_Font_DrawText("Play!", (popUpWidth / 2.0f), (popUpHeight / 2.0f + 50));
-
-
-	if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
-	{
-		// -----Play Input-----
-		if (IsAreaClicked((windowWidth / 2.0f), (windowHeight / 2.0f + 50), levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
-		{
-			CP_Engine_SetNextGameStateForced(level1_init, level1_update, level1_exit); // play.c > goes to level select > click level to play
-		}
-	}
-}
+//set exit transition for all scenes and then change scene
 
 void startLevel1(void)
 {
@@ -164,20 +117,16 @@ void startLevel15(void)
 	CP_Engine_SetNextGameStateForced(level15_init, level15_update, level15_exit);
 }
 
-void startGame(void)
-{
-	transitLevel();
-	CP_Engine_SetNextGameStateForced(game_init, game_update, game_exit);
-}
-
 void transitLevel(void)
 {
+	//set level exited
 	levelExited = 1;
 
 	if (levelExited)	//when level exit, 
 	{	//render exit level transition animation
 		levelExited = exitLevelTransition(levelExited);	//second parameter runs when the animation is complete, returns 0 when animation is done
 		if (!levelExited) {
+			//finish exit level
 			levelExited = 0;
 		}		
 	}
@@ -189,8 +138,4 @@ void startLevelSelect(void) {
 }
 
 
-void levelSelection_Exit()
-{
-	
-}
 

@@ -33,7 +33,7 @@ void drawTile(int Tile_Size);
 
 //method to assign all values in tiles to wall.
 //and then assign all values within tile size to floor
-void assignTile(int Tile_Size);
+void resetTile(int Tile_Size);
 
 
 //global tiles variable

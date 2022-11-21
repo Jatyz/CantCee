@@ -11,15 +11,20 @@
 
 void level11_init(void)
 {
+	//set window size
 	CP_System_SetWindowSize(WINDOW_WIDTH, WINIDOW_HEIGHT);
+
+	//clear background
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
+
+	//set tile size
 	Tile_Size = MEDIUM;
 
 	//reset all arrays and variables
 	resetGame(Tile_Size);
 
 	//assign all the floors and walls
-	assignTile(Tile_Size);
+	resetTile(Tile_Size);
 
 	
 	tiles[3][0].type = WALL;
@@ -86,12 +91,6 @@ void level11_init(void)
 	tiles[2][8].type = WALL;
 	tiles[0][8].type = WALL;
 
-
-
-
-
-
-
 	tiles[15][13].type = START;
 	tiles[0][1].type = END;
 
@@ -119,13 +118,15 @@ void level11_init(void)
 	gates[3].Switch = &tiles[0][4];
 	gates[3].Door = &tiles[8][0];
 
-
+	//set enemies
 	enemySet(9, 7, 2, 0, AOE_VIEW, GREEN);
 
 	enemySet(11, 1, 1, 0, AOE_VIEW, RED);
 
+	//set all current level values
 	setStartGame(Tile_Size);
 
+	//open some closed doors
 	tiles[13][12].type = OPENED_DOOR;	
 	tiles[8][0].type = OPENED_DOOR;
 
@@ -138,32 +139,40 @@ void level11_init(void)
 
 void level11_update(void)
 {
-	//need this for light shine on door
 		switch (gameState) {
 		case PLAY:
 			if (lightCounter > 0 || illumMode) {
-
+				//reduce light counter
 				lightCounter -= CP_System_GetDt();
+				//handle special input to detect light click
 				handlePlayerIllumInput();
+				//draw game but do not update fog
 				renderGame();
+				//draw fog
 				renderFOVAdvance(returnBounds(Tile_Size), returnBounds(Tile_Size), Tile_Size);
 				return;
 			}
-			else if (tileMoveCounter != 0) {}
 			else {
 				//clears the screen so things can be redrawn
 				CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
-				//all the game update methods that needs to be updated every frame
+
+				//draw all game tile
 				renderGame();
+
+				//handle player input
 				handlePlayerInput(Tile_Size);
+
+				//draw tutorial prompts
 				if (player.counter < 30) {
 					drawSmallPanel(4 * Tile_Size, 3 * Tile_Size, 3 * Tile_Size, 4 * Tile_Size, "One switch can open/close multiple doors at the same time.");
 				}
-				//End FOV logic handled area
+
+				//side panels
 				drawSideBarStats("Level 11", player.counter);
 
 			}
 			break;
+			//draw pause menu, win menu and lose menu and check player click
 		case PAUSED:
 			drawFullPanel();
 			checkClick(startLevelSelect, startLevel11, resumeGame);
@@ -177,12 +186,15 @@ void level11_update(void)
 			checkClick(0, startLevel11, startLevelSelect);
 			break;
 		case START_TRANSITION:
+			//clear background for transition
 			CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
 			if (levelStarted)	//when level starts, 
 			{	//render enter level transition animation
+				//render game to draw the init scene
 				renderGame();
+				//start the transition
 				levelStarted = initLevelTransition();	//returns 0 when animation is done
-
+				//start the game
 				if (!levelStarted)
 				{
 					gameState = PLAY;
@@ -194,7 +206,8 @@ void level11_update(void)
 	}
 
 
+//free all game resources on esxit
 void level11_exit(void)
 {
-	freeImage();
+	freeGameResources();
 }

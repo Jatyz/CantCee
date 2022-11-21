@@ -10,22 +10,18 @@
 
 void level6_init(void)
 {
+	//set window size
 	CP_System_SetWindowSize(WINDOW_WIDTH, WINIDOW_HEIGHT);
+
+	//clear background
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
-	//change this variable to change the number of tiles on the map X by X
-	//Factors of 800
-	// use these below
-	// 20,25,32,40,50,80,100,160
-	//e.g. big room = 20
-	// medium room = 50
-	// small room = 80
+
+	//set tile size
 	Tile_Size = SMALL;
 
-	//reset all arrays and variables
+	//reset all arrays and variables and init game resources
 	resetGame(Tile_Size);
 
-	//assign all the floors and walls
-	assignTile(Tile_Size);
 
 	//for loop to go through all the tiles
 	for (int height = 0; height < returnBounds(Tile_Size); height++) {
@@ -43,11 +39,13 @@ void level6_init(void)
 		}
 	}
 
-
 	tiles[5][9].type = START;
 	tiles[4][0].type = END;
 
+	//set enemies	
 	enemySet(5, 6, 1, 0, AOE_VIEW, 0);
+
+	//set current level values
 	setStartGame(Tile_Size);
 	player.setFOV = 0;
 	player.currentStage = 6;
@@ -57,14 +55,16 @@ void level6_update(void)
 {
 	switch (gameState) {
 	case PLAY:
-		if (tileMoveCounter != 0) {}
-		else {
 			//clears the screen so things can be redrawn
 			CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
+
+			//check for player input
 			handlePlayerInput(Tile_Size);
-			//all the game update methods that needs to be updated every frame
+
+			//draw game tile
 			renderGame();
-			//End FOV logic handled area
+
+			//draw sode panels
 			drawSideBarStats("Level 6", player.counter);
 			if (player.counter < 6)
 			{
@@ -77,8 +77,8 @@ void level6_update(void)
 				drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 0 * Tile_Size, 1 * Tile_Size, "Get to the exit tile to proceed");
 
 			}
-		}
 		break;
+		//draw pause win and lose panel and check for button click
 	case PAUSED:
 		drawFullPanel();
 		checkClick(startLevelSelect, startLevel6, resumeGame);
@@ -92,12 +92,15 @@ void level6_update(void)
 		checkClick(0,startLevel6, startLevelSelect);
 		break;
 	case START_TRANSITION:
+		//clear background for transition
 		CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
 		if (levelStarted)	//when level starts, 
 		{	//render enter level transition animation
+			//render game to draw the init scene
 			renderGame();
+			//start the transition
 			levelStarted = initLevelTransition();	//returns 0 when animation is done
-
+			//start the game
 			if (!levelStarted)
 			{
 				gameState = PLAY;
@@ -109,7 +112,8 @@ void level6_update(void)
 
 }
 
+//free game resources on exit
 void level6_exit(void)
 {
-	freeImage();
+	freeGameResources();
 }

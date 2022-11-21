@@ -11,15 +11,20 @@
 
 void level14_init(void)
 {
+	//set window size
 	CP_System_SetWindowSize(WINDOW_WIDTH, WINIDOW_HEIGHT);
+
+	//clear backgrouond
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
+
+	//set current tile size 
 	Tile_Size = MEDIUM;
 
 	//reset all arrays and variables
 	resetGame(Tile_Size);
 
 	//assign all the floors and walls
-	assignTile(Tile_Size);
+	resetTile(Tile_Size);
 
 	tiles[4][0].type = WALL;
 	tiles[4][2].type = WALL;
@@ -79,8 +84,6 @@ void level14_init(void)
 	tiles[14][6].type = WALL;
 	tiles[14][7].type = WALL;
 
-
-
 	tiles[11][13].type = START;
 	tiles[1][1].type = END;
 
@@ -112,15 +115,17 @@ void level14_init(void)
 	gates[6].Switch = &tiles[0][5];
 	gates[6].Door = &tiles[2][6];
 
-
+	//set current enemies
 	enemySet(7, 2, 2, 0, AOE_VIEW, RED);
 	enemySet(7, 7, 2, 0, AOE_VIEW, GREEN);
 	enemySet(7, 12, 2, 0, AOE_VIEW, BLUE);
 	enemySet(1, 4, 0, 7, VERTICAL_HORIZONTAL_LOOK, BLUE);
 	enemySet(13, 6, 0, 7, VERTICAL_HORIZONTAL_LOOK, RED);
 
+	//set all current level values
 	setStartGame(Tile_Size);
 
+	//open closed doors
 	tiles[1][6].type = OPENED_DOOR;
 	tiles[13][5].type = OPENED_DOOR;
 	tiles[13][7].type = OPENED_DOOR;
@@ -139,30 +144,38 @@ void level14_update(void)
 		switch (gameState) {
 		case PLAY:
 			if (lightCounter > 0 || illumMode) {
-
+				//reduce light counter
 				lightCounter -= CP_System_GetDt();
+				//handle special input to detect light click
 				handlePlayerIllumInput();
+				//draw game but do not update fog
 				renderGame();
+				//draw fog
 				renderFOVAdvance(returnBounds(Tile_Size), returnBounds(Tile_Size), Tile_Size);
 				return;
 			}
-			else if (tileMoveCounter != 0) {}
 			else {
 				//clears the screen so things can be redrawn
 				CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
-				//all the game update methods that needs to be updated every frame
+				
+				//draw all game tiles
 				renderGame();
+
+				//check for player input
 				handlePlayerInput(Tile_Size);
 				//End FOV logic handled area
 
+				//draw tutorial panel prompt
 				if (player.Player_Color == BLUE && tiles[13][9].type == CLOSED_DOOR && player.x > 9 && player.y < 9) {
 					drawSmallPanel(4 * Tile_Size, 4 * Tile_Size, 3 * Tile_Size, 4 * Tile_Size, "If you cannot find a way to progress you may need to restart.");
 				}
 
+				//draw side panel
 				drawSideBarStats("Level 14", player.counter);
 
 			}
 			break;
+			//draw pause win and lose panels and check for player input
 		case PAUSED:
 			drawFullPanel();
 			checkClick(startLevelSelect, startLevel14, resumeGame);
@@ -176,12 +189,15 @@ void level14_update(void)
 			checkClick(0, startLevel14, startLevelSelect);
 			break;
 		case START_TRANSITION:
+			//clear background for transition
 			CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
 			if (levelStarted)	//when level starts, 
 			{	//render enter level transition animation
+				//render game to draw the init scene
 				renderGame();
+				//start the transition
 				levelStarted = initLevelTransition();	//returns 0 when animation is done
-
+				//start the game
 				if (!levelStarted)
 				{
 					gameState = PLAY;
@@ -192,8 +208,8 @@ void level14_update(void)
 
 	}
 
-
+//free all game resources on exit
 void level14_exit(void)
 {
-	freeImage();
+	freeGameResources();
 }
