@@ -36,7 +36,9 @@ CP_Image hoverStartWord = NULL;
 
 // ---------------------------------------------------------------Main Menu Initialisation---------------------------------------------------------------
 void mainMenu_Init()
-{
+{   
+    CP_System_SetWindowTitle("CANT CEE");
+
     mainMenuBackground1 = CP_Image_Load("./Assets/mainMenuBackground1.png");
 
     cLogo = CP_Image_Load("./Assets/cLogo.png");
