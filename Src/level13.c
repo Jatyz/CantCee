@@ -94,10 +94,7 @@ void level13_init(void)
 	gates[12].Switch = &tiles[1][15];
 	gates[12].Door = &tiles[2][8];
 
-	setStartGame(Tile_Size);
-	tiles[14][8].type = OPENED_DOOR;
-	tiles[12][2].type = OPENED_DOOR;
-	tiles[2][8].type = OPENED_DOOR;
+
 	enemySet(10, 6, 1, 0, AOE_VIEW, GREEN);
 	//set enemy
 	enemySet(10, 6, 1, 0, AOE_VIEW, GREEN);

@@ -251,8 +251,6 @@ _Bool checkMove(int DirectionX, int DirectionY) {
 		break;
 		//check if player walked into a switch
 	case SWITCH_ON:
-		CP_Sound_PlayAdvanced(doorOpen, 0.5f, 2.0f, FALSE, CP_SOUND_GROUP_2);
-		break;
 	case SWITCH_OFF:
 		//open and close doors
 		CP_Sound_PlayAdvanced(doorClose, 0.5f, 2.0f, FALSE, CP_SOUND_GROUP_2);
