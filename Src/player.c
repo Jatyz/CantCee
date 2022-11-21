@@ -24,7 +24,7 @@ void drawPlayer(int tilesize) {
 		break;
 	case BLUE: CP_Settings_Fill(Blue);
 		break;
-	case GREEN: CP_Settings_Fill(Green);
+	case YELLOW: CP_Settings_Fill(Yellow);
 		break;
 	case DEFAULT: CP_Settings_Fill(CP_Color_Create(0, 255, 255, 255));
 		break;

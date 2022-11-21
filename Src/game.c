@@ -90,7 +90,7 @@ void game_init(void)
 	tiles[9][4].type = DISGUISE;
 	tiles[9][4].Tile_Color = BLUE;
 	tiles[0][9].type = DISGUISE;
-	tiles[0][9].Tile_Color = GREEN;
+	tiles[0][9].Tile_Color = YELLOW;
 
 	vents[0].tile1 = &tiles[9][8];
 	vents[0].tile2 = &tiles[0][8];

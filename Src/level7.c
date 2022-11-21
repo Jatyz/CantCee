@@ -33,12 +33,12 @@ void level7_init(void)
 	tiles[0][0].type = END;
 
 	tiles[7][9].type = DISGUISE;
-	tiles[7][9].Tile_Color = GREEN;
+	tiles[7][9].Tile_Color = YELLOW;
 	tiles[5][5].type = DISGUISE;
 	tiles[5][5].Tile_Color = RED;
 
-	enemySet(5, 8, 1, 0, AOE_VIEW, GREEN);
-	enemySet(8, 6, 1, 0, AOE_VIEW, GREEN);
+	enemySet(5, 8, 1, 0, AOE_VIEW, YELLOW);
+	enemySet(8, 6, 1, 0, AOE_VIEW, YELLOW);
 	enemySet(3, 4, 0, 6, VERTICAL_HORIZONTAL_LOOK, 0);
 	setStartGame(Tile_Size);
 	player.setFOV = 0;

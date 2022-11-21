@@ -84,7 +84,7 @@ void drawTile(int tilesize) {
 			
 					
 					break;
-				case GREEN:
+				case YELLOW:
 					//CP_Settings_Fill(Green);
 					CP_Image_Draw(disguiseYellow, width * tilesize, height * tilesize, tilesize, tilesize, 255);
 

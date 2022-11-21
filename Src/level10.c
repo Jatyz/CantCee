@@ -55,7 +55,7 @@ void level10_init(void)
 	tiles[4][9].type = DISGUISE;
 	tiles[4][9].Tile_Color = RED;
 	tiles[6][7].type = DISGUISE;
-	tiles[6][7].Tile_Color = GREEN;
+	tiles[6][7].Tile_Color = YELLOW;
 
 	vents[0].tile1 = &tiles[6][9];
 	vents[0].tile2 = &tiles[9][0];
@@ -67,7 +67,7 @@ void level10_init(void)
 
 	enemySet(2, 1, 1, 0, AOE_VIEW, RED);
 	enemySet(7, 1, 1, 0, AOE_VIEW, RED);
-	enemySet(2, 9, 0, 5, VERTICAL_HORIZONTAL_LOOK, GREEN);
+	enemySet(2, 9, 0, 5, VERTICAL_HORIZONTAL_LOOK, YELLOW);
 
 	setStartGame(Tile_Size);
 	player.setFOV = 1;
