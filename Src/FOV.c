@@ -141,6 +141,7 @@ static int angleBlockingTile(double tileAngle)
 /
 */
 
+//reset trails array
 void resetTrails(void ) 
 {
 	trailsCount = 0;
@@ -260,7 +261,7 @@ void setIllumination
 	}
 }
 
-//add player's location to a trails array and set render logic for all trails position in a radius around the previous trails
+//add player's location to a trails array and set render logic for all trails position around the previous trails
 void setIlluminationTrails
 (
 	int const gridSizeX,		//size of the grid in the X axis for the level, used to find the bounds required of the fog grid
@@ -331,167 +332,6 @@ void setIlluminationTrails2
 				}
 			}
 		}
-	}
-}
-
-void setIlluminationWallTrailsLogic
-(
-	int const playerXPos,		//player's current X position on the grid
-	int const playerYPos,		//player's current Y position on the grid
-	int const gridSizeX,		//size of the grid in the X axis for the level, used to find the bounds required of the fog grid
-	int const gridSizeY,		//size of the grid in the Y axis for the level, used to find the bounds required of the fog grid
-	int const fovRadius			//the radius of the global illumination in terms of number of tiles
-)
-{//Check if grid size out of array, if is larger than acceptable, return function. Allow fuction to work up to 6 tiles wide.
-	if (gridSizeX > FOG_MAX_X || gridSizeY > FOG_MAX_Y || fovRadius > 6)
-	{
-		return;
-	}
-
-	resetAllowanceAngles();
-
-	setIlluminationTrails(gridSizeX, gridSizeY);
-
-	int anglesToBeShadedSize = 0;			//the number of angles to be shaded currently stored in the above array, increment if new angles are added
-
-	double currentTileAngle;				//store the angle of the current tile to player with 0 starting on player's right
-
-	for (int currentRadius = 0; currentRadius < fovRadius; currentRadius++)			//for the size of the radius
-	{
-		//WALL LOGIC SECTION
-		//do wall logic first, then handle render. requires double to loops, but achieves a double buffering effect. Look for ways to refactor(WIP)
-		for (int xAxis = playerXPos - currentRadius; xAxis < (playerXPos + currentRadius + 1); xAxis += (currentRadius != 0) ? 2 * currentRadius : 1)	//check outer layer of X axis within current radius 
-		{
-			for (int yAxis = playerYPos - currentRadius; yAxis < (playerYPos + currentRadius + 1); yAxis++)		//check of Y axis under outer layer of X axis within current radius 
-			{
-				if (isInGrid(xAxis, yAxis, gridSizeX, gridSizeY))							//dont set value if out of array
-				{
-					currentTileAngle = angleOfPointR2(xAxis - playerXPos, yAxis - playerYPos);	//find current angle of tile from player position and store in currentTileAngle
-
-
-					if (tiles[xAxis][yAxis].type == WALL
-						&& !isAngleAlreadyAdded(currentTileAngle)
-						&& !isWallBlockedByWall(currentTileAngle)
-						&& sqrt((xAxis - playerXPos) * (xAxis - playerXPos) + (yAxis - playerYPos) * (yAxis - playerYPos)) < fovRadius)		//if tile found is wall
-					{
-						fog[xAxis][yAxis] = FOG_MIN;
-						allowanceAngles[anglesToBeShadedSize].angle = currentTileAngle;	//add current tile angle to angles that need to be shaded
-						// find alowance angle by finding current angle converted to quadrant where x and y axis are positive and 
-						// compare to angle of one grid unit forward in x axis, taking the absoulute of their difference as angle of allowance
-						double allowance =
-							fabs(angleOfPointR2(fabs(xAxis - playerXPos), fabs(yAxis - playerYPos))
-								- angleOfPointR2(fabs(xAxis - playerXPos) + 1, fabs(yAxis - playerYPos)));
-						//if allowance is 0(impossible irl, but is edge case due to how the angle is calulated), use another axis increment to 
-						//determine the allowance angle instead
-						allowance = (allowance == 0) ? fabs(angleOfPointR2(fabs(xAxis - playerXPos), fabs(yAxis - playerYPos))
-							- angleOfPointR2(fabs(xAxis - playerXPos), fabs(yAxis - playerYPos) + 1)) : allowance;
-						allowance = fmod(allowance, 46);
-						allowance += 0.000001;					//add floating point padding for arithemetic
-
-						allowanceAngles[anglesToBeShadedSize].fovLayer = currentRadius;
-						allowanceAngles[anglesToBeShadedSize].allowance = allowance;			//set the angle of allowance to the current angle of allowance
-						anglesToBeShadedSize++;					//increase the counter of the number of angles to check
-					}
-				}
-			}
-		}
-		for (int yAxis = playerYPos - currentRadius; yAxis < (playerYPos + currentRadius + 1); yAxis += (currentRadius != 0) ? 2 * currentRadius : 1)	//check outer layer of Y axis within current radius that remains to be checked 
-		{
-			for (int xAxis = playerXPos - currentRadius; xAxis < (playerXPos + currentRadius); xAxis++)	//check X axis under outer layer of Y axis within current radius 
-			{
-				if (isInGrid(xAxis, yAxis, gridSizeX, gridSizeY))							//dont set value if out of array
-				{
-					currentTileAngle = angleOfPointR2(xAxis - playerXPos, yAxis - playerYPos);	//find current angle of tile from player position and store in currentTileAngle
-
-					if (tiles[xAxis][yAxis].type == WALL
-						&& !isAngleAlreadyAdded(currentTileAngle)
-						&& !isWallBlockedByWall(currentTileAngle)
-						&& sqrt((xAxis - playerXPos) * (xAxis - playerXPos) + (yAxis - playerYPos) * (yAxis - playerYPos)) < fovRadius)		//if tile found is wall
-					{
-						fog[xAxis][yAxis] = FOG_MIN;
-						allowanceAngles[anglesToBeShadedSize].angle = currentTileAngle;	//add current tile angle to angles that need to be shaded
-						// find alowance angle by finding current angle converted to quadrant where x and y axis are positive and 
-						// compare to angle of one grid unit forward in x axis, taking the absoulute of their difference as angle of allowance
-						double allowance =
-							fabs(angleOfPointR2(fabs(xAxis - playerXPos), fabs(yAxis - playerYPos))
-								- angleOfPointR2(fabs(xAxis - playerXPos) + 1, fabs(yAxis - playerYPos)));
-						//if allowance is 0(impossible irl, but is edge case due to how the angle is calulated), use another axis increment to 
-						//determine the allowance angle instead
-						allowance = (allowance == 0) ? fabs(angleOfPointR2(fabs(xAxis - playerXPos), fabs(yAxis - playerYPos))
-							- angleOfPointR2(fabs(xAxis - playerXPos), fabs(yAxis - playerYPos) + 1)) : allowance;
-						allowance = fmod(allowance, 46);
-						allowance += 0.000001;			//add floating point padding for arithemetic
-
-						allowanceAngles[anglesToBeShadedSize].fovLayer = currentRadius;
-						allowanceAngles[anglesToBeShadedSize].allowance = allowance;			//set the angle of allowance to the current angle of allowance
-						anglesToBeShadedSize++;					//increase the counter of the number of angles to check
-					}
-				}
-			}
-		}
-		//END OF WALL LOGIC SECTION
-
-		//HANDLING RENDER LOGIC SECTION
-		//do wall logic first, then handle render. requires double to loops, but achieves a double buffering effect. Look for ways to refactor(WIP)
-		for (int xAxis = playerXPos - currentRadius; xAxis < (playerXPos + currentRadius + 1); xAxis += (currentRadius != 0) ? 2 * currentRadius : 1)	//check outer layer of X axis within current radius 
-		{
-			for (int yAxis = playerYPos - currentRadius; yAxis < (playerYPos + currentRadius + 1); yAxis++)		//check of Y axis under outer layer of X axis within current radius 
-			{
-				if (isInGrid(xAxis, yAxis, gridSizeX, gridSizeY))							//dont set value if out of array
-				{
-					currentTileAngle = angleOfPointR2(xAxis - playerXPos, yAxis - playerYPos);	//find current angle of tile from player position and store in currentTileAngle
-					if (tiles[xAxis][yAxis].type != WALL
-						&& sqrt((xAxis - playerXPos) * (xAxis - playerXPos) + (yAxis - playerYPos) * (yAxis - playerYPos)) < fovRadius)
-					{
-						if (isTileBlockedByWall(currentTileAngle))//when blocked by a wall
-						{
-							fog[xAxis][yAxis] = FOG_MAX;		//set to be covered by fog
-							continue;							//move to next tile
-						}
-						fog[xAxis][yAxis] = FOG_MIN;			//else set to not be covered by fog
-						addToTrails(xAxis, yAxis);
-						continue;								//move to next tile
-					}
-					if (tiles[xAxis][yAxis].type == WALL
-						&& sqrt((xAxis - playerXPos) * (xAxis - playerXPos) + (yAxis - playerYPos) * (yAxis - playerYPos)) < fovRadius
-						&& currentRadius < allowanceAngles[angleBlockingTile(currentTileAngle)].fovLayer) {	//walls of same radius dont affect each other
-						fog[xAxis][yAxis] = FOG_MIN;
-						addToTrails(xAxis, yAxis);
-						continue;
-					}
-				}
-			}
-		}
-		for (int yAxis = playerYPos - currentRadius; yAxis < (playerYPos + currentRadius + 1); yAxis += (currentRadius != 0) ? 2 * currentRadius : 1)	//check outer layer of Y axis within current radius that remains to be checked 
-		{
-			for (int xAxis = playerXPos - currentRadius; xAxis < (playerXPos + currentRadius); xAxis++)	//check X axis under outer layer of Y axis within current radius 
-			{
-				if (isInGrid(xAxis, yAxis, gridSizeX, gridSizeY))							//dont set value if out of array
-				{
-					currentTileAngle = angleOfPointR2(xAxis - playerXPos, yAxis - playerYPos);	//find current angle of tile from player position and store in currentTileAngle
-					if (tiles[xAxis][yAxis].type != WALL
-						&& sqrt((xAxis - playerXPos) * (xAxis - playerXPos) + (yAxis - playerYPos) * (yAxis - playerYPos)) < fovRadius)
-					{
-						if (isTileBlockedByWall(currentTileAngle))//when blocked by a wall
-						{
-							fog[xAxis][yAxis] = FOG_MAX;		//set to be covered by fog
-							continue;							//move to next tile
-						}
-						fog[xAxis][yAxis] = FOG_MIN;			//else set to not be covered by fog
-						addToTrails(xAxis, yAxis);
-						continue;
-					}
-					if (tiles[xAxis][yAxis].type == WALL
-						&& sqrt((xAxis - playerXPos) * (xAxis - playerXPos) + (yAxis - playerYPos) * (yAxis - playerYPos)) < fovRadius
-						&& currentRadius < allowanceAngles[angleBlockingTile(currentTileAngle)].fovLayer) {	//walls of same radius dont affect each other
-						fog[xAxis][yAxis] = FOG_MIN;
-						addToTrails(xAxis, yAxis);
-						continue;
-					}
-				}
-			}
-		}
-		//END OF RENDER LOGIC SECTION
 	}
 }
 
@@ -793,6 +633,168 @@ void setIlluminationWallLogicOnce
 						&& sqrt((xAxis - playerXPos) * (xAxis - playerXPos) + (yAxis - playerYPos) * (yAxis - playerYPos)) < fovRadius
 							&& currentRadius < allowanceAngles[angleBlockingTile(currentTileAngle)].fovLayer) {	//walls of same radius dont affect each other
 						fog[xAxis][yAxis] = FOG_MIN;
+						continue;
+					}
+				}
+			}
+		}
+		//END OF RENDER LOGIC SECTION
+	}
+}
+
+//equivalent to setIllumintaionWallLogicOnce(), but also adds trails to the trails array on top of the shadows
+void setIlluminationWallTrailsLogic
+(
+	int const playerXPos,		//player's current X position on the grid
+	int const playerYPos,		//player's current Y position on the grid
+	int const gridSizeX,		//size of the grid in the X axis for the level, used to find the bounds required of the fog grid
+	int const gridSizeY,		//size of the grid in the Y axis for the level, used to find the bounds required of the fog grid
+	int const fovRadius			//the radius of the global illumination in terms of number of tiles
+)
+{//Check if grid size out of array, if is larger than acceptable, return function. Allow fuction to work up to 6 tiles wide.
+	if (gridSizeX > FOG_MAX_X || gridSizeY > FOG_MAX_Y || fovRadius > 6)
+	{
+		return;
+	}
+
+	resetAllowanceAngles();
+
+	setIlluminationTrails(gridSizeX, gridSizeY);
+
+	int anglesToBeShadedSize = 0;			//the number of angles to be shaded currently stored in the above array, increment if new angles are added
+
+	double currentTileAngle;				//store the angle of the current tile to player with 0 starting on player's right
+
+	for (int currentRadius = 0; currentRadius < fovRadius; currentRadius++)			//for the size of the radius
+	{
+		//WALL LOGIC SECTION
+		//do wall logic first, then handle render. requires double to loops, but achieves a double buffering effect. Look for ways to refactor(WIP)
+		for (int xAxis = playerXPos - currentRadius; xAxis < (playerXPos + currentRadius + 1); xAxis += (currentRadius != 0) ? 2 * currentRadius : 1)	//check outer layer of X axis within current radius 
+		{
+			for (int yAxis = playerYPos - currentRadius; yAxis < (playerYPos + currentRadius + 1); yAxis++)		//check of Y axis under outer layer of X axis within current radius 
+			{
+				if (isInGrid(xAxis, yAxis, gridSizeX, gridSizeY))							//dont set value if out of array
+				{
+					currentTileAngle = angleOfPointR2(xAxis - playerXPos, yAxis - playerYPos);	//find current angle of tile from player position and store in currentTileAngle
+
+
+					if (tiles[xAxis][yAxis].type == WALL
+						&& !isAngleAlreadyAdded(currentTileAngle)
+						&& !isWallBlockedByWall(currentTileAngle)
+						&& sqrt((xAxis - playerXPos) * (xAxis - playerXPos) + (yAxis - playerYPos) * (yAxis - playerYPos)) < fovRadius)		//if tile found is wall
+					{
+						fog[xAxis][yAxis] = FOG_MIN;
+						allowanceAngles[anglesToBeShadedSize].angle = currentTileAngle;	//add current tile angle to angles that need to be shaded
+						// find alowance angle by finding current angle converted to quadrant where x and y axis are positive and 
+						// compare to angle of one grid unit forward in x axis, taking the absoulute of their difference as angle of allowance
+						double allowance =
+							fabs(angleOfPointR2(fabs(xAxis - playerXPos), fabs(yAxis - playerYPos))
+								- angleOfPointR2(fabs(xAxis - playerXPos) + 1, fabs(yAxis - playerYPos)));
+						//if allowance is 0(impossible irl, but is edge case due to how the angle is calulated), use another axis increment to 
+						//determine the allowance angle instead
+						allowance = (allowance == 0) ? fabs(angleOfPointR2(fabs(xAxis - playerXPos), fabs(yAxis - playerYPos))
+							- angleOfPointR2(fabs(xAxis - playerXPos), fabs(yAxis - playerYPos) + 1)) : allowance;
+						allowance = fmod(allowance, 46);
+						allowance += 0.000001;					//add floating point padding for arithemetic
+
+						allowanceAngles[anglesToBeShadedSize].fovLayer = currentRadius;
+						allowanceAngles[anglesToBeShadedSize].allowance = allowance;			//set the angle of allowance to the current angle of allowance
+						anglesToBeShadedSize++;					//increase the counter of the number of angles to check
+					}
+				}
+			}
+		}
+		for (int yAxis = playerYPos - currentRadius; yAxis < (playerYPos + currentRadius + 1); yAxis += (currentRadius != 0) ? 2 * currentRadius : 1)	//check outer layer of Y axis within current radius that remains to be checked 
+		{
+			for (int xAxis = playerXPos - currentRadius; xAxis < (playerXPos + currentRadius); xAxis++)	//check X axis under outer layer of Y axis within current radius 
+			{
+				if (isInGrid(xAxis, yAxis, gridSizeX, gridSizeY))							//dont set value if out of array
+				{
+					currentTileAngle = angleOfPointR2(xAxis - playerXPos, yAxis - playerYPos);	//find current angle of tile from player position and store in currentTileAngle
+
+					if (tiles[xAxis][yAxis].type == WALL
+						&& !isAngleAlreadyAdded(currentTileAngle)
+						&& !isWallBlockedByWall(currentTileAngle)
+						&& sqrt((xAxis - playerXPos) * (xAxis - playerXPos) + (yAxis - playerYPos) * (yAxis - playerYPos)) < fovRadius)		//if tile found is wall
+					{
+						fog[xAxis][yAxis] = FOG_MIN;
+						allowanceAngles[anglesToBeShadedSize].angle = currentTileAngle;	//add current tile angle to angles that need to be shaded
+						// find alowance angle by finding current angle converted to quadrant where x and y axis are positive and 
+						// compare to angle of one grid unit forward in x axis, taking the absoulute of their difference as angle of allowance
+						double allowance =
+							fabs(angleOfPointR2(fabs(xAxis - playerXPos), fabs(yAxis - playerYPos))
+								- angleOfPointR2(fabs(xAxis - playerXPos) + 1, fabs(yAxis - playerYPos)));
+						//if allowance is 0(impossible irl, but is edge case due to how the angle is calulated), use another axis increment to 
+						//determine the allowance angle instead
+						allowance = (allowance == 0) ? fabs(angleOfPointR2(fabs(xAxis - playerXPos), fabs(yAxis - playerYPos))
+							- angleOfPointR2(fabs(xAxis - playerXPos), fabs(yAxis - playerYPos) + 1)) : allowance;
+						allowance = fmod(allowance, 46);
+						allowance += 0.000001;			//add floating point padding for arithemetic
+
+						allowanceAngles[anglesToBeShadedSize].fovLayer = currentRadius;
+						allowanceAngles[anglesToBeShadedSize].allowance = allowance;			//set the angle of allowance to the current angle of allowance
+						anglesToBeShadedSize++;					//increase the counter of the number of angles to check
+					}
+				}
+			}
+		}
+		//END OF WALL LOGIC SECTION
+
+		//HANDLING RENDER LOGIC SECTION
+		//do wall logic first, then handle render. requires double to loops, but achieves a double buffering effect. Look for ways to refactor(WIP)
+		for (int xAxis = playerXPos - currentRadius; xAxis < (playerXPos + currentRadius + 1); xAxis += (currentRadius != 0) ? 2 * currentRadius : 1)	//check outer layer of X axis within current radius 
+		{
+			for (int yAxis = playerYPos - currentRadius; yAxis < (playerYPos + currentRadius + 1); yAxis++)		//check of Y axis under outer layer of X axis within current radius 
+			{
+				if (isInGrid(xAxis, yAxis, gridSizeX, gridSizeY))							//dont set value if out of array
+				{
+					currentTileAngle = angleOfPointR2(xAxis - playerXPos, yAxis - playerYPos);	//find current angle of tile from player position and store in currentTileAngle
+					if (tiles[xAxis][yAxis].type != WALL
+						&& sqrt((xAxis - playerXPos) * (xAxis - playerXPos) + (yAxis - playerYPos) * (yAxis - playerYPos)) < fovRadius)
+					{
+						if (isTileBlockedByWall(currentTileAngle))//when blocked by a wall
+						{
+							fog[xAxis][yAxis] = FOG_MAX;		//set to be covered by fog
+							continue;							//move to next tile
+						}
+						fog[xAxis][yAxis] = FOG_MIN;			//else set to not be covered by fog
+						addToTrails(xAxis, yAxis);
+						continue;								//move to next tile
+					}
+					if (tiles[xAxis][yAxis].type == WALL
+						&& sqrt((xAxis - playerXPos) * (xAxis - playerXPos) + (yAxis - playerYPos) * (yAxis - playerYPos)) < fovRadius
+						&& currentRadius < allowanceAngles[angleBlockingTile(currentTileAngle)].fovLayer) {	//walls of same radius dont affect each other
+						fog[xAxis][yAxis] = FOG_MIN;
+						addToTrails(xAxis, yAxis);
+						continue;
+					}
+				}
+			}
+		}
+		for (int yAxis = playerYPos - currentRadius; yAxis < (playerYPos + currentRadius + 1); yAxis += (currentRadius != 0) ? 2 * currentRadius : 1)	//check outer layer of Y axis within current radius that remains to be checked 
+		{
+			for (int xAxis = playerXPos - currentRadius; xAxis < (playerXPos + currentRadius); xAxis++)	//check X axis under outer layer of Y axis within current radius 
+			{
+				if (isInGrid(xAxis, yAxis, gridSizeX, gridSizeY))							//dont set value if out of array
+				{
+					currentTileAngle = angleOfPointR2(xAxis - playerXPos, yAxis - playerYPos);	//find current angle of tile from player position and store in currentTileAngle
+					if (tiles[xAxis][yAxis].type != WALL
+						&& sqrt((xAxis - playerXPos) * (xAxis - playerXPos) + (yAxis - playerYPos) * (yAxis - playerYPos)) < fovRadius)
+					{
+						if (isTileBlockedByWall(currentTileAngle))//when blocked by a wall
+						{
+							fog[xAxis][yAxis] = FOG_MAX;		//set to be covered by fog
+							continue;							//move to next tile
+						}
+						fog[xAxis][yAxis] = FOG_MIN;			//else set to not be covered by fog
+						addToTrails(xAxis, yAxis);
+						continue;
+					}
+					if (tiles[xAxis][yAxis].type == WALL
+						&& sqrt((xAxis - playerXPos) * (xAxis - playerXPos) + (yAxis - playerYPos) * (yAxis - playerYPos)) < fovRadius
+						&& currentRadius < allowanceAngles[angleBlockingTile(currentTileAngle)].fovLayer) {	//walls of same radius dont affect each other
+						fog[xAxis][yAxis] = FOG_MIN;
+						addToTrails(xAxis, yAxis);
 						continue;
 					}
 				}

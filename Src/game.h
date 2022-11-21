@@ -20,11 +20,6 @@ typedef enum { // enum for the different type of tiles
 //GLOBAL Color variables
 //CP_Color Green,Red,Blue;
 
-//game codes
-void game_init(void);
-void game_update(void);
-void game_exit(void);
-
 //render the player, tiles and fov
 void renderGame(void);
 
@@ -39,6 +34,7 @@ void resumeGame(void);
 
 //reading score from file
 void readScore();
+
 //writing score into file
 void writeScore();
 
@@ -47,15 +43,20 @@ void createScore();
 
 //light up tiles in a square area
 void lightTiles(int x, int y,int range);
-void drawFog(void);
-void freeImage(void);
+
+//Contains all the function needed to update the stage of the FOG
+void updateFog(void);
+
+//contains all the function needed to free game resources such as images and audio
+void freeGameResources(void);
+
 //global tile size variable
 extern int Tile_Size;
 extern Game_State gameState;
 extern int Score[];
-extern double lightCounter, tileMoveCounter;
+extern double lightCounter;
 extern int doorLightRange, gameFogRange,illumMode;
-extern levelExited, levelStarted;
+extern int levelExited, levelStarted;
 //extern int parScore[]; see game.c
 
 extern CP_Sound loseSound;

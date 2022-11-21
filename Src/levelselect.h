@@ -1,10 +1,6 @@
 #pragma once
 
-void levelSelection_Init(void);
-
-void levelSelection_Update(void);
-
-void levelSelection_Exit(void);
+//to hold all functions for function pointer to start each level.
 
 void startLevel1(void);
 void startLevel2(void);
@@ -21,9 +17,5 @@ void startLevel12(void);
 void startLevel13(void);
 void startLevel14(void);
 void startLevel15(void);
-void startGame(void);
 void transitLevel(void);
-
-//@youyang when u finish the levle select screen update this function to load it pls
 void startLevelSelect(void);
-//add other levels as well

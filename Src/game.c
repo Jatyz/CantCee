@@ -11,37 +11,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/*
-THE CODES UNDER GAME_INIT, GAME_UPDATE IS FOR TESTING
-FOR THE REAL STAGES WE NEED TO CREATE ANOTHER C AND H FILE TO INITIALIZE AND CALL THE FILES UNDER GAME.C
-
-IN INITIALIZE
-WE WILL NEED TO INIT THE TILE MAP, UNLESS WE CAN READ FROM EDITOR AND ASSIGN USING ASSIGN TILE
-
-SET WINDOW SIZE
-CLEAR WINDOW BACKGROUND TO CLEAR RENDER
-
-CALL SETSTARTGAME
-
-SET PLAYER START POINT AFTER ASSIGNING TILES
-
-*/
-
-//DO NOT INITIALIZE ANYMORE TILES AND PLAYER VARIABLES, THEY ARE GLOBAL.
-//IF YOU NEED TO ACCESS PLAYER AND TILES JUST INCLUDE THE SPEICIF HEADER FILES.
-
+//global variables
 int Tile_Size;
 Game_State gameState;
 int Score[30];//number in array base on number of lvls 30 as placeholder for now to test writing in and out
-
-//static variable for animation use
-int levelExited = 0,
-	 levelStarted = 1;
-
-
-double lightCounter, tileMoveCounter;
+int levelExited = 0, levelStarted = 1;
+double lightCounter;
 int doorLightRange,gameFogRange,illumMode;
 
+//global sound variables
 CP_Sound loseSound = NULL;
 CP_Sound disguiseSound = NULL;
 CP_Sound portalSound = NULL;
@@ -197,20 +175,32 @@ void game_exit(void)
 
 //all the render functions
 void renderGame(void) {
+	//draw tile based on tile size
 	drawTile(Tile_Size);
+	//draw player based on tile size
 	drawPlayer(Tile_Size);
+	//draw enemy based on tile size
 	drawEnemy(Tile_Size);
+	//draw enemy fov based on tile size
 	enemyFOV(Tile_Size);
+	//if not in illum mode, if not on switch, if light counter not greater than 0
 	if (!player.onSwitch && !(illumMode || lightCounter > 0)) {
-		drawFog();
+		//update fog state
+		updateFog();
 	}
+	//check if player is on the switch, if they are set area around point to be defogged
 	playerSwitchCheck();
-	if (player.setFOV)
-	renderFOVAdvance(returnBounds(Tile_Size), returnBounds(Tile_Size), Tile_Size);
+	//if player has fov on
+	if (player.setFOV) {
+		//draw fog
+		renderFOVAdvance(returnBounds(Tile_Size), returnBounds(Tile_Size), Tile_Size);
+	}
+
 }
 
-//Call this function after setting Tile_Size to reset things to default
+//Call this function after setting Tile_Size to set things to default
 void resetGame(Tile_Size) {
+	//assigning all images
 	wallTexture = CP_Image_Load("./Assets/wallTexture.png");
 	floorTexture = CP_Image_Load("./Assets/floorTexture.png");
 	openedDoor = CP_Image_Load("./Assets/openedDoor.png");
@@ -227,6 +217,7 @@ void resetGame(Tile_Size) {
 	disguiseBlue = CP_Image_Load("./Assets/disguiseBlue.png");
 	disguiseYellow = CP_Image_Load("./Assets/disguiseYellow.png");
 
+	//assigning all sound files
 	loseSound = CP_Sound_Load("./Assets/Sounds/Lose Sound.mp3");
 	buttonSound = CP_Sound_Load("./Assets/Sounds/Button Sound.mp3");
 	disguiseSound = CP_Sound_Load("./Assets/Sounds/Disguise Sound.mp3");
@@ -235,7 +226,7 @@ void resetGame(Tile_Size) {
 	doorOpen = CP_Sound_Load("./Assets/Sounds/Door Open.mp3");
 	doorClose = CP_Sound_Load("./Assets/Sounds/Door Close.mp3");
 
-	//player color may need to move out of this method to set from the start of the stage itself
+	//setting player color to default non disguised color.
 	player.Player_Color = DEFAULT;
 
 	//setting player size and counter
@@ -243,39 +234,52 @@ void resetGame(Tile_Size) {
 	player.width = Tile_Size / 2;
 	player.counter = 0;
 
-	//setting tiles
+	//resetting tile states
 	resetVents();
 	resetGates();
-	assignTile(Tile_Size);//assign all tiles
+	//set all playable tiles to floor, and everything out of boundaries to walls
+	resetTile(Tile_Size);
+	//reset all enemies states
 	enemyReset(Tile_Size);
 
-	tileMoveCounter = 0;
+	//resetting all variables to default values
 	gameFogRange = 3;
 	player.shineCount = 0;
 	lightCounter = 0;
 	player.onSwitch = 0;
 	player.isTP = 0;
+
+	//reset trail array on init
 	resetTrails();
+
+	//resetting animation to start
+	levelExited = 0, levelStarted = 1;
+
+	//reset the transition image
+	setSpriteExtended();
+
+	//set all scenes to transition state at the start to draw transition screen
+	gameState = START_TRANSITION;
 }
 
 //resume game
 void resumeGame(void)
 {
+	//set game state to play
 	gameState = PLAY;
 }
 
 //things to set before giving controls to the player
 void setStartGame(Tile_Size) {	
+	//assign all vent tile to vent state
 	setVents();
-	setGates();
-	setPlayerStartPoint(Tile_Size);
-	
 
-	//MOAR NEW CODE HERE!! FOR ANIMATIONS
-	levelExited = 0, levelStarted = 1;
-	setSpriteExtended();
-	gameState = START_TRANSITION;	//sets the first frame to be fully black in preperation for animation transistion in,
-	//reccomendation is to not allow player control till animation is done. P.S. does rendering
+	//setting all switch and gate tiles to switch and gate state
+	setGates();
+
+	//moving the player location to the start tile
+	setPlayerStartPoint(Tile_Size);
+
 }
 
 //called after finishing each floor
@@ -287,7 +291,6 @@ void writeScore() {
 	}
 	//write every score into the text file
 	for (int i = 0; i < sizeof(Score)/sizeof(Score[0]); i++) {
-
 		fprintf(output, "%d\n", Score[i]);
 	}
 	//close file
@@ -329,7 +332,9 @@ void createScore() {
 	}
 }
 
+//light tiles around an area
 void lightTiles(int x, int y, int range) {
+	//set range of tile from center
 	int startx = x - range;
 	int starty = y - range;
 
@@ -337,27 +342,37 @@ void lightTiles(int x, int y, int range) {
 	for (int i = 0; i <= (2 * range); i++) {
 		for (int j = 0; j <= (2 * range); j++) {
 
+			//set fog state of all the tiles around the center.
 			setTileHalfLit(startx + i, starty+j);
 		}
 	}
 	
+	//set fog state of center tile to be brighter
 	setTileLit(x, y);
 }
 
-void drawFog(void) {
+void updateFog(void) {
+	//if player is on fov mode
 	if (player.setFOV) {
+		//clear fog state
 		clearFogBackground();
+		//if on easy mode
 		if (isTrailsActive) {
+			//set trails based on player
 			setIlluminationTrails(player.x, player.y);
+			//update trails state based on player locations
 			setIlluminationWallTrailsLogic(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), gameFogRange + 1);
 			return;
 		}
+		//update fog state based on player location
 		setIlluminationWallLogicOnce(player.x, player.y, returnBounds(Tile_Size), returnBounds(Tile_Size), gameFogRange + 1);
 	}
 }
 
+//free all audio files
 void freeSound()
 {
+	//if exist free
 	if(loseSound == NULL) CP_Sound_Free(&loseSound);
 	if(buttonSound == NULL) CP_Sound_Free(&buttonSound);
 	if(disguiseSound == NULL) CP_Sound_Free(&disguiseSound);
@@ -367,7 +382,8 @@ void freeSound()
 	if(doorClose == NULL) CP_Sound_Free(&doorClose);
 }
 
-void freeImage() {
+//free all audio and image in the game
+void freeGameResources() {
 	freeSound();
 	freeMenuImages();
 	freeTransitionImage();

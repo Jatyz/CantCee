@@ -51,19 +51,9 @@ CP_Image pauseGradient = NULL;
 void drawFullPanel(void) {
 	buttonSound = CP_Sound_Load("./Assets/Sounds/Button Sound.mp3");
 	CP_Settings_NoStroke();
-	//CP_Settings_Fill(CP_Color_Create(0, 0, 0, 122));
-	//CP_Graphics_DrawRect(0, 0, 800, 800);
 
-	float smallpanelx = 500, smallpanely = 400;
-
-	float panelStartx = 400 - smallpanelx / 2;
-	float panelStarty = 400 - smallpanely / 2;
-
-	//CP_Settings_Fill(CP_Color_Create(122, 122, 122, 255));
-	//CP_Graphics_DrawRect(panelStartx, panelStarty, smallpanelx, smallpanely);
 
 	pauseBackground = CP_Image_Load("./Assets/pauseBackground.png");
-	//pauseGradient = CP_Image_Load("./Assets/pauseGradient.png");
 	pMenuHover = CP_Image_Load("./Assets/pMenuHover.png");
 
 	// Pause Menu
@@ -221,24 +211,25 @@ void drawFullPanel(void) {
 
 //panel width and height use whatever number you want best multiple of tile size, x and y make sure its the tile location * tile size if u want it to cover specific tiles. text[] is just a string
 void drawSmallPanel(int panelWidth, int panelHeight, int x, int y, char text[]) {
+	//set color
 	CP_Settings_Fill(CP_Color_Create(0, 0, 122, 200));
 
+	//draw panel
 	CP_Graphics_DrawRect(x, y, panelWidth, panelHeight);
 	CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
+
+	//draw text in panel
 	CP_Settings_TextSize(30.f);
 	CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
 	CP_Font_DrawTextBox(text, x, y + 20, panelWidth);
 
+	//reset to default
 	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 	CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_LEFT, CP_TEXT_ALIGN_V_BASELINE);
 }
 
 //check which button the player clicked, the buttons are hard coded spots, so the input check is also hard coded area
 void checkClick(void (button1)(void), void(button2)(void), void (button3)(void)) {
-	float smallpanelx = 500, smallpanely = 400;
-
-	float panelStartx = 400 - smallpanelx / 2;
-	float panelStarty = 400 - smallpanely / 2;
 
 	if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
 	{
@@ -265,20 +256,25 @@ void checkClick(void (button1)(void), void(button2)(void), void (button3)(void))
 }
 
 void drawSideBarLevel(char levelNumber[], int noOfStep) {
-
 	CP_Settings_RectMode(CP_POSITION_CORNER);
 	CP_Settings_Fill(CP_Color_Create(0,0,0,255));
 	CP_Settings_TextSize(40.f);
 	CP_Font_DrawTextBox(levelNumber, 810, 30, 200);
 
+	//allocate space to write text
 	char* number;
 	number = malloc(28 + 6);
+
+	//assign number of stepe to the string
 	if (number != NULL) {
 		sprintf_s(number, 34, "Current Number of Steps: %d", noOfStep);
 	}
+
+	//write out the string
 	CP_Settings_TextSize(25.f);
 	CP_Font_DrawTextBox(number, 805, 70, 200);
 
+	//free the allocated space
 	free(number);
 }
 
@@ -311,6 +307,7 @@ void drawSideBarStats(char levelNumber[], int noOfStep) {
 		CP_Settings_TextSize(40.f);
 		CP_Font_DrawTextBox(number, 875, 250, 200);
 
+		//tell player we on illum mode
 		if (illumMode) {
 			if (number != NULL) {
 				sprintf_s(number, 12, "Illum Mode");
@@ -319,8 +316,8 @@ void drawSideBarStats(char levelNumber[], int noOfStep) {
 			CP_Font_DrawTextBox(number, 825, 350, 200);
 		}
 
+		//if player having trouble
 		if (player.counter > 500) {
-			//number of shine
 			CP_Settings_TextSize(30.f);
 			CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
 			CP_Graphics_DrawRect(800, 380, 200, 220);
@@ -328,16 +325,14 @@ void drawSideBarStats(char levelNumber[], int noOfStep) {
 			CP_Font_DrawTextBox("If you are having trouble, you can go to settings to turn on easy mode", 810, 400, 200);
 		}
 	}
-
-
-
-
+	
+	//free allocated space
 	free(number);
 }
 
 void freeMenuImages()
 {
-	//please check again
+	//free all image
 	CP_Settings_ImageMode(CP_POSITION_CENTER);
 
 	CP_Image_Free(&pauseBackground);
@@ -377,8 +372,8 @@ void freeMenuImages()
 	CP_Sound_Free(buttonSound);
 }
 
+//draw level select side bar par score
 void drawSideBarPar(int noOfStep) {
-
 	CP_Settings_RectMode(CP_POSITION_CORNER);
 	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 

@@ -4,6 +4,7 @@
 #include "player.h"
 #include <stdio.h>
 
+//global image variables
 CP_Image wallTexture = NULL;
 CP_Image floorTexture= NULL;
 CP_Image openedDoor = NULL;
@@ -28,7 +29,7 @@ Tile tiles[MAX_TILES][MAX_TILES];
 //hardcode max 10 sets of vents
 Vent vents[15];
 Gate gates[15];
-//axulilary functions are defined first so it wont bloody crash when in a C lang compiler!!(without header)
+
 //returns the horizontal and vertical bounds(no. of elements) in the grid to be used for the level. Assumes grid space used is square
 int returnBounds(int tilesize) {
 	return (800 / tilesize);
@@ -43,100 +44,73 @@ void drawTile(int tilesize) {
 
 	int height, width;
 
+	//making sure there is no border around draw tiles.
 	CP_Settings_NoStroke();
+	//setting image mode to center
 	CP_Settings_ImageMode(CP_POSITION_CORNER);
 	//for loop to go through all the tiles
 	for (height = 0; height < Horizontal_Tile; height++) {
 
 		for (width = 0; width < Vertical_Tile; width++) {
-			//depending on the tile the color of the tile is different
+			//depending on the tile the image drawn is different.
 			switch (tiles[width][height].type) {
 			case WALL:
 				CP_Settings_Stroke(CP_Color_Create(125, 125, 125, 255)); //setting stroke color
-				//CP_Settings_Fill(CP_Color_Create(125, 125, 125, 255));   //setting tile color
 				CP_Image_Draw(wallTexture, width * tilesize, height * tilesize, tilesize, tilesize, 255);
-				//CP_Graphics_DrawRect(width * tilesize, height * tilesize, tilesize, tilesize); //draw tile
 				break;
-			case FLOOR:
-				
-				CP_Settings_NoStroke(); //turn off outline, to make grid
-				//CP_Settings_Fill(CP_Color_Create(75, 75, 75, 255)); // set tile color
-				//CP_Graphics_DrawRect(width * tilesize, height * tilesize, tilesize - .5f, tilesize - .5f); //draw tile
+			case FLOOR:		
 				CP_Image_Draw(floorTexture, width * tilesize, height * tilesize, tilesize, tilesize, 255);
 				break;
 			case START:
-				//CP_Settings_Fill(CP_Color_Create(0, 150, 75, 255)); // set tile color
-				//CP_Graphics_DrawRect(width * tilesize, height * tilesize, tilesize - .5f, tilesize - .5f); //draw tile
 				CP_Image_Draw(startPlatform, width * tilesize, height * tilesize, tilesize, tilesize, 255);
 				break;
 			case END:
-				//CP_Settings_Fill(CP_Color_Create(200, 0, 0, 255)); //set tile color
-				//CP_Graphics_DrawRect(width * tilesize, height * tilesize, tilesize - .5f, tilesize - .5f); //draw tile
 				CP_Image_Draw(endPlatform, width * tilesize, height * tilesize, tilesize, tilesize, 255);
-
 				break;
 			case DISGUISE:
 				switch (tiles[width][height].Tile_Color)
 				{
 				case RED:
-					//CP_Settings_Fill(Red);
-					CP_Image_Draw(disguiseRed, width * tilesize, height * tilesize, tilesize, tilesize, 255);
-			
-					
+					CP_Image_Draw(disguiseRed, width * tilesize, height * tilesize, tilesize, tilesize, 255);						
 					break;
 				case YELLOW:
 					//CP_Settings_Fill(Green);
+				case GREEN:
 					CP_Image_Draw(disguiseYellow, width * tilesize, height * tilesize, tilesize, tilesize, 255);
-
 					break;
 				case BLUE:
-					//CP_Settings_Fill(Blue);
 					CP_Image_Draw(disguiseBlue, width * tilesize, height * tilesize, tilesize, tilesize, 255);
-
 					break;
-				}
-				//CP_Graphics_DrawRect(width * tilesize, height * tilesize, tilesize - .5f, tilesize - .5f); // draw tile
+				}		
 				break;
 			case VENTS:
-				//CP_Settings_Fill(CP_Color_Create(100, 100, 100, 255)); //set tile color
-				//CP_Graphics_DrawRect(width * tilesize, height * tilesize, tilesize - .5f, tilesize - .5f); //draw tile
 				CP_Image_Draw(closedVent, width * tilesize, height * tilesize, tilesize, tilesize, 255);
 				break;
 			case CLOSED_DOOR:
-				//CP_Settings_Fill(CP_Color_Create(100, 0, 100, 255)); //set tile color
-				//CP_Graphics_DrawRect(width * tilesize, height * tilesize, tilesize - .5f, tilesize - .5f); //draw tile
 				CP_Image_Draw(closedDoor, width * tilesize, height * tilesize, tilesize, tilesize, 255);
 				break;
 			case OPENED_DOOR:
-				//CP_Settings_Fill(CP_Color_Create(200, 0, 200, 255)); //set tile color
-				//CP_Graphics_DrawRect(width * tilesize, height * tilesize, tilesize - .5f, tilesize - .5f); //draw tile
 				CP_Image_Draw(openedDoor, width * tilesize, height * tilesize, tilesize, tilesize, 255);
 				break;
 			case SWITCH_OFF:
-				//CP_Settings_Fill(CP_Color_Create(255, 255, 0, 255)); //set tile color
-				//CP_Graphics_DrawRect(width * tilesize, height * tilesize, tilesize - .5f, tilesize - .5f); //draw tile
 				CP_Image_Draw(switchOff, width * tilesize, height * tilesize, tilesize, tilesize, 255);
-
 				break;
 			case SWITCH_ON:
-				//CP_Settings_Fill(CP_Color_Create(122, 122, 0, 255)); //set tile color
-				//CP_Graphics_DrawRect(width * tilesize, height * tilesize, tilesize - .5f, tilesize - .5f); //draw tile
 				CP_Image_Draw(switchOn, width * tilesize, height * tilesize, tilesize, tilesize, 255);
 
 				break;
 			}
-			//draw the tile
 
 		}
 
 	}
+	//resetting image mode
 	CP_Settings_ImageMode(CP_POSITION_CENTER);
 }
 
 //reset all the tiles to only floor and walls. to be called in stage init
-void assignTile(int tilesize) {
+void resetTile(int tilesize) {
 	int height, width;
-	//need to check tht there is only 1 start tile
 
 	//loop through every single tile
 	for (height = 0; height < sizeof(tiles)/sizeof(tiles[0]); height++) {
@@ -271,7 +245,7 @@ void checkGates(Tile* address) {
 	//get the address of tile at 0 0
 	Tile* base = tiles;
 
-	//open or close all associated doors
+	//toggle open or close all associated doors
 	for (int i = 0; i < sizeof(gates) / sizeof(gates[0]); i++) {
 		//if the address of the tile the player set on matches the specific tile in the vents
 		if (gates[i].Switch == address) {
@@ -294,6 +268,7 @@ void checkGates(Tile* address) {
 	//get row of 2d array
 	int row = difference % MAX_TILES;
 
+	//toggle between switch states for drawing purposes
 	if (tiles[col][row].type == SWITCH_ON) {
 		tiles[col][row].type = SWITCH_OFF;
 	}
@@ -315,8 +290,8 @@ void freeGridImages() {
 	CP_Image_Free(&startPlatform);
 	CP_Image_Free(&endPlatform);
 
-	//CP_Image_Free(&disguiseRed);
-	//CP_Image_Free(&disguiseBlue);
-	//CP_Image_Free(&disguiseYellow);
+	CP_Image_Free(&disguiseRed);
+	CP_Image_Free(&disguiseBlue);
+	CP_Image_Free(&disguiseYellow);
 	
 }

@@ -11,15 +11,20 @@
 
 void level10_init(void)
 {
+	//set window size
 	CP_System_SetWindowSize(WINDOW_WIDTH, WINIDOW_HEIGHT);
+
+	//clear background
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
+
+	//set current tile size
 	Tile_Size = SMALL;
 
 	//reset all arrays and variables
 	resetGame(Tile_Size);
 
 	//assign all the floors and walls
-	assignTile(Tile_Size);
+	resetTile(Tile_Size);
 
 	tiles[4][0].type = WALL;
 	tiles[4][1].type = WALL;
@@ -65,10 +70,12 @@ void level10_init(void)
 	gates[1].Door = &tiles[2][6];
 	gates[1].Switch = &tiles[5][2];
 
+	//set current enemies
 	enemySet(2, 1, 1, 0, AOE_VIEW, RED);
 	enemySet(7, 1, 1, 0, AOE_VIEW, RED);
 	enemySet(2, 9, 0, 5, VERTICAL_HORIZONTAL_LOOK, YELLOW);
 
+	//set current level values
 	setStartGame(Tile_Size);
 	player.setFOV = 1;
 	doorLightRange = 2;
@@ -79,27 +86,43 @@ void level10_init(void)
 
 void level10_update(void)
 {
-	//need this for light shine on door
 		switch (gameState) {
 		case PLAY:
 			if (lightCounter > 0 || illumMode) {
-
+				//reduce light counter
 				lightCounter -= CP_System_GetDt();
+				//handle special input to detect light click
 				handlePlayerIllumInput();
+				//draw game but do not update fog
 				renderGame();
-				if(player.shineCount > 0 && player.counter < 100)
-				drawSmallPanel(4 * Tile_Size, 2 * Tile_Size, 3 * Tile_Size, 4 * Tile_Size, "click anywhere to shine a light when you have a shine");
+
+				//draw fog
+				renderFOVAdvance(returnBounds(Tile_Size), returnBounds(Tile_Size), Tile_Size);
+
+				if (player.counter < 10 && player.shineCount > 0)
+				{
+					drawSmallPanel(4 * Tile_Size, 2 * Tile_Size, 3 * Tile_Size, 4 * Tile_Size, "Left click on screen to use a shine");
+
+				}
+
+				if (player.counter >10 || player.shineCount == 0 && lightCounter < 0)
+				{
+					drawSmallPanel(4 * Tile_Size, 2 * Tile_Size, 3 * Tile_Size, 4 * Tile_Size, "Press Space again to deactivate Shine Mode");
+
+				}
 				return;
 			}
-			else if (tileMoveCounter != 0) {}
 			else {
 				//clears the screen so things can be redrawn
 				CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
-				//all the game update methods that needs to be updated every frame
+
+				//draw all game tiles
 				renderGame();
+
+				//check for player input
 				handlePlayerInput(Tile_Size);
 
-				//panel
+				//draw tutorial prompt panel
 				if (player.counter < 10 && player.shineCount > 0)
 				{
 					drawSmallPanel(4 * Tile_Size, 2 * Tile_Size, 3 * Tile_Size, 4 * Tile_Size, "Press space to activate Illum Mode");
@@ -111,11 +134,12 @@ void level10_update(void)
 
 				}
 
-				//End FOV logic handled area
+				//draw side bar
 				drawSideBarStats("Level 10", player.counter);
 
 			}
 			break;
+			//draw pause win and lose panels and check for panel click
 		case PAUSED:
 			drawFullPanel();
 			checkClick(startLevelSelect, startLevel10, resumeGame);
@@ -129,12 +153,15 @@ void level10_update(void)
 			checkClick(0, startLevel10, startLevelSelect);
 			break;
 		case START_TRANSITION:
+			//clear background for transition
 			CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
 			if (levelStarted)	//when level starts, 
 			{	//render enter level transition animation
+				//render game to draw the init scene
 				renderGame();
+				//start the transition
 				levelStarted = initLevelTransition();	//returns 0 when animation is done
-
+				//start the game
 				if (!levelStarted)
 				{
 					gameState = PLAY;
@@ -146,7 +173,8 @@ void level10_update(void)
 	}
 
 
+//free all game reousrces on exit
 void level10_exit(void)
 {
-	freeImage();
+	freeGameResources();
 }

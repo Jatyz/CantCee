@@ -11,15 +11,20 @@
 
 void level12_init(void)
 {
+	//set window size
 	CP_System_SetWindowSize(WINDOW_WIDTH, WINIDOW_HEIGHT);
+
+	//clear background
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
+
+	//set tile size
 	Tile_Size = MEDIUM;
 
 	//reset all arrays and variables
 	resetGame(Tile_Size);
 
 	//assign all the floors and walls
-	assignTile(Tile_Size);
+	resetTile(Tile_Size);
 
 	for (int height = 0; height < returnBounds(Tile_Size); height++) {
 
@@ -113,11 +118,14 @@ void level12_init(void)
 	gates[3].Switch = &tiles[12][0];
 	gates[3].Door = &tiles[8][8];
 
-
 	enemySet(9, 13, 1, 0, AOE_VIEW, YELLOW);
 	enemySet(7, 13, 1, 0, AOE_VIEW, YELLOW);
+	//set current enemies
+	enemySet(9, 13, 1, 0, AOE_VIEW, GREEN);
+	enemySet(7, 13, 1, 0, AOE_VIEW, GREEN);
 	enemySet(0, 1, 0, 5, VERTICAL_HORIZONTAL_LOOK, RED);
 
+	//set all current level values
 	setStartGame(Tile_Size);
 
 	player.setFOV = 1;
@@ -129,31 +137,40 @@ void level12_init(void)
 
 void level12_update(void)
 {
-	//need this for light shine on door
 		switch (gameState) {
 		case PLAY:
 			if (lightCounter > 0 || illumMode) {
-
+				//reduce light counter
 				lightCounter -= CP_System_GetDt();
+				//handle special input to detect light click
 				handlePlayerIllumInput();
+				//draw game but do not update fog
 				renderGame();
+				//draw fog
 				renderFOVAdvance(returnBounds(Tile_Size), returnBounds(Tile_Size), Tile_Size);
+				if (lightCounter < 0)
+				{
+					drawSmallPanel(4 * Tile_Size, 3 * Tile_Size, 6 * Tile_Size, 6 * Tile_Size, "Press Space again to deactivate Shine Mode");
+
+				}
 				return;
 			}
-			else if (tileMoveCounter != 0) {}
 			else {
 				//clears the screen so things can be redrawn
 				CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
-				//all the game update methods that needs to be updated every frame
-
+				
+				//draw all tiles
 				renderGame();
 
+				//check for player input
 				handlePlayerInput(Tile_Size);
-				//End FOV logic handled area
+
+				//draw side bar
 				drawSideBarStats("Level 12", player.counter);
 
 			}
 			break;
+			//draw pause win and lose panels, and check for button click
 		case PAUSED:
 			drawFullPanel();
 			checkClick(startLevelSelect, startLevel12, resumeGame);
@@ -167,12 +184,15 @@ void level12_update(void)
 			checkClick(0, startLevel12, startLevelSelect);
 			break;
 		case START_TRANSITION:
+			//clear background for transition
 			CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
 			if (levelStarted)	//when level starts, 
 			{	//render enter level transition animation
+				//render game to draw the init scene
 				renderGame();
+				//start the transition
 				levelStarted = initLevelTransition();	//returns 0 when animation is done
-
+				//start the game
 				if (!levelStarted)
 				{
 					gameState = PLAY;
@@ -184,7 +204,8 @@ void level12_update(void)
 	}
 
 
+//free all game resources on exit
 void level12_exit(void)
 {
-	freeImage();
+	freeGameResources();
 }

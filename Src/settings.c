@@ -8,6 +8,41 @@
 #include "howToPlay1.h"
 #include "settings.h"
 
+///=================================================
+///Sound Sliders Variables
+///================================================= 
+//declared individually for VS2022 tool tip comments
+static float sliderMinX = 150;						//sliders' left most position
+static float sliderMaxX = windowWidth - 150;		//sliders' right most position
+static float sliderBaseRadius = 15.0f;				//the radius of the small rectangular shape under the slider button 
+static float sliderButtonRadius = 30.0f;			//the radius of the slider's button
+static float sliderButtonOffsets = 100.0f;			//the distance the sliders should be from each other in pixels
+static float topSliderYPos = windowHeight / 5;		//set the first rendered slider to draw at mid screen in y axis
+static int sliderCurrentlyAdjusted = -1;			//set to -1 for no sliders selected.
+
+///=================================================
+///Mute and Trails Buttons Variables
+///================================================= 
+#define TOGGLE_SIZE_FACTOR 1.2f				//Size increase factor for an active toggle button
+#define TOGGLE_BUTTON_SIZE 75.0f			//Size of toggle buttons
+
+static float buttonsYPos = windowHeight / 10 * 6;	//the button's y position
+static float muteXPos = windowWidth / 10 * 3.25;			//the mute button's x position
+static float trailsXPos = windowWidth / 10 * 6.75;		//the trails toggle button's x position
+static CP_Color buttonDefaultColor;			//default color of toggle buttons
+static CP_Color buttonActiveColor;			//color of toggle buttons when they are active
+static int muteHovered = 0;			//if the mute button is currently hovered over 
+static int trailsHovered = 0;		//if the trails button is currently hovered over
+
+///=================================================
+///Sprite Variables
+///================================================= 
+//image variables to handle the sprites for the settings page
+CP_Image settingsBackToMainMenu = NULL;
+CP_Image settingsGradientBackground = NULL;
+
+
+
 /// -------------------------------------
 ///	Sound settings Code Section
 /// -------------------------------------
@@ -17,15 +52,6 @@
 /// 
 /// Master volume group sets the maximum limit for both other sound groups
 /// 
-
-//declared individually for VS2022 tool tip comments
-static float sliderMinX = 150;						//sliders' left most position
-static float sliderMaxX = windowWidth - 150;		//sliders' right most position
-static float sliderBaseRadius = 15.0f;				//the radius of the small rectangular shape under the slider button 
-static float sliderButtonRadius = 30.0f;			//the radius of the slider's button
-static float sliderButtonOffsets = 100.0f;			//the distance the sliders should be from each other in pixels
-static float topSliderYPos = windowHeight / 5;		//set the first rendered slider to draw at mid screen in y axis
-static int sliderCurrentlyAdjusted = -1;			//set to -1 for no sliders selected.
 
 //structure to store required values for each soundgroup slider
 struct Slider
@@ -308,17 +334,6 @@ void handleSliderInteraction(void)
 /// Toggle button Code Section
 /// =====================================
 
-#define TOGGLE_SIZE_FACTOR 1.2f				//Size increase factor for an active toggle button
-#define TOGGLE_BUTTON_SIZE 75.0f			//Size of toggle buttons
-
-static float buttonsYPos = windowHeight / 10 * 6 ;	//the button's y position
-static float muteXPos = windowWidth / 10 * 3.25;			//the mute button's x position
-static float trailsXPos = windowWidth / 10 * 6.75;		//the trails toggle button's x position
-static CP_Color buttonDefaultColor;			//default color of toggle buttons
-static CP_Color buttonActiveColor;			//color of toggle buttons when they are active
-static int muteHovered = 0;			//if the mute button is currently hovered over 
-static int trailsHovered = 0;		//if the trails button is currently hovered over
-
 //initializer for toggle buttons items
 void initButton(void) 
 {
@@ -418,8 +433,9 @@ void handleToggleInteraction(void)
 	return;
 }
 
-CP_Image settingsBackToMainMenu = NULL;
-CP_Image settingsGradientBackground = NULL; 
+///============================================
+/// Scene Init, Update and Exit Section
+///============================================
 
 //load
 // art assets
@@ -440,12 +456,14 @@ void settings_Update()
 	CP_Image_DrawAdvanced(settingsGradientBackground, windowWidth / 2, windowHeight / 2, windowWidth, windowHeight, 255,180);
 	CP_Image_DrawAdvanced(settingsGradientBackground, windowWidth / 2, windowHeight / 2, windowWidth, windowHeight, 255, 180);
 	
+	//handle interraction logics of the toggle buttons and volume sliders
 	handleSliderInteraction();
 	handleToggleInteraction();
+	//draw sliders and buttons
 	drawAllToggleButtons();
 	drawAllSliders();
 
-	
+	//draw back to main menu button
 	CP_Image_Draw(settingsBackToMainMenu, 
 		(windowWidth / 2) - 400,
 		(windowHeight / 10 * 9),
@@ -453,15 +471,16 @@ void settings_Update()
 		(float)CP_Image_GetHeight(settingsBackToMainMenu), 
 		255);
 
+	//if player clicks,
 	if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
 	{
-		// Back To Main Menu Button
+		// the Back To Main Menu Button
 		if (IsAreaClicked((windowWidth / 2) - 400, 
 			(windowHeight / 10 * 9),
 			(float)CP_Image_GetWidth(settingsBackToMainMenu),
 			(float)CP_Image_GetHeight(settingsBackToMainMenu),
 			CP_Input_GetMouseX(), CP_Input_GetMouseY()))
-		{
+		{	//go back to main menu
 			CP_Engine_SetNextGameStateForced(mainMenu_Init, mainMenu_Update, mainMenu_Exit);
 		}
 	}
@@ -477,11 +496,4 @@ void settings_Exit()
 	CP_Image_Free(&settingsBackToMainMenu);
 	CP_Image_Free(&settingsGradientBackground);
 }
-
-
-
-
-
-
-
 

@@ -6,24 +6,23 @@
 #include "panels.h"
 #include "levelSelect.h"
 #include "levelTransition.h"
+
 void level1_init(void)
 {
+	//Set window size
 	CP_System_SetWindowSize(WINDOW_WIDTH, WINIDOW_HEIGHT);
+
+	//Clear background
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
-	//change this variable to change the number of tiles on the map X by X
-	//Factors of 800
-	// use these below
-	// 20,25,32,40,50,80,100,160
-	//e.g. big room = 20
-	// medium room = 50
-	// small room = 80
+	
+	//setting tile size 
 	Tile_Size = SMALL;
 
-	//reset all arrays and variables
+	//reset all arrays and variables and init game resources
 	resetGame(Tile_Size);
 
 	//assign all the floors and walls
-	assignTile(Tile_Size);
+	resetTile(Tile_Size);
 
 
 	//for loop to go through all the tiles
@@ -45,6 +44,8 @@ void level1_init(void)
 	
 	tiles[5][9].type = START;
 	tiles[4][0].type = END;
+
+	//set current level values
 	setStartGame(Tile_Size);
 	player.setFOV = 0;
 	player.currentStage = 1;
@@ -55,15 +56,16 @@ void level1_update(void)
 {
 	switch (gameState) {
 	case PLAY:
-		if (tileMoveCounter != 0) {}
-		else {
 			//clears the screen so things can be redrawn
 			CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
+			//check player input every frame
 			handlePlayerInput(Tile_Size);
-			//all the game update methods that needs to be updated every frame
+			//render game every frame
 			renderGame();
-			//End FOV logic handled area
+			//draw side bar
 			drawSideBarStats("Level 1", player.counter);
+			
+			//draw prompts
 			if (player.y > 5)
 			{
 				drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 7 * Tile_Size, 6 * Tile_Size, "you can press/hold WASD/arrow keys to move.");
@@ -74,27 +76,32 @@ void level1_update(void)
 				drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 0 * Tile_Size, 1 * Tile_Size, "Get to the Exit tile to proceed to next stage");
 
 			}
-		}
 		break;
 	case PAUSED:
+		//draw pause panel and check for clicks
 		drawFullPanel();
 		checkClick(startLevelSelect, startLevel1, resumeGame);
 		break;
 	case WIN:
+		//draw win panel and check for clicks
 		drawFullPanel();
 		checkClick(startLevel2, startLevel1, startLevelSelect);
 		break;
 	case LOSE:
+		//draw lose panel and check for clicks
 		drawFullPanel();
 		checkClick(0, startLevel1, startLevelSelect);
 		break;
 	case START_TRANSITION:
+		//clear background for transition
 		CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
 		if (levelStarted)	//when level starts, 
 		{	//render enter level transition animation
+			//render game to draw the init scene
 			renderGame();
+			//start the transition
 			levelStarted = initLevelTransition();	//returns 0 when animation is done
-
+			//start the game
 			if (!levelStarted)
 			{
 				gameState = PLAY;
@@ -108,5 +115,6 @@ void level1_update(void)
 
 void level1_exit(void)
 {
-	freeImage();
+	//free game resources
+	freeGameResources();
 }

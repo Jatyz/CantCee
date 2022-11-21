@@ -9,24 +9,22 @@
 
 void level4_init(void)
 {
+	//set window size
 	CP_System_SetWindowSize(WINDOW_WIDTH, WINIDOW_HEIGHT);
+
+	//clear background
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
-	//change this variable to change the number of tiles on the map X by X
-	//Factors of 800
-	// use these below
-	// 20,25,32,40,50,80,100,160
-	//e.g. big room = 20
-	// medium room = 50
-	// small room = 80
+
+	//set tile size
 	Tile_Size = SMALL;
 
 	//reset all arrays and variables
 	resetGame(Tile_Size);
 
 	//assign all the floors and walls
-	assignTile(Tile_Size);
+	resetTile(Tile_Size);
 
-	//for loop to go through all the tiles
+	//assign all level tiles
 	for (int width = 0; width < returnBounds(Tile_Size); width++) {
 
 		tiles[width][5].type = WALL;
@@ -44,6 +42,8 @@ void level4_init(void)
 	gates[0].Door = &tiles[2][5];
 	gates[0].Switch = &tiles[6][4];
 
+
+	//assign current level values
 	setStartGame(Tile_Size);
 	player.setFOV = 0;
 	player.currentStage = 4;
@@ -53,14 +53,16 @@ void level4_update(void)
 {
 	switch (gameState) {
 	case PLAY:
-		if (tileMoveCounter != 0) {}
-		else {
 			//clears the screen so things can be redrawn
 			CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
+
+			//check for player input
 			handlePlayerInput(Tile_Size);
-			//all the game update methods that needs to be updated every frame
+
+			//draw all game tile
 			renderGame();
-			//End FOV logic handled area
+
+			//draw side bar
 			drawSideBarStats("Level 4", player.counter);
 			if (player.counter < 10)
 			{
@@ -73,27 +75,32 @@ void level4_update(void)
 				drawSmallPanel(3 * Tile_Size, 2 * Tile_Size, 7 * Tile_Size, 6 * Tile_Size, "After touching the switch, the door is opened");
 
 			}
-		}
 		break;
 	case PAUSED:
+		//draw pause panela nd check button click
 		drawFullPanel();
 		checkClick(startLevelSelect, startLevel4, resumeGame);
 		break;
 	case WIN:
+		//draw win panel and check button click
 		drawFullPanel();
 		checkClick(startLevel5, startLevel4, startLevelSelect);
 		break;
 	case LOSE:
+		//draw lose panel and check button click
 		drawFullPanel();
 		checkClick(0,startLevel4, startLevelSelect);
 		break;
 	case START_TRANSITION:
+		//clear background for transition
 		CP_Graphics_ClearBackground(CP_Color_Create(60, 60, 60, 255));
 		if (levelStarted)	//when level starts, 
 		{	//render enter level transition animation
+			//render game to draw the init scene
 			renderGame();
+			//start the transition
 			levelStarted = initLevelTransition();	//returns 0 when animation is done
-
+			//start the game
 			if (!levelStarted)
 			{
 				gameState = PLAY;
@@ -105,7 +112,8 @@ void level4_update(void)
 
 }
 
+//free game resources on exit
 void level4_exit(void)
 {
-	freeImage();
+	freeGameResources();
 }

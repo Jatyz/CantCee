@@ -13,22 +13,8 @@
 //---------------------------------------------------------
 
 #include "cprocessing.h"
-//#include "splashscreen.h"
-#include "mainmenu.h"
-#include "play.h"
-#include "credits1.h"
-#include "howToPlay1.h"
-#include "main.h"
-#include "grid.h"
-#include "game.h"
-#include "level1.h"
-#include "level3.h"
-#include "level5.h"
-#include "level8.h"
-#include "level9.h"
-#include "level15.h"
-#include "level14.h"
-#include "level10.h"
+#include "splashscreen.h"
+
 
 int main(void)
 {
@@ -52,8 +38,7 @@ int main(void)
 	//CP_Engine_SetNextGameState(howToPlay_Init, howToPlay_Update, howToPlay_Exit);
   
 
-	//CP_Engine_SetNextGameState(game_init, game_update, game_exit);
-	//CP_Engine_SetNextGameStateForced(level9_init, level9_update, level9_exit);
+	CP_Engine_SetNextGameState(splashscreen_init, splashscreen_update, splashscreen_exit);
 
 	CP_Engine_Run();
 	return 0;
