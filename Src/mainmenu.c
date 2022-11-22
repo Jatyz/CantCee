@@ -139,35 +139,35 @@ void mainMenu_Update()
         // ----------Play Button Input----------
         if (IsAreaClicked(startWordWidth, startWordHeight, CP_Image_GetWidth(startWord), CP_Image_GetHeight(startWord), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
         {
-            CP_Sound_PlayAdvanced(buttonSound, 0.5f, 2.0f, FALSE, CP_SOUND_GROUP_SFX);
+            CP_Sound_PlayAdvanced(buttonSound, CP_Sound_GetGroupVolume(CP_SOUND_GROUP_SFX), 2.0f, FALSE, CP_SOUND_GROUP_SFX);
             CP_Engine_SetNextGameStateForced(play_Init, play_Update, play_Exit); // play.c > goes to level select > click level to play
         }
 
         // ----------How to Play Input----------
         if (IsAreaClicked(howToPlayWordWidth, howToPlayWordHeight, CP_Image_GetWidth(howToPlayWord), CP_Image_GetHeight(howToPlayWord), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
         {
-            CP_Sound_PlayAdvanced(buttonSound, 0.5f, 2.0f, FALSE, CP_SOUND_GROUP_SFX);
+            CP_Sound_PlayAdvanced(buttonSound, CP_Sound_GetGroupVolume(CP_SOUND_GROUP_SFX), 2.0f, FALSE, CP_SOUND_GROUP_SFX);
             CP_Engine_SetNextGameStateForced(howToPlay1_Init, howToPlay1_Update, howToPlay1_Exit);
         }
 
         // ----------Credit Input----------
         if (IsAreaClicked(creditsWordWidth, creditsWordHeight, CP_Image_GetWidth(creditsWord), CP_Image_GetHeight(creditsWord), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
         {
-            CP_Sound_PlayAdvanced(buttonSound, 0.5f, 2.0f, FALSE, CP_SOUND_GROUP_SFX);
+            CP_Sound_PlayAdvanced(buttonSound, CP_Sound_GetGroupVolume(CP_SOUND_GROUP_SFX), 2.0f, FALSE, CP_SOUND_GROUP_SFX);
             CP_Engine_SetNextGameStateForced(credits1_Init, credits1_Update, credits1_Exit);
         }
 
         // ----------Settings Input----------
         if (IsAreaClicked(settingsWordWidth, settingsWordHeight, CP_Image_GetWidth(settingsWord), CP_Image_GetHeight(settingsWord), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
         {
-            CP_Sound_PlayAdvanced(buttonSound, 0.5f, 2.0f, FALSE, CP_SOUND_GROUP_SFX);
+            CP_Sound_PlayAdvanced(buttonSound, CP_Sound_GetGroupVolume(CP_SOUND_GROUP_SFX), 2.0f, FALSE, CP_SOUND_GROUP_SFX);
             CP_Engine_SetNextGameStateForced(settings_Init, settings_Update, settings_Exit);
         }
 
         // ----------Exit Button Input----------
         if (IsAreaClicked(exitWordWidth, exitWordHeight, CP_Image_GetWidth(exitWord), CP_Image_GetHeight(exitWord), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
         {
-            CP_Sound_PlayAdvanced(buttonSound, 0.5f, 2.0f, FALSE, CP_SOUND_GROUP_SFX);
+            CP_Sound_PlayAdvanced(buttonSound, CP_Sound_GetGroupVolume(CP_SOUND_GROUP_SFX), 2.0f, FALSE, CP_SOUND_GROUP_SFX);
             CP_Engine_Terminate();
         }
     }

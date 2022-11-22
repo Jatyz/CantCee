@@ -237,19 +237,19 @@ void checkClick(void (button1)(void), void(button2)(void), void (button3)(void))
 		// ----------Button 1---------------------------------------------any button with same size-------------------------------------------------------------------------------
 		if ((IsAreaClicked(gameCenterX, pMenuSelectlvlY, CP_Image_GetWidth(pMenuSelectLevelWord), CP_Image_GetHeight(pMenuSelectLevelWord), CP_Input_GetMouseX(), CP_Input_GetMouseY())&&gameState!=LOSE))
 		{
-			CP_Sound_PlayAdvanced(buttonSound, 0.5f, 2.0f, FALSE, CP_SOUND_GROUP_SFX);
+			CP_Sound_PlayAdvanced(buttonSound, CP_Sound_GetGroupVolume(CP_SOUND_GROUP_SFX), 2.0f, FALSE, CP_SOUND_GROUP_SFX);
 			button1();
 		}
 		// ----------Button 2---------------------------------------------any button with same size-------------------------------------------------------------------------------
 		if (IsAreaClicked(gameCenterX, pMenuRestartY, CP_Image_GetWidth(pMenuRestartWord), CP_Image_GetHeight(pMenuRestartWord), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
-			CP_Sound_PlayAdvanced(buttonSound, 0.5f, 2.0f, FALSE, CP_SOUND_GROUP_SFX);
+			CP_Sound_PlayAdvanced(buttonSound, CP_Sound_GetGroupVolume(CP_SOUND_GROUP_SFX), 2.0f, FALSE, CP_SOUND_GROUP_SFX);
 			button2();
 		}
 		// ----------Button 3---------------------------------------------any button with same size-------------------------------------------------------------------------------
 		if (IsAreaClicked(gameCenterX, pMenuRtoGameY, CP_Image_GetWidth(pMenuReturnToGame), CP_Image_GetHeight(pMenuReturnToGame), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
-			CP_Sound_PlayAdvanced(buttonSound, 0.5f, 2.0f, FALSE, CP_SOUND_GROUP_SFX);
+			CP_Sound_PlayAdvanced(buttonSound, CP_Sound_GetGroupVolume(CP_SOUND_GROUP_SFX), 2.0f, FALSE, CP_SOUND_GROUP_SFX);
 			button3();
 		}
 	}
