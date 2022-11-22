@@ -32,7 +32,7 @@ void drawPlayer(int tilesize) {
 	}
 
 	//draw player
-	CP_Graphics_DrawRect((player.x * tilesize) + (tilesize / 2) - player.width / 2, (player.y * tilesize) + (tilesize / 2) - player.height / 2, player.width, player.height);
+	CP_Graphics_DrawRect((player.x * tilesize) + (tilesize / 2.f) - player.width / 2.f, (player.y * tilesize) + (tilesize / 2.f) - player.height / 2.f, (float)player.width, (float)player.height);
 
 	//turn off outline
 	CP_Settings_NoStroke();
@@ -83,7 +83,7 @@ void playerSwitchCheck(void)
 			if (gates[i].Switch == &tiles[player.x][player.y]) {
 
 				//find the number of tiles between 0 0 and the tile at your current address
-				int difference = gates[i].Door - tiles;
+				int difference = (int)(gates[i].Door - *tiles);
 
 				//get column of 2d array
 				int col = difference / MAX_TILES;
@@ -305,8 +305,8 @@ void moveTileCheck() {
 
 	//change the state of the cell the mouse clicked on
 	//cannot put float in array, need to explicit convert to int
-	Width = x;
-	Height = y;
+	Width = (int)x;
+	Height = (int)y;
 
 
 	int direction = 0;
@@ -379,8 +379,8 @@ void lightTileCheck() {
 
 		//change the state of the cell the mouse clicked on
 		//cannot put float in array, need to explicit convert to int
-		Width = x;
-		Height = y;
+		Width = (int)x;
+		Height = (int)y;
 
 		//set tiles lit for 2 seconds
 		lightTiles(Width, Height, doorLightRange);

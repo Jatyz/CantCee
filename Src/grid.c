@@ -50,52 +50,50 @@ void drawTile(int tilesize) {
 	CP_Settings_ImageMode(CP_POSITION_CORNER);
 	//for loop to go through all the tiles
 	for (height = 0; height < Horizontal_Tile; height++) {
-
 		for (width = 0; width < Vertical_Tile; width++) {
 			//depending on the tile the image drawn is different.
 			switch (tiles[width][height].type) {
 			case WALL:
 				CP_Settings_Stroke(CP_Color_Create(125, 125, 125, 255)); //setting stroke color
-				CP_Image_Draw(wallTexture, width * tilesize, height * tilesize, tilesize, tilesize, 255);
+				CP_Image_Draw(wallTexture, (float)(width * tilesize), (float)(height * tilesize), (float)tilesize,(float) tilesize, 255);
 				break;
 			case FLOOR:		
-				CP_Image_Draw(floorTexture, width * tilesize, height * tilesize, tilesize, tilesize, 255);
+				CP_Image_Draw(floorTexture, (float)(width * tilesize), (float)(height * tilesize), (float)tilesize, (float)tilesize, 255);
 				break;
 			case START:
-				CP_Image_Draw(startPlatform, width * tilesize, height * tilesize, tilesize, tilesize, 255);
+				CP_Image_Draw(startPlatform, (float)(width * tilesize), (float)(height * tilesize), (float)tilesize, (float)tilesize, 255);
 				break;
 			case END:
-				CP_Image_Draw(endPlatform, width * tilesize, height * tilesize, tilesize, tilesize, 255);
+				CP_Image_Draw(endPlatform, (float)(width * tilesize), (float)(height * tilesize), (float)tilesize, (float)tilesize, 255);
 				break;
 			case DISGUISE:
 				switch (tiles[width][height].Tile_Color)
 				{
 				case RED:
-					CP_Image_Draw(disguiseRed, width * tilesize, height * tilesize, tilesize, tilesize, 255);						
+					CP_Image_Draw(disguiseRed, (float)(width * tilesize), (float)(height * tilesize), (float)tilesize, (float)tilesize, 255);
 					break;
 				case GREEN:
-					CP_Image_Draw(disguiseYellow, width * tilesize, height * tilesize, tilesize, tilesize, 255);
+					CP_Image_Draw(disguiseYellow, (float)(width * tilesize), (float)(height * tilesize), (float)tilesize, (float)tilesize, 255);
 					break;
 				case BLUE:
-					CP_Image_Draw(disguiseBlue, width * tilesize, height * tilesize, tilesize, tilesize, 255);
+					CP_Image_Draw(disguiseBlue, (float)(width * tilesize), (float)(height * tilesize), (float)tilesize, (float)tilesize, 255);
 					break;
 				}		
 				break;
 			case VENTS:
-				CP_Image_Draw(closedVent, width * tilesize, height * tilesize, tilesize, tilesize, 255);
+				CP_Image_Draw(closedVent, (float)(width * tilesize), (float)(height * tilesize), (float)tilesize, (float)tilesize, 255);
 				break;
 			case CLOSED_DOOR:
-				CP_Image_Draw(closedDoor, width * tilesize, height * tilesize, tilesize, tilesize, 255);
+				CP_Image_Draw(closedDoor, (float)(width * tilesize), (float)(height * tilesize), (float)tilesize, (float)tilesize, 255);
 				break;
 			case OPENED_DOOR:
-				CP_Image_Draw(openedDoor, width * tilesize, height * tilesize, tilesize, tilesize, 255);
+				CP_Image_Draw(openedDoor, (float)(width * tilesize), (float)(height * tilesize), (float)tilesize, (float)tilesize, 255);
 				break;
 			case SWITCH_OFF:
-				CP_Image_Draw(switchOff, width * tilesize, height * tilesize, tilesize, tilesize, 255);
+				CP_Image_Draw(switchOff, (float)(width * tilesize), (float)(height * tilesize), (float)tilesize, (float)tilesize, 255);
 				break;
 			case SWITCH_ON:
-				CP_Image_Draw(switchOn, width * tilesize, height * tilesize, tilesize, tilesize, 255);
-
+				CP_Image_Draw(switchOn, (float)(width * tilesize), (float)(height * tilesize), (float)tilesize, (float)tilesize, 255);
 				break;
 			}
 
@@ -166,10 +164,10 @@ void checkVents(Tile *address) {
 		if (vents[i].tile1 == address) {
 			
 			//get the address of tile at 0 0
-			Tile* base = tiles;
+			Tile* base = *tiles;
 
 			//find the number of tiles between 0 0 and the tile at your current address
-			int difference = vents[i].tile2 - base;
+			int difference = (int)(vents[i].tile2 - base);
 
 			//get column of 2d array
 			int col = difference / MAX_TILES;
@@ -191,10 +189,10 @@ void checkVents(Tile *address) {
 		if (vents[i].tile2 == address) {
 
 			//get the address of tile at 0 0
-			Tile* base = tiles;
+			Tile* base = *tiles;
 
 			//find the number of tiles between 0 0 and the tile at your current address
-			int difference = vents[i].tile1 - base;
+			int difference = (int)(vents[i].tile1 - base);
 
 			//get column of 2d array
 			int col = difference / MAX_TILES;
@@ -241,7 +239,7 @@ void resetGates() {
 void checkGates(Tile* address) {
 
 	//get the address of tile at 0 0
-	Tile* base = tiles;
+	Tile* base = *tiles;
 
 	//toggle open or close all associated doors
 	for (int i = 0; i < sizeof(gates) / sizeof(gates[0]); i++) {
@@ -258,7 +256,7 @@ void checkGates(Tile* address) {
 	}
 
 	//to change the switch
-	int difference = address - base;
+	int difference = (int)(address - base);
 
 	//get column of 2d array
 	int col = difference / MAX_TILES;
