@@ -1,4 +1,18 @@
 #pragma once
+//---------------------------------------------------------
+// file:	levelTransition.h
+// author:	Tan Poh Heng
+// email:	t.pohheng@digipen.edu
+//
+// brief:	Contains function declarations related to level transition animations
+//			for use in level scripts. animations are rendered independent of level renders
+//
+// documentation link:
+// https://github.com/DigiPen-Faculty/CProcessing/wiki
+//
+// Copyright © 2022 DigiPen, All rights reserved.
+//---------------------------------------------------------
+
 
 #ifndef TRANSITION_IMAGE_PATH
 #define TRANSITION_IMAGE_PATH "./Assets/LevelTransitionSprite.png"

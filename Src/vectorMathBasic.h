@@ -1,4 +1,18 @@
 #pragma once
+//---------------------------------------------------------
+// file:	vectorMathBasic.h
+// author:	Tan Poh Heng
+// email:	t.pohheng@digipen.edu
+//
+// brief:	Contains declaration functions pertaining to Vectors and Angles calculation in 
+//			2D to be used outside vectorMathBasic.c
+//
+// documentation link:
+// https://github.com/DigiPen-Faculty/CProcessing/wiki
+//
+// Copyright © 2022 DigiPen, All rights reserved.
+//---------------------------------------------------------
+
 
 //returns the distance of a vector
 double distanceOfVectorR2(

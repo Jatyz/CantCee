@@ -1,3 +1,16 @@
+//---------------------------------------------------------
+// file:	vectorMathBasic.c
+// author:	Tan Poh Heng
+// email:	t.pohheng@digipen.edu
+//
+// brief:	Contains functions pertaining to Vectors and Angles calculation in 2D 
+//
+// documentation link:
+// https://github.com/DigiPen-Faculty/CProcessing/wiki
+//
+// Copyright © 2022 DigiPen, All rights reserved.
+//---------------------------------------------------------
+
 #define _USE_MATH_DEFINES	//allows use of M_PI to represent pi = 3.141592654...
 
 #include <math.h>

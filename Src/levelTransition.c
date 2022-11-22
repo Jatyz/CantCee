@@ -1,3 +1,16 @@
+//---------------------------------------------------------
+// file:	levelTransition.c
+// author:	Tan Poh Heng
+// email:	t.pohheng@digipen.edu
+//
+// brief:	Contains functions related to level transition animations
+//
+// documentation link:
+// https://github.com/DigiPen-Faculty/CProcessing/wiki
+//
+// Copyright © 2022 DigiPen, All rights reserved.
+//---------------------------------------------------------
+
 #include "cprocessing.h"
 #include "levelTransition.h"
 #define ANIMATION_LENGTH .75	//length of the animation, in seconds
