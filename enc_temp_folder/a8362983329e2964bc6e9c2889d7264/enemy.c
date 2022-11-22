@@ -803,7 +803,7 @@ void enemyFOV(int tileSize)
 					//checks if player is on top of enemy
 					if (player.x == width && player.y == height)
 					{
-						CP_Sound_PlayAdvanced(loseSound, CP_Sound_GetGroupVolume(CP_SOUND_GROUP_SFX), 2.0f, FALSE, CP_SOUND_GROUP_SFX);
+						CP_Sound_PlayAdvanced(loseSound, 0.5f, 2.0f, FALSE, CP_SOUND_GROUP_SFX);
 						gameState = LOSE;
 
 					}
@@ -817,7 +817,7 @@ void enemyFOV(int tileSize)
 							{
 								if (player.Player_Color != enemies[width][height].Color)
 								{
-									CP_Sound_PlayAdvanced(loseSound, CP_Sound_GetGroupVolume(CP_SOUND_GROUP_SFX), 2.0f, FALSE, CP_SOUND_GROUP_SFX);
+									CP_Sound_PlayAdvanced(loseSound, 0.5f, 2.0f, FALSE, CP_SOUND_GROUP_SFX);
 									gameState = LOSE;
 								}
 							}
@@ -830,7 +830,7 @@ void enemyFOV(int tileSize)
 							{
 								if (player.Player_Color != enemies[width][height].Color)
 								{
-									CP_Sound_PlayAdvanced(loseSound, CP_Sound_GetGroupVolume(CP_SOUND_GROUP_SFX), 2.0f, FALSE, CP_SOUND_GROUP_SFX);
+									CP_Sound_PlayAdvanced(loseSound, 0.5f, 2.0f, FALSE, CP_SOUND_GROUP_SFX);
 									gameState = LOSE;
 								}
 							}
@@ -846,7 +846,7 @@ void enemyFOV(int tileSize)
 							{
 								if (player.Player_Color != enemies[width][height].Color)
 								{
-									CP_Sound_PlayAdvanced(loseSound, CP_Sound_GetGroupVolume(CP_SOUND_GROUP_SFX), 2.0f, FALSE, CP_SOUND_GROUP_SFX);
+									CP_Sound_PlayAdvanced(loseSound, 0.5f, 2.0f, FALSE, CP_SOUND_GROUP_SFX);
 									gameState = LOSE;
 								}
 							}
@@ -858,7 +858,7 @@ void enemyFOV(int tileSize)
 							{
 								if (player.Player_Color != enemies[width][height].Color)
 								{
-									CP_Sound_PlayAdvanced(loseSound, CP_Sound_GetGroupVolume(CP_SOUND_GROUP_SFX), 2.0f, FALSE, CP_SOUND_GROUP_SFX);
+									CP_Sound_PlayAdvanced(loseSound, 0.5f, 2.0f, FALSE, CP_SOUND_GROUP_SFX);
 									gameState = LOSE;
 								}
 							}
@@ -872,14 +872,14 @@ void enemyFOV(int tileSize)
 					//checks if player has entered enemy's FOV
 					if (player.x == width && player.y == height)
 					{
-						CP_Sound_PlayAdvanced(loseSound, CP_Sound_GetGroupVolume(CP_SOUND_GROUP_SFX), 2.0f, FALSE, CP_SOUND_GROUP_SFX);
+						CP_Sound_PlayAdvanced(loseSound, 0.5f, 2.0f, FALSE, CP_SOUND_GROUP_SFX);
 						gameState = LOSE;
 					}
 					else if (enemyBounds(0, 0, width, height, enemies[width][height].range, enemies[width][height].difficulty) == 1)
 					{
 						if (player.Player_Color != enemies[width][height].Color)
 						{
-							CP_Sound_PlayAdvanced(loseSound, CP_Sound_GetGroupVolume(CP_SOUND_GROUP_SFX), 2.0f, FALSE, CP_SOUND_GROUP_SFX);
+							CP_Sound_PlayAdvanced(loseSound, 0.5f, 2.0f, FALSE, CP_SOUND_GROUP_SFX);
 							gameState = LOSE;
 						}
 					}

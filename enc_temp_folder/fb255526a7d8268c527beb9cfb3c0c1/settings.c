@@ -263,12 +263,8 @@ void handleSliderInteraction(void)
 	{
 		if (volumeSliders[sliderCurrentlyAdjusted].soundGroup == CP_SOUND_GROUP_MAX)	//special case for master volume
 		{
-			handleVolumeMaster(convertSliderValueToVolume(CP_Input_GetMouseX()));	//update master volume		
-			CP_Sound_PlayAdvanced(settingButtonSound,
-			CP_Sound_GetGroupVolume(volumeSliders[sliderCurrentlyAdjusted].soundGroup),
-				2.0f,
-				FALSE,
-				volumeSliders[sliderCurrentlyAdjusted].soundGroup);
+			handleVolumeMaster(convertSliderValueToVolume(CP_Input_GetMouseX()));	//update master volume
+			CP_Sound_PlayAdvanced(settingButtonSound, CP_Sound_GetGroupVolume(CP_SOUND_GROUP_SFX), 2.0f, FALSE, CP_SOUND_GROUP_SFX);
 			sliderCurrentlyAdjusted = -1;	//set to not adjusting the slider before returning
 			return;
 		}
@@ -294,11 +290,7 @@ void handleSliderInteraction(void)
 			volumeSliders[sliderCurrentlyAdjusted].currentVolume = volumeSliders[VOLMASTER].currentVolume;
 		}
 		sliderCurrentlyAdjusted = -1;	//set to not adjusting the slider before returning
-		CP_Sound_PlayAdvanced(settingButtonSound,
-			CP_Sound_GetGroupVolume(volumeSliders[sliderCurrentlyAdjusted].soundGroup),
-			2.0f,
-			FALSE,
-			volumeSliders[sliderCurrentlyAdjusted].soundGroup);
+		CP_Sound_PlayAdvanced(settingButtonSound, CP_Sound_GetGroupVolume(CP_SOUND_GROUP_SFX), 2.0f, FALSE, CP_SOUND_GROUP_SFX);
 	}
 }
 

@@ -72,7 +72,7 @@ void howToPlay1_Update()
         // next page
         if (IsAreaClicked(htp1NPX, htp1NPY, CP_Image_GetWidth(howToPlay1NextPage), CP_Image_GetHeight(howToPlay1NextPage), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
         {
-            CP_Sound_PlayAdvanced(buttonSound, CP_Sound_GetGroupVolume(CP_SOUND_GROUP_SFX), 2.0f, FALSE, CP_SOUND_GROUP_SFX);
+            CP_Sound_PlayAdvanced(buttonSound, 0.5f, 2.0f, FALSE, CP_SOUND_GROUP_SFX);
             if(!swap)
             {
             swap = !swap;
@@ -84,7 +84,7 @@ void howToPlay1_Update()
         }
         if (IsAreaClicked(htp1BTMMx, htp1BTMMy, CP_Image_GetWidth(howToPlay1NextPage), CP_Image_GetHeight(howToPlay1NextPage), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
         {
-            CP_Sound_PlayAdvanced(buttonSound, CP_Sound_GetGroupVolume(CP_SOUND_GROUP_SFX), 2.0f, FALSE, CP_SOUND_GROUP_SFX);
+            CP_Sound_PlayAdvanced(buttonSound, 0.5f, 2.0f, FALSE, CP_SOUND_GROUP_SFX);
             if (swap)
             {
                 swap = !swap;
