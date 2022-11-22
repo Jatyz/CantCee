@@ -219,7 +219,7 @@ void drawSmallPanel(int panelWidth, int panelHeight, int x, int y, char text[]) 
 	CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
 
 	//draw text in panel
-	CP_Settings_TextSize(30.f)
+	CP_Settings_TextSize(30.f);
 	CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
 	CP_Font_DrawTextBox(text, (float)x, y + 20.f, (float)panelWidth);
 
