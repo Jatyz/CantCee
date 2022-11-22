@@ -1,10 +1,17 @@
-/*!
-Author: Tan Poh Heng (t.pohheng@digipen.edu)
-Section:CSD1401-b
-File:	FOV.c
-@brief: Contains functions pertaining to FOV functions such as setting gobal illumination, setting player's FOV in either a radius around the 
-player, in a cone or in a rectangle
-*/
+//---------------------------------------------------------
+// file:	FOV.c
+// author:	Tan Poh Heng
+// email:	t.pohheng@digipen.edu
+//
+// brief:	Contains all functions pertaining to FOV functions such as setting gobal illumination, 
+//			setting player's FOV in either a radius around a grid position, in a cone or in a rectangle. 
+//
+// documentation link:
+// https://github.com/DigiPen-Faculty/CProcessing/wiki
+//
+// Copyright © 2022 DigiPen, All rights reserved.
+//---------------------------------------------------------
+
 #include "cprocessing.h"
 #include "grid.h"
 #include "game.h"
@@ -17,7 +24,7 @@ player, in a cone or in a rectangle
 //fog grid of same size as base game to draw over the render layers as FOV, is 1 when FOV is blocked, 0 when FOV not blocked
 int fog[FOG_MAX_X][FOG_MAX_Y];		
 
-int isTrailsActive = 0;
+int isTrailsActive = 0;		//global variable for setting if trails(easy mode) is enabled
 
 //anonymus enums for easy settingand tracking of fog levels
 enum FogDensity {

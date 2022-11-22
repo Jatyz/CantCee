@@ -1,3 +1,16 @@
+//---------------------------------------------------------
+// file:	settings.c
+// author:	Tan Poh Heng(button and slider logic), Ong You Yang(sprites implementation)
+// email:	t.pohheng@digipen.edu ,youyang.o@digipen.edu
+//
+// brief:	Contains function related to logics and rendering of the settings scene
+//
+// documentation link:
+// https://github.com/DigiPen-Faculty/CProcessing/wiki
+//
+// Copyright © 2022 DigiPen, All rights reserved.
+//---------------------------------------------------------
+
 #include "cprocessing.h"
 #include "utils.h"
 #include <math.h>
