@@ -1,16 +1,34 @@
+//---------------------------------------------------------
+// file:	grid.h
+// author:	Jarran Tan Yan Zhi
+// email:	jarranyanzhi.tan@digipen.edu
+//
+// sub author: Ong You Yang (youyang.o@digipen.edu)
+// worked on all image related code
+// 
+// 
+// brief:	holds all of the definition of the grid functions.
+//			
+//
+// documentation link:
+// https://github.com/DigiPen-Faculty/CProcessing/wiki
+//
+// Copyright © 2022 DigiPen, All rights reserved.
+//---------------------------------------------------------
 #pragma once
 #include "cprocessing.h"
 #include "player.h"
+
 //Window size is 800 x 1000
-//Actual game window is 800 by 800
+//Actual game grid is 800 by 800
 #define WINIDOW_HEIGHT 800
 #define WINDOW_WIDTH 1000  
 
+//max number of tiles possible at once.
 #define MAX_TILES 800
+
 typedef enum { // enum for the different type of tiles
 	WALL, FLOOR, START, END, DISGUISE, CLOSED_DOOR, OPENED_DOOR, SWITCH_ON, SWITCH_OFF, VENTS
-	//switch off means closed door
-	//switch on means open door
 }Tile_Type;
 
 typedef struct { // method to contain information of the current tile
@@ -19,8 +37,8 @@ typedef struct { // method to contain information of the current tile
 }Tile;
 
 typedef struct {
-	Tile *tile1;
-	Tile *tile2;
+	Tile* tile1;
+	Tile* tile2;
 }Vent;
 
 typedef struct {
@@ -31,14 +49,11 @@ typedef struct {
 //method to take tile size and draw tiles based on the tiles global variable
 void drawTile(int Tile_Size);
 
-//method to assign all values in tiles to wall.
-//and then assign all values within tile size to floor
+//method to reset tile to initial state based on tile_size, which is within tile area its floors, anywhere else it is walls.
 void resetTile(int Tile_Size);
 
 
-//global tiles variable
-// 1000 1000 is just placeholder values so we can have a large tile map
-//but specific sstage tile map will need to be set by tile size.
+//global variables
 extern Tile tiles[MAX_TILES][MAX_TILES];
 
 extern Vent vents[15];
@@ -66,7 +81,7 @@ int returnBounds(int tilesize);
 //set vents based on assigned
 void setVents();
 
-//reset to null
+//reset to vents null
 void resetVents();
 
 //check if the vents was walked on
@@ -75,10 +90,11 @@ void checkVents(Tile *address);
 //set gates and switch based on assigned
 void setGates();
 
-//reset to null
+//reset to gates to null
 void resetGates();
 
 //check if a switch was walked on
 void checkGates(Tile* address);
 
+//free grid image tiles
 void freeGridImages(void);

@@ -129,7 +129,7 @@ void handlePlayerInput(int tilesize) {
 			drawPlayer(Tile_Size);
 			
 			//check if player getting light
-			giveLight();
+			giveShine();
 			
 			//set direction player is facing to up
 			player.direction = 0; 
@@ -147,7 +147,7 @@ void handlePlayerInput(int tilesize) {
 			drawPlayer(Tile_Size);
 			
 			//check if player getting light
-			giveLight();
+			giveShine();
 			
 			//set direction player is facing to right
 			player.direction = 1;		
@@ -166,7 +166,7 @@ void handlePlayerInput(int tilesize) {
 			drawPlayer(Tile_Size);
 			
 			//check if player has moved 50 steps
-			giveLight();
+			giveShine();
 			
 			//set direction player is facing to down
 			player.direction = 2;		
@@ -186,7 +186,7 @@ void handlePlayerInput(int tilesize) {
 				drawPlayer(Tile_Size);
 				
 				//check if player getting light
-				giveLight();
+				giveShine();
 
 				//set direction player is facing to left
 				player.direction = 3;	
@@ -329,9 +329,9 @@ void moveTileCheck() {
 			//dont let player update anything
 			player.y += direction * checkMove(0, direction);
 			//check if counter hit a factor of 50
-			giveLight();
+			giveShine();
 			//check if player walked into enemy fov
-			enemyFOV(Tile_Size);
+			enemyFOV((float)Tile_Size);
 			//if player vented stop moving
 			if (player.isTP) {
 				player.isTP = 0;
@@ -355,9 +355,9 @@ void moveTileCheck() {
 			//dont update anything else
 			player.x += direction * checkMove(direction, 0);
 			//check if moved by factor of 50
-			giveLight();
+			giveShine();
 			//check if walked into enemy fov
-			enemyFOV(Tile_Size);
+			enemyFOV((float)Tile_Size);
 			//check if player walked into a vent, if so stop moving
 			if (player.isTP) {
 				player.isTP = 0;
@@ -391,7 +391,7 @@ void lightTileCheck() {
 	}
 }
 
-void giveLight() {
+void giveShine() {
 	//every 50 steps give player a shine
 	if (player.counter % 50 == 0) {
 		player.shineCount++;

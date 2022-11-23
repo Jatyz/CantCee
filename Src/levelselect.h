@@ -1,6 +1,20 @@
+//---------------------------------------------------------
+// file:	levelselect.h
+// author:	Jarran Tan Yan Zhi
+// email:	jarranyanzhi.tan@digipen.edu
+//
+// brief:	Levelselect header that holds all stage running functions
+//			
+//
+// documentation link:
+// https://github.com/DigiPen-Faculty/CProcessing/wiki
+//
+// Copyright © 2022 DigiPen, All rights reserved.
+//---------------------------------------------------------
 #pragma once
 
-//to hold all functions for function pointer to start each level.
+
+//definition for all the functions to start each level.
 
 void startLevel1(void);
 void startLevel2(void);

@@ -1,3 +1,19 @@
+//---------------------------------------------------------
+// file:	panels.c
+// author:	Jarran Tan Yan Zhi
+// email:	jarranyanzhi.tan@digipen.edu
+//
+// brief:	All the declaration of pause win lose and side panel functions
+//			
+// sub author: Ong You Yang (youyang.o@digipen.edu)
+// worked on all image related code
+// 
+// documentation link:
+// https://github.com/DigiPen-Faculty/CProcessing/wiki
+//
+// Copyright © 2022 DigiPen, All rights reserved.
+//---------------------------------------------------------
+
 #include "cprocessing.h"
 #include "grid.h"
 #include "game.h"
