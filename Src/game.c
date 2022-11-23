@@ -180,9 +180,10 @@ void renderGame(void) {
 	//draw player based on tile size
 	drawPlayer(Tile_Size);
 	//draw enemy based on tile size
-	drawEnemy(Tile_Size);
+	drawEnemy((float)Tile_Size);
 	//draw enemy fov based on tile size
-	enemyFOV(Tile_Size);
+	enemyFOV((float)Tile_Size);
+	enemyFOV((float)Tile_Size);
 	//if not in illum mode, if not on switch, if light counter not greater than 0
 	if (!player.onSwitch && !(illumMode || lightCounter > 0)) {
 		//update fog state

@@ -779,7 +779,7 @@ void play_Exit()
 	CP_Image_Free(&hoverLvl13Word);
 	CP_Image_Free(&hoverLvl14Word);
 	
-	CP_Sound_Free(buttonSound);
+	CP_Sound_Free(&buttonSound);
 
 	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 	CP_Settings_RectMode(CP_POSITION_CORNER);

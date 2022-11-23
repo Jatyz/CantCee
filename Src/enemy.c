@@ -420,10 +420,11 @@ int enemyBounds(int xdir, int ydir, int enemyXPos, int enemyYPos, int range, int
 		}
 		break;
 	}
+	return 0;
 }
 
 //handles the drawing of the enemy FOV
-void drawBounds(int xdir, int ydir, int enemyXPos, int enemyYPos, int range, int tileSize, int difficulty)
+void drawBounds(int xdir, int ydir, int enemyXPos, int enemyYPos, int range, float tileSize, int difficulty)
 {
 	switch (enemies[enemyXPos][enemyYPos].type)
 	{
@@ -666,7 +667,7 @@ void drawBounds(int xdir, int ydir, int enemyXPos, int enemyYPos, int range, int
 								else
 								{
 									enemyFOVColorSet(enemyXPos, enemyYPos);
-									CP_Graphics_DrawCircle((xPos + 0.5) * tileSize, (yPos + 0.5) * tileSize, tileSize);
+									CP_Graphics_DrawCircle((float)(xPos + 0.5) * tileSize, (float)(yPos + 0.5) * tileSize, tileSize);
 									CP_Settings_NoStroke();
 								}
 							}
@@ -742,10 +743,10 @@ void drawBounds(int xdir, int ydir, int enemyXPos, int enemyYPos, int range, int
 }
 
 //draws all the enemies on the level
-void drawEnemy(int tileSize)
+void drawEnemy(float tileSize)
 {
 	//getting array bounds
-	int Horizontal_Tile = returnBounds(tileSize);
+	int Horizontal_Tile = returnBounds((int)tileSize);
 	int Vertical_Tile = Horizontal_Tile;
 	int height, width;
 
@@ -785,9 +786,9 @@ void drawEnemy(int tileSize)
 }
 
 //handles the general FOV logic
-void enemyFOV(int tileSize)
+void enemyFOV(float tileSize)
 {
-	int Horizontal_Tile = returnBounds(tileSize);
+	int Horizontal_Tile = returnBounds((int)tileSize);
 	int Vertical_Tile = Horizontal_Tile;
 	int height, width;
 
@@ -891,9 +892,9 @@ void enemyFOV(int tileSize)
 }
 
 //resets the enemeis on level clear
-void enemyReset(int tileSize)
+void enemyReset(float tileSize)
 {
-	int Horizontal_Tile = returnBounds(tileSize);
+	int Horizontal_Tile = returnBounds((int)tileSize);
 	int Vertical_Tile = Horizontal_Tile;
 	int height, width;
 

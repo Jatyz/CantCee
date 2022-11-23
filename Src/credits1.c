@@ -58,5 +58,5 @@ void credits1_Exit()
     CP_Image_Free(&credits1);
     CP_Image_Free(&credits1BackToMainMenu);
     CP_Image_Free(&credits1NextPage);
-    CP_Sound_Free(buttonSound);
+    CP_Sound_Free(&buttonSound);
 }

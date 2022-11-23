@@ -200,5 +200,5 @@ void mainMenu_Exit()
 
     CP_Image_Free(&hoverStartWord);
 
-    CP_Sound_Free(buttonSound);
+    CP_Sound_Free(&buttonSound);
 }

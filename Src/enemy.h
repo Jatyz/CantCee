@@ -41,7 +41,7 @@ typedef struct
 
 extern Enemy enemies[MAX_TILES][MAX_TILES];//---------------------------------------------------Used externally to determine the enemy's [x] and [y] position
 
-void drawEnemy(int tileSize);//-----------------------------------------------------------------Draws all the enemies on the level
-void enemyFOV(int tileSize);//------------------------------------------------------------------Handles the general FOV logic
-void enemyReset(int tileSize);//----------------------------------------------------------------Resets the enemeis on level clear
+void drawEnemy(float tileSize);//-----------------------------------------------------------------Draws all the enemies on the level
+void enemyFOV(float tileSize);//------------------------------------------------------------------Handles the general FOV logic
+void enemyReset(float tileSize);//----------------------------------------------------------------Resets the enemeis on level clear
 void enemySet(int width, int height, int difficulty, int range, EnemyType type, Color Color);//-Catch-all function to make it easier to load all enemy stats and parameters

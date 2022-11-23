@@ -114,7 +114,7 @@ void howToPlay1_Exit()
     CP_Image_Free(&HTPBackground);
     CP_Image_Free(&gradientAccentBackground3);
 
-    CP_Sound_Free(buttonSound);
+    CP_Sound_Free(&buttonSound);
 
  
 }
