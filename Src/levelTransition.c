@@ -1,3 +1,16 @@
+//---------------------------------------------------------
+// file:	levelTransition.c
+// author:	Tan Poh Heng
+// email:	t.pohheng@digipen.edu
+//
+// brief:	Contains functions related to level transition animations
+//
+// documentation link:
+// https://github.com/DigiPen-Faculty/CProcessing/wiki
+//
+// Copyright © 2022 DigiPen, All rights reserved.
+//---------------------------------------------------------
+
 #include "cprocessing.h"
 #include "levelTransition.h"
 #define ANIMATION_LENGTH .75	//length of the animation, in seconds
@@ -29,8 +42,8 @@ void setSpriteExtended(void)
 	CP_Settings_Fill(CP_Color_Create(50, 50, 50, 255));
 
 	CP_Graphics_DrawRect
-	(imageXpos + TRANSITION_IMAGE_WIDTH - 10, 0,
-		CP_System_GetWindowWidth() - (imageXpos - TRANSITION_IMAGE_WIDTH), CP_System_GetWindowHeight());
+	((float)imageXpos + (float)(TRANSITION_IMAGE_WIDTH - 10), 0,
+		(float)CP_System_GetWindowWidth() - (float)(imageXpos - (float)TRANSITION_IMAGE_WIDTH), (float)CP_System_GetWindowHeight());
 }
 
 //set the animation to start at outside screen
@@ -76,14 +89,14 @@ int initLevelTransition()
 
 	//renders a rect to follow the sprite out of the screen
 	CP_Graphics_DrawRect
-	(imageXpos + TRANSITION_IMAGE_WIDTH-10, 0,
-		CP_System_GetWindowWidth() - (imageXpos - TRANSITION_IMAGE_WIDTH), CP_System_GetWindowHeight());
+	((float)imageXpos + (float)(TRANSITION_IMAGE_WIDTH-10), 0,
+		(float)CP_System_GetWindowWidth() - (float)(imageXpos - TRANSITION_IMAGE_WIDTH), (float)CP_System_GetWindowHeight());
 
 	//draw sprite at new location
 	int a = CP_Image_GetWidth(lvlTransitImage);
 	CP_Image_DrawAdvanced(
 		lvlTransitImage,
-		imageXpos,
+		(float)imageXpos,
 		0,
 		TRANSITION_IMAGE_WIDTH,
 		TRANSITION_IMAGE_HEIGHT,
@@ -112,12 +125,12 @@ int exitLevelTransition(int isAnimationComplete)
 
 	//renders a rect to follow the sprite to cover the screen
 	CP_Graphics_DrawRect
-	(0, 0, imageXpos+10, CP_System_GetWindowHeight());
+	(0, 0, (float)imageXpos+10.0f, (float)CP_System_GetWindowHeight());
 
 	//draw sprite at new location
 	CP_Image_Draw(
 		lvlTransitImage,
-		imageXpos,
+		(float)imageXpos,
 		0,
 		TRANSITION_IMAGE_WIDTH,
 		TRANSITION_IMAGE_HEIGHT,

@@ -1,3 +1,16 @@
+//---------------------------------------------------------
+// file:	settings.h
+// author:	Tan Poh Heng(button and slider logic), Ong You Yang(sprites implementation)
+// email:	t.pohheng@digipen.edu ,youyang.o@digipen.edu
+//
+// brief:	Contains function declarations related settings options
+//
+// documentation link:
+// https://github.com/DigiPen-Faculty/CProcessing/wiki
+//
+// Copyright © 2022 DigiPen, All rights reserved.
+//---------------------------------------------------------
+
 
 // ---------------------------------------------------------------settings Headers---------------------------------------------------------------
 void settings_Init(void);

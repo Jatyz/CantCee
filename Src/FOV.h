@@ -1,4 +1,17 @@
 #pragma once
+//---------------------------------------------------------
+// file:	FOV.h
+// author:	Tan Poh Heng
+// email:	t.pohheng@digipen.edu
+//
+// brief:	Function declaration for FOV render logics and rendering functions for use outside FOV.c
+//			
+//
+// documentation link:
+// https://github.com/DigiPen-Faculty/CProcessing/wiki
+//
+// Copyright © 2022 DigiPen, All rights reserved.
+//---------------------------------------------------------
 
 extern int isTrailsActive;
 
