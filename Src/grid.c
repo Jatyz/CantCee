@@ -2,11 +2,11 @@
 // file:	grid.c
 // author:	Jarran Tan Yan Zhi
 // email:	jarranyanzhi.tan@digipen.edu
+// 
+// co-author:	Ong You Yang
+// email:		youyang.o@digipen.edu
 //
-// brief:	All the declaration of grid functions
-//			
-// sub author: Ong You Yang (youyang.o@digipen.edu)
-// worked on all image related code
+// brief: All the declaration of grid functions
 // 
 // documentation link:
 // https://github.com/DigiPen-Faculty/CProcessing/wiki

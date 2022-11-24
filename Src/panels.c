@@ -2,18 +2,16 @@
 // file:	panels.c
 // author:	Jarran Tan Yan Zhi
 // email:	jarranyanzhi.tan@digipen.edu
+// co-author:	Ong You Yang
+// email:		youyang.o@digipen.edu
 //
 // brief:	All the declaration of pause win lose and side panel functions
 //			
-// sub author: Ong You Yang (youyang.o@digipen.edu)
-// worked on all image related code
-// 
 // documentation link:
 // https://github.com/DigiPen-Faculty/CProcessing/wiki
 //
 // Copyright © 2022 DigiPen, All rights reserved.
 //---------------------------------------------------------
-
 #include "cprocessing.h"
 #include "grid.h"
 #include "game.h"
@@ -24,11 +22,12 @@
 #include <stdlib.h>
 #include "panels.h"
 
+	/*------------------------------------------------------------ Storing Loaded Image in Variable ------------------------------------------------------------*/
 CP_Image pauseBackground = NULL;
 
 CP_Image pMenuHover = NULL;
 
-// Pause Menu
+// --------------- Pause Menu ---------------
 CP_Image pauseMenuBackground = NULL;
 CP_Image pauseMenuTitle = NULL;
 
@@ -40,8 +39,9 @@ CP_Image pMenuSelectLevelWordHover = NULL;
 CP_Image pMenuRestartWordHover = NULL;
 CP_Image pMenuReturnToGameHover = NULL;
 
-// Lose Menu
-//CP_Image loseMenuBackground = NULL;
+CP_Image pauseGradient = NULL;
+
+// --------------- Lose Menu ---------------
 CP_Image loseMenuTitle = NULL;
 
 CP_Image lMenuRestartWord = NULL;
@@ -50,7 +50,7 @@ CP_Image lMenuSelectLevel = NULL;
 CP_Image lMenuRestartWordHover = NULL;
 CP_Image lMenuSelectLevelHover = NULL;
 
-// Victory Menu
+// --------------- Victory Menu ---------------
 CP_Image victoryMenuTitle = NULL;
 
 CP_Image vNextLvlWord = NULL;
@@ -61,18 +61,16 @@ CP_Image vNextLvlWordHover = NULL;
 CP_Image vMenuRestartWordHover = NULL;
 CP_Image vMenuSelectLevelWordHover = NULL;
 
-CP_Image pauseGradient = NULL;
-
 //draws a full button that covers the screen,and there is a small panel with buttons depending on the state the button that shows up are different and does different things.
 void drawFullPanel(void) {
 	buttonSound = CP_Sound_Load("./Assets/Sounds/Button Sound.mp3");
 	CP_Settings_NoStroke();
 
-
+	/*------------------------------------------------------------ Loading File Path of Image File ------------------------------------------------------------*/
 	pauseBackground = CP_Image_Load("./Assets/pauseBackground.png");
 	pMenuHover = CP_Image_Load("./Assets/pMenuHover.png");
 
-	// Pause Menu
+	// --------------- Pause Menu ---------------
 	pauseMenuBackground = CP_Image_Load("./Assets/pauseMenuBackground.png");
 	pauseMenuTitle = CP_Image_Load("./Assets/pauseMenuTitle.png");
 
@@ -84,8 +82,7 @@ void drawFullPanel(void) {
 	pMenuRestartWordHover = CP_Image_Load("./Assets/pMenuRestartWordHover.png");
 	pMenuReturnToGameHover = CP_Image_Load("./Assets/pMenuReturnToGameHover.png");
 
-	// Lose Menu
-	//loseMenuBackground = CP_Image_Load("./Assets/loseMenuBackground.png");
+	// --------------- Lose Menu ---------------
 	loseMenuTitle = CP_Image_Load("./Assets/loseMenuTitle.png");
 
 	lMenuRestartWord = CP_Image_Load("./Assets/lMenuRestartWord.png");
@@ -94,7 +91,7 @@ void drawFullPanel(void) {
 	lMenuRestartWordHover = CP_Image_Load("./Assets/lMenuRestartWordHover.png");
 	lMenuSelectLevelHover = CP_Image_Load("./Assets/lMenuSelectLevelHover.png");
 
-	// Victory Menu
+	// --------------- Victory Menu ---------------
 	victoryMenuTitle = CP_Image_Load("./Assets/victoryMenuTitle.png");
 
 	vNextLvlWord = CP_Image_Load("./Assets/vNextLvlWord.png");
@@ -105,21 +102,17 @@ void drawFullPanel(void) {
 	vMenuRestartWordHover = CP_Image_Load("./Assets/vMenuRestartWordHover.png");
 	vMenuSelectLevelWordHover = CP_Image_Load("./Assets/vMenuSelectLevelWordHover.png");
 
+	/*------------------------------------------------------------ Drawing/Displaying of Images ------------------------------------------------------------*/
 	CP_Image_Draw(pauseBackground, gameCenterX, gameCenterY, gameWindowWidth, gameWindowHeight, 255);
-
-	//for the button add switch case depending on what is the current game state
-	//add a game state under game.h
-	// 
-	//CP_Settings_ImageMode(CP_POSITION_CENTER);
-
 
 	CP_Settings_RectMode(CP_POSITION_CENTER);
 	switch (gameState) {
+		/*------------------------------------------------------------ Pause Menu ------------------------------------------------------------*/
 	case PAUSED:
 		CP_Image_Draw(pauseMenuBackground, gameCenterX, gameCenterY, (float)CP_Image_GetWidth(pauseMenuBackground), (float)CP_Image_GetHeight(pauseMenuBackground), 255);
 		CP_Image_Draw(pauseMenuTitle, gameCenterX, pauseMenuY, (float)CP_Image_GetWidth(pauseMenuTitle), (float)CP_Image_GetHeight(pauseMenuTitle), 255);
 
-		// Pause Menu Select Level
+		// --------------- Pause Menu Select Level ---------------
 		if (IsAreaClicked(gameCenterX, pMenuSelectlvlY, (float)CP_Image_GetWidth(pMenuSelectLevelWord), (float)CP_Image_GetHeight(pMenuSelectLevelWord), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
 			CP_Image_Draw(pMenuHover, gameCenterX, pMenuSelectlvlY, (float)CP_Image_GetWidth(pMenuHover), (float)CP_Image_GetHeight(pMenuHover), 255);
@@ -130,7 +123,7 @@ void drawFullPanel(void) {
 			CP_Image_Draw(pMenuSelectLevelWord, gameCenterX, pMenuSelectlvlY, (float)CP_Image_GetWidth(pMenuSelectLevelWord), (float)CP_Image_GetHeight(pMenuSelectLevelWord), 255);
 		}
 		
-		// Pause Menu Restart
+		// --------------- Pause Menu Restart ---------------
 		if (IsAreaClicked(gameCenterX, pMenuRestartY, (float)CP_Image_GetWidth(pMenuSelectLevelWord), (float)CP_Image_GetHeight(pMenuSelectLevelWord), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
 			CP_Image_Draw(pMenuHover, gameCenterX, pMenuRestartY, (float)CP_Image_GetWidth(pMenuHover), (float)CP_Image_GetHeight(pMenuHover), 255);
@@ -141,7 +134,7 @@ void drawFullPanel(void) {
 			CP_Image_Draw(pMenuRestartWord, gameCenterX, pMenuRestartY, (float)CP_Image_GetWidth(pMenuRestartWord), (float)CP_Image_GetHeight(pMenuRestartWord), 255);
 		}
 
-		// Pause Menu Return To Game
+		// --------------- Pause Menu Return to Game ---------------
 		if (IsAreaClicked(gameCenterX, pMenuRtoGameY, (float)CP_Image_GetWidth(pMenuReturnToGame), (float)CP_Image_GetHeight(pMenuReturnToGame), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
 			CP_Image_Draw(pMenuHover, gameCenterX, pMenuRtoGameY, (float)CP_Image_GetWidth(pMenuHover), (float)CP_Image_GetHeight(pMenuHover), 255);
@@ -153,11 +146,12 @@ void drawFullPanel(void) {
 		}
 		break;
 
+		/*------------------------------------------------------------ Lose Menu ------------------------------------------------------------*/
 	case LOSE:
 		CP_Image_Draw(pauseMenuBackground, gameCenterX, gameCenterY, (float)CP_Image_GetWidth(pauseMenuBackground), (float)CP_Image_GetHeight(pauseMenuBackground), 255);
 		CP_Image_Draw(loseMenuTitle, gameCenterX, pauseMenuY, (float)CP_Image_GetWidth(loseMenuTitle), (float)CP_Image_GetHeight(loseMenuTitle), 255);
 
-		// Lose Menu Restart
+		// --------------- Lose Menu Restart ---------------
 		if (IsAreaClicked(gameCenterX, pMenuRestartY, (float)CP_Image_GetWidth(lMenuRestartWord), (float)CP_Image_GetHeight(lMenuRestartWord), (float)CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
 			CP_Image_Draw(pMenuHover, gameCenterX, pMenuRestartY, (float)CP_Image_GetWidth(pMenuHover), (float)CP_Image_GetHeight(pMenuHover), 255);
@@ -168,7 +162,7 @@ void drawFullPanel(void) {
 			CP_Image_Draw(lMenuRestartWord, gameCenterX, pMenuRestartY, (float)CP_Image_GetWidth(lMenuRestartWord), (float)CP_Image_GetHeight(lMenuRestartWord), 255);
 		}
 
-		// Lose Menu Select Level
+		// --------------- Lose Menu Select Level ---------------
 		if (IsAreaClicked(gameCenterX, pMenuRtoGameY, (float)CP_Image_GetWidth(lMenuSelectLevel), (float)CP_Image_GetHeight(lMenuSelectLevel), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
 			CP_Image_Draw(pMenuHover, gameCenterX, pMenuRtoGameY, (float)CP_Image_GetWidth(pMenuHover), (float)CP_Image_GetHeight(pMenuHover), 255);
@@ -178,15 +172,14 @@ void drawFullPanel(void) {
 		{
 			CP_Image_Draw(lMenuSelectLevel, gameCenterX, pMenuRtoGameY, (float)CP_Image_GetWidth(lMenuSelectLevel), (float)CP_Image_GetHeight(lMenuSelectLevel), 255);
 		}
-
-		
 		break;
 
+		/*------------------------------------------------------------ Victory Menu ------------------------------------------------------------*/
 	case WIN:
 		CP_Image_Draw(pauseMenuBackground, gameCenterX, gameCenterY, (float)CP_Image_GetWidth(pauseMenuBackground), (float)CP_Image_GetHeight(pauseMenuBackground), 255);
 		CP_Image_Draw(victoryMenuTitle, gameCenterX, pauseMenuY, (float)CP_Image_GetWidth(victoryMenuTitle), (float)CP_Image_GetHeight(victoryMenuTitle), 255);
 
-		// Victory Menu Next Level
+		// --------------- Victory Menu Next Level ---------------
 		if (IsAreaClicked(gameCenterX, pMenuSelectlvlY, (float)CP_Image_GetWidth(vNextLvlWord), (float)CP_Image_GetHeight(vNextLvlWord), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
 			CP_Image_Draw(pMenuHover, gameCenterX, pMenuSelectlvlY, (float)CP_Image_GetWidth(pMenuHover), (float)CP_Image_GetHeight(pMenuHover), 255);
@@ -197,7 +190,7 @@ void drawFullPanel(void) {
 			CP_Image_Draw(vNextLvlWord, gameCenterX, pMenuSelectlvlY, (float)CP_Image_GetWidth(vNextLvlWord), (float)CP_Image_GetHeight(vNextLvlWord), 255);
 		}
 
-		// Victory Menu Restart
+		// --------------- Victory Menu Restart ---------------
 		if (IsAreaClicked(gameCenterX, pMenuRestartY, (float)CP_Image_GetWidth(vMenuRestartWord), (float)CP_Image_GetHeight(vMenuRestartWord), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
 			CP_Image_Draw(pMenuHover, gameCenterX, pMenuRestartY, (float)CP_Image_GetWidth(pMenuHover), (float)CP_Image_GetHeight(pMenuHover), 255);
@@ -208,7 +201,7 @@ void drawFullPanel(void) {
 			CP_Image_Draw(vMenuRestartWord, gameCenterX, pMenuRestartY, (float)CP_Image_GetWidth(vMenuRestartWord), (float)CP_Image_GetHeight(vMenuRestartWord), 255);
 		}
 
-		// Victory Menu Select Level
+		// --------------- Victory Menu Select Level ---------------
 		if (IsAreaClicked(gameCenterX, pMenuRtoGameY, (float)CP_Image_GetWidth(vMenuSelectLevelWord), (float)CP_Image_GetHeight(vMenuSelectLevelWord), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
 			CP_Image_Draw(pMenuHover, gameCenterX, pMenuRtoGameY, (float)CP_Image_GetWidth(pMenuHover), (float)CP_Image_GetHeight(pMenuHover), 255);
@@ -219,7 +212,6 @@ void drawFullPanel(void) {
 			CP_Image_Draw(vMenuSelectLevelWord, gameCenterX, pMenuRtoGameY, (float)CP_Image_GetWidth(vMenuSelectLevelWord), (float)CP_Image_GetHeight(vMenuSelectLevelWord), 255);
 		}
 		break;
-		
 	}
 	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 	CP_Settings_RectMode(CP_POSITION_CORNER);
@@ -346,6 +338,7 @@ void drawSideBarStats(char levelNumber[], int noOfStep) {
 	free(number);
 }
 
+	/*------------------------------------------------------------ Freeing of Images ------------------------------------------------------------*/
 void freeMenuImages()
 {
 	//free all image

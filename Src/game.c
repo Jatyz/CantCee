@@ -2,6 +2,9 @@
 // file:	game.c
 // author:	Jarran Tan Yan Zhi
 // email:	jarranyanzhi.tan@digipen.edu
+// 
+// co-author:	Ong You Yang
+// email:		youyang.o@digipen.edu
 //
 // brief:	All the functions that needs to be called by each stage linked together.
 //			
