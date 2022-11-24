@@ -1,3 +1,15 @@
+//---------------------------------------------------------
+// file:	play.c
+// author:	Ong You Yang
+// email:	youyang.o@digipen.edu
+//
+// brief:	Level select page
+//			
+// documentation link:
+// https://github.com/DigiPen-Faculty/CProcessing/wiki
+//
+// Copyright © 2022 DigiPen, All rights reserved.
+//---------------------------------------------------------
 #include "cprocessing.h"
 #include <stdio.h>
 #include "utils.h"

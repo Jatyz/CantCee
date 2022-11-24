@@ -1,3 +1,15 @@
+//---------------------------------------------------------
+// file:	credits1.c
+// author:	Ong You Yang
+// email:	youyang.o@digipen.edu
+//
+// brief:	first page of the credits
+//			
+// documentation link:
+// https://github.com/DigiPen-Faculty/CProcessing/wiki
+//
+// Copyright © 2022 DigiPen, All rights reserved.
+//---------------------------------------------------------
 #include "cprocessing.h"
 #include "utils.h"
 #include "game.h"
