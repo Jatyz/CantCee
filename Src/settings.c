@@ -306,12 +306,12 @@ void handleSliderInteraction(void)
 			//update volume info to slider equivalent of master volume's current volume
 			volumeSliders[sliderCurrentlyAdjusted].currentVolume = volumeSliders[VOLMASTER].currentVolume;
 		}
-		sliderCurrentlyAdjusted = -1;	//set to not adjusting the slider before returning
 		CP_Sound_PlayAdvanced(settingButtonSound,
 			CP_Sound_GetGroupVolume(volumeSliders[sliderCurrentlyAdjusted].soundGroup),
 			2.0f,
 			FALSE,
 			volumeSliders[sliderCurrentlyAdjusted].soundGroup);
+		sliderCurrentlyAdjusted = -1;	//set to not adjusting the slider before returning
 	}
 }
 
