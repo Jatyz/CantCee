@@ -65,7 +65,7 @@ CP_Image settingsGradientBackground = NULL;
 /// Conversion functions convert from position relative to slider x position to volume in decibells range of 60 to 0 in terms of 1.0f to 0.0f
 /// more details in function comments
 /// 
-/// Master volume group sets the maximum limit for both other sound groups
+/// Master volume group sets the maximum limit for other sound groups
 /// 
 
 //structure to store required values for each soundgroup slider

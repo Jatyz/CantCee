@@ -13,7 +13,7 @@
 // Copyright © 2022 DigiPen, All rights reserved.
 //---------------------------------------------------------
 
-extern int isTrailsActive;
+extern int isTrailsActive;		//extern variable for tracking if trails(easy mode) is required in logic
 
 //sets all value in fog to be fully obscured
 void clearFogBackground(void);
