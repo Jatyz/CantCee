@@ -29,7 +29,7 @@ CP_Image credits2NextPage = NULL;
 void credits2_Init()
 {
     /*------------------------------------------------------------ Window Size 1000 x 800 ------------------------------------------------------------*/
-    CP_System_SetWindowSize(windowWidth, windowHeight);
+    CP_System_SetWindowSize((int)windowWidth, (int)windowHeight);
 
     /*------------------------------------------------------------ Loading File Path of Image File ------------------------------------------------------------*/
     credits2 = CP_Image_Load("./Assets/credits2.png");
@@ -45,14 +45,14 @@ void credits2_Update()
     if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
     {
         // --------------- Back to First Credit Page Input ---------------
-        if (IsAreaClicked(credits2BackButtonX, credits2ButtonY, CP_Image_GetWidth(credits2BackToMainMenu), CP_Image_GetHeight(credits2BackToMainMenu), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+        if (IsAreaClicked(credits2BackButtonX, credits2ButtonY, (float)CP_Image_GetWidth(credits2BackToMainMenu), (float)CP_Image_GetHeight(credits2BackToMainMenu), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
         {
             CP_Sound_PlayAdvanced(buttonSound, CP_Sound_GetGroupVolume(CP_SOUND_GROUP_SFX), 2.0f, FALSE, CP_SOUND_GROUP_SFX);
             CP_Engine_SetNextGameStateForced(credits1_Init, credits1_Update, credits1_Exit);
         }
 
         // --------------- Go to Main Menu Input ---------------
-        if (IsAreaClicked(credits2NextPageButtonX, credits2ButtonY, CP_Image_GetWidth(credits2NextPage), CP_Image_GetHeight(credits2NextPage), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+        if (IsAreaClicked(credits2NextPageButtonX, credits2ButtonY, (float)CP_Image_GetWidth(credits2NextPage), (float)CP_Image_GetHeight(credits2NextPage), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
         {
             CP_Sound_PlayAdvanced(buttonSound, CP_Sound_GetGroupVolume(CP_SOUND_GROUP_SFX), 2.0f, FALSE, CP_SOUND_GROUP_SFX);
             CP_Engine_SetNextGameStateForced(mainMenu_Init, mainMenu_Update, mainMenu_Exit);
@@ -65,8 +65,8 @@ void credits2_Update()
     /*------------------------------------------------------------ Drawing/Displaying of Images ------------------------------------------------------------*/
     CP_Image_Draw(credits2GradientBackground, windowWidth / 2, windowHeight / 2, windowWidth, windowHeight, 255);
     CP_Image_Draw(credits2, windowWidth / 2, windowHeight / 2, windowWidth, windowHeight, 255);
-    CP_Image_Draw(credits2BackToMainMenu, credits2BackButtonX, credits2ButtonY, CP_Image_GetWidth(credits2BackToMainMenu), CP_Image_GetHeight(credits2BackToMainMenu), 255);
-    CP_Image_Draw(credits2NextPage, credits2NextPageButtonX, credits2ButtonY, CP_Image_GetWidth(credits2NextPage), CP_Image_GetHeight(credits2NextPage), 255);
+    CP_Image_Draw(credits2BackToMainMenu, credits2BackButtonX, credits2ButtonY, (float)CP_Image_GetWidth(credits2BackToMainMenu), (float)CP_Image_GetHeight(credits2BackToMainMenu), 255);
+    CP_Image_Draw(credits2NextPage, credits2NextPageButtonX, credits2ButtonY, (float)CP_Image_GetWidth(credits2NextPage), (float)CP_Image_GetHeight(credits2NextPage), 255);
 }
 
     /*------------------------------------------------------------ Freeing of Images ------------------------------------------------------------*/

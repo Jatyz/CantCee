@@ -18,7 +18,7 @@ int IsAreaClicked(float area_center_x, float area_center_y, float area_width, fl
 {
 	// TOD
 	
-	float x_max = area_center_x + (area_width / 2);					// max X of area clicked
+	float x_max = area_center_x + (area_width / 2);				// max X of area clicked
 	float x_min = area_center_x - (area_width / 2);
 	float y_max = area_center_y + (area_height / 2);					// max y of area clicked
 	float y_min = area_center_y - (area_height / 2);

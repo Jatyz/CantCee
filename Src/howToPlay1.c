@@ -33,7 +33,7 @@ int swap = 0;
 void howToPlay1_Init()
 {
     /*------------------------------------------------------------ Window Size 1000 x 800 ------------------------------------------------------------*/
-    CP_System_SetWindowSize(windowWidth, windowHeight);
+    CP_System_SetWindowSize((int)windowWidth, (int)windowHeight);
 
     /*------------------------------------------------------------ Loading File Path of Image File ------------------------------------------------------------*/
     howToPlay1 = CP_Image_Load("./Assets/howToPlay1.png");
@@ -53,7 +53,7 @@ void howToPlay1_Update()
     if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
     {
         // --------------- Next Page Mouse Input ---------------
-        if (IsAreaClicked(htp1NPX, htp1NPY, CP_Image_GetWidth(howToPlay1NextPage), CP_Image_GetHeight(howToPlay1NextPage), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+        if (IsAreaClicked(htp1NPX, htp1NPY, (float)CP_Image_GetWidth(howToPlay1NextPage), (float)CP_Image_GetHeight(howToPlay1NextPage), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
         {
             CP_Sound_PlayAdvanced(buttonSound, CP_Sound_GetGroupVolume(CP_SOUND_GROUP_SFX), 2.0f, FALSE, CP_SOUND_GROUP_SFX);
             if(!swap)
@@ -62,11 +62,11 @@ void howToPlay1_Update()
             return;
             }
             swap = 0;
-            CP_Engine_SetNextGameStateForced(mainMenu_Init, mainMenu_Update, mainMenu_Exit);
+            //CP_Engine_SetNextGameStateForced(mainMenu_Init, mainMenu_Update, mainMenu_Exit);
         }
 
         // --------------- Swap Back to Previous Page ---------------
-        if (IsAreaClicked(htp1BTMMx, htp1BTMMy, CP_Image_GetWidth(howToPlay1NextPage), CP_Image_GetHeight(howToPlay1NextPage), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+        if (IsAreaClicked(htp1BTMMx, htp1BTMMy, (float)CP_Image_GetWidth(howToPlay1NextPage), (float)CP_Image_GetHeight(howToPlay1NextPage), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
         {
             CP_Sound_PlayAdvanced(buttonSound, CP_Sound_GetGroupVolume(CP_SOUND_GROUP_SFX), 2.0f, FALSE, CP_SOUND_GROUP_SFX);
             if (swap)
@@ -90,17 +90,17 @@ void howToPlay1_Update()
     // --------------- First Page of HowToPlay ---------------
     if (!swap)
     {
-        CP_Image_Draw(howToPlay1, windowWidth / 2, windowHeight / 2, CP_Image_GetWidth(howToPlay1), CP_Image_GetHeight(howToPlay1), 255);
-        CP_Image_Draw(howToPlay1BackToMainMenu, htp1BTMMx, htp1BTMMy, CP_Image_GetWidth(howToPlay1BackToMainMenu), CP_Image_GetHeight(howToPlay1BackToMainMenu), 255);
-        CP_Image_Draw(howToPlay1NextPage, htp1NPX, htp1NPY, CP_Image_GetWidth(howToPlay1NextPage), CP_Image_GetHeight(howToPlay1NextPage), 255);
+        CP_Image_Draw(howToPlay1, windowWidth / 2, windowHeight / 2, (float)CP_Image_GetWidth(howToPlay1), (float)CP_Image_GetHeight(howToPlay1), 255);
+        CP_Image_Draw(howToPlay1BackToMainMenu, htp1BTMMx, htp1BTMMy, (float)CP_Image_GetWidth(howToPlay1BackToMainMenu), (float)CP_Image_GetHeight(howToPlay1BackToMainMenu), 255);
+        CP_Image_Draw(howToPlay1NextPage, htp1NPX, htp1NPY, (float)CP_Image_GetWidth(howToPlay1NextPage), (float)CP_Image_GetHeight(howToPlay1NextPage), 255);
     }
 
     // --------------- Second Page of HowToPlay ---------------
     else
     {
-        CP_Image_Draw(howToPlay2, windowWidth / 2, windowHeight / 2, CP_Image_GetWidth(howToPlay2), CP_Image_GetHeight(howToPlay2), 255);
-        CP_Image_Draw(howToPlay1BackToMainMenu, htp1BTMMx, htp1BTMMy, CP_Image_GetWidth(howToPlay1BackToMainMenu), CP_Image_GetHeight(howToPlay1BackToMainMenu), 255);
-        CP_Image_Draw(howToPlay1NextPage, htp1NPX, htp1NPY, CP_Image_GetWidth(howToPlay1NextPage), CP_Image_GetHeight(howToPlay1NextPage), 255);
+        CP_Image_Draw(howToPlay2, windowWidth / 2, windowHeight / 2, (float)CP_Image_GetWidth(howToPlay2), (float)CP_Image_GetHeight(howToPlay2), 255);
+        CP_Image_Draw(howToPlay1BackToMainMenu, htp1BTMMx, htp1BTMMy, (float)CP_Image_GetWidth(howToPlay1BackToMainMenu), (float)CP_Image_GetHeight(howToPlay1BackToMainMenu), 255);
+        CP_Image_Draw(howToPlay1NextPage, htp1NPX, htp1NPY, (float)CP_Image_GetWidth(howToPlay1NextPage), (float)CP_Image_GetHeight(howToPlay1NextPage), 255);
     }
 }
 
