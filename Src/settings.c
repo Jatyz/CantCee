@@ -464,11 +464,11 @@ void settings_Update()
 	CP_Image_DrawAdvanced(settingsGradientBackground, windowWidth / 2, windowHeight / 2, windowWidth, windowHeight, 255, 180);
 	CP_Image_DrawAdvanced(settingsGradientBackground, windowWidth / 2, windowHeight / 2, windowWidth, windowHeight, 255, 180);
 
-	CP_Image_Draw(masterVolume, windowWidth / 2, windowHeight / 2 - 300 , CP_Image_GetWidth(masterVolume), CP_Image_GetHeight(masterVolume), 255);
-	CP_Image_Draw(sfxVolume, windowWidth / 2, windowHeight / 2 - 150, CP_Image_GetWidth(sfxVolume), CP_Image_GetHeight(sfxVolume), 255);
+	CP_Image_Draw(masterVolume, windowWidth / 2, windowHeight / 2 - 300 , (float)CP_Image_GetWidth(masterVolume), (float)CP_Image_GetHeight(masterVolume), 255);
+	CP_Image_Draw(sfxVolume, windowWidth / 2, windowHeight / 2 - 150, (float)CP_Image_GetWidth(sfxVolume), (float)CP_Image_GetHeight(sfxVolume), 255);
 
-	CP_Image_Draw(mute, windowWidth / 10 * 3.25, windowHeight / 10 * 6 - 75, CP_Image_GetWidth(mute), CP_Image_GetHeight(mute), 255);
-	CP_Image_Draw(difficulty, windowWidth / 10 * 6.75 + 10, windowHeight / 10 * 6 - 75, CP_Image_GetWidth(difficulty), CP_Image_GetHeight(difficulty), 255);
+	CP_Image_Draw(mute, windowWidth / 10 * 3.25, windowHeight / 10 * 6 - 75, (float)CP_Image_GetWidth(mute), (float)CP_Image_GetHeight(mute), 255);
+	CP_Image_Draw(difficulty, windowWidth / 10 * 6.75 + 10, windowHeight / 10 * 6 - 75, (float)CP_Image_GetWidth(difficulty), (float)CP_Image_GetHeight(difficulty), 255);
 
 	//handle interraction logics of the toggle buttons and volume sliders
 	handleSliderInteraction();

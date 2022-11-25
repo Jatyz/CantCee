@@ -29,27 +29,3 @@ int IsAreaClicked(float area_center_x, float area_center_y, float area_width, fl
 	}
 	return 0;
 }
-
-int IsCircleClicked(float circle_center_x, float circle_center_y, float diameter, float click_x, float click_y)
-{
-	// TODO
-	float distX = click_x - circle_center_x;
-	float distY = click_y - circle_center_y;
-	
-	float originToPoint = sqrt((distX * distX) + (distY * distY));
-
-	if (originToPoint <= (diameter / 2))
-	{
-		return 1;
-	}
-	return 0;
-}
-
-CP_Vector AngleToVector(float radian_angle)
-{
-    // TODO 
-    CP_Vector point;
-	point = CP_Vector_Set(cos(radian_angle), sin(radian_angle));
-
-    return point;
-}
