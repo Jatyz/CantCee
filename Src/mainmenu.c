@@ -1,3 +1,15 @@
+//---------------------------------------------------------
+// file:	mainmenu.c
+// author:	Ong You Yang
+// email:	youyang.o@digipen.edu
+//
+// brief:	Main menu
+//			
+// documentation link:
+// https://github.com/DigiPen-Faculty/CProcessing/wiki
+//
+// Copyright © 2022 DigiPen, All rights reserved.
+//---------------------------------------------------------
 #include "cprocessing.h"
 #include "utils.h"
 
@@ -10,6 +22,7 @@
 
 #include "game.h"
 
+    /*------------------------------------------------------------ Storing Loaded Image in Variable ------------------------------------------------------------*/
 CP_Image mainMenuBackground1 = NULL;
 
 CP_Image cLogo = NULL;
@@ -34,11 +47,18 @@ CP_Image hoverExit = NULL;
 CP_Image hoverStartWord = NULL;
 
 
-// ---------------------------------------------------------------Main Menu Initialisation---------------------------------------------------------------
+// --------------------------------------------------------------- Main Menu Initialisation ---------------------------------------------------------------
 void mainMenu_Init()
 {   
+    /*------------------------------------------------------------ Window Size 1000 x 800 ------------------------------------------------------------*/
+    CP_System_SetWindowSize(windowWidth, windowHeight);
+
     CP_System_SetWindowTitle("CANT CEE");
 
+    createScore();
+    readScore();
+
+    /*------------------------------------------------------------ Loading File Path of Image File ------------------------------------------------------------*/
     mainMenuBackground1 = CP_Image_Load("./Assets/mainMenuBackground1.png");
 
     cLogo = CP_Image_Load("./Assets/cLogo.png");
@@ -63,31 +83,16 @@ void mainMenu_Init()
     hoverStartWord = CP_Image_Load("./Assets/hoverStartWord.png");
 
     buttonSound = CP_Sound_Load("./Assets/Sounds/Button Sound.mp3");
-
-    // Set the window size to a sqaure 1000 x 800
-    CP_System_SetWindowSize(windowWidth, windowHeight);
-
-    // Set the rectangle drawing mode to CENTER
-    CP_Settings_RectMode(CP_POSITION_CENTER);
-
-    // All Text size
-    CP_Settings_TextSize(20.0f);
-
-    // All Text allignment
-    CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
-
-    createScore();
-
-    readScore();
 }
 
 
 // ---------------------------------------------------------------Main Menu Update---------------------------------------------------------------
 void mainMenu_Update()
 {
-    // Background: Grey Colour
+    /*------------------------------------------------------------ Setting Background Colour ------------------------------------------------------------*/
     CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 
+    /*------------------------------------------------------------ Drawing/Displaying of Images ------------------------------------------------------------*/
     CP_Image_Draw(mainMenuBackground1, windowWidth / 2, windowHeight / 2, windowWidth, windowHeight, 255);
 
     CP_Image_Draw(cLogo, windowWidth / 2, windowHeight / 2, windowWidth, windowHeight, 255);
@@ -103,10 +108,8 @@ void mainMenu_Update()
     CP_Image_Draw(settingsWord, settingsWordWidth, settingsWordHeight, CP_Image_GetWidth(settingsWord), CP_Image_GetHeight(settingsWord), 255);
     CP_Image_Draw(exitWord, exitWordWidth, exitWordHeight, CP_Image_GetWidth(exitWord), CP_Image_GetHeight(exitWord), 255);
 
-
-
     // ---------------------------------------------------------------Mouse Inputs/Checking---------------------------------------------------------------
-        // ----------Hover Feature----------
+    // --------------- Hover Feature ---------------
     if (IsAreaClicked(startWordWidth, startWordHeight, CP_Image_GetWidth(startWord), CP_Image_GetHeight(startWord), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
     {
         CP_Image_Draw(hoverStart, startWordWidth - 5, startWordHeight - 5, CP_Image_GetWidth(startWord), CP_Image_GetHeight(startWord), 255);
@@ -133,7 +136,7 @@ void mainMenu_Update()
         CP_Image_Draw(hoverExit, exitWordWidth - 5, exitWordHeight - 5, CP_Image_GetWidth(hoverExit), CP_Image_GetHeight(hoverExit), 255);
     }
 
-
+    // --------------- Mouse Input ---------------
     if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
     {
         // ----------Play Button Input----------
@@ -174,7 +177,7 @@ void mainMenu_Update()
 }
 
 
-// ---------------------------------------------------------------Main Menu Exit---------------------------------------------------------------
+    /*------------------------------------------------------------ Freeing of Images ------------------------------------------------------------*/
 void mainMenu_Exit()
 {
     CP_Image_Free(&mainMenuBackground1);

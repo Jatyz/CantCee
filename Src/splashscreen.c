@@ -1,3 +1,16 @@
+//---------------------------------------------------------
+// file:	splashscreen.c
+// author:	Jarran Tan Yan Zhi
+// email:	jarranyanzhi.tan@digipen.edu
+//
+// brief:	All the declaration of splashscreen functions
+//			
+// 
+// documentation link:
+// https://github.com/DigiPen-Faculty/CProcessing/wiki
+//
+// Copyright © 2022 DigiPen, All rights reserved.
+//---------------------------------------------------------
 #include "splashscreen.h"
 #include "mainmenu.h"
 
@@ -122,11 +135,16 @@ void splashscreen_update(void)
             break;
         }
     }
+
+    //footer
+    CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
+    CP_Font_DrawTextBox("press space to skip!", 860, 790, 200);
 }
 
 //things to be do on exit
 void splashscreen_exit(void) {
     CP_Settings_ImageMode(CP_POSITION_CENTER);
+    CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
     CP_Image_Free(&digipenLogo);
     CP_Image_Free(&Clogo);
     CP_Image_Free(&zureLogo);

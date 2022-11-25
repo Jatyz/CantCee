@@ -1,3 +1,15 @@
+//---------------------------------------------------------
+// file:	play.c
+// author:	Ong You Yang
+// email:	youyang.o@digipen.edu
+//
+// brief:	Level select page
+//			
+// documentation link:
+// https://github.com/DigiPen-Faculty/CProcessing/wiki
+//
+// Copyright © 2022 DigiPen, All rights reserved.
+//---------------------------------------------------------
 #include "cprocessing.h"
 #include <stdio.h>
 #include "utils.h"
@@ -26,6 +38,7 @@
 #include "panels.h"
 #include "game.h"
 
+	/*------------------------------------------------------------ Storing Loaded Image in Variable ------------------------------------------------------------*/
 CP_Image gradientAccentBackground2 = NULL;
 CP_Image selectLevelTitle = NULL;
 
@@ -151,6 +164,7 @@ void play_Init()
 	level[14].yAxis = thirdRowHeight;
 	level[14].selected = 0;
 
+	/*------------------------------------------------------------ Loading File Path of Image File ------------------------------------------------------------*/
 	gradientAccentBackground2 = CP_Image_Load("./Assets/gradientAccentBackground2.png");
 	selectLevelTitle = CP_Image_Load("./Assets/selectLevelTitle.png");
 
@@ -199,6 +213,7 @@ void play_Init()
 
 int once = 0; int levelSelected = 0; int levelScore = 0,parScore = 0;
 char test[100];
+
 // ---------------------------------------------------------------Main Menu Update---------------------------------------------------------------
 void play_Update()
 {
@@ -726,15 +741,14 @@ void play_Update()
 
 	for (int setLevelSelectionState = 0; setLevelSelectionState < 15; setLevelSelectionState++)
 	{
-		if (level[setLevelSelectionState].selected) {
+		if (level[setLevelSelectionState].selected)
+		{
 			CP_Image_Draw(hoverLvl, level[setLevelSelectionState].xAxis, level[setLevelSelectionState].yAxis, CP_Image_GetWidth(hoverLvl), CP_Image_GetHeight(hoverLvl), 255);
 		}
 	}
+}
 
-
-	}
-
-
+	/*------------------------------------------------------------ Freeing of Images ------------------------------------------------------------*/
 void play_Exit()
 {
 	CP_Image_Free(&gradientAccentBackground2);

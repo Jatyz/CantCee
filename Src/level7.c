@@ -1,3 +1,17 @@
+//---------------------------------------------------------
+// file:	level7.c
+// author:	Jarran Tan Yan Zhi
+// email:	jarranyanzhi.tan@digipen.edu
+//
+// brief:	All the declration of functions that creates the level and runs the level
+//			
+//
+// documentation link:
+// https://github.com/DigiPen-Faculty/CProcessing/wiki
+//
+// Copyright © 2022 DigiPen, All rights reserved.
+//---------------------------------------------------------
+
 #include "player.h"
 #include "grid.h"
 #include "game.h"

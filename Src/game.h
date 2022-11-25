@@ -1,3 +1,16 @@
+//---------------------------------------------------------
+// file:	game.h
+// author:	Jarran Tan Yan Zhi
+// email:	jarranyanzhi.tan@digipen.edu
+//
+// brief:	Holdes all the definition of the game's handling functions.
+//			
+//
+// documentation link:
+// https://github.com/DigiPen-Faculty/CProcessing/wiki
+//
+// Copyright © 2022 DigiPen, All rights reserved.
+//---------------------------------------------------------
 #pragma once
 
 #define UP -1

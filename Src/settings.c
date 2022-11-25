@@ -65,7 +65,7 @@ CP_Image settingsGradientBackground = NULL;
 /// Conversion functions convert from position relative to slider x position to volume in decibells range of 60 to 0 in terms of 1.0f to 0.0f
 /// more details in function comments
 /// 
-/// Master volume group sets the maximum limit for both other sound groups
+/// Master volume group sets the maximum limit for other sound groups
 /// 
 
 //structure to store required values for each soundgroup slider
@@ -306,12 +306,12 @@ void handleSliderInteraction(void)
 			//update volume info to slider equivalent of master volume's current volume
 			volumeSliders[sliderCurrentlyAdjusted].currentVolume = volumeSliders[VOLMASTER].currentVolume;
 		}
-		sliderCurrentlyAdjusted = -1;	//set to not adjusting the slider before returning
 		CP_Sound_PlayAdvanced(settingButtonSound,
 			CP_Sound_GetGroupVolume(volumeSliders[sliderCurrentlyAdjusted].soundGroup),
 			2.0f,
 			FALSE,
 			volumeSliders[sliderCurrentlyAdjusted].soundGroup);
+		sliderCurrentlyAdjusted = -1;	//set to not adjusting the slider before returning
 	}
 }
 

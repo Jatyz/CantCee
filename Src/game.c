@@ -1,12 +1,28 @@
+//---------------------------------------------------------
+// file:	game.c
+// author:	Jarran Tan Yan Zhi
+// email:	jarranyanzhi.tan@digipen.edu
+// 
+// co-author:	Ong You Yang
+// email:		youyang.o@digipen.edu
+//
+// brief:	All the functions that needs to be called by each stage linked together.
+//			
+//
+// documentation link:
+// https://github.com/DigiPen-Faculty/CProcessing/wiki
+//
+// Copyright © 2022 DigiPen, All rights reserved.
+//---------------------------------------------------------
+
+
 #include "player.h"
 #include "enemy.h"
 #include "grid.h"
 #include "game.h"
+#include "panels.h"
 #include "FOV.h"
 #include "cprocessing.h"
-#include "level1.h"
-#include "panels.h"
-#include "levelselect.h"
 #include "levelTransition.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -97,7 +113,7 @@ void resetGame(Tile_Size) {
 	//set all playable tiles to floor, and everything out of boundaries to walls
 	resetTile(Tile_Size);
 	//reset all enemies states
-	enemyReset(Tile_Size);
+	enemyReset((float)Tile_Size);
 
 	//resetting all variables to default values
 	gameFogRange = 3;

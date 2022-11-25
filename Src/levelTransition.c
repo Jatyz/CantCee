@@ -106,9 +106,7 @@ int initLevelTransition()
 	return animateOut();
 }
 
-typedef void transitScript(void);
-
-//handles the animation logic for level exit, runs transit script on animation complete, as denoted by param isAnimationComplete. 
+//handles the animation logic for level exit, as denoted by param isAnimationComplete. 
 //return value is 0 when animation is complete, meant to be feed into isAnimation complete parameter
 int exitLevelTransition(int isAnimationComplete)
 {

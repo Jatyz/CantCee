@@ -1,3 +1,16 @@
+//---------------------------------------------------------
+// file:	utils.c
+// author:	Ong You Yang
+// email:	youyang.o@digipen.edu
+//
+// brief:	mouse functions
+//			
+// documentation link:
+// https://github.com/DigiPen-Faculty/CProcessing/wiki
+//
+// Copyright © 2022 DigiPen, All rights reserved.
+//---------------------------------------------------------
+
 #include "cprocessing.h"
 #include "math.h"
 
