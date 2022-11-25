@@ -34,22 +34,21 @@ void enemySet(int width, int height, int difficulty, int range, EnemyType type, 
 
 //sets the enemy's FOV color. The reason this is a separate set of colors is because the FOV has a transparency,
 //to allow the player to see themselves when they are behind the FOV layer
-void enemyFOVColorSet(int enemyXPos, int enemyYPos)
+void enemyFOVColorSet(int enemyXPos, int enemyYPos)	
 {
-	if (enemies[enemyXPos][enemyYPos].Color == RED)
+	if (enemies[enemyXPos][enemyYPos].Color == RED)//---------checks to see if enum COLOR of the enemy is RED. It then assigns a translucent red color to the enemy FOV
 	{
-
 		CP_Settings_Stroke(CP_Color_Create(255, 0, 0, 60));
 		CP_Settings_Fill(CP_Color_Create(200, 0, 50, 60));
 	}
 
-	if (enemies[enemyXPos][enemyYPos].Color == GREEN)
+	if (enemies[enemyXPos][enemyYPos].Color == GREEN)//-------checks to see if enum COLOR of the enemy is GREEN. It then assigns a translucent yellow color to the enemy FOV
 	{
 		CP_Settings_Stroke(CP_Color_Create(255, 255, 0, 60));
 		CP_Settings_Fill(CP_Color_Create(255, 255, 0, 60));
 	}
 
-	if (enemies[enemyXPos][enemyYPos].Color == BLUE)
+	if (enemies[enemyXPos][enemyYPos].Color == BLUE)//--------checks to see if enum COLOR of the enemy is BLUE. It then assigns a translucent blue color to the enemy FOV
 	{
 		CP_Settings_Stroke(CP_Color_Create(0, 0, 255, 60));
 		CP_Settings_Fill(CP_Color_Create(0, 0, 255, 60));
