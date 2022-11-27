@@ -24,6 +24,8 @@
     /*------------------------------------------------------------ Storing Loaded Image in Variable ------------------------------------------------------------*/
 CP_Image copyrights = NULL;
 CP_Image credits3GradientBackground = NULL;
+CP_Image copyrights2 = NULL;
+
 CP_Image credits3BackToMainMenu = NULL;
 CP_Image credits3NextPage = NULL;
 
@@ -36,6 +38,7 @@ void credits3_Init()
     /*------------------------------------------------------------ Loading File Path of Image File ------------------------------------------------------------*/
     copyrights = CP_Image_Load("./Assets/copyrights.png");
     credits3GradientBackground = CP_Image_Load("./Assets/credits3GradientBackground.png");
+    copyrights2 = CP_Image_Load("./Assets/copyrights2.png");
 
     credits3BackToMainMenu = CP_Image_Load("./Assets/credits3BackToMainMenu.png");
     credits3NextPage = CP_Image_Load("./Assets/credits3NextPage.png");
@@ -69,6 +72,7 @@ void credits3_Update()
     /*------------------------------------------------------------ Drawing/Displaying of Images ------------------------------------------------------------*/
     CP_Image_Draw(copyrights, windowWidth /2, windowHeight/2, (float)CP_Image_GetWidth(copyrights), (float)CP_Image_GetHeight(copyrights), 255);
     CP_Image_Draw(credits3GradientBackground, windowWidth / 2, windowHeight / 2, windowWidth, windowHeight, 255);
+    CP_Image_Draw(copyrights2, windowWidth / 2, windowHeight / 2, windowWidth, windowHeight, 255);
 
     CP_Image_Draw(credits3BackToMainMenu, credits2BackButtonX, credits2ButtonY, (float)CP_Image_GetWidth(credits3BackToMainMenu), (float)CP_Image_GetHeight(credits3BackToMainMenu), 255);
     CP_Image_Draw(credits3NextPage, credits2NextPageButtonX, credits2ButtonY, (float)CP_Image_GetWidth(credits3NextPage), (float)CP_Image_GetHeight(credits3NextPage), 255);
@@ -80,6 +84,8 @@ void credits3_Exit()
 {
     CP_Image_Free(&copyrights);
     CP_Image_Free(&credits3GradientBackground);
+    CP_Image_Free(&copyrights2);
+
     CP_Image_Free(&credits3BackToMainMenu);
     CP_Image_Free(&credits3NextPage);
 }
