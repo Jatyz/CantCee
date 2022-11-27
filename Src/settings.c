@@ -66,6 +66,8 @@ CP_Image difficulty = NULL;
 CP_Image muteButton = NULL;
 CP_Image mutedButton = NULL;
 
+CP_Image easyMode = NULL;
+CP_Image hardMode = NULL;
 
 /// -------------------------------------
 ///	Sound settings Code Section
@@ -149,7 +151,7 @@ void drawSliderbase(float const Ypos)
 	CP_Settings_RectMode(CP_POSITION_CENTER);	//set the graphics draw mode to center
 	
 	//set a fill color and no stroke 
-	CP_Settings_Fill(CP_Color_Create(50, 50, 50, 255));
+	CP_Settings_Fill(CP_Color_Create(40, 40, 40, 255));
 	CP_Settings_NoStroke();
 
 	//draw the small slider rectangle that is supposed to be under the slider button
@@ -165,7 +167,7 @@ void drawSliderbase(float const Ypos)
 //draws the slider Button 
 double drawSliderButton(float const XPos, float const Ypos)
 {	//set a fill color and no stroke 
-	CP_Settings_Fill(CP_Color_Create(150, 150, 150, 255));
+	CP_Settings_Fill(CP_Color_Create(170, 244, 237, 255));
 	CP_Settings_NoStroke();
 	float newXPos = getWithinSliderValue(XPos);	//get a forcibly set x axis position within the slider value
 
@@ -369,9 +371,14 @@ void drawAllToggleButtons(void)
 	else
 	CP_Image_Draw(mutedButton, muteXPos, buttonsYPos, TOGGLE_BUTTON_SIZE, TOGGLE_BUTTON_SIZE, 255);
 
-	drawButton(trailsXPos,
-		(trailsHovered) ? TOGGLE_SIZE_FACTOR : 1,
-		(trailsHovered) ? buttonActiveColor : buttonDefaultColor);
+	if (isTrailsActive)
+		CP_Image_Draw(hardMode, trailsXPos, buttonsYPos, TOGGLE_BUTTON_SIZE, TOGGLE_BUTTON_SIZE, 255);
+	else
+		CP_Image_Draw(easyMode, trailsXPos, buttonsYPos, TOGGLE_BUTTON_SIZE, TOGGLE_BUTTON_SIZE, 255);
+
+	//drawButton(trailsXPos,
+	//	(trailsHovered) ? TOGGLE_SIZE_FACTOR : 1,
+	//	(trailsHovered) ? buttonActiveColor : buttonDefaultColor);
 }
 
 //handles logic for toggle buttons for mute and trails
@@ -455,6 +462,8 @@ void settings_Init()
 	muteButton = CP_Image_Load("./Assets/muteButton.png");
 	mutedButton = CP_Image_Load("./Assets/mutedButton.png");
 
+	easyMode = CP_Image_Load("./Assets/easyMode.png");
+	hardMode = CP_Image_Load("./Assets/hardMode.png");
 
 	settingButtonSound = CP_Sound_Load("./Assets/Sounds/Button Sound.mp3");
 
@@ -524,9 +533,11 @@ void settings_Exit()
 	CP_Image_Free(&mute);
 	CP_Image_Free(&difficulty);
 
-	//CP_Image_Free(&muteButton);
-	//CP_Image_Free(&mutedButton);
+	CP_Image_Free(&muteButton);
+	CP_Image_Free(&mutedButton);
 
+	CP_Image_Free(&easyMode);
+	CP_Image_Free(&hardMode);
 
 	CP_Sound_Free(&settingButtonSound);
 }

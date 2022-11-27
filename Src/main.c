@@ -15,6 +15,7 @@
 #include "cprocessing.h"
 #include "splashscreen.h"
 
+
 int main(void)
 {
 	CP_Engine_SetNextGameState(splashscreen_init, splashscreen_update, splashscreen_exit);
