@@ -355,8 +355,6 @@ void drawButton(float xPos,float scaleFactor, CP_Color color)
 {	//set a fill color and no stroke 
 	CP_Settings_Fill(color);
 	CP_Settings_NoStroke();
-
-
 	
 	CP_Settings_RectMode(CP_POSITION_CENTER);	//draw the slider using the center position
 	//draw button
@@ -371,9 +369,11 @@ void drawButton(float xPos,float scaleFactor, CP_Color color)
 //draw all toggle buttons
 void drawAllToggleButtons(void) 
 {
-	drawButton(muteXPos, 
-		(muteHovered) ? TOGGLE_SIZE_FACTOR : 1 , 
-		(muteHovered) ? buttonActiveColor: buttonDefaultColor);
+	if(volumeSliders[VOLMASTER].currentVolume > 0.f)
+	CP_Image_Draw(muteButton, muteXPos, buttonsYPos, TOGGLE_BUTTON_SIZE, TOGGLE_BUTTON_SIZE, 255);
+	else
+	CP_Image_Draw(mutedButton, muteXPos, buttonsYPos, TOGGLE_BUTTON_SIZE, TOGGLE_BUTTON_SIZE, 255);
+
 	drawButton(trailsXPos,
 		(trailsHovered) ? TOGGLE_SIZE_FACTOR : 1,
 		(trailsHovered) ? buttonActiveColor : buttonDefaultColor);
@@ -477,6 +477,7 @@ void settings_Update()
 	CP_Image_Draw(masterVolume, windowWidth / 2, windowHeight / 2 - 300 , (float)CP_Image_GetWidth(masterVolume), (float)CP_Image_GetHeight(masterVolume), 255);
 	CP_Image_Draw(sfxVolume, windowWidth / 2, windowHeight / 2 - 150, (float)CP_Image_GetWidth(sfxVolume), (float)CP_Image_GetHeight(sfxVolume), 255);
 
+	//text
 	CP_Image_Draw(mute, windowWidth / 10 * 3.25, windowHeight / 10 * 6 - 75, (float)CP_Image_GetWidth(mute), (float)CP_Image_GetHeight(mute), 255);
 	CP_Image_Draw(difficulty, windowWidth / 10 * 6.75 + 10, windowHeight / 10 * 6 - 75, (float)CP_Image_GetWidth(difficulty), (float)CP_Image_GetHeight(difficulty), 255);
 
