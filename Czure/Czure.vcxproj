@@ -136,21 +136,6 @@ xcopy "$(SolutionDir)Assets\*" "$(OutDir)Assets\" /s /r /y /q
     <ClCompile Include="..\Src\vectorMathBasic.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Inc\level1.h" />
-    <ClInclude Include="..\Inc\level10.h" />
-    <ClInclude Include="..\Inc\level11.h" />
-    <ClInclude Include="..\Inc\level12.h" />
-    <ClInclude Include="..\Inc\level13.h" />
-    <ClInclude Include="..\Inc\level14.h" />
-    <ClInclude Include="..\Inc\level15.h" />
-    <ClInclude Include="..\Inc\level2.h" />
-    <ClInclude Include="..\Inc\level3.h" />
-    <ClInclude Include="..\Inc\level4.h" />
-    <ClInclude Include="..\Inc\level5.h" />
-    <ClInclude Include="..\Inc\level6.h" />
-    <ClInclude Include="..\Inc\level7.h" />
-    <ClInclude Include="..\Inc\level8.h" />
-    <ClInclude Include="..\Inc\level9.h" />
     <ClInclude Include="..\Src\credits1.h" />
     <ClInclude Include="..\Src\credits2.h" />
     <ClInclude Include="..\Src\enemy.h" />
@@ -158,6 +143,21 @@ xcopy "$(SolutionDir)Assets\*" "$(OutDir)Assets\" /s /r /y /q
     <ClInclude Include="..\Src\game.h" />
     <ClInclude Include="..\Src\grid.h" />
     <ClInclude Include="..\Src\howToPlay1.h" />
+    <ClInclude Include="..\Src\level1.h" />
+    <ClInclude Include="..\Src\level10.h" />
+    <ClInclude Include="..\Src\level11.h" />
+    <ClInclude Include="..\Src\level12.h" />
+    <ClInclude Include="..\Src\level13.h" />
+    <ClInclude Include="..\Src\level14.h" />
+    <ClInclude Include="..\Src\level15.h" />
+    <ClInclude Include="..\Src\level2.h" />
+    <ClInclude Include="..\Src\level3.h" />
+    <ClInclude Include="..\Src\level4.h" />
+    <ClInclude Include="..\Src\level5.h" />
+    <ClInclude Include="..\Src\level6.h" />
+    <ClInclude Include="..\Src\level7.h" />
+    <ClInclude Include="..\Src\level8.h" />
+    <ClInclude Include="..\Src\level9.h" />
     <ClInclude Include="..\Src\levelselect.h" />
     <ClInclude Include="..\Src\main.h" />
     <ClInclude Include="..\Src\mainmenu.h" />

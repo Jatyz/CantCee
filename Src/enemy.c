@@ -34,22 +34,21 @@ void enemySet(int width, int height, int difficulty, int range, EnemyType type, 
 
 //sets the enemy's FOV color. The reason this is a separate set of colors is because the FOV has a transparency,
 //to allow the player to see themselves when they are behind the FOV layer
-void enemyFOVColorSet(int enemyXPos, int enemyYPos)
+void enemyFOVColorSet(int enemyXPos, int enemyYPos)	
 {
-	if (enemies[enemyXPos][enemyYPos].Color == RED)
+	if (enemies[enemyXPos][enemyYPos].Color == RED)//---------checks to see if enum COLOR of the enemy is RED. It then assigns a translucent red color to the enemy FOV
 	{
-
 		CP_Settings_Stroke(CP_Color_Create(255, 0, 0, 60));
 		CP_Settings_Fill(CP_Color_Create(200, 0, 50, 60));
 	}
 
-	if (enemies[enemyXPos][enemyYPos].Color == GREEN)
+	if (enemies[enemyXPos][enemyYPos].Color == GREEN)//-------checks to see if enum COLOR of the enemy is GREEN. It then assigns a translucent yellow color to the enemy FOV
 	{
 		CP_Settings_Stroke(CP_Color_Create(255, 255, 0, 60));
 		CP_Settings_Fill(CP_Color_Create(255, 255, 0, 60));
 	}
 
-	if (enemies[enemyXPos][enemyYPos].Color == BLUE)
+	if (enemies[enemyXPos][enemyYPos].Color == BLUE)//--------checks to see if enum COLOR of the enemy is BLUE. It then assigns a translucent blue color to the enemy FOV
 	{
 		CP_Settings_Stroke(CP_Color_Create(0, 0, 255, 60));
 		CP_Settings_Fill(CP_Color_Create(0, 0, 255, 60));
@@ -59,17 +58,17 @@ void enemyFOVColorSet(int enemyXPos, int enemyYPos)
 //sets the enemy's color automatically
 CP_Color enemyColorSet(int enemyXPos, int enemyYPos)
 {
-	if (enemies[enemyXPos][enemyYPos].Color == RED)
+	if (enemies[enemyXPos][enemyYPos].Color == RED)//--------------------checks if the Enemy's color is red. Then, give it the color red
 	{
 		return Red;
 	}
 
-	if (enemies[enemyXPos][enemyYPos].Color == GREEN)
+	if (enemies[enemyXPos][enemyYPos].Color == GREEN)//------------------checks if the Enemy's color is green. Then, give it the color green
 	{
 		return Yellow;
 	}
 
-	if (enemies[enemyXPos][enemyYPos].Color == BLUE)
+	if (enemies[enemyXPos][enemyYPos].Color == BLUE)//-------------------checks if the Enemy's color is blue. Then, give it the color blue
 	{
 		return Blue;
 	}
@@ -84,7 +83,8 @@ int enemyBounds(int xdir, int ydir, int enemyXPos, int enemyYPos, int range, int
 	{
 	case VERTICAL_HORIZONTAL_LOOK:
 		for (int counter = 1; counter <= range; counter++)
-		{
+		{   
+			//checks if the grid of position [(counter * x)(counter * y)] is a wall or closed door. If true, return amount of grids the enemy has to check for its FOV
 			if ((tiles[enemyXPos + (xdir * counter)][enemyYPos + (ydir * counter)].type == WALL || tiles[enemyXPos + (xdir * counter)][enemyYPos + (ydir * counter)].type == CLOSED_DOOR)
 				&& (enemyXPos + (xdir * counter) >= 0)
 				&& (enemyYPos + (ydir * counter) >= 0)
@@ -103,14 +103,17 @@ int enemyBounds(int xdir, int ydir, int enemyXPos, int enemyYPos, int range, int
 			{
 				for (int yPos = enemyYPos - 1; yPos < (enemyYPos + 2); yPos++)
 				{
+					//checks to see if this current grid is on a wall or closed door. If true, DO NOT mark it as part of the enemy's FOV
 					if (tiles[xPos][yPos].type == WALL || (tiles[xPos][yPos].type == CLOSED_DOOR))
 					{
 						continue;
 					}
+					//checks to see if the player has entered the same grid as the enemy itself
 					else if (player.x == enemyXPos && player.y == enemyYPos)
 					{
 						gameState = LOSE;
 					}
+					//check assumes that current grid IS NOT a wall or closed door, and therefore will check if player has entered this FOV
 					else
 					{
 						if (player.x == xPos && player.y == yPos)
@@ -127,8 +130,11 @@ int enemyBounds(int xdir, int ydir, int enemyXPos, int enemyYPos, int range, int
 			{
 				for (int yPos = enemyYPos - 2; yPos < (enemyYPos + 3); yPos++)
 				{
+					//This set of if statements checks where the current grid is relative to the enemy. This makes it easier to track the checks each
+					//grid must do in order to produce a more realistic FOV in-game
 					if (xPos < enemyXPos)
 					{
+						//checks 3 grids around itself: immediate right, diagonal bottom right, and below 
 						if (yPos < enemyYPos)
 						{
 							if ((enemyXPos - 1) == xPos && (enemyYPos - 1) == yPos)
@@ -173,6 +179,7 @@ int enemyBounds(int xdir, int ydir, int enemyXPos, int enemyYPos, int range, int
 							}
 
 						}
+						//checks the grid to the immediate right
 						if (yPos == enemyYPos)
 						{
 							if ((enemyXPos - 1) == xPos && enemyYPos == yPos)
@@ -209,6 +216,7 @@ int enemyBounds(int xdir, int ydir, int enemyXPos, int enemyYPos, int range, int
 							}
 
 						}
+						//checks 3 grids around itself: immediate right, diagonal top right, and above
 						if (yPos > enemyYPos)
 						{
 							if ((enemyXPos - 1) == xPos && (enemyYPos + 1) == yPos)
@@ -256,6 +264,7 @@ int enemyBounds(int xdir, int ydir, int enemyXPos, int enemyYPos, int range, int
 					}
 					else if (xPos == enemyXPos)
 					{
+						//checks the grid to the bottom of itself
 						if (yPos < enemyYPos)
 						{
 							if (tiles[xPos][yPos].type == WALL || (tiles[xPos][yPos].type == CLOSED_DOOR))
@@ -275,6 +284,7 @@ int enemyBounds(int xdir, int ydir, int enemyXPos, int enemyYPos, int range, int
 								}
 							}
 						}
+						//checks if the player is on the enemy. If true, immediate death regardless of color
 						else if (yPos == enemyYPos)
 						{
 							if (player.x == xPos && player.y == yPos)
@@ -282,6 +292,7 @@ int enemyBounds(int xdir, int ydir, int enemyXPos, int enemyYPos, int range, int
 								gameState = LOSE;
 							}
 						}
+						//checks the grid to the top of itself
 						else if (yPos > enemyYPos)
 						{
 							if (tiles[xPos][yPos].type == WALL || (tiles[xPos][yPos].type == CLOSED_DOOR))
@@ -303,7 +314,8 @@ int enemyBounds(int xdir, int ydir, int enemyXPos, int enemyYPos, int range, int
 						}
 					}
 					else if (xPos > enemyXPos)
-					{
+					{						
+						//checks 3 grids around itself: immediate left, diagonal bottom left, and below 
 						if (yPos < enemyYPos)
 						{
 							if ((enemyXPos + 1) == xPos && (enemyYPos - 1) == yPos)
@@ -350,6 +362,7 @@ int enemyBounds(int xdir, int ydir, int enemyXPos, int enemyYPos, int range, int
 							}
 
 						}
+						//checks the grid to the immediate right
 						else if (yPos == enemyYPos)
 						{
 							if (tiles[xPos][yPos].type == WALL || (tiles[xPos][yPos].type == CLOSED_DOOR))
@@ -368,6 +381,7 @@ int enemyBounds(int xdir, int ydir, int enemyXPos, int enemyYPos, int range, int
 								}
 							}
 						}
+						//checks 3 grids around itself: immediate left, diagonal top left, and above
 						else if (yPos > enemyYPos)
 						{
 							if ((enemyXPos + 1) == xPos && (enemyYPos + 1) == yPos)
@@ -469,8 +483,11 @@ void drawBounds(int xdir, int ydir, int enemyXPos, int enemyYPos, int range, flo
 			{
 				for (int yPos = enemyYPos - 2; yPos < (enemyYPos + 3); yPos++)
 				{
+					//This set of if statements checks where the current grid is relative to the enemy. This makes it easier to track the checks each
+					//grid must do in order to produce a more realistic FOV in-game
 					if (xPos < enemyXPos)
 					{
+						//checks 3 grids around itself: immediate right, diagonal bottom right, and below 
 						if (yPos < enemyYPos)
 						{
 							if ((enemyXPos - 1) == xPos && (enemyYPos - 1) == yPos)
@@ -513,6 +530,7 @@ void drawBounds(int xdir, int ydir, int enemyXPos, int enemyYPos, int range, flo
 							}
 
 						}
+						//checks the grid to the immediate right
 						if (yPos == enemyYPos)
 						{
 							if ((enemyXPos - 1) == xPos && enemyYPos == yPos)
@@ -547,6 +565,7 @@ void drawBounds(int xdir, int ydir, int enemyXPos, int enemyYPos, int range, flo
 							}
 
 						}
+						//checks 3 grids around itself: immediate right, diagonal top right, and above
 						if (yPos > enemyYPos)
 						{
 							if ((enemyXPos - 1) == xPos && (enemyYPos + 1) == yPos)
@@ -591,7 +610,8 @@ void drawBounds(int xdir, int ydir, int enemyXPos, int enemyYPos, int range, flo
 						}
 					}
 					else if (xPos == enemyXPos)
-					{
+					{						
+						//checks the grid to the bottom of itself
 						if (yPos < enemyYPos)
 						{
 							if (tiles[xPos][yPos].type == WALL || (tiles[xPos][yPos].type == CLOSED_DOOR))
@@ -609,6 +629,7 @@ void drawBounds(int xdir, int ydir, int enemyXPos, int enemyYPos, int range, flo
 								CP_Settings_NoStroke();
 							}
 						}
+						//checks the grid to the top of itself
 						else if (yPos > enemyYPos)
 						{
 							if (tiles[xPos][yPos].type == WALL || (tiles[xPos][yPos].type == CLOSED_DOOR))
@@ -628,7 +649,8 @@ void drawBounds(int xdir, int ydir, int enemyXPos, int enemyYPos, int range, flo
 						}
 					}
 					else if (xPos > enemyXPos)
-					{
+					{						
+						//checks 3 grids around itself: immediate left, diagonal bottom left, and below 
 						if (yPos < enemyYPos)
 						{
 							if ((enemyXPos + 1) == xPos && (enemyYPos - 1) == yPos)
@@ -673,6 +695,7 @@ void drawBounds(int xdir, int ydir, int enemyXPos, int enemyYPos, int range, flo
 							}
 
 						}
+						//checks the grid to the immediate right
 						else if (yPos == enemyYPos)
 						{
 							if (tiles[xPos][yPos].type == WALL || (tiles[xPos][yPos].type == CLOSED_DOOR))
@@ -690,6 +713,7 @@ void drawBounds(int xdir, int ydir, int enemyXPos, int enemyYPos, int range, flo
 								CP_Settings_NoStroke();
 							}
 						}
+						//checks 3 grids around itself: immediate left, diagonal top left, and above
 						else if (yPos > enemyYPos)
 						{
 							if ((enemyXPos + 1) == xPos && (enemyYPos + 1) == yPos)
@@ -759,21 +783,31 @@ void drawEnemy(float tileSize)
 				switch (enemies[width][height].type)
 				{
 				case VERTICAL_HORIZONTAL_LOOK:
+					//draws the FOV in the 4 directions of this enemy's FOV
 					drawBounds(1, 0, width, height, enemies[width][height].range, tileSize, enemies[width][height].difficulty);
 					drawBounds(-1, 0, width, height, enemies[width][height].range, tileSize, enemies[width][height].difficulty);
 					drawBounds(0, 1, width, height, enemies[width][height].range, tileSize, enemies[width][height].difficulty);
 					drawBounds(0, -1, width, height, enemies[width][height].range, tileSize, enemies[width][height].difficulty);
+
+					//Sets the color of the enemy using the [enemyColorSet] function
 					CP_Settings_Stroke(enemyColorSet(width, height));
 					CP_Settings_Fill(enemyColorSet(width, height));
+					
+					//draws the enemy on screen
 					CP_Graphics_DrawCircle((width + 0.5f) * tileSize, (height + 0.5f) * tileSize, tileSize);
 					CP_Settings_NoStroke();
 					CP_Settings_NoFill();
 					break;
 
 				case AOE_VIEW:
+					//draws the FOV of the enemy according to the difficulty assigned
 					drawBounds(0, 0, width, height, enemies[width][height].range, tileSize, enemies[width][height].difficulty);
+
+					//Sets the color of the enemy using the [enemyColorSet] function
 					CP_Settings_Stroke(enemyColorSet(width, height));
 					CP_Settings_Fill(enemyColorSet(width, height));
+
+					//draws the enemy on screen
 					CP_Graphics_DrawCircle((width + 0.5f) * tileSize, (height + 0.5f) * tileSize, tileSize);
 					CP_Settings_NoStroke();
 					CP_Settings_NoFill();
@@ -809,13 +843,15 @@ void enemyFOV(float tileSize)
 
 					}
 
-					//checks to the right of the enemy and checks if player has entered enemy's FOV
+					//checks if the player is on the same y position as the enemy
 					else if (player.y == height)
 					{
+						//checks to the right of the enemy and checks if player has entered enemy's FOV
 						if (width - player.x > 0)
 						{
 							if (abs(width - player.x) <= enemyBounds(-1, 0, width, height, enemies[width][height].range, enemies[width][height].difficulty))
 							{
+								//checks if player has the same color as the enemy. If not, player dies.
 								if (player.Player_Color != enemies[width][height].Color)
 								{
 									CP_Sound_PlayAdvanced(loseSound, CP_Sound_GetGroupVolume(CP_SOUND_GROUP_SFX), 2.0f, FALSE, CP_SOUND_GROUP_SFX);
@@ -829,6 +865,7 @@ void enemyFOV(float tileSize)
 
 							if (abs(width - player.x) <= enemyBounds(1, 0, width, height, enemies[width][height].range, enemies[width][height].difficulty))
 							{
+								//checks if player has the same color as the enemy. If not, player dies.
 								if (player.Player_Color != enemies[width][height].Color)
 								{
 									CP_Sound_PlayAdvanced(loseSound, CP_Sound_GetGroupVolume(CP_SOUND_GROUP_SFX), 2.0f, FALSE, CP_SOUND_GROUP_SFX);
@@ -837,7 +874,8 @@ void enemyFOV(float tileSize)
 							}
 						}
 					}
-					
+
+					//checks if the player is on the same x position as the enemy
 					else if (player.x == width)
 					{
 						//checks to the bottom of the enemy and checks if player has entered enemy's FOV
@@ -845,6 +883,7 @@ void enemyFOV(float tileSize)
 						{
 							if (abs(height - player.y) <= enemyBounds(0, -1, width, height, enemies[width][height].range, enemies[width][height].difficulty))
 							{
+								//checks if player has the same color as the enemy. If not, player dies.
 								if (player.Player_Color != enemies[width][height].Color)
 								{
 									CP_Sound_PlayAdvanced(loseSound, CP_Sound_GetGroupVolume(CP_SOUND_GROUP_SFX), 2.0f, FALSE, CP_SOUND_GROUP_SFX);
@@ -857,6 +896,7 @@ void enemyFOV(float tileSize)
 						{
 							if (abs(height - player.y) <= enemyBounds(0, 1, width, height, enemies[width][height].range, enemies[width][height].difficulty))
 							{
+								//checks if player has the same color as the enemy. If not, player dies.
 								if (player.Player_Color != enemies[width][height].Color)
 								{
 									CP_Sound_PlayAdvanced(loseSound, CP_Sound_GetGroupVolume(CP_SOUND_GROUP_SFX), 2.0f, FALSE, CP_SOUND_GROUP_SFX);
@@ -866,18 +906,19 @@ void enemyFOV(float tileSize)
 						}
 
 					}
-
 					break;
-
 				case AOE_VIEW:
-					//checks if player has entered enemy's FOV
+					//checks if player is on top of enemy
 					if (player.x == width && player.y == height)
 					{
 						CP_Sound_PlayAdvanced(loseSound, CP_Sound_GetGroupVolume(CP_SOUND_GROUP_SFX), 2.0f, FALSE, CP_SOUND_GROUP_SFX);
 						gameState = LOSE;
 					}
+
+					//does it's FOV check to see if player has entered this enemy's FOV
 					else if (enemyBounds(0, 0, width, height, enemies[width][height].range, enemies[width][height].difficulty) == 1)
 					{
+						//checks if player has the same color as the enemy. If not, player dies.
 						if (player.Player_Color != enemies[width][height].Color)
 						{
 							CP_Sound_PlayAdvanced(loseSound, CP_Sound_GetGroupVolume(CP_SOUND_GROUP_SFX), 2.0f, FALSE, CP_SOUND_GROUP_SFX);
