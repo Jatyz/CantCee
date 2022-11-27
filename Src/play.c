@@ -82,6 +82,10 @@ CP_Image hoverLvl12Word = NULL;
 CP_Image hoverLvl13Word = NULL;
 CP_Image hoverLvl14Word = NULL;
 
+CP_Image lsPlayButton = NULL;
+CP_Image lsPlayButtonHover = NULL;
+CP_Image lsPlayButtonWordHover = NULL;
+
 typedef struct Level
 {
 	double xAxis;
@@ -208,6 +212,10 @@ void play_Init()
 	hoverLvl13Word = CP_Image_Load("./Assets/hoverLvl14Word.png");
 	hoverLvl14Word = CP_Image_Load("./Assets/hoverLvl15Word.png");
 
+	lsPlayButton = CP_Image_Load("./Assets/lsPlayButton.png");
+	lsPlayButtonHover = CP_Image_Load("./Assets/lsPlayButtonHover.png");
+	lsPlayButtonWordHover = CP_Image_Load("./Assets/lsPlayButtonWordHover.png");
+
 	buttonSound = CP_Sound_Load("./Assets/Sounds/Button Sound.mp3");
 }
 
@@ -221,8 +229,6 @@ void play_Update()
 	{
 		drawSideBarLevel(test, levelScore);
 		drawSideBarPar(parScore);
-
-
 	}
 
 	// Background: Grey Colour
@@ -247,11 +253,14 @@ void play_Update()
 	CP_Image_Draw(home, (float)firstColumn, (float)exitHeight, (float)CP_Image_GetWidth(home), (float)CP_Image_GetHeight(home), 255);
 
 	//-----Start Button-----
-	CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
-	CP_Graphics_DrawRect(fifthColumn, playHeight, levelButtonWidth, levelButtonHeight);
-	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-	CP_Font_DrawText("Play!", fifthColumn, playHeight);
+	//CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
+	//CP_Graphics_DrawRect(fifthColumn, playHeight, levelButtonWidth, levelButtonHeight);
+	//CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
+	//CP_Font_DrawText("Play!", fifthColumn, playHeight);
 	CP_Settings_RectMode(CP_POSITION_CORNER);
+
+
+
 	//}
 		// ------------------------------------------------------------------------------------------ Hover Feature ------------------------------------------------------------------------------------------
 	// ------------------------------------------------------------ Level 1 TO 5 Hover ------------------------------------------------------------
@@ -395,6 +404,16 @@ void play_Update()
 		CP_Image_Draw(lvl14, (float)level[14].xAxis, (float)level[14].yAxis, (float)CP_Image_GetWidth(lvl14), (float)CP_Image_GetHeight(lvl14), 255);
 	}
 
+	if (IsAreaClicked(fifthColumn, playHeight, (float)CP_Image_GetWidth(lsPlayButton), (float)CP_Image_GetHeight(lsPlayButton), (float)CP_Input_GetMouseX(), (float)CP_Input_GetMouseY()))
+	{
+		CP_Image_Draw(lsPlayButtonHover, fifthColumn, playHeight, (float)CP_Image_GetWidth(lsPlayButtonHover), (float)CP_Image_GetHeight(lsPlayButtonHover), 255);
+		CP_Image_Draw(lsPlayButtonWordHover, fifthColumn, playHeight, (float)CP_Image_GetWidth(lsPlayButtonWordHover), (float)CP_Image_GetHeight(lsPlayButtonWordHover), 255);
+	}
+	else
+	{
+		CP_Image_Draw(lsPlayButton, fifthColumn, playHeight, (float)CP_Image_GetWidth(lsPlayButton), (float)CP_Image_GetHeight(lsPlayButton), 255);
+	}
+	
 
 
 	// ---------------------------------------------------------------------- LEVEL SELECTION ----------------------------------------------------------------------
@@ -612,11 +631,11 @@ void play_Update()
 
 
 	// ---------------------------------------------------------------------- Start Level[X] ----------------------------------------------------------------------
-	// if Level [X] is selected, & Start is clicked > enter game
+	// if Level [X] is selected, & PLAY is clicked > enter game
 	// ----------------------------------------------------------------------Level 1 TO 5----------------------------------------------------------------------
 	if (level[0].selected == 1 && CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
 	{
-		if (IsAreaClicked(fifthColumn, playHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		if (IsAreaClicked(fifthColumn, playHeight, (float)CP_Image_GetWidth(lsPlayButton), (float)CP_Image_GetHeight(lsPlayButton), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
 			CP_Sound_PlayAdvanced(buttonSound, CP_Sound_GetGroupVolume(CP_SOUND_GROUP_SFX), 2.0f, FALSE, CP_SOUND_GROUP_SFX);
 			CP_Engine_SetNextGameStateForced(level1_init, level1_update, level1_exit);
@@ -624,7 +643,7 @@ void play_Update()
 	}
 	if (level[1].selected == 1 && CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
 	{
-		if (IsAreaClicked(fifthColumn, playHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		if (IsAreaClicked(fifthColumn, playHeight, (float)CP_Image_GetWidth(lsPlayButton), (float)CP_Image_GetHeight(lsPlayButton), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
 			CP_Sound_PlayAdvanced(buttonSound, CP_Sound_GetGroupVolume(CP_SOUND_GROUP_SFX), 2.0f, FALSE, CP_SOUND_GROUP_SFX);
 			CP_Engine_SetNextGameStateForced(level2_init, level2_update, level2_exit);
@@ -632,7 +651,7 @@ void play_Update()
 	}
 	if (level[2].selected == 1 && CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
 	{
-		if (IsAreaClicked(fifthColumn, playHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		if (IsAreaClicked(fifthColumn, playHeight, (float)CP_Image_GetWidth(lsPlayButton), (float)CP_Image_GetHeight(lsPlayButton), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
 			CP_Sound_PlayAdvanced(buttonSound, CP_Sound_GetGroupVolume(CP_SOUND_GROUP_SFX), 2.0f, FALSE, CP_SOUND_GROUP_SFX);
 			CP_Engine_SetNextGameStateForced(level3_init, level3_update, level3_exit);
@@ -640,7 +659,7 @@ void play_Update()
 	}
 	if (level[3].selected == 1 && CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
 	{
-		if (IsAreaClicked(fifthColumn, playHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		if (IsAreaClicked(fifthColumn, playHeight, (float)CP_Image_GetWidth(lsPlayButton), (float)CP_Image_GetHeight(lsPlayButton), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
 			CP_Sound_PlayAdvanced(buttonSound, CP_Sound_GetGroupVolume(CP_SOUND_GROUP_SFX), 2.0f, FALSE, CP_SOUND_GROUP_SFX);
 			CP_Engine_SetNextGameStateForced(level4_init, level4_update, level4_exit);
@@ -648,7 +667,7 @@ void play_Update()
 	}
 	if (level[4].selected == 1 && CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
 	{
-		if (IsAreaClicked(fifthColumn, playHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		if (IsAreaClicked(fifthColumn, playHeight, (float)CP_Image_GetWidth(lsPlayButton), (float)CP_Image_GetHeight(lsPlayButton), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
 			CP_Sound_PlayAdvanced(buttonSound, CP_Sound_GetGroupVolume(CP_SOUND_GROUP_SFX), 2.0f, FALSE, CP_SOUND_GROUP_SFX);
 			CP_Engine_SetNextGameStateForced(level5_init, level5_update, level5_exit);
@@ -658,7 +677,7 @@ void play_Update()
 	// ----------------------------------------------------------------------Level 6 TO 10----------------------------------------------------------------------
 	if (level[5].selected == 1 && CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
 	{
-		if (IsAreaClicked(fifthColumn, playHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		if (IsAreaClicked(fifthColumn, playHeight, (float)CP_Image_GetWidth(lsPlayButton), (float)CP_Image_GetHeight(lsPlayButton), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
 			CP_Sound_PlayAdvanced(buttonSound, CP_Sound_GetGroupVolume(CP_SOUND_GROUP_SFX), 2.0f, FALSE, CP_SOUND_GROUP_SFX);
 			CP_Engine_SetNextGameStateForced(level6_init, level6_update, level6_exit);
@@ -666,7 +685,7 @@ void play_Update()
 	}
 	if (level[6].selected == 1 && CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
 	{
-		if (IsAreaClicked(fifthColumn, playHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		if (IsAreaClicked(fifthColumn, playHeight, (float)CP_Image_GetWidth(lsPlayButton), (float)CP_Image_GetHeight(lsPlayButton), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
 			CP_Sound_PlayAdvanced(buttonSound, CP_Sound_GetGroupVolume(CP_SOUND_GROUP_SFX), 2.0f, FALSE, CP_SOUND_GROUP_SFX);
 			CP_Engine_SetNextGameStateForced(level7_init, level7_update, level7_exit);
@@ -674,7 +693,7 @@ void play_Update()
 	}
 	if (level[7].selected == 1 && CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
 	{
-		if (IsAreaClicked(fifthColumn, playHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		if (IsAreaClicked(fifthColumn, playHeight, (float)CP_Image_GetWidth(lsPlayButton), (float)CP_Image_GetHeight(lsPlayButton), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
 			CP_Sound_PlayAdvanced(buttonSound, CP_Sound_GetGroupVolume(CP_SOUND_GROUP_SFX), 2.0f, FALSE, CP_SOUND_GROUP_SFX);
 			CP_Engine_SetNextGameStateForced(level8_init, level8_update, level8_exit);
@@ -682,7 +701,7 @@ void play_Update()
 	}
 	if (level[8].selected == 1 && CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
 	{
-		if (IsAreaClicked(fifthColumn, playHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		if (IsAreaClicked(fifthColumn, playHeight, (float)CP_Image_GetWidth(lsPlayButton), (float)CP_Image_GetHeight(lsPlayButton), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
 			CP_Sound_PlayAdvanced(buttonSound, CP_Sound_GetGroupVolume(CP_SOUND_GROUP_SFX), 2.0f, FALSE, CP_SOUND_GROUP_SFX);
 			CP_Engine_SetNextGameStateForced(level9_init, level9_update, level9_exit);
@@ -690,7 +709,7 @@ void play_Update()
 	}
 	if (level[9].selected == 1 && CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
 	{
-		if (IsAreaClicked(fifthColumn, playHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		if (IsAreaClicked(fifthColumn, playHeight, (float)CP_Image_GetWidth(lsPlayButton), (float)CP_Image_GetHeight(lsPlayButton), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
 			CP_Sound_PlayAdvanced(buttonSound, CP_Sound_GetGroupVolume(CP_SOUND_GROUP_SFX), 2.0f, FALSE, CP_SOUND_GROUP_SFX);
 			CP_Engine_SetNextGameStateForced(level10_init, level10_update, level10_exit);
@@ -700,7 +719,7 @@ void play_Update()
 	// ----------------------------------------------------------------------Level 11 TO 15----------------------------------------------------------------------
 	if (level[10].selected == 1 && CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
 	{
-		if (IsAreaClicked(fifthColumn, playHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		if (IsAreaClicked(fifthColumn, playHeight, (float)CP_Image_GetWidth(lsPlayButton), (float)CP_Image_GetHeight(lsPlayButton), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
 			CP_Sound_PlayAdvanced(buttonSound, CP_Sound_GetGroupVolume(CP_SOUND_GROUP_SFX), 2.0f, FALSE, CP_SOUND_GROUP_SFX);
 			CP_Engine_SetNextGameStateForced(level11_init, level11_update, level11_exit);
@@ -708,7 +727,7 @@ void play_Update()
 	}
 	if (level[11].selected == 1 && CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
 	{
-		if (IsAreaClicked(fifthColumn, playHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		if (IsAreaClicked(fifthColumn, playHeight, (float)CP_Image_GetWidth(lsPlayButton), (float)CP_Image_GetHeight(lsPlayButton), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
 			CP_Sound_PlayAdvanced(buttonSound, CP_Sound_GetGroupVolume(CP_SOUND_GROUP_SFX), 2.0f, FALSE, CP_SOUND_GROUP_SFX);
 			CP_Engine_SetNextGameStateForced(level12_init, level12_update, level12_exit);
@@ -716,7 +735,7 @@ void play_Update()
 	}
 	if (level[12].selected == 1 && CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
 	{
-		if (IsAreaClicked(fifthColumn, playHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		if (IsAreaClicked(fifthColumn, playHeight, (float)CP_Image_GetWidth(lsPlayButton), (float)CP_Image_GetHeight(lsPlayButton), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
 			CP_Sound_PlayAdvanced(buttonSound, CP_Sound_GetGroupVolume(CP_SOUND_GROUP_SFX), 2.0f, FALSE, CP_SOUND_GROUP_SFX);
 			CP_Engine_SetNextGameStateForced(level13_init, level13_update, level13_exit);
@@ -724,7 +743,7 @@ void play_Update()
 	}
 	if (level[13].selected == 1 && CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
 	{
-		if (IsAreaClicked(fifthColumn, playHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		if (IsAreaClicked(fifthColumn, playHeight, (float)CP_Image_GetWidth(lsPlayButton), (float)CP_Image_GetHeight(lsPlayButton), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
 			CP_Sound_PlayAdvanced(buttonSound, CP_Sound_GetGroupVolume(CP_SOUND_GROUP_SFX), 2.0f, FALSE, CP_SOUND_GROUP_SFX);
 			CP_Engine_SetNextGameStateForced(level14_init, level14_update, level14_exit);
@@ -732,7 +751,7 @@ void play_Update()
 	}
 	if (level[14].selected == 1 && CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
 	{
-		if (IsAreaClicked(fifthColumn, playHeight, levelButtonWidth, levelButtonHeight, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		if (IsAreaClicked(fifthColumn, playHeight, (float)CP_Image_GetWidth(lsPlayButton), (float)CP_Image_GetHeight(lsPlayButton), CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
 			CP_Sound_PlayAdvanced(buttonSound, CP_Sound_GetGroupVolume(CP_SOUND_GROUP_SFX), 2.0f, FALSE, CP_SOUND_GROUP_SFX);
 			CP_Engine_SetNextGameStateForced(level15_init, level15_update, level15_exit);
@@ -793,6 +812,10 @@ void play_Exit()
 	CP_Image_Free(&hoverLvl13Word);
 	CP_Image_Free(&hoverLvl14Word);
 	
+	CP_Image_Free(&lsPlayButton);
+	CP_Image_Free(&lsPlayButtonHover);
+	CP_Image_Free(&lsPlayButtonWordHover);
+
 	CP_Sound_Free(&buttonSound);
 
 	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
