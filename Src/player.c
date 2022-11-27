@@ -5,7 +5,7 @@
 #include "utils.h"
 #include "enemy.h"
 #include "soundEffects.h"
-
+#include <math.h>
 //global player
 Player player;
 

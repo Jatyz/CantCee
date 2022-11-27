@@ -15,11 +15,17 @@
 #include "utils.h"
 #include <math.h>
 
-#include "mainMenu.h"
+#include "mainmenu.h"
 #include "play.h"
 #include "FOV.h"
 #include "howToPlay1.h"
 #include "settings.h"
+
+
+
+void settings_init()
+{
+}
 
 ///=================================================
 ///Sound Sliders Variables
@@ -29,7 +35,7 @@ static float sliderMinX = 150;						//sliders' left most position
 static float sliderMaxX = windowWidth - 150;		//sliders' right most position
 static float sliderBaseRadius = 15.0f;				//the radius of the small rectangular shape under the slider button 
 static float sliderButtonRadius = 30.0f;			//the radius of the slider's button
-static float sliderButtonOffsets = 100.0f;			//the distance the sliders should be from each other in pixels
+static float sliderButtonOffsets = 150.0f;			//the distance the sliders should be from each other in pixels
 static float topSliderYPos = windowHeight / 5;		//set the first rendered slider to draw at mid screen in y axis
 static int sliderCurrentlyAdjusted = -1;			//set to -1 for no sliders selected.
 static int isInit = 0;								//boolean for whether all vaiables have been initialized before
@@ -56,6 +62,11 @@ static int trailsHovered = 0;		//if the trails button is currently hovered over
 CP_Image settingsBackToMainMenu = NULL;
 CP_Image settingsGradientBackground = NULL;
 
+CP_Image masterVolume = NULL;
+CP_Image sfxVolume = NULL;
+
+CP_Image mute = NULL;
+CP_Image difficulty = NULL;
 
 
 /// -------------------------------------
@@ -434,6 +445,13 @@ void settings_Init()
 	initButton();
 	settingsBackToMainMenu = CP_Image_Load("./Assets/credits1BackToMainMenu.png");
 	settingsGradientBackground = CP_Image_Load("./Assets/gradientAccentBackground.png");
+
+	masterVolume = CP_Image_Load("./Assets/masterVolume.png");
+	sfxVolume = CP_Image_Load("./Assets/sfxVolume.png");
+
+	mute = CP_Image_Load("./Assets/mute.png");
+	difficulty = CP_Image_Load("./Assets/difficulty.png");
+
 	settingButtonSound = CP_Sound_Load("./Assets/Sounds/Button Sound.mp3");
 }
 
@@ -443,9 +461,15 @@ void settings_Update()
 {
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));//background, change if needed
 	//double up on image opacity, do change when new background is available
-	CP_Image_DrawAdvanced(settingsGradientBackground, windowWidth / 2, windowHeight / 2, windowWidth, windowHeight, 255,180);
 	CP_Image_DrawAdvanced(settingsGradientBackground, windowWidth / 2, windowHeight / 2, windowWidth, windowHeight, 255, 180);
-	
+	CP_Image_DrawAdvanced(settingsGradientBackground, windowWidth / 2, windowHeight / 2, windowWidth, windowHeight, 255, 180);
+
+	CP_Image_Draw(masterVolume, windowWidth / 2, windowHeight / 2 - 300 , (float)CP_Image_GetWidth(masterVolume), (float)CP_Image_GetHeight(masterVolume), 255);
+	CP_Image_Draw(sfxVolume, windowWidth / 2, windowHeight / 2 - 150, (float)CP_Image_GetWidth(sfxVolume), (float)CP_Image_GetHeight(sfxVolume), 255);
+
+	CP_Image_Draw(mute, windowWidth / 10 * 3.25, windowHeight / 10 * 6 - 75, (float)CP_Image_GetWidth(mute), (float)CP_Image_GetHeight(mute), 255);
+	CP_Image_Draw(difficulty, windowWidth / 10 * 6.75 + 10, windowHeight / 10 * 6 - 75, (float)CP_Image_GetWidth(difficulty), (float)CP_Image_GetHeight(difficulty), 255);
+
 	//handle interraction logics of the toggle buttons and volume sliders
 	handleSliderInteraction();
 	handleToggleInteraction();
@@ -485,6 +509,14 @@ void settings_Exit()
 {
 	CP_Image_Free(&settingsBackToMainMenu);
 	CP_Image_Free(&settingsGradientBackground);
+
+	CP_Image_Free(&masterVolume);
+	CP_Image_Free(&sfxVolume);
+
+	CP_Image_Free(&mute);
+	CP_Image_Free(&difficulty);
+
+
 	CP_Sound_Free(&settingButtonSound);
 }
 
