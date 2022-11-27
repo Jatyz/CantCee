@@ -68,6 +68,9 @@ CP_Image sfxVolume = NULL;
 CP_Image mute = NULL;
 CP_Image difficulty = NULL;
 
+CP_Image muteButton = NULL;
+CP_Image mutedButton = NULL;
+
 
 /// -------------------------------------
 ///	Sound settings Code Section
@@ -353,10 +356,12 @@ void drawButton(float xPos,float scaleFactor, CP_Color color)
 	CP_Settings_Fill(color);
 	CP_Settings_NoStroke();
 
+
+	
 	CP_Settings_RectMode(CP_POSITION_CENTER);	//draw the slider using the center position
-	//draw button 
-	CP_Graphics_DrawRect(xPos, buttonsYPos,
-		TOGGLE_BUTTON_SIZE * scaleFactor, TOGGLE_BUTTON_SIZE * scaleFactor);
+	//draw button
+
+	CP_Graphics_DrawRect(xPos, buttonsYPos, TOGGLE_BUTTON_SIZE * scaleFactor, TOGGLE_BUTTON_SIZE * scaleFactor);
 	CP_Settings_RectMode(CP_POSITION_CORNER);	//return draw mode to default mode
 
 	//reset the stroke to prevent further no strokes
@@ -364,7 +369,7 @@ void drawButton(float xPos,float scaleFactor, CP_Color color)
 }
 
 //draw all toggle buttons
-void drawAllToggleButtons(void ) 
+void drawAllToggleButtons(void) 
 {
 	drawButton(muteXPos, 
 		(muteHovered) ? TOGGLE_SIZE_FACTOR : 1 , 
@@ -452,7 +457,12 @@ void settings_Init()
 	mute = CP_Image_Load("./Assets/mute.png");
 	difficulty = CP_Image_Load("./Assets/difficulty.png");
 
+	muteButton = CP_Image_Load("./Assets/muteButton.png");
+	mutedButton = CP_Image_Load("./Assets/mutedButton.png");
+
+
 	settingButtonSound = CP_Sound_Load("./Assets/Sounds/Button Sound.mp3");
+
 }
 
 
@@ -469,6 +479,8 @@ void settings_Update()
 
 	CP_Image_Draw(mute, windowWidth / 10 * 3.25, windowHeight / 10 * 6 - 75, (float)CP_Image_GetWidth(mute), (float)CP_Image_GetHeight(mute), 255);
 	CP_Image_Draw(difficulty, windowWidth / 10 * 6.75 + 10, windowHeight / 10 * 6 - 75, (float)CP_Image_GetWidth(difficulty), (float)CP_Image_GetHeight(difficulty), 255);
+
+
 
 	//handle interraction logics of the toggle buttons and volume sliders
 	handleSliderInteraction();
@@ -515,6 +527,9 @@ void settings_Exit()
 
 	CP_Image_Free(&mute);
 	CP_Image_Free(&difficulty);
+
+	//CP_Image_Free(&muteButton);
+	//CP_Image_Free(&mutedButton);
 
 
 	CP_Sound_Free(&settingButtonSound);

@@ -18,6 +18,7 @@
 int main(void)
 {
 	CP_Engine_SetNextGameState(splashscreen_init, splashscreen_update, splashscreen_exit);
+
 	CP_Engine_Run();
 	return 0;
 }
